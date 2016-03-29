@@ -1,7 +1,7 @@
 Building firmware
 -----------------
 
-1. Prepare [build environment](building_env.md), if you don't have it already
+1. Prepare [build environment](building_env.md), if you haven't done so yet
 2. Clone PC Engines coreboot repository:
 
     ```

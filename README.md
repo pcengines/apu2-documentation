@@ -10,7 +10,7 @@ Table of contents
 1. [Building environment](docs/building_env.md)
 2. [Building firmware](docs/building_firmware.md)
 3. [iPXE - compilation, configuration and including in firmware image](docs/ipxe_compile.md)
-4. [Firmware flashing](docs/firmware_flashing.md)
+4. [APU2 firmware flashing](docs/firmware_flashing.md)
 
 
 TODO list

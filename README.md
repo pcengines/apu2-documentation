@@ -12,6 +12,11 @@ Table of contents
 3. [iPXE - compilation, configuration and including in firmware image](docs/ipxe_compile.md)
 4. [APU2 firmware flashing](docs/firmware_flashing.md)
 
+Other resources
+----------------
+
+* [sortbootorder payload](https://github.com/pcengines/sortbootorde://github.com/pcengines/sortbootorder)
+  - coreboot payload that give ability to make persistent changes to boot order
 
 TODO list
 ---------

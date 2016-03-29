@@ -16,4 +16,5 @@ RUN apt-get update && apt-get install -y \
     cmake \
     make \
     g++ \
-    wget
+    wget \
+    liblzma-dev

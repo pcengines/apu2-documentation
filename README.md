@@ -9,8 +9,14 @@ Table of contents
 
 1. [Building environment](docs/building_env.md)
 2. [Building firmware](docs/building_firmware.md)
-2. [Compiling adding iPXE to coreboot.rom](docs/ipxe_compile.md)
+3. [iPXE - compilation, configuration and including in firmware image](docs/ipxe_compile.md)
+4. [Firmware flashing](docs/firmware_flashing.md)
 
+
+TODO list
+---------
+
+- [  ] iPXE sample configuration through script
 
 Contribute
 ----------

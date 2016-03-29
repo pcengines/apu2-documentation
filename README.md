@@ -9,6 +9,7 @@ Table of contents
 
 1. [Building environment](docs/building_env.md)
 2. [Building firmware](docs/building_firmware.md)
+2. [Compiling adding iPXE to coreboot.rom](docs/ipxe_compile.md)
 
 
 Contribute

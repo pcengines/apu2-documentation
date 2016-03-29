@@ -8,6 +8,7 @@ Table of contents
 -----------------
 
 1. [Building environment](docs/building_env.md)
+2. [Building firmware](docs/building_firmware.md)
 
 
 Contribute

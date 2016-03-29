@@ -18,11 +18,11 @@ system. Note that it is convenient to have non-root, so user added to group
 
 ### Building Docker image
 
-Clone this repository:
+Get Dockerfile:
 
 ```
-git clone git@github.com:pcengines/apu2-documentation.git
-cd apu2-documentation
+mkdir apu2-docker && apu2-docker
+wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/Dockerfile
 ```
 
 Build Ubuntu LTS 14.04 based image:

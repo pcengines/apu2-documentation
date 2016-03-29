@@ -16,7 +16,7 @@ Table of contents
 TODO list
 ---------
 
-- [  ] iPXE sample configuration through script
+- [ ] iPXE sample configuration through script
 
 Contribute
 ----------

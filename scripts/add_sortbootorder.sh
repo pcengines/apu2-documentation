@@ -23,6 +23,7 @@ make
 cd ../../../
 
 if [ -f  $CBFSTOOL ]; then
+  $CBFSTOOL ./build/coreboot.rom remove -n img/setup
   $CBFSTOOL ./build/coreboot.rom add-payload -f $SBO_PATH/sortbootorder.elf -n img/setup -t payload
   if [ $? != 0 ]; then
     exit

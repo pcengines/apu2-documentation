@@ -83,6 +83,20 @@ To add sortbootortder as payload please run below script in coreboot directory:
 wget -O - https://raw.githubusercontent.com/pcengines/apu2-documentation/master/scripts/add_sortbootorder.sh|bash -
 ```
 
+## Known issues
+
+If you get something like:
+
+```
+E: 'img/setup' already in ROM image.
+```
+
+please remove previous payload using:
+
+```
+./build/cbfstool build/coreboot.rom remove -n img/setup
+```
+
 Building in Docker container
 ----------------------------
 

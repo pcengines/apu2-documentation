@@ -4,8 +4,14 @@ Overview
 This repository contain documentation and scripts that aim to help PC Engines
 APU2 platform users to customize firmware to their needs.
 
-Building
---------
+Table of contents
+-----------------
+
+1. [Building](#building)
+2. [Adding iPXE](#adding-ipxe)
+3. [Adding sortbootorder](#adding-sortbootorder)
+
+## Building
 
 Below procedure tested with Debian stretch/sid.
 
@@ -17,7 +23,7 @@ make crossgcc-i386
 make
 ```
 
-## Flashing using TinyCore Linux
+### TinyCore Linux USB stick preparation
 
 ```
 wget http://pcengines.ch/file/apu2-tinycore6.4.img.gz
@@ -59,6 +65,22 @@ You should get exactly the same result.
 
 ```
 apu2> flashrom -w fw.bin -p internal
+```
+
+## Adding iPXE
+
+To add iPXE as payload please run below script in coreboot directory:
+
+```
+wget -O - https://raw.githubusercontent.com/pcengines/apu2-documentation/master/scripts/add_ipxe.sh|bash -
+```
+
+## Adding sortbootorder
+
+To add sortbootortder as payload please run below script in coreboot directory:
+
+```
+wget -O - https://raw.githubusercontent.com/pcengines/apu2-documentation/master/scripts/add_sortbootorder.sh|bash -
 ```
 
 Building in Docker container

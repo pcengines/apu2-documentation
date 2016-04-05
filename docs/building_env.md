@@ -21,7 +21,7 @@ system. Note that it is convenient to have non-root, so user added to group
 Get Dockerfile:
 
 ```
-mkdir apu2-docker && apu2-docker
+mkdir apu2-docker && cd apu2-docker
 wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/Dockerfile
 ```
 

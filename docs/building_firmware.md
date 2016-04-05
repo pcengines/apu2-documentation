@@ -11,7 +11,7 @@ Building firmware
 3. Run container and provide absolute path to above repository
 
     ```
-    docker run -v ${PWD}/../src/coreboot:/coreboot -t -i pc-engines/apu2b
+    docker run -v ${PWD}/coreboot:/coreboot -t -i pc-engines/apu2b
     ```
 4. Inside container
 

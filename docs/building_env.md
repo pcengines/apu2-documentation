@@ -33,15 +33,3 @@ docker build -t pc-engines/apu2b .
 
 After successful build you will have image based on which you can create
 containers that can be used as build environment for PC Engines APU2 firmware.
-
-### Run container
-
-```
-docker run -v ${PWD}/../src/coreboot:/coreboot -t -i pc-engines/apu2b
-```
-
-This command runs container using previously created image. Note that
-`${PWD}/../src/coreboot` is absolute path to coreboot source code. You can find
-this repository [here](https://github.com/pcengines/coreboot).
-
-

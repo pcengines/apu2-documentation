@@ -10,7 +10,7 @@ Building firmware using APU2 image builder
 Get APU2 image builder from [here (FIXME: this is just link placeholder)]().
 
 ```
-User/pass: root/voyage.
+User/pass: root/voyage
 ```
 
 1. write image to SD/mSATA/USB

@@ -2,106 +2,91 @@ Overview
 --------
 
 This repository contain documentation and scripts that aim to help PC Engines
-APU2 platform users to customize firmware to their needs.
+APU2 platform users and developers to customize firmware to their needs.
 
-Table of contents
------------------
+Building firmware using APU2 image builder
+------------------------------------------
 
-1. [Building](#building)
-2. [Adding iPXE](#adding-ipxe)
-3. [Adding sortbootorder](#adding-sortbootorder)
-
-## Building
-
-Below procedure tested with Debian stretch/sid.
+Get APU2 image builder from [here (FIXME: this is just link placeholder)]().
 
 ```
-git clone -b apu2b-20160304 git@github.com:pcengines/coreboot.git
-cd coreboot
-cp configs/pcengines.apu2.20160304.config .config
-make crossgcc-i386
-make
+User/pass: root/voyage.
 ```
 
-### TinyCore Linux USB stick preparation
+1. write image to SD/mSATA/USB
+2. boot the APU2 board with this image
+3. run below commands
+
+    ```
+    remountrw
+    wget https://github.com/pcengines/coreboot/archive/apu2b-20160304.zip
+    unzip apu2b-20160304.zip
+    cd coreboot-apu2b-20160304/
+    cp /xgcc/.xcompile . # this command setup toolchain
+    cp configs/pcengines.apu2.20160304.config .config
+    make
+    ```
+
+4. once done find the new firmware in the build folder (`build/coreboot.rom`)
+5. see [here](http://pcengines.ch/howto.htm#bios) for instructions on how to
+   flash the firmware
+
+Building iPXE
+-------------
 
 ```
-wget http://pcengines.ch/file/apu2-tinycore6.4.img.gz
-gunzip apu2-tinycore6.4.img.gz
-sudo dd if=apu2-tinycore6.4.img of=/dev/sdX bs=1M
+cd coreboot-apu2b-20160304/
+IPXE_PATH=payloads/external/ipxe
+git clone https://github.com/pcengines/ipxe $IPXE_PATH
+wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/general.h -O $IPXE_PATH/src/config/local/general.h
+wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/shell.ipxe -O $IPXE_PATH/src/shell.ipxe
+cd $IPXE_PATH/src
+make bin/8086157b.rom EMBED=./shell.ipxe
 ```
 
-Note that you have to replace `/dev/sdX` with your USB stick device.
+Feel free to customize `shell.pxe` and `local/general.h` to match your needs.
 
-### Transfer coreboot.rom to APU2
+Building sortbootorder
+----------------------
 
-To transfer build result to APU2 you can use netcat:
+Please check [here](https://github.com/pcengines/sortbootorder).
 
-```
-apu2> nc -l -p 2020 > fw.bin
-```
+NOTE: `sortbootorder` payload is not yet supported on APU2.
 
-On host:
+cbfstool and adding/removing ROMs or payloads
+---------------------------------------------
 
-```
-host> cat build/coreboot.rom | nc <apu2_ip_addr> 2020
-```
+`cbfstool` is result of `coreboot` build it gives ability to manipulate CBFS
+which filesystem for coreboot ROM.
 
-If nc will not finish after couple seconds break its execution with `<Ctrl-C>`.
-To make sure that file was transfered correctly compare MD5 sum on both
-machines.
+Usage examples:
 
 ```
-apu2> md5sum fw.bin
+# add iPXE ROM
+cd coreboot-apu2b-20160304/
+./build/cbfstool ./build/coreboot.rom add -f payloads/external/ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
 ```
 
-```
-host> md5sum build/coreboot.rom
-```
-
-You should get exactly the same result.
-
-### Running flashrom
+Above command add raw image (`8086157b.rom`, result of iPXE build) to
+`coreboot.rom` under the name `genroms/pxe.rom`. This makes SeaBIOS to auto
+detect iPXE ROM and execute it before entering menu.
 
 ```
-apu2> flashrom -w fw.bin -p internal
+# add sortbootorder
+cd coreboot-apu2b-20160304/
+./build/cbfstool ./build/coreboot.rom remove -n img/setup
+./build/cbfstool ./build/coreboot.rom add-payload -f payloads/pcengines/sortbootorder/sortbootorder.elf -n img/setup -t payload
 ```
 
-## Adding iPXE
+Above commands first remove already existing `img/setup` from CBFS and then add
+`sortbootorder.elf` as payload under the name `img/setup` to `coreboot.rom`.
 
-To add iPXE as payload please run below script in coreboot directory:
+Cross compilation with Docker container
+---------------------------------------
 
-```
-wget -O - https://raw.githubusercontent.com/pcengines/apu2-documentation/master/scripts/add_ipxe.sh|bash -
-```
-
-## Adding sortbootorder
-
-To add sortbootortder as payload please run below script in coreboot directory:
-
-```
-wget -O - https://raw.githubusercontent.com/pcengines/apu2-documentation/master/scripts/add_sortbootorder.sh|bash -
-```
-
-## Known issues
-
-If you get something like:
-
-```
-E: 'img/setup' already in ROM image.
-```
-
-please remove previous payload using:
-
-```
-./build/cbfstool build/coreboot.rom remove -n img/setup
-```
-
-Building in Docker container
-----------------------------
-
-If you don't want to use Voyage Linux you can use Docker container according to
-procedure described below.
+For advanced users and developers there maybe need to have development
+environment that is separated for working environment. Because of that you can
+use Docker containers as descried below.
 
 1. [Building environment](docs/building_env.md)
 2. [Building firmware](docs/building_firmware.md)
@@ -111,13 +96,8 @@ procedure described below.
 Other resources
 ----------------
 
-* [sortbootorder payload](https://github.com/pcengines/sortbootorde://github.com/pcengines/sortbootorder)
+* [sortbootorder payload](https://github.com/pcengines/sortbootorder)
   - coreboot payload that give ability to make persistent changes to boot order
-
-TODO list
----------
-
-- [ ] iPXE sample configuration through script
 
 Contribute
 ----------

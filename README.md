@@ -7,7 +7,7 @@ APU2 platform users and developers to customize firmware to their needs.
 Building firmware using APU2 image builder
 ------------------------------------------
 
-Get APU2 image builder from [here (FIXME: this is just link placeholder)]().
+Get APU2 image builder from [here](http://pcengines.ch/file/apu2_image_builder_v0.1.img.xz) (MD5 sum after decompression: a40ea9caff93c0218a745e0625e1292a).
 
 ```
 User/pass: root/voyage

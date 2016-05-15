@@ -13,9 +13,15 @@ Get APU2 image builder from [here](http://pcengines.ch/file/apu2_image_builder_v
 User/pass: root/voyage
 ```
 
-1. write image to SD/mSATA/USB
-2. boot the APU2 board with this image
-3. run below commands
+1. Unpack image:
+
+    ```
+    tar xf apu2_image_builder_v0.1.img.xz
+    ```
+
+2. write image to SD/mSATA/USB
+3. boot the APU2 board with this image
+4. run below commands
 
     ```
     remountrw
@@ -27,8 +33,8 @@ User/pass: root/voyage
     make
     ```
 
-4. once done find the new firmware in the build folder (`build/coreboot.rom`)
-5. see [here](http://pcengines.ch/howto.htm#bios) for instructions on how to
+5. once done find the new firmware in the build folder (`build/coreboot.rom`)
+6. see [here](http://pcengines.ch/howto.htm#bios) for instructions on how to
    flash the firmware
 
 Building iPXE

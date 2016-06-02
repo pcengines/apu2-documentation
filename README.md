@@ -110,17 +110,16 @@ cd coreboot-apu2b-20160304/
 ./build/cbfstool ./build/coreboot.rom add-payload -f payloads/external/memtest86plus/memtest -n img/memtest - payload
 ```
 
-Cross compilation with Docker container
+Cross compilation in Docker container
 ---------------------------------------
 
 For advanced users and developers there maybe need to have development
 environment that is separated for working environment. Because of that you can
 use Docker containers as descried below.
 
-1. [Building environment](docs/building_env.md)
+1. [Build container](docs/building_env.md)
 2. [Building firmware](docs/building_firmware.md)
-3. [iPXE - compilation, configuration and including in firmware image](docs/ipxe_compile.md)
-4. [APU2 firmware flashing](docs/firmware_flashing.md)
+3. [Firmware flashing](docs/firmware_flashing.md)
 
 Other resources
 ----------------

@@ -18,3 +18,21 @@ You can also use minimal distributions with already installed `flashrom` like
 ```
 flashrom -w coreboot.rom -p internal
 ```
+
+Developer tricks
+----------------
+
+To automate firmware update while developing copy ssh keys to taget machine:
+
+```
+cat ~/.ssh/id_rsa.pub | ssh root@192.168.0.101 'cat >> .ssh/authorized_keys'
+```
+
+Then you can use below command to flash recently built changes:
+
+```
+APU2_IP=192.168.0.101 && ssh root@$APU2_IP remountrw && \
+scp build/coreboot.rom root@$APU2_IP:/root && \
+ssh root@$APU2_IP flashrom -w /root/coreboot.rom -p internal \
+&& ssh root@$APU2_IP reboot
+```

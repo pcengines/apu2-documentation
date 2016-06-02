@@ -5,10 +5,10 @@ Building firmware
 2. Clone PC Engines coreboot repository:
 
     ```
-    # ie. git clone -b apu2b-20160304-superio-backport git@github.com:pcengines/coreboot.git
     git clone -b <branch> git@github.com:pcengines/coreboot.git
-    # ie. git clone -b apu2 git@github.com:pcengines/memtest86plus.git
+    # ie. git clone -b apu2b-20160304-superio-backport git@github.com:pcengines/coreboot.git
     git clone -b <branch> git@github.com:pcengines/memtest86plus.git
+    # ie. git clone -b apu2 git@github.com:pcengines/memtest86plus.git
     git clone git@github.com:pcengines/ipxe.git
     git clone git@github.com:pcengines/sortbootorder.git
     ```
@@ -16,7 +16,7 @@ Building firmware
     Note that `<branch>` should be replaced with one of available git branches.
     Not all combiantions of branches will work.
 
-3. Run container and provide absolute path to above repository
+3. Run container and provide absolute path to above repositories
 
     ```
     docker run -v ${PWD}/coreboot:/coreboot \
@@ -25,6 +25,7 @@ Building firmware
     -v ${PWD}/sortboorder:/payloads/pcengines/sortbootorder \
     -t -i pc-engines/apu2b
     ```
+
 4. Inside container
 
     ```
@@ -35,6 +36,39 @@ Building firmware
     ```
 
     Note that building toolchain `make crossgcc-i386` is needed only once.
+
+5. Compile payloads
+
+    ```
+    # ipxe
+    PXE_PATH=/ipxe
+    wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/general.h -O $IPXE_PATH/src/config/local/general.h
+    wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/menu.ipxe -O $IPXE_PATH/src/menu.ipxe
+    cd $IPXE_PATH/src
+    make bin/8086157b.rom EMBED=./menu.ipxe
+    # sortbootorder
+    cd /coreboot/payloads/libpayload
+    wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/xcompile/.xcompile-libpayload
+    make defconfig
+    make
+    make install
+    cd ../pcengines/sortbootorder
+    make
+    # memtest86plus
+    cd /memtest86plus
+    make
+    ```
+6. Add payloads to image
+
+   ```
+   cd /coreboot
+   # ./build/cbfstool ./build/coreboot.rom remove -n genroms/pxe.rom
+   ./build/cbfstool ./build/coreboot.rom add -f /ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
+   ./build/cbfstool ./build/coreboot.rom remove -n img/setup
+   ./build/cbfstool ./build/coreboot.rom add-payload -f payloads/pcengines/sortbootorder/sortbootorder.elf -n img/setup -t payload
+   ./build/cbfstool ./build/coreboot.rom remove -n img/memtest
+   ./build/cbfstool ./build/coreboot.rom add-payload -f /memtest86plus/memtest -n img/memtest - payload
+   ```
 
 As a result you will have `build/coreboot.rom` file which is our firmware for
 APU2 board.

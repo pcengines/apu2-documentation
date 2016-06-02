@@ -1,0 +1,38 @@
+:MENU
+menu
+item --gap -- ---------------- iPXE boot menu ----------------
+item ipxedemo        ipxe online boot demo
+item shell          ipxe shell
+item return        return to previous menu
+item hostinfo        details about this computer
+choose --default return --timeout 5000 target && goto ${target}
+ 
+:ipxedemo
+chain http://boot.ipxe.org/demo/boot.php ||
+goto MENU
+ 
+:shell
+shell ||
+goto MENU
+ 
+:return
+chain  http://${fog-ip}/${fog-webroot}/service/ipxe/boot.php?mac=${net0/mac} ||
+prompt
+goto MENU
+ 
+:hostinfo
+echo This computer : ||
+echo MAC address....${net0/mac} ||
+echo IP address.....${ip} ||
+echo Netmask........${netmask} ||
+echo Serial.........${serial} ||
+echo Asset number...${asset} ||
+echo Manufacturer...${manufacturer} ||
+echo Product........${product} ||
+echo BIOS platform..${platform} ||
+echo ||
+echo press any key to return to Menu ||
+prompt
+goto MENU
+ 
+autoboot

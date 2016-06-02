@@ -5,20 +5,32 @@ Building firmware
 2. Clone PC Engines coreboot repository:
 
     ```
-    git clone -b apu2b-20160304 git@github.com:pcengines/coreboot.git
+    # ie. git clone -b apu2b-20160304-superio-backport git@github.com:pcengines/coreboot.git
+    git clone -b <branch> git@github.com:pcengines/coreboot.git
+    # ie. git clone -b apu2 git@github.com:pcengines/memtest86plus.git
+    git clone -b <branch> git@github.com:pcengines/memtest86plus.git
+    git clone git@github.com:pcengines/ipxe.git
+    git clone git@github.com:pcengines/sortbootorder.git
     ```
+
+    Note that `<branch>` should be replaced with one of available git branches.
+    Not all combiantions of branches will work.
 
 3. Run container and provide absolute path to above repository
 
     ```
-    docker run -v ${PWD}/coreboot:/coreboot -t -i pc-engines/apu2b
+    docker run -v ${PWD}/coreboot:/coreboot \
+    -v ${PWD}/memtest86plus:/memtest86plus \
+    -v ${PWD}/ipxe:/ipxe \
+    -v ${PWD}/sortboorder:/payloads/pcengines/sortbootorder \
+    -t -i pc-engines/apu2b
     ```
 4. Inside container
 
     ```
     cd /coreboot
     cp configs/pcengines.apu2.20160304.config .config
-    make crossgcc-i386
+    make crossgcc-i386 CPUS=4
     make
     ```
 

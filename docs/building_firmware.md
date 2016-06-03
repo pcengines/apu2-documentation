@@ -41,7 +41,7 @@ Building firmware
 
     ```
     # ipxe
-    PXE_PATH=/ipxe
+    IPXE_PATH=/ipxe
     wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/general.h -O $IPXE_PATH/src/config/local/general.h
     wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/menu.ipxe -O $IPXE_PATH/src/menu.ipxe
     cd $IPXE_PATH/src

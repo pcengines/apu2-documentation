@@ -22,7 +22,7 @@ Building firmware
     docker run -v ${PWD}/coreboot:/coreboot \
     -v ${PWD}/memtest86plus:/memtest86plus \
     -v ${PWD}/ipxe:/ipxe \
-    -v ${PWD}/sortboorder:/payloads/pcengines/sortbootorder \
+    -v ${PWD}/sortbootorder:/payloads/pcengines/sortbootorder \
     -t -i pc-engines/apu2b
     ```
 

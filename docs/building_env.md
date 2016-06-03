@@ -34,4 +34,4 @@ docker build -t pc-engines/apu2b .
 After successful build you will have image based on which you can create
 containers that can be used as build environment for PC Engines APU2 firmware.
 
-Please continue to [Building firmware](docs/building_firmware.md).
+Please continue to [Building firmware](building_firmware.md).

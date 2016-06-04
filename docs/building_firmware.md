@@ -71,7 +71,7 @@ Building firmware
    ```
 
 As a result you will have `build/coreboot.rom` file which is our firmware for
-APU2 board. Now you can continue with [flashing firmware](flashing_firmware.md).
+APU2 board. Now you can continue with [flashing firmware](firmware_flashing.md).
 
 
 Logs

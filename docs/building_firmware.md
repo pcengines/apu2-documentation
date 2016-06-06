@@ -25,6 +25,14 @@ Building firmware
     -v ${PWD}/sortbootorder:/coreboot/payloads/pcengines/sortbootorder \
     -t -i pc-engines/apu2b
     ```
+    
+    For mainline coreboot:
+
+    ```
+    docker run -v ${PWD}/coreboot:/coreboot \
+    -v ${PWD}/sortbootorder:/coreboot/payloads/pcengines/sortbootorder \
+    -t -i pc-engines/apu2b
+    ```
 
 4. Inside container
 

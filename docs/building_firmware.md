@@ -5,17 +5,15 @@ Building firmware
 2. Clone PC Engines coreboot repository:
 
     ```
-    git clone -b <branch> git@github.com:pcengines/coreboot.git
-    # ie. git clone -b apu2b-20160304-superio-backport git@github.com:pcengines/coreboot.git
-    git clone -b <branch> git@github.com:pcengines/memtest86plus.git
-    # ie. git clone -b apu2 git@github.com:pcengines/memtest86plus.git
-    git clone git@github.com:pcengines/ipxe.git
-    git clone git@github.com:pcengines/sortbootorder.git
+    # git clone git@github.com:pcengines/coreboot.git
+    git clone https://github.com/pcengines/coreboot.git
+    # git clone git@github.com:pcengines/memtest86plus.git
+    git clone https://github.com/pcengines/memtest86plus.git
+    # git clone git@github.com:pcengines/ipxe.git
+    git clone https://github.com/pcengines/ipxe.git
+    # git clone git@github.com:pcengines/sortbootorder.git
+    git clone https://github.com/pcengines/sortbootorder.git
     ```
-
-    Note that `<branch>` should be replaced with one of available git branches.
-    Not all combiantions of branches will work.
-
 3. Run container and provide absolute path to above repositories
 
     ```

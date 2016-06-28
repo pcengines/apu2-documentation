@@ -46,10 +46,16 @@ etc.
 
 5. Check if system is booting from SD card properly. It worked fine when using
    SanDisk Ultra 8GB. However, on Samsung Evo 16 GB boot process failed and it
-   was required to install `grub` manually using `grub-install`.
+   was required to install `grub` manually using `grub-install`:
 
-6. It is advised to fill an empty card space with zeroes. It will cause the
-   compression process run faster. Before shutting down platform execute
+   ```
+   mkdir tmp
+   mount /dev/mmcblk0p1 tmp
+   grub-install --root-directory=tmp /dev/mmcblk0
+   ```
+
+6. It is advised to fill an empty space of SD  card with zeroes. It will cause
+   the compression process run faster. Before shutting down platform execute
    following command. Note that this process may take up to one hour.
 
     ```

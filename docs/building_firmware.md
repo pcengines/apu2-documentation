@@ -158,3 +158,6 @@ Known issues
     ```
     make clean
     ```
+
+* Above command may also be necessary to execute after modyfying configuration
+  file (e.g. changing log level).

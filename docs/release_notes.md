@@ -39,4 +39,14 @@ Releases 4.0.x are based on PC Engines 20160304 release
   * initial commit based on
     [apu1coreboot_140908](http://pcengines.ch/tmp/coreboot_140908.tar.gz)
 
+#### Memtest86plus
 
+  * add macro `SPD_DISABLED ` for disabling SPD related functionality
+  * fix refresh procedure so that full screen content is reprinted on refresh
+  * add refresh option label (`l`) to bottom menu
+  * enable serial console by default
+  * based on [memtest86plus](https://review.coreboot.org/cgit/memtest86plus.git?)
+
+#### iPXE
+
+  * mirror of [iPXE git tree](http://git.ipxe.org/ipxe.git)

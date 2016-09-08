@@ -1,6 +1,8 @@
 PC Engines APU2 Coreboot Release Notes
 --------------------------------------
 
+Releases 4.0.x are based on PC Engines 20160304 release
+
 ### 4.0.1
 
 #### Coreboot & SeaBIOS
@@ -18,7 +20,6 @@ PC Engines APU2 Coreboot Release Notes
   * add missing `cbfs_find_string` in `libpayload`
   * add missing binaries
   * add executable bit to `xcompile`
-  * U-ELTAN release 20160304
 
 #### Sortbootorder
 

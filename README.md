@@ -4,6 +4,8 @@ Overview
 This repository contain documentation and scripts that aim to help PC Engines
 APU2 platform users and developers to customize firmware to their needs.
 
+[RELEASE NOTES](docs/release_notes.md)
+
 Building firmware using APU2 image builder
 ------------------------------------------
 

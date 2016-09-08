@@ -18,7 +18,6 @@ Releases 4.0.x are based on PC Engines 20160304 release
   * check if `git` exists before calling it
   * change git repository in `Makefile`
   * add missing `cbfs_find_string` in `libpayload`
-  * add missing binaries
   * add executable bit to `xcompile`
 
 #### Sortbootorder

@@ -22,7 +22,7 @@ flashrom -w coreboot.rom -p internal
 Developer tricks
 ----------------
 
-To automate firmware update while developing copy ssh keys to taget machine:
+To automate firmware update while developing copy ssh keys to target machine:
 
 ```
 cat ~/.ssh/id_rsa.pub | ssh root@192.168.0.101 'cat >> .ssh/authorized_keys'

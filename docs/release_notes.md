@@ -1,24 +1,36 @@
-PC Engines APU2 Coreboot Release Notes
+PC Engines APU2 coreboot Release Notes
 --------------------------------------
 
 Releases 4.0.x are based on PC Engines 20160304 release
 
+### 4.0.1.1
+
+#### coreboot
+
+  * Reprogram `GPP_CLK3` output (connected to miniPCIe slot 1) to ignore `CLKREQ#`
+    input - force it to be always on.
+
 ### 4.0.1
 
-#### Coreboot & SeaBIOS
+#### coreboot
 
   * introduce versioning
   * obtain `smbios` fields, such as `board serial` and `SKU`
-  * allow for one-time `PXE ` boot with `N` key
   * reduce log level: display mainboard, DRAM and ECC info only
   * improve SD card performance
   * force to use SD in 2.0 mode
-  * prevent from printing character multiple times
   * nct5104d driver backport
   * check if `git` exists before calling it
   * change git repository in `Makefile`
   * add missing `cbfs_find_string` in `libpayload`
   * add executable bit to `xcompile`
+
+#### SeaBIOS
+
+  * allow for one-time `PXE ` boot with `N` key
+  * enable/disable `USB` boot
+  * enable/disable `PXE` boot
+  * prevent from printing character multiple times
 
 #### Sortbootorder
 

@@ -3,6 +3,13 @@ PC Engines APU2 Coreboot Release Notes
 
 Releases 4.0.x are based on PC Engines 20160304 release
 
+### 4.0.1.1
+
+#### Coreboot
+
+  * Reprogram `GPP_CLK3` output (connected to miniPCIe slot 1) to ignore `CLKREQ#`
+    input - force it to be always on.
+
 ### 4.0.1
 
 #### Coreboot & SeaBIOS

@@ -55,6 +55,7 @@ Building firmware
     # sortbootorder
     cd /coreboot/payloads/libpayload
     wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/xcompile/.xcompile-libpayload
+    make clean
     make defconfig
     make
     make install

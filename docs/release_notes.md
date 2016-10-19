@@ -49,7 +49,7 @@ Releases 4.0.x are based on PC Engines 20160304 release
   * add `PC Engines` header
   * add `README` and `Makefile`
   * initial commit based on
-    [apu1coreboot_140908](http://pcengines.ch/tmp/coreboot_140908.tar.gz)
+    [coreboot_140908](http://pcengines.ch/tmp/coreboot_140908.tar.gz)
 
 #### Memtest86plus
 

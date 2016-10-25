@@ -285,6 +285,10 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
     not print returned value). This `else` does not matter since it is not
     executing in this case.
 
+    This is done in file
+    [seabios/src/hw/ahci.c](https://github.com/pcengines/seabios/blob/apu2-support/src/hw/ahci.c),
+    function `ahci_port_setup` that starts with line 421.
+
     ```
             rc = ahci_command(port, 1, 0, 0, 0);
 
@@ -294,7 +298,7 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
                 dprintf(1, "AHCI/%d: Set transfer mode failed.\n", port->pnr);
             }
         }
-    else 
+    else
     {
         // found cdrom (atapi)
         port->drive.type = DTYPE_AHCI_ATAPI;

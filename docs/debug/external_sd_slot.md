@@ -1,5 +1,5 @@
 
-We have used an external [SD slot)](https://www.sparkfun.com/products/12941)
+We have used an external [SD slot](https://www.sparkfun.com/products/12941)
 connected to SD pins on APU2. Unfortunately `CD` and `WP` pins are not exposed
 so it is not `exactly` the same situation. However, we have managed to connect
 to `CD` pin as well. Leaving `WP` unconnected should not make the difference -

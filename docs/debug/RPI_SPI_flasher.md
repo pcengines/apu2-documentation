@@ -53,3 +53,10 @@
   ```
   sudo flashrom -V -p linux_spi:dev=/dev/spidev0.0 -r coreboot.rom
   ```
+
+Hexdumps of binaries:
+
+* [original
+  binary](https://drive.google.com/open?id=0B2fOAKKiyr_yY3VYS0FZV3NqMVE)
+* [binary read by
+  RPI](https://drive.google.com/open?id=0B2fOAKKiyr_ydmxTWm4xN1VQZmM)

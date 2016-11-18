@@ -14,8 +14,8 @@
         remote="github"
         revision="apu2-support"/>
 
-    <project path="apu2/seabios"
-        name="pcengines/seabios"
+    <project path="apu2/memtest86plus"
+        name="pcengines/memtest86plus"
         remote="github"
         revision="apu2-support"/>
 

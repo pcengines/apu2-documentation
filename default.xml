@@ -4,6 +4,11 @@
 
     <default revision="master" remote="github" sync-j="4" />
 
+    <project path="apu2/apu2-documentation"
+        name="pcengines/apu2-documentation"
+        remote="github"
+        revision="master"/>
+
     <project path="apu2/coreboot"
         name="pcengines/coreboot"
         remote="github"

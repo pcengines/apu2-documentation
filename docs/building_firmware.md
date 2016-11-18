@@ -28,6 +28,7 @@ Building firmware
 
     ```
     docker run -v ${PWD}/coreboot:/coreboot \
+    -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
     -v ${PWD}/sortbootorder:/coreboot/payloads/pcengines/sortbootorder \
     -t -i pc-engines/apu2b
     ```

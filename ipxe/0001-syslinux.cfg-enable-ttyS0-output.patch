@@ -1,0 +1,27 @@
+From d7fe2a6cb5fc8e48d4a7d2feeffdf84f002d6adc Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Piotr=20Kr=C3=B3l?= <piotr.krol@3mdeb.com>
+Date: Sat, 19 Nov 2016 22:59:39 +0100
+Subject: [PATCH] syslinux.cfg: enable ttyS0 output
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Piotr Król <piotr.krol@3mdeb.com>
+---
+ debian-installer/i386/boot-screens/syslinux.cfg | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/debian-installer/i386/boot-screens/syslinux.cfg b/debian-installer/i386/boot-screens/syslinux.cfg
+index 66a60361d932..0d994db4f747 100644
+--- a/debian-installer/i386/boot-screens/syslinux.cfg
++++ b/debian-installer/i386/boot-screens/syslinux.cfg
+@@ -1,5 +1,6 @@
+ # D-I config version 2.0
+ # search path for the c32 support libraries (libcom32, libutil etc.)
++serial 0 115200 0
+ path debian-installer/i386/boot-screens/
+ include debian-installer/i386/boot-screens/menu.cfg
+ default debian-installer/i386/boot-screens/vesamenu.c32
+-- 
+2.10.1
+

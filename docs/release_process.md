@@ -29,5 +29,16 @@ docker build -t pcengines/apu2 apu2/apu2-documentation
 ## Build release
 
 ```
-./apu2/apu2-documentation/scripts/apu2_fw_rel.sh
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build
+```
+
+## Flash release
+
+Note that below script assume that you have ssh enabled connection with target
+device and destination OS [APU2 image builder](https://github.com/pcengines/apu2-documentation#building-firmware-using-apu2-image-builder).
+Without keys added you will see question about password couple times during
+flashing.
+
+```
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <ip_address>
 ```

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: differentiate between build and flash
+
 docker run --rm -it \
 -v ${PWD}/apu2/apu2-documentation:/apu2-docs \
 -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK  \

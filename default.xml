@@ -28,4 +28,9 @@
         name="pcengines/sortbootorder"
         remote="github"
         revision="master"/>
+
+    <project path="apu2/ipxe"
+        name="pcengines/ipxe"
+        remote="github"
+        revision="master"/>
 </manifest>

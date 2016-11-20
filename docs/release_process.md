@@ -42,3 +42,56 @@ flashing.
 ```
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <ip_address>
 ```
+
+## Changes to work on mainline
+
+`.gitmodules` have to be changed with this patch:
+
+```
+diff --git a/.gitmodules b/.gitmodules
+index c3270e6ae2f2..5c1b495dea1a 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -1,23 +1,23 @@
+ [submodule "3rdparty/blobs"]
+        path = 3rdparty/blobs
+-       url = ../blobs.git
++       url = ssh://<username>@review.coreboot.org:29418/blobs.git
+        update = none
+        ignore = dirty
+ [submodule "util/nvidia-cbootimage"]
+        path = util/nvidia/cbootimage
+-       url = ../nvidia-cbootimage.git
++       url = ssh://<username>@review.coreboot.org:29418/nvidia-cbootimage.git
+ [submodule "vboot"]
+        path = 3rdparty/vboot
+-       url = ../vboot.git
++       url = ssh://<username>@review.coreboot.org:29418/vboot.git
+ [submodule "arm-trusted-firmware"]
+        path = 3rdparty/arm-trusted-firmware
+-       url = ../arm-trusted-firmware.git
++       url = ssh://<username>@review.coreboot.org:29418/arm-trusted-firmware.git
+ [submodule "3rdparty/chromeec"]
+        path = 3rdparty/chromeec
+-       url = ../chrome-ec.git
++       url = ssh://<username>@review.coreboot.org:29418/chrome-ec.git
+ [submodule "libhwbase"]
+        path = 3rdparty/libhwbase
+-       url = ../libhwbase.git
++       url = ssh://<username>@review.coreboot.org:29418/libhwbase.git
+ [submodule "libgfxinit"]
+        path = 3rdparty/libgfxinit
+-       url = ../libgfxinit.git
++       url = ssh://<username>@review.coreboot.org:29418/libgfxinit.git
+```
+
+## Known issues
+
+* using repo with coreboot show errors like:
+
+```
+fatal: Not a git repository (or any parent up to mount point /coreboot)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+``` 
+
+Since it use `git` commands to create build timestamp.

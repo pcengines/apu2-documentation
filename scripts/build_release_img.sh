@@ -27,6 +27,16 @@ build_coreboot () {
   make CPUS=$(nproc)
 }
 
+build_coreboot_ml () {
+  cd $CB_PATH
+
+  if [ ! -d $CB_PATH/util/crossgcc/xgcc ]; then
+    make crossgcc-i386 CPUS=$(nproc)
+  fi
+  make menuconfig
+  make CPUS=$(nproc)
+}
+
 build_memtest86plus () {
   if [ ! -d $MEMTEST ]; then
     echo "ERROR: $MEMTEST doesn't exist"
@@ -84,6 +94,8 @@ elif [ "$1" == "build" ]; then
   build_memtest86plus
   build_sortbootorder
   create_image
+elif [ "$1" == "build-mainline" ]; then
+  build_coreboot_ml
 elif [ "$1" == "build-coreboot" ]; then
   build_coreboot
   create_image

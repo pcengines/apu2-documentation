@@ -7,25 +7,7 @@ SBO_PATH=$CB_PATH/payloads/pcengines/sortbootorder
 MEMTEST=/memtest86plus
 CBFSTOOL=./build/cbfstool
 
-if [ "$1" == "flash" ]; then
-    if [[ $2 =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-        APU2_IP=$2
-        ssh root@$APU2_IP remountrw
-        if [ ! -f $CB_PATH/build/coreboot.rom ]; then
-            echo "ERROR: $CB_PATH/build/coreboot.rom doesn't exist. Please build coreboot first"
-            exit
-        fi
-        scp $CB_PATH/build/coreboot.rom root@$APU2_IP:/root
-        ssh root@$APU2_IP flashrom -w /root/coreboot.rom -p internal
-        ssh root@$APU2_IP reboot
-    else
-      echo "ERROR: invalid IP address $2"
-      exit
-    fi
-elif [ "$1" == "build" ]; then
-  #
-  # iPXE
-  #
+build_ipxe () {
   if [ ! -d $IPXE_PATH ]; then
     echo "ERROR: $PXE_PATH doesn't exist"
   else
@@ -34,23 +16,18 @@ elif [ "$1" == "build" ]; then
   fi
 
   make bin/8086157b.rom EMBED=$APU2_PATH/ipxe/menu.ipxe
+}
 
-  #
-  # coreboot
-  #
+build_coreboot () {
   cd $CB_PATH
 
   if [ ! -d $CB_PATH/util/crossgcc/xgcc ]; then
     make crossgcc-i386 CPUS=$(nproc)
   fi
-
-  cp configs/pcengines.apu2.4.0.1.config .config
   make CPUS=$(nproc)
+}
 
-  #
-  # memtest86plus
-  #
-
+build_memtest86plus () {
   if [ ! -d $MEMTEST ]; then
     echo "ERROR: $MEMTEST doesn't exist"
   else
@@ -59,11 +36,9 @@ elif [ "$1" == "build" ]; then
   fi
 
   make
+}
 
-  #
-  # sortbootorder
-  #
-
+build_sortbootorder () {
   if [ ! -d $SBO_PATH ]; then
     echo "ERROR: $SBO_PATH doesn't exist"
   else
@@ -77,17 +52,42 @@ elif [ "$1" == "build" ]; then
   make install
   cd $SBO_PATH
   make
+}
 
+create_image () {
   cd $CB_PATH
-
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n genroms/pxe.rom
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n img/setup
   $CBFSTOOL $CB_PATH/build/coreboot.rom add -f /ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
   $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f $CB_PATH/payloads/pcengines/sortbootorder/sortbootorder.elf -n img/setup -t payload
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n img/memtest
   $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f /memtest86plus/memtest -n img/memtest - payload
-
   $CBFSTOOL $CB_PATH/build/coreboot.rom print $CB_PATH/build/coreboot.rom
+}
+
+if [ "$1" == "flash" ]; then
+  APU2_LOGIN=$2
+  ssh $APU2_LOGIN remountrw
+  if [ ! -f $CB_PATH/build/coreboot.rom ]; then
+      echo "ERROR: $CB_PATH/build/coreboot.rom doesn't exist. Please build coreboot first"
+      exit
+  fi
+  scp $CB_PATH/build/coreboot.rom $APU2_LOGIN:/tmp
+  ssh $APU2_LOGIN sudo flashrom -w /tmp/coreboot.rom -p internal
+  ssh $APU2_LOGIN sudo reboot
+elif [ "$1" == "build" ]; then
+  build_ipxe
+
+  cp configs/pcengines.apu2.4.0.1.config .config
+
+  build_coreboot
+  build_memtest86plus
+  build_sortbootorder
+  create_image
+elif [ "$1" == "build-coreboot" ]; then
+  build_coreboot
+  create_image
 else
   echo "ERROR: unknown command $1"
 fi
+

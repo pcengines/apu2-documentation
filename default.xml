@@ -9,11 +9,6 @@
         remote="github"
         revision="master"/>
 
-    <project path="apu2/coreboot"
-        name="pcengines/coreboot"
-        remote="github"
-        revision="apu2-support"/>
-
     <project path="apu2/seabios"
         name="pcengines/seabios"
         remote="github"

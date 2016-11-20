@@ -28,12 +28,10 @@ build_coreboot () {
 }
 
 build_coreboot_ml () {
-  cd $CB_PATH
 
   if [ ! -d $CB_PATH/util/crossgcc/xgcc ]; then
     make crossgcc-i386 CPUS=$(nproc)
   fi
-  make menuconfig
   make CPUS=$(nproc)
 }
 
@@ -75,7 +73,7 @@ create_image () {
   $CBFSTOOL $CB_PATH/build/coreboot.rom print $CB_PATH/build/coreboot.rom
 }
 
-if [ "$1" == "flash" ]; then
+if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
   APU2_LOGIN=$2
   ssh $APU2_LOGIN remountrw
   if [ ! -f $CB_PATH/build/coreboot.rom ]; then
@@ -83,8 +81,8 @@ if [ "$1" == "flash" ]; then
       exit
   fi
   scp $CB_PATH/build/coreboot.rom $APU2_LOGIN:/tmp
-  ssh $APU2_LOGIN sudo flashrom -w /tmp/coreboot.rom -p internal
-  ssh $APU2_LOGIN sudo reboot
+  ssh $APU2_LOGIN flashrom -w /tmp/coreboot.rom -p internal
+  ssh $APU2_LOGIN reboot
 elif [ "$1" == "build" ]; then
   build_ipxe
 
@@ -94,11 +92,24 @@ elif [ "$1" == "build" ]; then
   build_memtest86plus
   build_sortbootorder
   create_image
-elif [ "$1" == "build-mainline" ]; then
+elif [ "$1" == "build-ml" ]; then
+  cd $CB_PATH
+  if [ "$2" == "distclean" ]; then
+    make distclean
+    make menuconfig
+  elif [ "$2" == "menuconfig" ]; then
+    make menuconfig
+  elif [ "$2" == "cfgclean" ]; then
+    rm -rf .config .config.old
+    make menuconfig
+  fi
   build_coreboot_ml
 elif [ "$1" == "build-coreboot" ]; then
   build_coreboot
   create_image
+elif [ "$1" == "custom-ml" ]; then
+  cd $CB_PATH
+  make $2
 else
   echo "ERROR: unknown command $1"
 fi

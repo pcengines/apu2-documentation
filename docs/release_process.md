@@ -101,7 +101,7 @@ index c3270e6ae2f2..5c1b495dea1a 100644
 
 ## Known issues
 
-* using repo with coreboot show errors like:
+### using repo with coreboot show errors like:
 
 ```
 fatal: Not a git repository (or any parent up to mount point /coreboot)
@@ -109,3 +109,18 @@ Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
 ``` 
 
 Since it use `git` commands to create build timestamp.
+
+#### flashing doesn't work
+
+```
+[21:51:53] pietrushnic:apu2_fw_rel $ ../apu2-documentation/scripts/apu2_fw_rel.sh flash-ml pcengines@192.168.0.103
+flash-ml pcengines@192.168.0.103
+The authenticity of host '192.168.0.103 (192.168.0.103)' can't be established.
+(...)
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.0.103' (ECDSA) to the list of known hosts.
+bash: remountrw: command not found
+coreboot.rom                                                                                                                                                                                                100% 8192KB   8.0MB/s   00:00    
+sudo: no tty present and no askpass program specified
+sudo: no tty present and no askpass program specified
+```

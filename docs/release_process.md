@@ -32,6 +32,12 @@ docker build -t pcengines/apu2 apu2/apu2-documentation
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build
 ```
 
+Or for mainline coreboot:
+
+```
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml
+```
+
 ## Flash release
 
 Note that below script assume that you have ssh enabled connection with target
@@ -40,8 +46,16 @@ Without keys added you will see question about password couple times during
 flashing.
 
 ```
-./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <ip_address>
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <user>@<ip_address>
 ```
+
+For mainline:
+
+```
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash-ml <user>@<ip_address>
+```
+
+Best way is to use `root` as `<user>` because it can h
 
 ## Changes to work on mainline
 

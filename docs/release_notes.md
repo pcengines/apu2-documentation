@@ -1,7 +1,8 @@
 PC Engines APU2 coreboot Release Notes
 --------------------------------------
 
-Releases 4.0.x are based on PC Engines 20160304 release
+Releases 4.0.x are based on PC Engines 20160304 release.
+
 Releases 4.5.x are based on mainline support submitted in [this gerrit ref](https://review.coreboot.org/#/c/14138/)
 
 ### 4.5.2
@@ -17,6 +18,10 @@ Releases 4.5.x are based on mainline support submitted in [this gerrit ref](http
   * booting from start works fine (Seagete SSHD 1TB ST1000LM014)
   * USB booting works fine (USB MSC Drive UFD 3.0 Silicon-Power16G 1100)
   * iPXE works fine (tested with Debian netboot pxelinux.0)
+  * HDD warm and cold boot works (Seagete SSHD 1TB ST1000LM014)
+  * USB warm and cold boot works (USB MSC Drive UFD 3.0 Silicon-Power16G 1100)
+  * iPXE works fine (tested with Debian netboot pxelinux.0)
+  * OSes tested: Debian testing (Linux kernel 4.8) and Voyage Linux (APU2 image builder)
 
 #### sortbootorder
 

@@ -2,6 +2,31 @@ PC Engines APU2 coreboot Release Notes
 --------------------------------------
 
 Releases 4.0.x are based on PC Engines 20160304 release
+Releases 4.5.x are based on mainline support submitted in [this gerrit ref](https://review.coreboot.org/#/c/14138/)
+
+### 4.5.2
+
+#### coreboot
+
+  * port of clock settings from legacy implementation
+  * support for getting sku and serial number
+  * set log level to ALERT
+  * add sortbootorder as secondary payload
+  * include PXE ROM based on 2016.7 release
+  * enable UART C and UART D by default
+  * booting from start works fine (Seagete SSHD 1TB ST1000LM014)
+  * USB booting works fine (USB MSC Drive UFD 3.0 Silicon-Power16G 1100)
+  * iPXE works fine (tested with Debian netboot pxelinux.0)
+
+#### sortbootorder
+
+  * compilation fixes to build with mainline coreboot
+
+### 4.5.1
+
+#### coreboot
+
+  * mainline support for APU2
 
 ### 4.0.1.1
 
@@ -32,7 +57,7 @@ Releases 4.0.x are based on PC Engines 20160304 release
   * enable/disable `PXE` boot
   * prevent from printing character multiple times
 
-#### Sortbootorder
+#### sortbootorder
 
   * merge all `USB` entries into one
   * add `(disabled)` tag in menu

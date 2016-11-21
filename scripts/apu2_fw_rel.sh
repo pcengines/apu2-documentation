@@ -4,7 +4,7 @@ echo $*
 
 if [ "$1" == "build-ml" ] || [ "$1" == "flash-ml" ] || [ "$1" == "custom-ml" ]; then
   if [ ! -d ${PWD}/apu2/coreboot-ml ];then
-    git clone http://review.coreboot.org/coreboot.git ${PWD}/apu2/coreboot-ml
+    git clone http://review.coreboot.org/coreboot.git ${PWD}/apu2/coreboot-ml -b release_process_fixes
   fi
   docker run --rm -it \
   -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK  \

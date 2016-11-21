@@ -91,6 +91,11 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
     make clean
     rm -rf .config .config.old
     make menuconfig
+  elif [ "$2" == "custom" ]; then
+    make $3
+  else
+    echo "ERROR: unknown subcommand $2"
+    exit
   fi
 
   build_coreboot

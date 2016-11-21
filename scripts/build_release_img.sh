@@ -27,14 +27,6 @@ build_coreboot () {
   make CPUS=$(nproc)
 }
 
-build_coreboot_ml () {
-
-  if [ ! -d $CB_PATH/util/crossgcc/xgcc ]; then
-    make crossgcc-i386 CPUS=$(nproc)
-  fi
-  make CPUS=$(nproc)
-}
-
 build_memtest86plus () {
   if [ ! -d $MEMTEST ]; then
     echo "ERROR: $MEMTEST doesn't exist"
@@ -75,35 +67,38 @@ create_image () {
 
 if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
   APU2_LOGIN=$2
-  ssh $APU2_LOGIN remountrw
+  if [ "$1" == "flash" ];then  
+    ssh $APU2_LOGIN remountrw
+  fi
   if [ ! -f $CB_PATH/build/coreboot.rom ]; then
       echo "ERROR: $CB_PATH/build/coreboot.rom doesn't exist. Please build coreboot first"
       exit
   fi
   scp $CB_PATH/build/coreboot.rom $APU2_LOGIN:/tmp
-  ssh $APU2_LOGIN flashrom -w /tmp/coreboot.rom -p internal
-  ssh $APU2_LOGIN reboot
-elif [ "$1" == "build" ]; then
-  build_ipxe
-
-  cp configs/pcengines.apu2.4.0.1.config .config
-
-  build_coreboot
-  build_memtest86plus
-  build_sortbootorder
-  create_image
-elif [ "$1" == "build-ml" ]; then
+  ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal && reboot"
+elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   cd $CB_PATH
+  if [ "$1" == "build" ];then
+    cp configs/pcengines.apu2.4.0.1.config .config
+  fi
+
   if [ "$2" == "distclean" ]; then
     make distclean
-    make menuconfig
   elif [ "$2" == "menuconfig" ]; then
     make menuconfig
   elif [ "$2" == "cfgclean" ]; then
+    make clean
     rm -rf .config .config.old
-    make menuconfig
   fi
-  build_coreboot_ml
+
+  build_coreboot
+
+  if [ "$1" == "build" ];then
+    build_ipxe
+    build_memtest86plus
+    build_sortbootorder
+    create_image
+  fi
 elif [ "$1" == "build-coreboot" ]; then
   build_coreboot
   create_image

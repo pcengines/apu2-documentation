@@ -84,11 +84,13 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
 
   if [ "$2" == "distclean" ]; then
     make distclean
+    make menuconfig
   elif [ "$2" == "menuconfig" ]; then
     make menuconfig
   elif [ "$2" == "cfgclean" ]; then
     make clean
     rm -rf .config .config.old
+    make menuconfig
   fi
 
   build_coreboot

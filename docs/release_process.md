@@ -29,21 +29,40 @@ docker build -t pcengines/apu2 apu2/apu2-documentation
 ## Build release
 
 ```
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml menuconfig
+```
+
+Please choose:
+
+```
+Mainboard -> Mainboard vendor -> PC Engines
+Mainboard -> Mainboard model -> APU2
+```
+
+All other pieces will be set according to recent release configuration.
+coreboot image will start to build after exiting menu.
+
+There are additional commands like:
+
+```
+#v4.0.x build
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build
+#distclean && menuconfig
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml distclean
+#rm -rf .config* && menuconfig
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml cfgclean
+#custom make parameters
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml custom <param>
 ```
 
-Or for mainline coreboot:
-
-```
-./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml
-```
+After successful build you can flash target device.
 
 ## Flash release
 
 Note that below script assume that you have ssh enabled connection with target
-device and destination OS [APU2 image builder](https://github.com/pcengines/apu2-documentation#building-firmware-using-apu2-image-builder).
-Without keys added you will see question about password couple times during
-flashing.
+device and destination OS [APU2 image builder](https://github.com/pcengines/apu2-documentation#building-firmware-using-apu2-image-builder)
+or other distro that have working `flashrom` available in `PATH`. Without keys
+added you will see question about password couple times during flashing.
 
 ```
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <user>@<ip_address>
@@ -55,7 +74,10 @@ For mainline:
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash-ml <user>@<ip_address>
 ```
 
-Best way is to use `root` as `<user>` because it can h
+Best way is to use `root` as `<user>` because it can have no problem with low
+level access.
+
+Please do not hesitate with providing feedback or contributing fixes.
 
 ## Changes to work on mainline
 

@@ -4,7 +4,13 @@ echo $*
 
 if [ "$1" == "build-ml" ] || [ "$1" == "flash-ml" ] || [ "$1" == "custom-ml" ]; then
   if [ ! -d ${PWD}/apu2/coreboot-ml ];then
-    git clone https://github.com/pcengines/coreboot.git ${PWD}/apu2/coreboot-ml -b release_process_fixes
+    git clone https://review.coreboot.org/coreboot.git ${PWD}/apu2/coreboot-ml
+    cd ${PWD}/apu2/coreboot-ml
+    git submodule update --init --checkout
+    git remote add pcengines http://github.com/pcengines/coreboot.git
+    git fetch pcengines
+    git checkout -b release_process_fixes pcengines/release_process_fixes
+    cd ../..
   fi
   docker run --rm -it \
   -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK  \

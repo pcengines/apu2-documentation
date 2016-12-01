@@ -5,6 +5,24 @@ Releases 4.0.x are based on PC Engines 20160304 release.
 
 Releases 4.5.x are based on mainline support submitted in [this gerrit ref](https://review.coreboot.org/#/c/14138/)
 
+### 4.5.3
+
+#### coreboot
+
+  * fix incorrect GPIO implementation
+  * support legacy LEDs behavior
+  * add legacy logs at boot
+  * add 4k alignment for bootorder in CBFS
+  * enable memtest86+ by default
+
+#### sortbootorder
+
+  * fix problem with saving configuration
+
+#### SeaBIOS
+
+  * limit level 1 logs to minimum
+
 ### 4.5.2
 
 #### coreboot

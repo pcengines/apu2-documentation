@@ -1,0 +1,15 @@
+# elf32-i386 toolchain (gcc)
+CC_i386:=/xgcc/bin/i386-elf-gcc -m32 -Wl,-b,elf32-i386 -Wl,-melf_i386 -Wno-unused-but-set-variable  -fuse-ld=bfd -Wa,--divide -fno-stack-protector -Wl,--build-id=none
+AS_i386:=/xgcc/bin/i386-elf-as --32
+LD_i386:=/xgcc/bin/i386-elf-ld -b elf32-i386 -melf_i386
+NM_i386:=/xgcc/bin/i386-elf-nm
+OBJCOPY_i386:=/xgcc/bin/i386-elf-objcopy
+OBJDUMP_i386:=/xgcc/bin/i386-elf-objdump
+READELF_i386:=/xgcc/bin/i386-elf-readelf
+STRIP_i386:=/xgcc/bin/i386-elf-strip
+AR_i386:=/xgcc/bin/i386-elf-ar
+
+IASL:=/xgcc/bin/iasl
+
+# native toolchain
+HOSTCC:=/xgcc/bin/i386-elf-gcc

@@ -62,9 +62,17 @@ Feel free to customize `menu.pxe` and `local/general.h` to match your needs.
 Building sortbootorder
 ----------------------
 
-Please check [here](https://github.com/pcengines/sortbootorder).
-
-NOTE: `sortbootorder` payload is not yet supported on APU2.
+```
+cd && cd coreboot-${BR_NAME}
+git clone https://github.com/pcengines/sortbootorder.git -b ${BR_NAME} payloads/pcengines/sortbootorder
+cd payloads/libpayload
+make clean && make defconfig
+wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/xcompile/.apu2-builder-xcompile-libpayload -O .xcompile
+make -j$(nproc)
+make install
+cd ../pcengines/sortbootorder
+make -j$(nproc)
+```
 
 Building memtest86+
 -------------------

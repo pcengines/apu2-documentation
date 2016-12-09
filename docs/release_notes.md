@@ -5,6 +5,18 @@ Releases 4.0.x are based on PC Engines 20160304 release.
 
 Releases 4.5.x are based on mainline support submitted in [this gerrit ref](https://review.coreboot.org/#/c/14138/)
 
+### 4.0.2
+
+### coreboot
+
+  * fix config to use correct version of SeaBIOS
+  * make coreboot config version independent
+
+#### sortbootorder
+
+  * fix libpayload compilation procedure for legacy firmware
+  * change versioning scheme to compatible with coreboot releases
+
 ### 4.5.3
 
 #### coreboot

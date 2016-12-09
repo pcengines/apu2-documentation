@@ -9,6 +9,9 @@ APU2 platform users and developers to customize firmware to their needs.
 Building firmware using APU2 image builder
 ------------------------------------------
 
+Please note this procedure covers building `v4.0.x` firmware, which is based on
+legacy code. Mainline firmware development is in progress more information can be found [here](http://pcengines.info/forums/?page=post&id=CAA8403D-7135-4EA1-8C7E-41C8B15C6246).
+
 Get APU2 image builder from [here](http://pcengines.ch/file/apu2_image_builder_v0.1.img.xz) (MD5 sum after decompression: a40ea9caff93c0218a745e0625e1292a).
 
 ```

@@ -26,13 +26,15 @@ User/pass: root/voyage
 4. run below commands
 
     ```
+    cd
     remountrw
-    wget https://github.com/pcengines/coreboot/archive/apu2b-20160304.zip
-    unzip apu2b-20160304.zip
-    cd coreboot-apu2b-20160304/
+    export BR_NAME=coreboot-4.0.x
+    wget https://github.com/pcengines/coreboot/archive/${BR_NAME}.zip
+    unzip ${BR_NAME}.zip
+    cd coreboot-${BR_NAME}/
     cp /xgcc/.xcompile . # this command setup toolchain
-    cp configs/pcengines.apu2.20160304.config .config
-    make
+    cp configs/pcengines_apu2.config .config
+    make -j$(nproc)
     ```
 
 5. once done find the new firmware in the build folder (`build/coreboot.rom`)
@@ -43,16 +45,16 @@ Building iPXE
 -------------
 
 ```
-cd coreboot-apu2b-20160304/
+cd && cd coreboot-${BR_NAME}
 IPXE_PATH=payloads/external/ipxe
 git clone https://github.com/pcengines/ipxe $IPXE_PATH
 wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/general.h -O $IPXE_PATH/src/config/local/general.h
-wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/shell.ipxe -O $IPXE_PATH/src/shell.ipxe
+wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/ipxe/menu.ipxe -O $IPXE_PATH/src/menu.ipxe
 cd $IPXE_PATH/src
-make bin/8086157b.rom EMBED=./shell.ipxe
+make -j$(nproc) bin/8086157b.rom EMBED=./menu.ipxe
 ```
 
-Feel free to customize `shell.pxe` and `local/general.h` to match your needs.
+Feel free to customize `menu.pxe` and `local/general.h` to match your needs.
 
 Building sortbootorder
 ----------------------
@@ -65,10 +67,10 @@ Building memtest86+
 -------------------
 
 ```
-cd coreboot-apu2b-20160304/
-git clone https://github.com/pcengines/memtest86plus.git -b apu2 payloads/external/memtest86plus
+cd && cd coreboot-${BR_NAME}
+git clone https://github.com/pcengines/memtest86plus.git payloads/external/memtest86plus
 cd payloads/external/memtest86plus
-make
+make -j$(nproc)
 ```
 
 cbfstool and adding/removing ROMs or payloads
@@ -82,7 +84,7 @@ Usage examples:
 ### Add iPXE ROM
 
 ```
-cd coreboot-apu2b-20160304/
+cd && cd coreboot-${BR_NAME}
 ./build/cbfstool ./build/coreboot.rom add -f payloads/external/ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
 ```
 
@@ -94,7 +96,7 @@ detect iPXE ROM and execute it before entering menu.
 
 ```
 # add sortbootorder
-cd coreboot-apu2b-20160304/
+cd && cd coreboot-${BR_NAME}
 ./build/cbfstool ./build/coreboot.rom remove -n img/setup
 ./build/cbfstool ./build/coreboot.rom add-payload -f payloads/pcengines/sortbootorder/sortbootorder.elf -n img/setup -t payload
 ```
@@ -107,7 +109,7 @@ Above commands first remove already existing `img/setup` from CBFS and then add
 
 ```
 # add memtest86+
-cd coreboot-apu2b-20160304/
+cd && cd coreboot-${BR_NAME}
 ./build/cbfstool ./build/coreboot.rom remove -n img/memtest
 ./build/cbfstool ./build/coreboot.rom add-payload -f payloads/external/memtest86plus/memtest -n img/memtest - payload
 ```

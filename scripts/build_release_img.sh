@@ -78,18 +78,22 @@ if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
   ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal && reboot"
 elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   cd $CB_PATH
-  if [ "$1" == "build" ];then
-    cp configs/pcengines.apu2.4.0.1.config .config
-  fi
 
   if [ "$2" == "distclean" ]; then
     make distclean
-    make menuconfig
+    if [ "$1" == "build" ];then
+      cp configs/pcengines_apu2.config .config
+    else
+      make menuconfig
+    fi
   elif [ "$2" == "menuconfig" ]; then
     make menuconfig
   elif [ "$2" == "cfgclean" ]; then
     make clean
     rm -rf .config .config.old
+    if [ "$1" == "build" ];then
+      cp configs/pcengines_apu2.config .config
+    fi
     make menuconfig
   elif [ "$2" == "custom" ]; then
     make $3

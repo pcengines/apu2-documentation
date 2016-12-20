@@ -1,124 +1,122 @@
-PC Engines APU2 coreboot Release Notes
---------------------------------------
+Change log for PC Engines binary releases
+=========================================
+
+This document contain changelog for binary releases that contain all below
+components:
+
+* [coreboot (with all required blobs)](https://github.com/pcengines/coreboot)
+* [SeaBIOS](https://github.com/pcengines/seabios)
+* [sortbootorder](https://github.com/pcengines/sortbootorder)
+* [ipxe](https://github.com/pcengines/ipxe)
+* [memtest86+](https://github.com/pcengines/memtest86plus)
 
 Releases 4.0.x are based on PC Engines 20160304 release.
+Releases 4.5.x are based on mainline support submitted in 
+[this gerrit ref](https://review.coreboot.org/#/c/14138/).
 
-Releases 4.5.x are based on mainline support submitted in [this gerrit ref](https://review.coreboot.org/#/c/14138/)
+## [Unreleased]
+## [v4.0.4] - 2016-12-20
+- [coreboot v4.0.4](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v404---2016-12-20)
+- [SeaBIOS rel-1.9.2.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1922---2016-12-13)
+- [sortbootorder v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
 
-### 4.0.2
+### Changed
+- iPXE autoboot runs only on net0
 
+## [v4.0.3] - 2016-12-14
+- [coreboot v4.0.3](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v403---2016-12-14)
+- [SeaBIOS rel-1.9.2.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1922---2016-12-13)
+- [sortbootorder v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1]()
+
+## [v4.0.2] - 2016-12-09
+- [coreboot v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [SeaBIOS rel-1.9.2.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1921---2016-10-04)
+- [sortbootorder v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
+
+## [v4.0.1.1] - 2016-09-12
+- [coreboot v4.0.1.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v4011---2016-09-12)
+- [SeaBIOS rel-1.9.2.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1921---2016-10-04)
+- [sortbootorder v4.0.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-08-14)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
+
+## [v4.0.1] - 2016-09-12
+- [coreboot v4.0.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-09-12)
+- [SeaBIOS rel-1.9.2.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1921---2016-10-04)
+- [sortbootorder v4.0.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-08-14)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
+
+Mainline releases
+-----------------
+
+## [v4.5.3]
 ### coreboot
+#### Added
+- support for legacy LEDs behavior
+- legacy logs at boot
+- 4k alignment for bootorder in CBFS
 
-  * fix config to use correct version of SeaBIOS
-  * make coreboot config version independent
+#### Changed
+- enabled memtest86+ by default
 
-#### sortbootorder
+#### Fixed
+- incorrect GPIO implementation
 
-  * fix libpayload compilation procedure for legacy firmware
-  * change versioning scheme to compatible with coreboot releases
+### sortbootorder
+#### Fixed
+- problem with saving configuration
 
-### 4.5.3
+### SeaBIOS
+#### Changed
+- limit level 1 logs to minimum
 
-#### coreboot
+## [v4.5.2]
+### coreboot
+#### Added
+- port of clock settings from legacy implementation
+- support for getting sku and serial number
+- sortbootorder as secondary payload
+- PXE ROM based on 2016.7 release
 
-  * fix incorrect GPIO implementation
-  * support legacy LEDs behavior
-  * add legacy logs at boot
-  * add 4k alignment for bootorder in CBFS
-  * enable memtest86+ by default
+#### Changed
+- log level to ALERT
+- enable UART C and UART D by default
 
-#### sortbootorder
+#### Fixed
+OSes tested: Debian testing (Linux kernel 4.8) and Voyage Linux (APU2 image 
+builder)
+- booting from start works fine (Seagete SSHD 1TB ST1000LM014)
+- USB booting works fine (USB MSC Drive UFD 3.0 Silicon-Power16G 1100)
+- iPXE works fine (tested with Debian netboot pxelinux.0)
+- HDD warm and cold boot works (Seagete SSHD 1TB ST1000LM014)
+- USB warm and cold boot works (USB MSC Drive UFD 3.0 Silicon-Power16G 1100)
+- iPXE works fine (tested with Debian netboot pxelinux.0)
 
-  * fix problem with saving configuration
+### sortbootorder
+#### Fixed
+- compilation fixes to build with mainline coreboot
 
-#### SeaBIOS
+## [v4.5.1]
+#### Added
+- mainline support for APU2
 
-  * limit level 1 logs to minimum
+## [v4.0.1.1]
+### coreboot
+#### Changed
+- Reprogrammed `GPP_CLK3` output (connected to miniPCIe slot 1) to ignore 
+`CLKREQ#`
+    input - forced it to be always on.
 
-### 4.5.2
-
-#### coreboot
-
-  * port of clock settings from legacy implementation
-  * support for getting sku and serial number
-  * set log level to ALERT
-  * add sortbootorder as secondary payload
-  * include PXE ROM based on 2016.7 release
-  * enable UART C and UART D by default
-  * booting from start works fine (Seagete SSHD 1TB ST1000LM014)
-  * USB booting works fine (USB MSC Drive UFD 3.0 Silicon-Power16G 1100)
-  * iPXE works fine (tested with Debian netboot pxelinux.0)
-  * HDD warm and cold boot works (Seagete SSHD 1TB ST1000LM014)
-  * USB warm and cold boot works (USB MSC Drive UFD 3.0 Silicon-Power16G 1100)
-  * iPXE works fine (tested with Debian netboot pxelinux.0)
-  * OSes tested: Debian testing (Linux kernel 4.8) and Voyage Linux (APU2 image builder)
-
-#### sortbootorder
-
-  * compilation fixes to build with mainline coreboot
-
-### 4.5.1
-
-#### coreboot
-
-  * mainline support for APU2
-
-### 4.0.1.1
-
-#### coreboot
-
-  * Reprogram `GPP_CLK3` output (connected to miniPCIe slot 1) to ignore `CLKREQ#`
-    input - force it to be always on.
-
-### 4.0.1
-
-#### coreboot
-
-  * introduce versioning
-  * obtain `smbios` fields, such as `board serial` and `SKU`
-  * reduce log level: display mainboard, DRAM and ECC info only
-  * improve SD card performance
-  * force to use SD in 2.0 mode
-  * nct5104d driver backport
-  * check if `git` exists before calling it
-  * change git repository in `Makefile`
-  * add missing `cbfs_find_string` in `libpayload`
-  * add executable bit to `xcompile`
-
-#### SeaBIOS
-
-  * allow for one-time `PXE ` boot with `N` key
-  * enable/disable `USB` boot
-  * enable/disable `PXE` boot
-  * prevent from printing character multiple times
-
-#### sortbootorder
-
-  * merge all `USB` entries into one
-  * add `(disabled)` tag in menu
-  * interface modification
-  * version bump to v1.3
-  * add `PXE` and `USB` enable options in menu
-  * add `PXE` to bootorder menu
-  * change interface to lower case
-  * version bump to v1.2
-  * change letter for save and exit to `S`
-  * use proper way to access extended SPI registers
-  * add support for `yangtzee fch spi controller`
-  * user interface improvements
-  * add `PC Engines` header
-  * add `README` and `Makefile`
-  * initial commit based on
-    [coreboot_140908](http://pcengines.ch/tmp/coreboot_140908.tar.gz)
-
-#### Memtest86plus
-
-  * add macro `SPD_DISABLED ` for disabling SPD related functionality
-  * fix refresh procedure so that full screen content is reprinted on refresh
-  * add refresh option label (`l`) to bottom menu
-  * enable serial console by default
-  * based on [memtest86plus](https://review.coreboot.org/cgit/memtest86plus.git?)
-
-#### iPXE
-
-  * mirror of [iPXE git tree](http://git.ipxe.org/ipxe.git)
+[Unreleased]: https://github.com/pcengines/coreboot/compare/v4.0.4...coreboot-4.0.x
+[v4.0.4]: https://github.com/pcengines/coreboot/compare/v4.0.3...v4.0.4
+[v4.0.3]: https://github.com/pcengines/coreboot/compare/v4.0.2...v4.0.3
+[v4.0.2]: https://github.com/pcengines/coreboot/compare/v4.0.1.1...v4.0.2
+[v4.0.1.1]: https://github.com/pcengines/coreboot/compare/v4.0.1...v4.0.1.1
+[v4.0.1]: https://github.com/pcengines/coreboot/compare/88a4f96110fbd3f55ee727bd01f53875f1c6c398...v4.0.1

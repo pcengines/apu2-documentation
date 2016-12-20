@@ -15,38 +15,43 @@ Releases 4.5.x are based on mainline support submitted in
 [this gerrit ref](https://review.coreboot.org/#/c/14138/).
 
 ## [Unreleased]
+## [v4.0.4] - 2016-12-20
+- [coreboot v4.0.4](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v404---2016-12-20)
+- [SeaBIOS rel-1.9.2.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1922---2016-12-13)
+- [sortbootorder v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
+
+### Changed
+- iPXE autoboot runs only on net0
 
 ## [v4.0.3] - 2016-12-14
-- [coreboot v4.0.3]()
-- [SeaBIOS rel-1.9.2.2]()
-- [sortbootorder v4.0.2]()
-- [ipxe v4.0.1]()
+- [coreboot v4.0.3](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v403---2016-12-14)
+- [SeaBIOS rel-1.9.2.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1922---2016-12-13)
+- [sortbootorder v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
 - [memtest86+ v4.0.1]()
 
 ## [v4.0.2] - 2016-12-09
-- [coreboot v4.0.2]()
-- [SeaBIOS rel-1.9.2.1]()
-- [sortbootorder v4.0.2]()
-- [ipxe v4.0.1]()
-- [memtest86+ v4.0.1]()
+- [coreboot v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [SeaBIOS rel-1.9.2.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1921---2016-10-04)
+- [sortbootorder v4.0.2](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v402---2016-12-09)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
 
 ## [v4.0.1.1] - 2016-09-12
-- [coreboot v4.0.1.1]()
-- [SeaBIOS rel-1.9.2.1]()
-- [sortbootorder v4.0.1]()
-- [ipxe v4.0.1]()
-- [memtest86+ v4.0.1]()
+- [coreboot v4.0.1.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v4011---2016-09-12)
+- [SeaBIOS rel-1.9.2.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1921---2016-10-04)
+- [sortbootorder v4.0.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-08-14)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
 
 ## [v4.0.1] - 2016-09-12
-- [coreboot v4.0.1]()
-- [SeaBIOS rel-1.9.2.1]()
-- [sortbootorder v4.0.1]()
-- [ipxe v4.0.1]()
-- [memtest86+ v4.0.1]()
-
-### iPXE
-
-mirror of [iPXE git tree](http://git.ipxe.org/ipxe.git)
+- [coreboot v4.0.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-09-12)
+- [SeaBIOS rel-1.9.2.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#rel-1921---2016-10-04)
+- [sortbootorder v4.0.1](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-08-14)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
 
 Mainline releases
 -----------------
@@ -109,3 +114,9 @@ builder)
 `CLKREQ#`
     input - forced it to be always on.
 
+[Unreleased]: https://github.com/pcengines/coreboot/compare/v4.0.4...coreboot-4.0.x
+[v4.0.4]: https://github.com/pcengines/coreboot/compare/v4.0.3...v4.0.4
+[v4.0.3]: https://github.com/pcengines/coreboot/compare/v4.0.2...v4.0.3
+[v4.0.2]: https://github.com/pcengines/coreboot/compare/v4.0.1.1...v4.0.2
+[v4.0.1.1]: https://github.com/pcengines/coreboot/compare/v4.0.1...v4.0.1.1
+[v4.0.1]: https://github.com/pcengines/coreboot/compare/88a4f96110fbd3f55ee727bd01f53875f1c6c398...v4.0.1

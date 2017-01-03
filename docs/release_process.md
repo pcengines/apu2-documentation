@@ -128,7 +128,7 @@ index c3270e6ae2f2..5c1b495dea1a 100644
 ```
 fatal: Not a git repository (or any parent up to mount point /coreboot)
 Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
-``` 
+```
 
 Since it use `git` commands to create build timestamp.
 
@@ -142,7 +142,26 @@ The authenticity of host '192.168.0.103 (192.168.0.103)' can't be established.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added '192.168.0.103' (ECDSA) to the list of known hosts.
 bash: remountrw: command not found
-coreboot.rom                                                                                                                                                                                                100% 8192KB   8.0MB/s   00:00    
+coreboot.rom                                                                                                                                                                                                100% 8192KB   8.0MB/s   00:00
 sudo: no tty present and no askpass program specified
 sudo: no tty present and no askpass program specified
 ```
+
+### scripts finish with error
+
+If you see something like this:
+```
+dirname: missing operand
+Try 'dirname --help' for more information.
+dirname: missing operand
+Try 'dirname --help' for more information.
+docker: Error response from daemon: Invalid volume spec ":": Invalid volume specification: ':'.
+See 'docker run --help'.
+```
+
+Try to run:
+```
+eval $(ssh-agent)
+ssh-add
+```
+

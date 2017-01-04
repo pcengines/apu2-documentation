@@ -79,10 +79,16 @@ if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
 elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   cd $CB_PATH
 
+  if [ "$1" == "build" -a ! -f .config ]; then
+    cp configs/pcengines_apu2.config .config
+    make oldconfig
+  fi
+
   if [ "$2" == "distclean" ]; then
     make distclean
     if [ "$1" == "build" ];then
       cp configs/pcengines_apu2.config .config
+      make oldconfig
     else
       make menuconfig
     fi
@@ -93,6 +99,7 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
     rm -rf .config .config.old
     if [ "$1" == "build" ];then
       cp configs/pcengines_apu2.config .config
+      make oldconfig
     fi
     make menuconfig
   elif [ "$2" == "custom" ]; then

@@ -128,7 +128,8 @@ builder)
 `CLKREQ#`
     input - forced it to be always on.
 
-[Unreleased]: https://github.com/pcengines/coreboot/compare/v4.0.5...coreboot-4.0.x
+[Unreleased]: https://github.com/pcengines/coreboot/compare/v4.0.6...coreboot-4.0.x
+[v4.0.6]: https://github.com/pcengines/coreboot/compare/v4.0.5...v4.0.6
 [v4.0.5]: https://github.com/pcengines/coreboot/compare/v4.0.4...v4.0.5
 [v4.0.4]: https://github.com/pcengines/coreboot/compare/v4.0.3...v4.0.4
 [v4.0.3]: https://github.com/pcengines/coreboot/compare/v4.0.2...v4.0.3

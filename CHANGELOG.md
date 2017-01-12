@@ -15,7 +15,14 @@ Releases 4.5.x are based on mainline support submitted in
 [this gerrit ref](https://review.coreboot.org/#/c/14138/).
 
 ## [Unreleased]
-## [v4.0.5] - 2016-01-03
+## [v4.0.6] - 2017-01-12
+- [coreboot v4.0.6](https://github.com/pcengines/coreboot/blob/coreboot-4.0.x/CHANGELOG.md#v406---2017-01-12)
+- [SeaBIOS rel-1.9.2.3](https://github.com/pcengines/seabios/blob/coreboot-4.0.x/CHANGELOG.md#rel-1923---2017-01-03)
+- [sortbootorder v4.0.3](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v403---2017-01-03)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
+
+## [v4.0.5] - 2017-01-03
 - [coreboot v4.0.5](https://github.com/pcengines/coreboot/blob/coreboot-4.0.x/CHANGELOG.md#v405---2017-01-03)
 - [SeaBIOS rel-1.9.2.3](https://github.com/pcengines/seabios/blob/coreboot-4.0.x/CHANGELOG.md#rel-1923---2017-01-03)
 - [sortbootorder v4.0.3](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v403---2017-01-03)

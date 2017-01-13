@@ -12,12 +12,12 @@
     <project path="apu2/seabios"
         name="pcengines/seabios"
         remote="github"
-        revision="apu2-support"/>
+        revision="coreboot-4.0.x"/>
 
     <project path="apu2/memtest86plus"
         name="pcengines/memtest86plus"
         remote="github"
-        revision="apu2-support"/>
+        revision="coreboot-4.0.x"/>
 
     <project path="apu2/sortbootorder"
         name="pcengines/sortbootorder"

@@ -1,6 +1,6 @@
 ## Intro
 
-This document described release process for new versions of firmware for PC
+Following document describes release process for new versions of firmware for PC
 Engines APU2 platform. It is intended for developers who want to create fully
 featured binaries and test those with various versions of sortbootorder,
 SeaBIOS, memtest86+ or iPXE.
@@ -14,9 +14,21 @@ system.
 ```
 mkdir apu2_fw_rel
 cd apu2_fw_rel
-repo init -u git@github.com:pcengines/apu2-documentation.git -b manifest
+
+repo init -u git@github.com:mek-x/pcengines_manifests.git -b refs/tags/<tag_release>
+# or
+repo init -u git@github.com:mek-x/pcengines_manifests.git -b <branch_name>
+
 repo sync --force-sync
 ```
+
+where:
+* `<tag_release>` - is the release version number (e.g. `v4.5.3.1`)
+* `<branch_name>` - is the release branch (i.e. `coreboot-4.0.x` for legacy,
+and `coreboot-4.5.x` for mainline
+
+You can look-up changes, available branches and release tags on this
+[github repository](https://github.com/mek-x/pcengines_manifests).
 
 ## Build container
 
@@ -26,7 +38,12 @@ This is to avoid impact of system on build results:
 docker build -t pcengines/apu2 apu2/apu2-documentation
 ```
 
+This step could be omitted, if there was build done before (container already
+exists).
+
 ## Build release
+
+Assuming you initialized the repo with *mainline* release:
 
 ```
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml menuconfig
@@ -36,31 +53,38 @@ Please choose:
 
 ```
 Mainboard -> Mainboard vendor -> PC Engines
-Mainboard -> Mainboard model -> APU2
+Mainboard -> Mainboard model  -> APU2
 ```
 
 All other pieces will be set according to recent release configuration.
-coreboot image will start to build after exiting menu.
+*coreboot* image will start to build after exiting menu.
 
-There are additional commands like:
-
+For *legacy* release you can use this command. You don't need to run
+`menuconfig` first, because *legacy* release get's initialized by custom
+`.config` file:
 ```
-#v4.0.x build
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build
-#distclean && menuconfig
+```
+
+There are also additional commands like:
+```
+# distclean && menuconfig
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml distclean
+
 #rm -rf .config* && menuconfig
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml cfgclean
+
 #custom make parameters
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml custom <param>
 ```
 
-After successful build you can flash target device.
+After successful build, you can flash target device.
 
 ## Flash release
 
 Note that below script assume that you have ssh enabled connection with target
-device and destination OS [APU2 image builder](https://github.com/pcengines/apu2-documentation#building-firmware-using-apu2-image-builder)
+device and destination OS [APU2 image builder](https://github.com/pcengines/
+apu2-documentation#building-firmware-using-apu2-image-builder)
 or other distro that have working `flashrom` available in `PATH`. Without keys
 added you will see question about password couple times during flashing.
 
@@ -78,48 +102,6 @@ Best way is to use `root` as `<user>` because it can have no problem with low
 level access.
 
 Please do not hesitate with providing feedback or contributing fixes.
-
-## Changes to work on mainline
-
-`.gitmodules` have to be changed with this patch:
-
-```
-diff --git a/.gitmodules b/.gitmodules
-index c3270e6ae2f2..5c1b495dea1a 100644
---- a/.gitmodules
-+++ b/.gitmodules
-@@ -1,23 +1,23 @@
- [submodule "3rdparty/blobs"]
-        path = 3rdparty/blobs
--       url = ../blobs.git
-+       url = ssh://<username>@review.coreboot.org:29418/blobs.git
-        update = none
-        ignore = dirty
- [submodule "util/nvidia-cbootimage"]
-        path = util/nvidia/cbootimage
--       url = ../nvidia-cbootimage.git
-+       url = ssh://<username>@review.coreboot.org:29418/nvidia-cbootimage.git
- [submodule "vboot"]
-        path = 3rdparty/vboot
--       url = ../vboot.git
-+       url = ssh://<username>@review.coreboot.org:29418/vboot.git
- [submodule "arm-trusted-firmware"]
-        path = 3rdparty/arm-trusted-firmware
--       url = ../arm-trusted-firmware.git
-+       url = ssh://<username>@review.coreboot.org:29418/arm-trusted-firmware.git
- [submodule "3rdparty/chromeec"]
-        path = 3rdparty/chromeec
--       url = ../chrome-ec.git
-+       url = ssh://<username>@review.coreboot.org:29418/chrome-ec.git
- [submodule "libhwbase"]
-        path = 3rdparty/libhwbase
--       url = ../libhwbase.git
-+       url = ssh://<username>@review.coreboot.org:29418/libhwbase.git
- [submodule "libgfxinit"]
-        path = 3rdparty/libgfxinit
--       url = ../libgfxinit.git
-+       url = ssh://<username>@review.coreboot.org:29418/libgfxinit.git
-```
 
 ## Known issues
 
@@ -164,4 +146,3 @@ Try to run:
 eval $(ssh-agent)
 ssh-add
 ```
-

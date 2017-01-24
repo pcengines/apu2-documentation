@@ -73,6 +73,19 @@ create_image () {
   $CBFSTOOL $CB_PATH/build/coreboot.rom print $CB_PATH/build/coreboot.rom
 }
 
+pack_release () {
+  cd $CB_PATH
+  VERSION=`git describe --tags`
+  TARGET=`cat .config | grep CONFIG_MAINBOARD_DIR | sed -e 's/.*pcengines\///' -e 's/.$//'`
+  OUT_FILE_NAME="${TARGET}_${VERSION}.rom"
+
+  cp build/coreboot.rom "${RELEASE_DIR}/${OUT_FILE_NAME}" && \
+  cd $RELEASE_DIR && \
+  md5sum "${OUT_FILE_NAME}" > "${OUT_FILE_NAME}.md5" && \
+  tar czf "${OUT_FILE_NAME}.tar.gz" "${OUT_FILE_NAME}" "${OUT_FILE_NAME}.md5"
+}
+
+
 if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
   APU2_LOGIN=$2
   if [ "$1" == "flash" ]; then
@@ -122,8 +135,7 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
     build_sortbootorder
     create_image
   fi
-  cp $CB_PATH/build/coreboot.rom $RELEASE_DIR && \
-  md5sum $RELEASE_DIR/coreboot.rom > $RELEASE_DIR/coreboot.rom.md5
+  pack_release
 elif [ "$1" == "build-coreboot" ]; then
   build_coreboot
   create_image

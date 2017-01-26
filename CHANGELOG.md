@@ -70,6 +70,14 @@ Releases 4.5.x are based on mainline support submitted in
 Mainline releases
 -----------------
 
+## [Unreleased 4.5.x]
+## [v4.5.4] - 2017-01-24
+- [coreboot v4.5.4](https://github.com/pcengines/coreboot/blob/coreboot-4.5.x/CHANGELOG.md#v454---2017-01-24)
+- [SeaBIOS rel-1.9.2.4](https://github.com/pcengines/seabios/blob/coreboot-4.0.x/CHANGELOG.md#rel-1924---2016-01-23)
+- [sortbootorder v4.0.3](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v403---2017-01-03)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
+
 ## [v4.5.3]
 ### coreboot
 #### Added

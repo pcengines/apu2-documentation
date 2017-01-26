@@ -10,11 +10,11 @@ components:
 * [ipxe](https://github.com/pcengines/ipxe)
 * [memtest86+](https://github.com/pcengines/memtest86plus)
 
-Releases 4.0.x are based on PC Engines 20160304 release.
+[Releases 4.0.x] are based on PC Engines 20160304 release.
 Releases 4.5.x are based on mainline support submitted in
 [this gerrit ref](https://review.coreboot.org/#/c/14138/).
 
-## [Unreleased]
+## [Unreleased 4.0.x]
 ## [v4.0.6] - 2017-01-12
 - [coreboot v4.0.6](https://github.com/pcengines/coreboot/blob/coreboot-4.0.x/CHANGELOG.md#v406---2017-01-12)
 - [SeaBIOS rel-1.9.2.3](https://github.com/pcengines/seabios/blob/coreboot-4.0.x/CHANGELOG.md#rel-1923---2017-01-03)
@@ -128,7 +128,7 @@ builder)
 `CLKREQ#`
     input - forced it to be always on.
 
-[Unreleased]: https://github.com/pcengines/coreboot/compare/v4.0.6...coreboot-4.0.x
+[Unreleased 4.0.x]: https://github.com/pcengines/coreboot/compare/v4.0.6...coreboot-4.0.x
 [v4.0.6]: https://github.com/pcengines/coreboot/compare/v4.0.5...v4.0.6
 [v4.0.5]: https://github.com/pcengines/coreboot/compare/v4.0.4...v4.0.5
 [v4.0.4]: https://github.com/pcengines/coreboot/compare/v4.0.3...v4.0.4
@@ -136,3 +136,5 @@ builder)
 [v4.0.2]: https://github.com/pcengines/coreboot/compare/v4.0.1.1...v4.0.2
 [v4.0.1.1]: https://github.com/pcengines/coreboot/compare/v4.0.1...v4.0.1.1
 [v4.0.1]: https://github.com/pcengines/coreboot/compare/88a4f96110fbd3f55ee727bd01f53875f1c6c398...v4.0.1
+[Unreleased 4.5.x]: https://github.com/pcengines/coreboot/compare/v4.5.4...coreboot-4.5.x
+[v4.5.4]: https://github.com/pcengines/coreboot/compare/v4.5.3...v4.5.4

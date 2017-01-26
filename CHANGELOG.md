@@ -10,8 +10,9 @@ components:
 * [ipxe](https://github.com/pcengines/ipxe)
 * [memtest86+](https://github.com/pcengines/memtest86plus)
 
-[Releases 4.0.x] are based on PC Engines 20160304 release.
-Releases 4.5.x are based on mainline support submitted in
+To see recent changes for legacy and mainline branch:
+* [Releases 4.0.x](#unreleased-40x) are based on PC Engines 20160304 release.
+* [Releases 4.5.x](#unreleased-45x) are based on mainline support merged in
 [this gerrit ref](https://review.coreboot.org/#/c/14138/).
 
 ## [Unreleased 4.0.x]

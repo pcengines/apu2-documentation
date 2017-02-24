@@ -1,15 +1,18 @@
 #!/bin/bash
 
-IPXE_PATH=/ipxe
-APU2_PATH=/apu2-docs
-CB_PATH=/coreboot
+RELEASE_DIR=/release
+ROOT_DIR=$RELEASE_DIR/apu2
+IPXE_PATH=$ROOT_DIR/ipxe
+APU2_PATH=$ROOT_DIR/apu2-documentation
+MEMTEST=$ROOT_DIR/memtest86plus
+CB_PATH=$ROOT_DIR/coreboot
 SBO_PATH=$CB_PATH/payloads/pcengines/sortbootorder
-MEMTEST=/memtest86plus
 CBFSTOOL=./build/cbfstool
 
 build_ipxe () {
   if [ ! -d $IPXE_PATH ]; then
     echo "ERROR: $PXE_PATH doesn't exist"
+    return
   else
     cd $IPXE_PATH/src
     make clean
@@ -19,6 +22,11 @@ build_ipxe () {
 }
 
 build_coreboot () {
+  if [ ! -d $CB_PATH ]; then
+    echo "ERROR: $CB_PATH doesn't exist"
+    return
+  fi
+
   cd $CB_PATH
 
   if [ ! -d $CB_PATH/util/crossgcc/xgcc ]; then
@@ -30,6 +38,7 @@ build_coreboot () {
 build_memtest86plus () {
   if [ ! -d $MEMTEST ]; then
     echo "ERROR: $MEMTEST doesn't exist"
+    return
   else
     cd $MEMTEST
     make clean
@@ -41,9 +50,7 @@ build_memtest86plus () {
 build_sortbootorder () {
   if [ ! -d $SBO_PATH ]; then
     echo "ERROR: $SBO_PATH doesn't exist"
-  else
-    cd $SBO_PATH
-    make clean
+    return
   fi
 
   cd $CB_PATH/payloads/libpayload
@@ -51,6 +58,7 @@ build_sortbootorder () {
   make
   make install
   cd $SBO_PATH
+  make clean
   make
 }
 
@@ -58,16 +66,29 @@ create_image () {
   cd $CB_PATH
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n genroms/pxe.rom
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n img/setup
-  $CBFSTOOL $CB_PATH/build/coreboot.rom add -f /ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
-  $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f $CB_PATH/payloads/pcengines/sortbootorder/sortbootorder.elf -n img/setup -t payload
+  $CBFSTOOL $CB_PATH/build/coreboot.rom add -f $ROOT_DIR/ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
+  $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f $SBO_PATH/sortbootorder.elf -n img/setup -t payload
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n img/memtest
-  $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f /memtest86plus/memtest -n img/memtest - payload
+  $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f $ROOT_DIR/memtest86plus/memtest -n img/memtest - payload
   $CBFSTOOL $CB_PATH/build/coreboot.rom print $CB_PATH/build/coreboot.rom
 }
 
+pack_release () {
+  cd $CB_PATH
+  VERSION=`git describe --tags`
+  TARGET=`cat .config | grep CONFIG_MAINBOARD_DIR | sed -e 's/.*pcengines\///' -e 's/.$//'`
+  OUT_FILE_NAME="${TARGET}_${VERSION}.rom"
+
+  cp build/coreboot.rom "${RELEASE_DIR}/${OUT_FILE_NAME}" && \
+  cd $RELEASE_DIR && \
+  md5sum "${OUT_FILE_NAME}" > "${OUT_FILE_NAME}.md5" && \
+  tar czf "${OUT_FILE_NAME}.tar.gz" "${OUT_FILE_NAME}" "${OUT_FILE_NAME}.md5"
+}
+
+
 if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
   APU2_LOGIN=$2
-  if [ "$1" == "flash" ];then  
+  if [ "$1" == "flash" ]; then
     ssh $APU2_LOGIN remountrw
   fi
   if [ ! -f $CB_PATH/build/coreboot.rom ]; then
@@ -114,6 +135,7 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
     build_sortbootorder
     create_image
   fi
+  pack_release
 elif [ "$1" == "build-coreboot" ]; then
   build_coreboot
   create_image

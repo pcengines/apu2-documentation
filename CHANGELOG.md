@@ -72,10 +72,40 @@ Mainline releases
 -----------------
 
 ## [Unreleased 4.5.x]
+## [v4.5.5] - 2017-02-24
+- [coreboot v4.5.5](https://github.com/pcengines/coreboot/blob/coreboot-4.5.x/CHANGELOG.md#v455---2017-02-24)
+- [SeaBIOS rel-1.10.0.1](https://github.com/pcengines/seabios/blob/coreboot-4.0.x/CHANGELOG.md#rel-11001---2017-02-23)
+- [sortbootorder v4.5.4](https://github.com/pcengines/sortbootorder/blob/master/CHANGELOG.md#v454---2017-02-23)
+- [ipxe v1.0.0](https://github.com/pcengines/ipxe)
+- [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
+
+### Added
+
+- sgabios video oprom is added by default (v.1.0.0 pcengines version)
+- added setup option to turn on legacy console to serial redirect using sgabios
+
+### Changed
+
+- SeaBIOS up to 1.10.0.1
+- sortbootorder up to 4.5.4
+- coreboot rebased to the latest mainline
+- removed setup option to disable serial console, as it was not working in
+  mainline
+
+### Fixed
+
+- Asmedia ASM106x controllers work in the mPCIe1 slot
+- Memory size shown during boot corrected in 2GB SKU devices
+
+### Known issues
+
+- Asmedia ASM106x controllers are not working in the mPCIe2 slot
+- Some XHCI USB booting stability issues after soft-reset
+
 ## [v4.5.4] - 2017-01-24
 - [coreboot v4.5.4](https://github.com/pcengines/coreboot/blob/coreboot-4.5.x/CHANGELOG.md#v454---2017-01-24)
 - [SeaBIOS rel-1.9.2.4](https://github.com/pcengines/seabios/blob/coreboot-4.0.x/CHANGELOG.md#rel-1924---2016-01-23)
-- [sortbootorder v4.0.3](https://github.com/pcengines/sortbootorder/blob/coreboot-4.0.x/CHANGELOG.md#v403---2017-01-03)
+- [sortbootorder v4.5.3](https://github.com/pcengines/sortbootorder/blob/master/CHANGELOG.md#v453---2017-01-12)
 - [ipxe v1.0.0](https://github.com/pcengines/ipxe)
 - [memtest86+ v4.0.1](https://github.com/pcengines/memtest86plus/blob/coreboot-4.0.x/CHANGELOG.md#v401---2016-05-11)
 
@@ -145,5 +175,6 @@ builder)
 [v4.0.2]: https://github.com/pcengines/coreboot/compare/v4.0.1.1...v4.0.2
 [v4.0.1.1]: https://github.com/pcengines/coreboot/compare/v4.0.1...v4.0.1.1
 [v4.0.1]: https://github.com/pcengines/coreboot/compare/88a4f96110fbd3f55ee727bd01f53875f1c6c398...v4.0.1
-[Unreleased 4.5.x]: https://github.com/pcengines/coreboot/compare/v4.5.4...coreboot-4.5.x
+[Unreleased 4.5.x]: https://github.com/pcengines/coreboot/compare/v4.5.5...coreboot-4.5.x
+[v4.5.5]: https://github.com/pcengines/coreboot/compare/v4.5.4...v4.5.5
 [v4.5.4]: https://github.com/pcengines/coreboot/compare/v4.5.3...v4.5.4

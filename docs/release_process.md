@@ -1,8 +1,8 @@
 ## Intro
 
 Following document describes release process for new versions of firmware for PC
-Engines APU2 platform. It is intended for developers who want to create fully
-featured binaries and test those with various versions of sortbootorder,
+Engines APU2 and APU3 platform. It is intended for developers who want to create 
+fully featured binaries and test those with various versions of sortbootorder,
 SeaBIOS, memtest86+ or iPXE.
 
 Please note that flashing without recovery procedure is not recommended and we
@@ -15,9 +15,9 @@ system.
 mkdir apu2_fw_rel
 cd apu2_fw_rel
 
-repo init -u git@github.com:mek-x/pcengines_manifests.git -b refs/tags/<tag_release>
+repo init -u git@github.com:pcengines/release_manifests.git -b refs/tags/<tag_release>
 # or
-repo init -u git@github.com:mek-x/pcengines_manifests.git -b <branch_name>
+repo init -u git@github.com:pcengines/release_manifests.git -b <branch_name>
 
 repo sync --force-sync
 ```
@@ -28,7 +28,7 @@ where:
 and `coreboot-4.5.x` for mainline
 
 You can look-up changes, available branches and release tags on this
-[github repository](https://github.com/mek-x/pcengines_manifests).
+[github repository](https://github.com/pcengines/release_manifests).
 
 ## Build container
 
@@ -54,6 +54,8 @@ Please choose:
 ```
 Mainboard -> Mainboard vendor -> PC Engines
 Mainboard -> Mainboard model  -> APU2
+or
+Mainboard -> Mainboard model  -> APU3
 ```
 
 All other pieces will be set according to recent release configuration.
@@ -83,10 +85,12 @@ After successful build, you can flash target device.
 ## Flash release
 
 Note that below script assume that you have ssh enabled connection with target
-device and destination OS [APU2 image builder](https://github.com/pcengines/
-apu2-documentation#building-firmware-using-apu2-image-builder)
+device and destination OS 
+[APU2 image builder](https://github.com/pcengines/apu2-documentation#building-firmware-using-apu2-image-builder)
 or other distro that have working `flashrom` available in `PATH`. Without keys
 added you will see question about password couple times during flashing.
+
+For legacy:
 
 ```
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <user>@<ip_address>

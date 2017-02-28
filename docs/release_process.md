@@ -1,7 +1,7 @@
 ## Intro
 
 Following document describes release process for new versions of firmware for PC
-Engines APU2 and APU3 platform. It is intended for developers who want to create 
+Engines APU2 and APU3 platform. It is intended for developers who want to create
 fully featured binaries and test those with various versions of sortbootorder,
 SeaBIOS, memtest86+ or iPXE.
 
@@ -68,6 +68,11 @@ For *legacy* release you can use this command. You don't need to run
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build
 ```
 
+For APU3 target in *legacy* build this command should be used:
+```
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build apu3
+```
+
 There are also additional commands like:
 ```
 # distclean && menuconfig
@@ -85,7 +90,7 @@ After successful build, you can flash target device.
 ## Flash release
 
 Note that below script assume that you have ssh enabled connection with target
-device and destination OS 
+device and destination OS
 [APU2 image builder](https://github.com/pcengines/apu2-documentation#building-firmware-using-apu2-image-builder)
 or other distro that have working `flashrom` available in `PATH`. Without keys
 added you will see question about password couple times during flashing.

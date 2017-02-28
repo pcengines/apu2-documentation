@@ -101,7 +101,11 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   cd $CB_PATH
 
   if [ "$1" == "build" -a ! -f .config ]; then
-    cp configs/pcengines_apu2.config .config
+    if [ "$2" == "apu3" ]; then
+      cp configs/pcengines_apu3.config .config
+    else
+      cp configs/pcengines_apu2.config .config
+    fi
     make oldconfig
   fi
 

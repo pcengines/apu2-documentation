@@ -1,12 +1,66 @@
 Building firmware
------------------
+=================
+
+coreboot-4.5.x
+--------------
+
+1. Prepare [build environment](building_env.md), if you haven't done so yet
+2. Create working directory:
+
+    ```sh
+    mkdir apu_coreboot
+    cd apu_coreboot
+    ```
+
+3. Clone PC Engines coreboot repository:
+
+    ```sh
+    # git clone -b coreboot-4.5.x git@github.com:pcengines/coreboot.git
+    git clone -b coreboot-4.5.x https://github.com/pcengines/coreboot.git
+    # git clone git@github.com:pcengines/apu2-documentation.git
+    git clone https://github.com/pcengines/apu2-documentation.git
+    ```
+
+4. Run contatiner with correct path to working directory (can be bypassed, if
+    coreboot builds on host Linux):
+
+    ```sh
+    docker run --rm \
+        -v ${PWD}:/workdir \
+        -t -i pc-engines/apu2 bash
+    ```
+
+5. Configure coreboot (inside the container):
+
+    ```sh
+    cd /workdir/coreboot
+    make menuconfig
+    ```
+
+    * select `Mainboard` > `Mainboard vendor` = `PC Engines`
+    * select `Mainboard` > `Mainboard model` = `APU2` (or `APU3`)
+
+6. Build crossgcc:
+
+    ```sh
+    make crossgcc-i386
+    ```
+
+7. Build coreboot:
+
+    ```sh
+    make
+    ```
+
+coreboot-4.0.x
+--------------
 
 1. Prepare [build environment](building_env.md), if you haven't done so yet
 2. Clone PC Engines coreboot repository:
 
     ```
-    # git clone git@github.com:pcengines/coreboot.git
-    git clone https://github.com/pcengines/coreboot.git
+    # git clone -b coreboot-4.0.x git@github.com:pcengines/coreboot.git
+    git clone -b coreboot-4.0.x https://github.com/pcengines/coreboot.git
     # git clone git@github.com:pcengines/memtest86plus.git
     git clone https://github.com/pcengines/memtest86plus.git
     # git clone git@github.com:pcengines/ipxe.git
@@ -21,16 +75,7 @@ Building firmware
     -v ${PWD}/memtest86plus:/memtest86plus \
     -v ${PWD}/ipxe:/ipxe \
     -v ${PWD}/sortbootorder:/coreboot/payloads/pcengines/sortbootorder \
-    -t -i pc-engines/apu2b
-    ```
-    
-    For mainline coreboot:
-
-    ```
-    docker run -v ${PWD}/coreboot:/coreboot \
-    -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
-    -v ${PWD}/sortbootorder:/coreboot/payloads/pcengines/sortbootorder \
-    -t -i pc-engines/apu2b
+    -t -i pc-engines/apu2b bash
     ```
 
 4. Inside container
@@ -95,7 +140,7 @@ Welcome to the coreboot cross toolchain builder v1.26 (February 23th, 2015)
 
 Target arch is now i386-elf
 Will skip GDB ... ok
-Downloading tar balls ... 
+Downloading tar balls ...
  * gmp-5.1.2.tar.bz2 (downloading)
  * mpfr-3.1.2.tar.bz2 (downloading)
  * mpc-1.0.3.tar.gz (downloading)
@@ -104,7 +149,7 @@ Downloading tar balls ...
  * binutils-2.23.2.tar.bz2 (downloading)
  * acpica-unix-20140114.tar.gz (downloading)
 Downloaded tar balls ... ok
-Unpacking and patching ... 
+Unpacking and patching ...
  * gmp-5.1.2.tar.bz2
  * mpfr-3.1.2.tar.bz2
  * mpc-1.0.3.tar.gz

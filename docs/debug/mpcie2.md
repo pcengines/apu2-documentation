@@ -10,7 +10,9 @@ are connected, system boots normally and controller is detectable using `lspci`.
 Another problem is, that normally ASM1062 contoller on the mPCIe board like,
 e.g. this [Delock adapter], is not detectable in mPCIe 2 slot at all. One need
 to modify the `apu2/romstage.c` file and enable always on Clock for GFX PCIE
-slot, like this:
+slot, like this (in `cache_as_ram_main` function, after clock are set, see
+[here](https://github.com/pcengines/coreboot/blob/coreboot-4.5.x/src/mainboard/pcengines/apu2/romstage.c#L95)
+for reference):
 
 ```c
 		data = *((u32 *)(ACPI_MMIO_BASE + MISC_BASE + FCH_MISC_REG04));

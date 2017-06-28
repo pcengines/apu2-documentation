@@ -1,13 +1,13 @@
-ASM1062 in the J13 slot problems
+ASM1061 in the J13 slot problems
 ================================
 
 ## Rationale
 
-mPCIe 2 slot (J13) on APU2 devices has problems, when ASM1062 controllers are
+mPCIe 2 slot (J13) on APU2 devices has problems, when ASM1061 controllers are
 used. With disk connected, device enters bootloop and never boots. When no disks
 are connected, system boots normally and controller is detectable using `lspci`.
 
-Another problem is, that normally ASM1062 contoller on the mPCIe board like,
+Another problem is, that normally ASM1061 contoller on the mPCIe board like,
 e.g. this [Delock adapter], is not detectable in mPCIe 2 slot at all. One need
 to modify the `apu2/romstage.c` file and enable always on Clock for GFX PCIE
 slot, like this (in `cache_as_ram_main` function, after clock are set, see

@@ -7,6 +7,22 @@ mPCIe 2 slot (J13) on APU2 devices has problems, when ASM1062 controllers are
 used. With disk connected, device enters bootloop and never boots. When no disks
 are connected, system boots normally and controller is detectable using `lspci`.
 
+Another problem is, that normally ASM1062 contoller on the mPCIe board like,
+e.g. this [Delock adapter], is not detectable in mPCIe 2 slot at all. One need
+to modify the `apu2/romstage.c` file and enable always on Clock for GFX PCIE
+slot, like this:
+
+```c
+		data = *((u32 *)(ACPI_MMIO_BASE + MISC_BASE + FCH_MISC_REG04));
+
+		data &= 0xFFFFFF0F;
+		data |= 0xF << (1 * 4);	// CLKREQ GFX always on.
+
+		*((u32 *)(ACPI_MMIO_BASE + MISC_BASE + FCH_MISC_REG04)) = data;
+```
+
+> See in [BKDG] paragraph 3.26.11: `MISCx04 ClkOutputCntrl` register
+
 ## Symptoms
 
 Currently after connecting disk - enters boot loop.
@@ -37,4 +53,6 @@ I've tried setting UDMA, MultiDMA or PIO modes and it's still the same (reset).
 # reset happens always here
 ```
 
+[Delock adapter]: http://www.delock.de/produkte/F_428_Mini-PCI-Express_95233/merkmale.html
+[BKDG]: http://support.amd.com/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf
 [AHCI spec]:https://www.intel.com/content/www/us/en/io/serial-ata/serial-ata-ahci-spec-rev1-3-1.html

@@ -6,7 +6,6 @@ IPXE_PATH=$ROOT_DIR/ipxe
 APU2_PATH=$ROOT_DIR/apu2-documentation
 MEMTEST=$ROOT_DIR/memtest86plus
 CB_PATH=$ROOT_DIR/coreboot
-SBO_PATH=$CB_PATH/payloads/pcengines/sortbootorder
 CBFSTOOL=./build/cbfstool
 
 build_ipxe () {
@@ -47,27 +46,10 @@ build_memtest86plus () {
   make
 }
 
-build_sortbootorder () {
-  if [ ! -d $SBO_PATH ]; then
-    echo "ERROR: $SBO_PATH doesn't exist"
-    return
-  fi
-
-  cd $CB_PATH/payloads/libpayload
-  make defconfig
-  make
-  make install
-  cd $SBO_PATH
-  make clean
-  make
-}
-
 create_image () {
   cd $CB_PATH
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n genroms/pxe.rom
-  $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n img/setup
   $CBFSTOOL $CB_PATH/build/coreboot.rom add -f $ROOT_DIR/ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
-  $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f $SBO_PATH/sortbootorder.elf -n img/setup -t payload
   $CBFSTOOL $CB_PATH/build/coreboot.rom remove -n img/memtest
   $CBFSTOOL $CB_PATH/build/coreboot.rom add-payload -f $ROOT_DIR/memtest86plus/memtest -n img/memtest - payload
   $CBFSTOOL $CB_PATH/build/coreboot.rom print $CB_PATH/build/coreboot.rom
@@ -136,7 +118,6 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   if [ "$1" == "build" ];then
     build_ipxe
     build_memtest86plus
-    build_sortbootorder
     create_image
   fi
   pack_release

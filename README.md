@@ -21,7 +21,7 @@ User/pass: root/voyage
 
 1. Unpack image:
 
-    ```
+    ```sh
     tar xf apu2_image_builder_v0.1.img.xz
     ```
 
@@ -29,7 +29,7 @@ User/pass: root/voyage
 3. boot the APU2 board with this image
 4. run below commands
 
-    ```
+    ```sh
     cd
     remountrw
     export BR_NAME=coreboot-4.0.x
@@ -48,7 +48,7 @@ User/pass: root/voyage
 Building iPXE
 -------------
 
-```
+```sh
 cd && cd coreboot-${BR_NAME}
 IPXE_PATH=payloads/external/ipxe
 git clone https://github.com/pcengines/ipxe $IPXE_PATH
@@ -63,22 +63,23 @@ Feel free to customize `menu.pxe` and `local/general.h` to match your needs.
 Building sortbootorder
 ----------------------
 
-```
-cd && cd coreboot-${BR_NAME}
-git clone https://github.com/pcengines/sortbootorder.git -b ${BR_NAME} payloads/pcengines/sortbootorder
-cd payloads/libpayload
-make clean && make defconfig
-wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/xcompile/.apu2-builder-xcompile-libpayload -O .xcompile
-make -j$(nproc)
-make install
-cd ../pcengines/sortbootorder
-make -j$(nproc)
+> coreboot is in `./coreboot-${BR_NAME}` directory
+>
+```sh
+git clone https://github.com/pcengines/sortbootorder.git sortbootorder
+cd sortbootorder
+# for mainline coreboot (4.5.x)
+COREBOOT_ROOT=../coreboot-${BR_NAME} make distclean
+COREBOOT_ROOT=../coreboot-${BR_NAME} make
+# for legacy coreboot (4.0.x)
+COREBOOT_ROOT=../coreboot-${BR_NAME} make distclean
+COREBOOT_ROOT=../coreboot-${BR_NAME} COREBOOT_REL=legacy make
 ```
 
 Building memtest86+
 -------------------
 
-```
+```sh
 cd && cd coreboot-${BR_NAME}
 git clone https://github.com/pcengines/memtest86plus.git payloads/external/memtest86plus
 cd payloads/external/memtest86plus
@@ -95,7 +96,7 @@ Usage examples:
 
 ### Add iPXE ROM
 
-```
+```sh
 cd && cd coreboot-${BR_NAME}
 ./build/cbfstool ./build/coreboot.rom add -f payloads/external/ipxe/src/bin/8086157b.rom -n genroms/pxe.rom -t raw
 ```

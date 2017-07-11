@@ -116,6 +116,9 @@ Full diff files from APU2 boot logs between Ethernet Controller placed in the mP
 and it placed in mPCIe2 slot (J13):
 
 [diff of boot logs](http://81.95.197.197:7777/duzixebaqi.md)
+
 [diff of ip a command logs](http://81.95.197.197:7777/woseyetaxu.hs)
+
 [diff of lspcie command logs](http://81.95.197.197:7777/gozepejoja.go)
+
 [diff of lsusb command logs](http://81.95.197.197:7777/zecidunudi.css)

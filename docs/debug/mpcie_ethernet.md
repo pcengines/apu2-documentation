@@ -323,6 +323,194 @@ PING 192.168.0.123 (192.168.0.123) 56(84) bytes of data.
 64 bytes from 192.168.0.120: icmp_seq=2 ttl=64 time=0.482 ms
 ```
 
+#### Operating multiple interfaces at once
+
+Following interfaces have been connected using separate Ethernet cables:
+
+* both interfaces from mPCIe extension card
+
+* two out of three interfaces from APU2 board
+
+1. Interfaces configuration
+
+```
+ifconfig eth0 up
+```
+
+output:
+
+```
+[  400.659117] r8169 0000:06:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[  400.762913] r8169 0000:06:00.0 eth0: link down
+[  400.767438] r8169 0000:06:00.0 eth0: link down
+[  400.772017] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[  402.677778] r8169 0000:06:00.0 eth0: link up
+[  402.682146] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+```
+
+```
+dhclient eth0
+ifconfig eth0
+```
+
+output:
+
+```
+eth0      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c8
+          inet addr:192.168.0.132  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:7 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1480 (1.4 KiB)  TX bytes:1332 (1.3 KiB)
+```
+
+```
+ifconfig eth1 up
+```
+
+output:
+
+```
+[  449.690659] r8169 0000:07:00.0 eth1: link down
+[  449.690686] r8169 0000:07:00.0 eth1: link down
+[  449.699870] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+[  451.626151] r8169 0000:07:00.0 eth1: link up
+[  451.630502] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+```
+
+```
+dhclient eth1
+ifconfig eth1
+```
+
+output:
+
+```
+eth1      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c9
+          inet addr:192.168.0.133  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1300 (1.2 KiB)  TX bytes:1262 (1.2 KiB)
+```
+
+```
+ifconfig eth2 up
+```
+
+output:
+
+```
+[  484.573775] IPv6: ADDRCONF(NETDEV_UP): eth2: link is not ready
+[  487.225321] igb 0000:01:00.0 eth2: igb: eth2 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[  487.234971] IPv6: ADDRCONF(NETDEV_CHANGE): eth2: link becomes ready
+```
+
+```
+dhclient eth2
+ifconfig eth2
+```
+
+output:
+
+```
+eth2      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:bc
+          inet addr:192.168.0.134  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbc/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:11 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1720 (1.6 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7a00000-f7a1ffff
+```
+
+```
+ifconfig eth4 up
+```
+
+output:
+
+```
+[  528.424071] IPv6: ADDRCONF(NETDEV_UP): eth4: link is not ready
+[  531.111624] igb 0000:03:00.0 eth4: igb: eth4 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[  531.121238] IPv6: ADDRCONF(NETDEV_CHANGE): eth4: link becomes ready
+```
+
+```
+dhclient eth4
+ifconfig eth4
+```
+
+output:
+
+```
+eth4      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:be
+          inet addr:192.168.0.135  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbe/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:19 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:2200 (2.1 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7c00000-f7c1ffff
+
+```
+
+2. Each of them can be separately reached from network
+
+```
+ping 192.168.0.132
+```
+
+output:
+
+```
+PING 192.168.0.132 (192.168.0.132) 56(84) bytes of data.
+64 bytes from 192.168.0.132: icmp_seq=2 ttl=64 time=410 ms
+64 bytes from 192.168.0.132: icmp_seq=3 ttl=64 time=551 ms
+```
+
+```
+ping 192.168.0.133
+```
+
+output:
+
+```
+PING 192.168.0.133 (192.168.0.133) 56(84) bytes of data.
+64 bytes from 192.168.0.133: icmp_seq=1 ttl=64 time=4.31 ms
+64 bytes from 192.168.0.133: icmp_seq=2 ttl=64 time=1.49 ms
+```
+
+```
+ping 192.168.0.134
+```
+
+output:
+
+```
+PING 192.168.0.134 (192.168.0.134) 56(84) bytes of data.
+64 bytes from 192.168.0.134: icmp_seq=1 ttl=64 time=3.02 ms
+64 bytes from 192.168.0.134: icmp_seq=2 ttl=64 time=1.71 ms
+```
+
+```
+ping 192.168.0.135
+```
+
+output:
+
+```
+PING 192.168.0.135 (192.168.0.135) 56(84) bytes of data.
+64 bytes from 192.168.0.135: icmp_seq=1 ttl=64 time=2.80 ms
+64 bytes from 192.168.0.135: icmp_seq=2 ttl=64 time=1.71 ms
+```
+
 ### mPCIe slot 2
 
 #### Device identification
@@ -704,6 +892,189 @@ output:
 PING 192.168.0.123 (192.168.0.123) 56(84) bytes of data.
 64 bytes from 192.168.0.123: icmp_seq=1 ttl=64 time=0.800 ms
 64 bytes from 192.168.0.123: icmp_seq=2 ttl=64 time=0.313 ms
+```
+
+#### Operating multiple interfaces at once
+
+Following interfaces have been connected using separate Ethernet cables:
+
+* both interfaces from mPCIe extension card
+
+* two out of three interfaces from APU2 board
+
+1. Interfaces configuration
+
+```
+ifconfig eth0 up
+```
+
+output:
+
+```
+[  158.770166] r8169 0000:03:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[  158.877942] r8169 0000:03:00.0 eth0: link down
+[  158.882483] r8169 0000:03:00.0 eth0: link down
+[  158.882576] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[  160.847493] r8169 0000:03:00.0 eth0: link up
+[  160.851821] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+```
+
+```
+dhclient eth0
+ifconfig eth0
+```
+
+output:
+
+```
+eth0      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c8
+          inet addr:192.168.0.132  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:9 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1600 (1.5 KiB)  TX bytes:1262 (1.2 KiB)
+```
+
+```
+ifconfig eth1 up
+```
+
+output:
+
+```
+[  185.188050] r8169 0000:04:00.0 eth1: link down
+[  185.188107] r8169 0000:04:00.0 eth1: link down
+[  185.197387] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+root@voyage:~# dh[  187.135453] r8169 0000:04:00.0 eth1: link up
+[  187.139809] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+```
+
+```
+client eth1
+ifconfig eth1
+```
+
+output:
+
+```
+eth1      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c9
+          inet addr:192.168.0.133  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:7 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1480 (1.4 KiB)  TX bytes:1262 (1.2 KiB)
+```
+
+```
+ifconfig eth2 up
+```
+
+output:
+
+```
+[  602.484926] IPv6: ADDRCONF(NETDEV_UP): eth2: link is not ready
+[  605.172947] igb 0000:05:00.0 eth2: igb: eth2 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[  605.182617] IPv6: ADDRCONF(NETDEV_CHANGE): eth2: link becomes ready
+```
+
+```
+ifconfig eth2
+```
+
+output:
+
+```
+eth2      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:bc
+          inet addr:192.168.0.134  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbc/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:66 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:5675 (5.5 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7a00000-f7a1ffff
+```
+
+```
+ifconfig eth4 up
+```
+
+output:
+
+```
+[ 1038.772097] IPv6: ADDRCONF(NETDEV_UP): eth4: link is not ready
+[ 1041.441250] igb 0000:07:00.0 eth4: igb: eth4 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[ 1041.450845] IPv6: ADDRCONF(NETDEV_CHANGE): eth4: link becomes ready
+```
+
+```
+dhclient eth4
+```
+
+output:
+
+
+```
+root@voyage:~# ifconfig eth4
+eth4      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:be
+          inet addr:192.168.0.135  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbe/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:13 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1931 (1.8 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7c00000-f7c1ffff
+```
+
+2. Each of them can be individually reached from network
+
+```
+ping 192.168.0.132
+```
+
+output:
+
+```
+PING 192.168.0.132 (192.168.0.132) 56(84) bytes of data.
+64 bytes from 192.168.0.132: icmp_seq=1 ttl=64 time=26.2 ms
+64 bytes from 192.168.0.132: icmp_seq=2 ttl=64 time=1.96 ms
+```
+
+```
+ping 192.168.0.133
+```
+
+output:
+
+```
+PING 192.168.0.133 (192.168.0.133) 56(84) bytes of data.
+64 bytes from 192.168.0.133: icmp_seq=1 ttl=64 time=1.35 ms
+64 bytes from 192.168.0.133: icmp_seq=2 ttl=64 time=1.97 ms
+```
+
+```
+ping 192.168.0.134
+```
+
+```
+PING 192.168.0.134 (192.168.0.134) 56(84) bytes of data.
+64 bytes from 192.168.0.134: icmp_seq=1 ttl=64 time=1.42 ms
+64 bytes from 192.168.0.134: icmp_seq=2 ttl=64 time=1.49 ms
+```
+
+```
+ping 192.168.0.135
+```
+
+```
+PING 192.168.0.135 (192.168.0.135) 56(84) bytes of data.
+64 bytes from 192.168.0.135: icmp_seq=1 ttl=64 time=1.81 ms
+64 bytes from 192.168.0.135: icmp_seq=2 ttl=64 time=1.38 ms
 ```
 
 ### Conclusion

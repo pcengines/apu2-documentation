@@ -15,8 +15,8 @@
 
 ## Installing armbian on Orange Pi
 
-We need to prepare a SD card with armibian image on it first.
-Downlaod The image from
+Prepare a SD card with armbian image on it first.
+Download the image from
 [here](https://dl.armbian.com/orangepizero/Debian_jessie_dev.7z)
 and extract it to your SD card.
 
@@ -30,13 +30,14 @@ cd flashrom
 make CONFIG_ENABLE_LIBPCI_PROGRAMMERS=no install
 ```
 
-We also need to enable SPI:
+Enable SPI on Orange Pi:
 ```
 echo "overlays=spi-spidev" >> /boot/armbianEnv.txt
 echo "param_spidev_spi_bus=1" >> /boot/armbianEnv.txt
 reboot
 ```
-> Important! Edit the armbianEnv.txt file only once.
+> Important! Put these lines in armbianEnv.txt file only once. This file
+contains overall system configuration and should not contain duplicates.
 
 ## Connection
 
@@ -53,14 +54,17 @@ Orange Pi pinout:
  SPI1_MISO      | 5
  SPI1_MOSI      | 6
  
+Also shorten 2-3 pins on APU2 J2 to enable S5 state.
  
 ## Flashing
 
-After Orange Pi reboot type following command:
+Make sure that APU2 was powered up with shortened 2-3 pins on J2. After Orange
+Pi reboot type following command:
 
 ```
 flashrom -p linux_spi:dev=/dev/spidev1.0 -w coreboot.rom
 ```
+
 
 > Note that coreboot.rom should be the rom file You are trying to write.
 

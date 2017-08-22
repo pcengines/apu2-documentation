@@ -1,3 +1,7 @@
+# Usage:
+# OPI_IP=<OrangePi IP> robot -b debug.log -L TRACE flashtest.robot
+
+
 *** Settings ***
 Library         SSHLibrary
 

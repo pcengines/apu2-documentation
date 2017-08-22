@@ -1,3 +1,7 @@
+# Usage:
+# S2N_PORT=<telnet port> PXE_SRV_IP=<server IP> robot -b debug.log -L TRACE aputest.robot
+
+
 *** settings ***
 Library    Telnet
 Library    String

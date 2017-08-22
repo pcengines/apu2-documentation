@@ -63,7 +63,6 @@ make install
 
 8. Check the device:
 ```
-$ tpm2_takeownership -c --tcti=dev
 $ tpm2_dump_capability -T device -c properties-fixed
 TPM_PT_FAMILY_INDICATOR:
   as UINT32:                0x08322e3000
@@ -119,4 +118,6 @@ TPM_PT_TOTAL_COMMANDS:      0x0000005a
 TPM_PT_LIBRARY_COMMANDS:    0x00000058
 TPM_PT_VENDOR_COMMANDS:     0x00000002
 TPM_PT_NV_BUFFER_MAX:       0x00000300
+$ tpm2_getrandom -T device 10
+0x84 0xCF 0xA4 0xF8 0xEC 0x43 0x11 0xA4 0x7D 0xE8
 ```

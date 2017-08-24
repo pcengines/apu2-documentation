@@ -41,6 +41,11 @@ After this next booting processes take same normal time. The reason may be multi
 failed attempts to obtain an IP address.
 That problem doesn't exist for the mPCIe2 slot (J13).
 
+> Reason of that was time out value for DHCP client set to few minutes. After 
+disabling DHCP client for `eth0` interface booting lag doesn't occurs. 
+Mentioned booting lag is not a bug.
+
+
 ## Boot logs comparison
 
 Level of the detail of booting logs was set at `6:DEBUG`.
@@ -62,8 +67,8 @@ For `mPCIe1`:
 ```
 
 This suggests a problem with device recognition when Ethernet Controller is 
-placed in the mPCIe1 slot (J14). The reason for this can be rivalry of devices
-or incorrect designed interrupt system.
+placed in the mPCIe1 slot (J14). The reason for this can be concurent access of devices
+or incorrectly configured interrupt system.
 
 Surrounding the log of the case when Ethernet Controller is placed in the mPCIe1 
 slot (J14).

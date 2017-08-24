@@ -28,6 +28,13 @@ shown in the table below.
 	+--------------------+--------------+
 ```
 
+## Solution of the problems
+
+Changing the value from `0xA` to `0xF` of the part of variable named `data` 
+(showed under the following [line](https://github.com/pcengines/coreboot/blob/coreboot-4.0.x/src/mainboard/pcengines/apu2/romstage.c#L132)) 
+fixed the problems described in this file. This modification enables the clock 
+regardless of the `CLKREQ` line state.
+
 ## Mini PCI-Express Dual Gigabit Ethernet Controller Card elements
 
 On a board are located PCI bridge [ASMedia Technology Inc. Device 1182](http://www.asmedia.com.tw/eng/e_show_products.php?cate_index=112&item=134) and 2 Ethernet 

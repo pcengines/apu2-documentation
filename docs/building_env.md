@@ -25,10 +25,10 @@ mkdir apu2-docker && cd apu2-docker
 wget https://raw.githubusercontent.com/pcengines/apu2-documentation/master/Dockerfile
 ```
 
-Build Ubuntu LTS 14.04 based image:
+Build Ubuntu LTS 14.04 based container image:
 
 ```
-docker build -t pc-engines/apu2b .
+docker build -t pc-engines/apu2 .
 ```
 
 After successful build you will have image based on which you can create

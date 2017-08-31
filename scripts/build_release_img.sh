@@ -68,49 +68,51 @@ pack_release () {
 }
 
 
-if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
+if [ "$1" == "flash" ] || [ "$1" == "flash-force" ]; then
   APU2_LOGIN=$2
-  if [ "$1" == "flash" ]; then
-    ssh $APU2_LOGIN remountrw
-  fi
   if [ ! -f $CB_PATH/build/coreboot.rom ]; then
       echo "ERROR: $CB_PATH/build/coreboot.rom doesn't exist. Please build coreboot first"
       exit
   fi
   scp $CB_PATH/build/coreboot.rom $APU2_LOGIN:/tmp
-  ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal && reboot"
+
+  if [ "$1" == "flash-force" ]; then
+    ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal:boardmismatch=force && reboot"
+  else
+    ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal && reboot"
+  fi
+
 elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   cd $CB_PATH
 
-  if [ "$1" == "build" -a ! -f .config ]; then
-    if [ "$2" == "apu3" ]; then
-      cp configs/pcengines_apu3.config .config
-    else
-      cp configs/pcengines_apu2.config .config
-    fi
-    make oldconfig
-  fi
-
   if [ "$2" == "distclean" ]; then
     make distclean
-    if [ "$1" == "build" ];then
-      cp configs/pcengines_apu2.config .config
-      make oldconfig
-    else
-      make menuconfig
-    fi
+    exit
   elif [ "$2" == "menuconfig" ]; then
     make menuconfig
+    exit
   elif [ "$2" == "cfgclean" ]; then
     make clean
     rm -rf .config .config.old
-    if [ "$1" == "build" ];then
-      cp configs/pcengines_apu2.config .config
-      make oldconfig
-    fi
-    make menuconfig
+    exit
   elif [ "$2" == "custom" ]; then
     make $3
+    exit
+  fi
+
+  if [ ! -f .config ]; then
+    if [ "$1" == "build" ]; then
+      if [ "$2" == "apu3" ]; then
+        cp configs/pcengines_apu3.config .config
+      elif [ "$2" == "apu5" ]; then
+        cp configs/pcengines_apu5.config .config
+      else
+        cp configs/pcengines_apu2.config .config
+      fi
+      make oldconfig
+    elif [ "$1" == "build-ml" ]; then
+      make menuconfig
+    fi
   fi
 
   build_coreboot
@@ -124,9 +126,6 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
 elif [ "$1" == "build-coreboot" ]; then
   build_coreboot
   create_image
-elif [ "$1" == "custom-ml" ]; then
-  cd $CB_PATH
-  make $2
 else
   echo "ERROR: unknown command $1"
 fi

@@ -107,16 +107,14 @@ device and destination OS
 or other distro that have working `flashrom` available in `PATH`. Without keys
 added you will see question about password couple times during flashing.
 
-For legacy:
-
 ```
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <user>@<ip_address>
 ```
 
-For mainline:
+For forcing the flash (board identification mismatch):
 
 ```
-./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash-ml <user>@<ip_address>
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash-force <user>@<ip_address>
 ```
 
 Best way is to use `root` as `<user>` because it can have no problem with low
@@ -138,8 +136,8 @@ Since it use `git` commands to create build timestamp.
 #### flashing doesn't work
 
 ```
-[21:51:53] pietrushnic:apu2_fw_rel $ ../apu2-documentation/scripts/apu2_fw_rel.sh flash-ml pcengines@192.168.0.103
-flash-ml pcengines@192.168.0.103
+[21:51:53] pietrushnic:apu2_fw_rel $ ../apu2-documentation/scripts/apu2_fw_rel.sh flash pcengines@192.168.0.103
+flash pcengines@192.168.0.103
 The authenticity of host '192.168.0.103 (192.168.0.103)' can't be established.
 (...)
 Are you sure you want to continue connecting (yes/no)? yes

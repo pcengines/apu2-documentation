@@ -100,15 +100,19 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
     exit
   fi
 
-  if [ "$1" == "build" -a ! -f .config ]; then
-    if [ "$2" == "apu3" ]; then
-      cp configs/pcengines_apu3.config .config
-    elif [ "$2" == "apu5" ]; then
-      cp configs/pcengines_apu5.config .config
-    else
-      cp configs/pcengines_apu2.config .config
+  if [ ! -f .config ]; then
+    if [ "$1" == "build" ]; then
+      if [ "$2" == "apu3" ]; then
+        cp configs/pcengines_apu3.config .config
+      elif [ "$2" == "apu5" ]; then
+        cp configs/pcengines_apu5.config .config
+      else
+        cp configs/pcengines_apu2.config .config
+      fi
+      make oldconfig
+    elif [ "$1" == "build-ml" ]; then
+      make menuconfig
     fi
-    make oldconfig
   fi
 
   build_coreboot

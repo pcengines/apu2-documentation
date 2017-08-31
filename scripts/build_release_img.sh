@@ -79,22 +79,11 @@ if [ "$1" == "flash" ] || [ "$1" == "flash-force" ]; then
   if [ "$1" == "flash-force" ]; then
     ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal:boardmismatch=force && reboot"
   else
-    ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal&& reboot"
+    ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal && reboot"
   fi
 
 elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   cd $CB_PATH
-
-  if [ "$1" == "build" -a ! -f .config ]; then
-    if [ "$2" == "apu3" ]; then
-      cp configs/pcengines_apu3.config .config
-    elif [ "$2" == "apu5" ]; then
-      cp configs/pcengines_apu5.config .config
-    else
-      cp configs/pcengines_apu2.config .config
-    fi
-    make oldconfig
-  fi
 
   if [ "$2" == "distclean" ]; then
     make distclean
@@ -109,6 +98,17 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   elif [ "$2" == "custom" ]; then
     make $3
     exit
+  fi
+
+  if [ "$1" == "build" -a ! -f .config ]; then
+    if [ "$2" == "apu3" ]; then
+      cp configs/pcengines_apu3.config .config
+    elif [ "$2" == "apu5" ]; then
+      cp configs/pcengines_apu5.config .config
+    else
+      cp configs/pcengines_apu2.config .config
+    fi
+    make oldconfig
   fi
 
   build_coreboot

@@ -73,16 +73,28 @@ For APU3 target in *legacy* build this command should be used:
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build apu3
 ```
 
+For APU5 target in *legacy* build:
+```
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build apu5
+```
+
 There are also additional commands like:
 ```
-# distclean && menuconfig
+# distclean
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml distclean
+# or for legacy
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build distclean
 
-#rm -rf .config* && menuconfig
+# rm -rf .config*
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml cfgclean
+# or for legacy
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build cfgclean
 
-#custom make parameters
+# custom make parameters
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml custom <param>
+# or for legacy
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build custom <param>
+
 ```
 
 After successful build, you can flash target device.

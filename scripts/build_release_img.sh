@@ -95,13 +95,17 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
 
   if [ "$2" == "distclean" ]; then
     make distclean
+    exit
   elif [ "$2" == "menuconfig" ]; then
     make menuconfig
+    exit
   elif [ "$2" == "cfgclean" ]; then
     make clean
     rm -rf .config .config.old
+    exit
   elif [ "$2" == "custom" ]; then
     make $3
+    exit
   fi
 
   build_coreboot
@@ -115,9 +119,6 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
 elif [ "$1" == "build-coreboot" ]; then
   build_coreboot
   create_image
-elif [ "$1" == "custom-ml" ]; then
-  cd $CB_PATH
-  make $2
 else
   echo "ERROR: unknown command $1"
 fi

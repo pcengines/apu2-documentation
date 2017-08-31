@@ -68,17 +68,20 @@ pack_release () {
 }
 
 
-if [ "$1" == "flash" ] || [ "$1" == "flash-ml" ]; then
+if [ "$1" == "flash" ] || [ "$1" == "flash-force" ]; then
   APU2_LOGIN=$2
-  if [ "$1" == "flash" ]; then
-    ssh $APU2_LOGIN remountrw
-  fi
   if [ ! -f $CB_PATH/build/coreboot.rom ]; then
       echo "ERROR: $CB_PATH/build/coreboot.rom doesn't exist. Please build coreboot first"
       exit
   fi
   scp $CB_PATH/build/coreboot.rom $APU2_LOGIN:/tmp
-  ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal && reboot"
+
+  if [ "$1" == "flash-force" ]; then
+    ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal:boardmismatch=force && reboot"
+  else
+    ssh $APU2_LOGIN "flashrom -w /tmp/coreboot.rom -p internal&& reboot"
+  fi
+
 elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   cd $CB_PATH
 

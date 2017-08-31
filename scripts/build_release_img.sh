@@ -85,6 +85,8 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
   if [ "$1" == "build" -a ! -f .config ]; then
     if [ "$2" == "apu3" ]; then
       cp configs/pcengines_apu3.config .config
+    elif [ "$2" == "apu5" ]; then
+      cp configs/pcengines_apu5.config .config
     else
       cp configs/pcengines_apu2.config .config
     fi
@@ -93,22 +95,11 @@ elif [ "$1" == "build" ] || [ "$1" == "build-ml" ]; then
 
   if [ "$2" == "distclean" ]; then
     make distclean
-    if [ "$1" == "build" ];then
-      cp configs/pcengines_apu2.config .config
-      make oldconfig
-    else
-      make menuconfig
-    fi
   elif [ "$2" == "menuconfig" ]; then
     make menuconfig
   elif [ "$2" == "cfgclean" ]; then
     make clean
     rm -rf .config .config.old
-    if [ "$1" == "build" ];then
-      cp configs/pcengines_apu2.config .config
-      make oldconfig
-    fi
-    make menuconfig
   elif [ "$2" == "custom" ]; then
     make $3
   fi

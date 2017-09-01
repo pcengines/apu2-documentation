@@ -10,6 +10,8 @@
     - [Installing flashrom on Orange Pi](#installing-flashrom-on-rpi)
     - [Connection](#connection)
     - [Flashing](#flashing)
+    - [Customizing kernel for armbian](#customizing-kernel-for-armbian)
+    - [Updating kernel on Orange Pi Zero](#updating-kernel-on-orange-pi-zero)
 
 <!-- /TOC -->
 
@@ -70,7 +72,7 @@ flashrom -p linux_spi:dev=/dev/spidev1.0 -w coreboot.rom
 
 Correct output should look like this:
 ```
-root@orangepizero:~# flashrom -w ./apu2_v4.6.0.rom -p linux_spi:dev=/dev/spidev1.0                          
+root@orangepizero:~# flashrom -w ./apu2_v4.6.0.rom -p linux_spi:dev=/dev/spidev1.0
 flashrom 0.9.9-45-g4d440a7 on Linux 4.11.3-sun8i (armv7l)
 flashrom is free software, get the source code at https://flashrom.org
 
@@ -81,3 +83,82 @@ Erasing and writing flash chip...
 Warning: Chip content is identical to the requested image.
 Erase/write done.
 ```
+
+> Be sure to use stable power supply. Do no supply OrangePi from PC USB.
+> Its efficiency is not enough for proper operating of Orange Pi.
+> It is strongly recommended to use 5V power supply connected to microUSB
+> socket (a trusted USB charger will make it too). Using uncertain power supply
+> leads to flash writing errors, which may brick your target device.
+
+## Customizing kernel for armbian
+
+Clone the repository first and then run script `compile.sh` (must run as root):
+```
+git clone --depth 1 https://github.com/armbian/build
+cd build
+sudo ./compile.sh
+```
+
+`compile.sh` takes care of everything. Downloads cross compilation toolchain and
+all necessary tools.
+
+>It works only with Ubuntu Xenial (16.04), other distros are supposed to be not
+>supported. Refer to [README](https://github.com/armbian/build/blob/master/README.md)
+
+This command will pop up a menu. Many options can be chosen there, but the most
+important options are:
+
+1. Select to build only kernel and uboot packages
+2. Show a kernel configuration menu before compilation
+3. Choose target board (in this case `orangepizero`)
+4. Select the target kernel branch as `dev` for newest development version
+5. Accept to enter export mode
+
+>I followed this approach and I strongly recommend to use it this way.
+
+Now the kernel menuconfig should pop up and the customization process begin.
+Make changes here for Your use case and needs, then save the changes and exit.
+
+>If do not want to make changes, just leave `menuconfig` by saving the
+>configuration and exiting. Kernel will be built with default configuration.
+
+After saving config and exiting, the kernel compilation will start.
+
+## Updating kernel on Orange Pi Zero
+
+Debian packages created after compilation are in `/repodir/build/output/debs`.
+
+```
+build/output/debs$ ls
+extra
+linux-firmware-image-dev-sun8i_5.32_armhf.deb
+linux-image-dev-sun8i_5.32_armhf.deb
+linux-u-boot-dev-orangepizero_5.32_armhf.deb
+linux-dtb-dev-sun8i_5.32_armhf.deb
+linux-headers-dev-sun8i_5.32_armhf.deb
+linux-source-dev-sun8i_5.32_all.deb
+
+```
+There are also u-boot and source packages which are not necessary to update
+the Orange Pi. Send the following three packages to Orange Pi, via SCP for
+example:
+
+```
+scp linux-image-dev-sun8i_5.32_armhf.deb root@192.168.0.112:/root/
+scp linux-dtb-dev-sun8i_5.32_armhf.deb   root@192.168.0.112:/root/
+scp linux-headers-dev-sun8i_5.32_armhf.deb  root@192.168.0.112:/root/
+```
+
+Now connect to Orange Pi, via SSH for example, as root. Default password is
+`armbian1234`. Install the packages:
+
+```
+cd
+dpkg -i linux-headers-dev-sun8i_5.32_armhf.deb linux-dtb-dev-sun8i_5.32_armhf.deb linux-image-dev-sun8i_5.32_armhf.deb
+```
+
+This may take a while, especially the headers package, so I advise making
+a coffee break.
+
+After completion directory with old headers may be still present in `/usr/src/`.
+It can be safely removed if not needed.

@@ -1,20 +1,18 @@
-Report of TPM2 support on Voyage Linux 0.10.0
-=============================================
+Report of TPM2 support
+======================
 
 ## Conclusion
 
-Works with `tpm_tis` module bypassing the BIOS in TPM setup.
+Works with `tpm_tis` module bypassing the BIOS in TPM setup. Verified on Voyage
+Linux 0.10.0 and Debian jessie.
 
 ## Actual steps taken
 
 HW used: APU2 with TPM LPC addon
 
-1. Install 4.13.0-rc6 kernel
-    - use voyage linux config as oldconfig
-    - enable CONFIG_SECURE
-    - enable TPM char drivers
-
+1. Install 4.13.0-rc6 kernel - [config](4_13_rc6_tpm_config)
 2. Enable tpm2 module:
+
 ```
 modprobe tpm_tis force=1 interrupts=0
 ```

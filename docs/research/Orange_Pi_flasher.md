@@ -102,8 +102,8 @@ sudo ./compile.sh
 `compile.sh` takes care of everything. Downloads cross compilation toolchain and
 all necessary tools.
 
->They say it works only with Ubuntu Xenial (16.04), other distros are supposed
-to be not supported
+>It works only with Ubuntu Xenial (16.04), other distros are supposed to be not
+>supported. Refer to [README](https://github.com/armbian/build/blob/master/README.md)
 
 This command will pop up a menu. Many options can be chosen there, but the most
 important options are:
@@ -117,16 +117,20 @@ important options are:
 >I followed this approach and I strongly recommend to use it this way.
 
 Now the kernel menuconfig should pop up and the customization process begin.
+Make changes here for Your use case and needs, then save the changes and exit.
+
+>If do not want to make changes, just leave `menuconfig` by saving the
+>configuration and exiting. Kernel will be built with default configuration.
+
 After saving config and exiting, the kernel compilation will start.
 
 ## Updating kernel on Orange Pi Zero
 
-The kernel compilation results in building debian packages in
-`/repodir/build/output/debs`.
+Debian packages created after compilation are in `/repodir/build/output/debs`.
 
 ```
 build/output/debs$ ls
-extra 
+extra
 linux-firmware-image-dev-sun8i_5.32_armhf.deb
 linux-image-dev-sun8i_5.32_armhf.deb
 linux-u-boot-dev-orangepizero_5.32_armhf.deb
@@ -135,8 +139,9 @@ linux-headers-dev-sun8i_5.32_armhf.deb
 linux-source-dev-sun8i_5.32_all.deb
 
 ```
-
-These packages need to be  sent to Orange Pi, for example via scp:
+There are also u-boot and source packages which are not necessary to update
+the Orange Pi. Send the following three packages to Orange Pi, via SCP for
+example:
 
 ```
 scp linux-image-dev-sun8i_5.32_armhf.deb root@192.168.0.112:/root/
@@ -144,20 +149,16 @@ scp linux-dtb-dev-sun8i_5.32_armhf.deb   root@192.168.0.112:/root/
 scp linux-headers-dev-sun8i_5.32_armhf.deb  root@192.168.0.112:/root/
 ```
 
-Only these three are necessary, because there is an u-boot and source package,
-which are not needed to update the kernel.
-
-Now connect to Orange Pi, via SSH for example, as root. Defautl password is
-`armbian1234`.
-Install the packages:
+Now connect to Orange Pi, via SSH for example, as root. Default password is
+`armbian1234`. Install the packages:
 
 ```
 cd
 dpkg -i linux-headers-dev-sun8i_5.32_armhf.deb linux-dtb-dev-sun8i_5.32_armhf.deb linux-image-dev-sun8i_5.32_armhf.deb
 ```
 
-This may take a while, especially the headers package, so I advise taking
-a break with coffee.
+This may take a while, especially the headers package, so I advise making
+a coffee break.
 
 After completion directory with old headers may be still present in `/usr/src/`.
-It can be safely removed if need.
+It can be safely removed if not needed.

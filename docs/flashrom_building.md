@@ -58,10 +58,9 @@ Flashing firmware with flashrom usage
 
 ```
 flashrom -w <ROM directory> -p internal
-
 ```
 
 E.g.:
 ```
-flashrom coreboot.rom -p internal
+flashrom -w coreboot.rom -p internal
 ```

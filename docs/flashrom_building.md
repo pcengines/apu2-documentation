@@ -21,7 +21,7 @@ apt-get install git -y
 apt-get install build-essential -y
 apt-get install libpci-dev -y
 apt-get install libusb-dev -y
-apt-get install libusbdev-1.0-0-dev -y
+apt-get install libusb-1.0-0-dev -y
 apt-get install libftdi-dev -y
 ```
 

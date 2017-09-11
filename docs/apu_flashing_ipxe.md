@@ -9,8 +9,8 @@ Intro
 Requirements
 ------------
 
-* Ethernet connetion to the network
-* iPXE server have to be online in the same network
+* Ethernet connection to the network
+* iPXE server have to be online and in the same network
 * PXE boot have to be enabled in SeaBIOS options
 * OS with installed `flashrom`
 * Serial connection between APUx and PC
@@ -103,10 +103,12 @@ OS booting should start.
 
 Number of OSes can be increased in the future.
 
-> For legacy versions of coreboot PXE server boot menu is incorrectly 
-displayed. Every displayed character is doubled.
+> When `Legacy Console Redirection` is turned on displayed characters are 
+doubled. It's beacause iPXE is outputting data to the serial console and
+to the standard output, which is serial console in the case described in this
+instruction.
 
-7. When the following prompt appears:
+7. When a prompt similar to the shown below appears:
 ```
 pcengines login: 
 
@@ -124,7 +126,7 @@ flashrom -w <directory to ROM> -p internal
 ```
 E.g.:
 ```
-flashrom -w /root/coreboot.rom -p internal
+flashrom -w /tmp/coreboot.rom -p internal
 ```
 
 After correct firmware flashing the following message should appear:
@@ -149,12 +151,12 @@ scp <ROM image> root@<IP of APUx to flash>:<directory to store ROM image on APUx
 E.g.:
 ```
 cd /home/me/coreboot/build
-scp coreboot.rom root@192.168.0.123:/root
+scp coreboot.rom root@192.168.0.123:/tmp
 ```
 Then to flash APUx type in the serial console:
 ```
 cd 
-flashrom -w coreboot.rom -p internal
+flashrom -w /tmp/coreboot.rom -p internal
 ```
 
 Enabling PXE boot in SeaBIOS

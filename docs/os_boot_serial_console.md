@@ -3,7 +3,7 @@ Enabling OS boot serial console and setting connection parameters
 
 # Intro
 -------
-* Instructions is written for Voyage Linux, but steps showed there should work
+* Instructions is written for Voyage Linux, but steps shown there should work
 for another Linux distributions
 * Used serial connection parameters: `baudrate`: 115200, `data bits`: 8, 
 `parity`: none, `stop bits`: 1
@@ -52,7 +52,7 @@ After that step settings of selected configuration should look like:
 ```
 title           Debian GNU/Linux, kernel 3.10.11
 root            (hd0,0)
-kernel          /boot/vmlinuz-3.10.11 root=UUID=f45cf8c7-311e-47d6-88d0-a3a8861f37be ro vga=normal console=tty0 console=ttyS0,115200n8
+kernel          /boot/vmlinuz-3.10.11 root=UUID=f45cf8c7-311e-47d6-88d0-a3a8861f37be ro console=ttyS0,115200n8
 initrd          /boot/initrd.img-3.10.11
 ```
 6. Save the changes and close the file. For `nano` it's `Ctrl+O` to save the 
@@ -86,7 +86,7 @@ automatically:
 nano /boot/grub/grub.conf
 ```
 
-Then add lines showed below to the file:
+Then add lines shown below to the file:
 
 ```
 serial --unit=1 --speed=19200
@@ -104,7 +104,7 @@ Save the changes and exit from the file (for `nano`: `Ctrl+O` next `Ctrl+X`).
 nano /etc/inittab
 ```
 
-Find uncommented line which looks similar to the showed below:
+Find uncommented line which looks similar to the shown below:
 
 ```
 T0:23:respawn:/sbin/getty -L ttyS0 115200
@@ -126,5 +126,5 @@ reboot
 
 > If you are using serial console to perform steps from this instruction take 
 a note that you should change connection parameters in used serial terminal 
-(e.g. `minicom`) too. Because characters won't be show correctly after 
+(e.g. `minicom`) too. Because characters won't be shown correctly after 
 `reboot`.

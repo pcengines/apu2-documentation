@@ -3,7 +3,7 @@ Enabling OS boot serial console and setting connection parameters
 
 # Intro
 -------
-* Instructions is written for Voyage Linux, but steps shown there should work
+* Instructions is written for Voyage Linux, but steps shown here should work
 for another Linux distributions
 * Used serial connection parameters: `baudrate`: 115200, `data bits`: 8, 
 `parity`: none, `stop bits`: 1

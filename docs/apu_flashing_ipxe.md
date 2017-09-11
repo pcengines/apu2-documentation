@@ -105,8 +105,7 @@ Number of OSes can be increased in the future.
 
 > When `Legacy Console Redirection` is turned on displayed characters are 
 doubled. It's beacause iPXE is outputting data to the serial console and
-to the standard output, which is serial console in the case described in this
-instruction.
+to the screen, which is emulated on serial console.
 
 7. When a prompt similar to the shown below appears:
 ```

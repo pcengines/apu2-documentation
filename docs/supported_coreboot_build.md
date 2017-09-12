@@ -4,8 +4,8 @@ Building firmware supported by coreboot
 Intro
 -----
 * Tested on Ubuntu 16.04 LTS
-* CPU with 4 threads is usaded in instruction as an example
-* Example IP address of PC Engines platform is `192.168.0.102`
+* CPU with 4 threads is used in instruction as an example
+* Example `PLATFORM_IP` of PC Engines platform is `192.168.0.102`
 * Git is required (type `sudo apt-get install git -y` to install git)
 
 Coreboot ROM building process

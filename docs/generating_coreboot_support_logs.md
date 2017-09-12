@@ -63,7 +63,7 @@ Eg.:
 
 You will be requested to enter `root` user password many times. It is 
 uncomfortable for a longer period of time. To avoid this requirement follow 
-[that steps](#enabling-possibility-to-SSH-login-without-entering-user-password)
+[those steps](#enabling-possibility-to-SSH-login-without-entering-user-password)
 
 After finishing that process information where logs were saved may be shown.
 Example output:
@@ -87,7 +87,7 @@ Eg.:
 Logs will be sent to the https://review.coreboot.org/cgit/board-status.git/
 repository automatically.
 
-If you have no SSH key added corretly to coreboot gerrit you will be promt to
+If you have no SSH key added correctly to coreboot gerrit you will be prompt to
 enter your user name and HTTP password. To generate temporary HTTP password
 enter to the settings of your coreboot [gerrit account](https://review.coreboot.org/#/settings/),
 select `HTTP Password` section and click on `Generate Password` button. 
@@ -106,10 +106,10 @@ Eg.:
 ```
 sudo ./util/board_status/board_status.sh -s /dev/ttyUSB0
 ```
-That method is not that comfortable that using SSH. Sometimes occur here 
-problem with logs formatting. What is more you have to press `Enter` when 
+That method is not that comfortable as SSH. Sometimes problems with logs 
+formatting may occur. What is more you have to press `Enter` when 
 you log to the OS, because first phase of logs collecting ends when grub
-starts. Second phase of logs collecting start after `Enter` pressing.
+starts. Second phase of logs collecting start after pressing `Enter`.
 
 Generating logs using earlier built ROM image
 ---------------------------------------------

@@ -10,8 +10,8 @@ Requirements
 ------------
 
 * Ethernet connection to the network
-* iPXE server have to be online and in the same network
-* PXE boot have to be enabled in SeaBIOS options
+* iPXE server has to be online and in the same network
+* PXE boot has to be enabled in SeaBIOS options
 * OS with installed `flashrom`
 * Serial connection between APUx and PC
 
@@ -117,6 +117,8 @@ Type `root` as login. Then next prompt should appear:
 Password: 
 ```
 Type `root` as password to finish logging process.
+
+> Steps shown above can be automated using Robot Framework and [this test](https://github.com/pcengines/apu-test-suite/pull/2/files).
 
 8. Now you can start flashing process. To flash firmware with `flashrom` usage
 type:

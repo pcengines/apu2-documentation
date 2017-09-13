@@ -9,7 +9,7 @@ Intro
 Requirements
 ------------
 * OS with `cbmem` and `dmesg` installed on the target board
-([`cbmem` installation instruction](cbmem_building.md))
+([`cbmem` installation instruction](./cbmem_building.md))
 * Coreboot gerrit account: https://review.coreboot.org/
 * Possibility to login to `root` user on the target board via SSH or enabled
 coreboot boot logs redirection to the serial console
@@ -19,13 +19,13 @@ coreboot boot logs redirection to the serial console
 Common steps for every generating logs process variant
 ------------------------------------------------------
  
-1. [Build coreboot ROM](supported_coreboot_build.md). 
+1. [Build coreboot ROM](./supported_coreboot_build.md). 
 
 It's important to don't delete ROM image, because script used to generate 
 support logs requires that image. Default directory of built ROM image is
 `coreboot/build/`.
 
-2. [Flash your device with flashrom usage](flashrom_building.md).
+2. [Flash your device with flashrom usage](./flashrom_building.md).
 
 If you have `flashrom` installed on your OS you can jump to 
 `Flashing firmware with flashrom usage` section of instruction linked above.

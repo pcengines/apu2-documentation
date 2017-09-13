@@ -146,6 +146,16 @@ cat ~/.ssh/id_rsa.pub | ssh root@192.168.0.100 'cat >> .ssh/authorized_keys'
 
 and enter the correct user password.
 
+If the following error message appears:
+```
+bash: .ssh/authorized_keys: No such file or directory
+```
+
+That means you have to create `.ssh` folder. To do this type:
+```
+cd
+mkdir .ssh
+```
 If there were no errors you should be able to connect to your target device via
 SSH without entering user password.
 

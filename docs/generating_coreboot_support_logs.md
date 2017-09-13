@@ -9,23 +9,23 @@ Intro
 Requirements
 ------------
 * OS with `cbmem` and `dmesg` installed on the target board
-([`cbmem` installation instruction](https://github.com/pcengines/apu2-documentation/blob/master/docs/cbmem_building.md))
+([`cbmem` installation instruction](cbmem_building.md))
 * Coreboot gerrit account: https://review.coreboot.org/
 * Possibility to login to `root` user on the target board via SSH or enabled
 coreboot boot logs redirection to the serial console
-* Git (type on slave device`apt-get install git -y` to install git on it)
+* Git (type on target device`apt-get install git -y` to install git on it)
 * Internet connection
 
 Common steps for every generating logs process variant
 ------------------------------------------------------
  
-1. [Build coreboot ROM](link to supported_coreboot_build.md). 
+1. [Build coreboot ROM](supported_coreboot_build.md). 
 
 It's important to don't delete ROM image, because script used to generate 
 support logs requires that image. Default directory of built ROM image is
 `coreboot/build/`.
 
-2. [Flash your device with flashrom usage](link to flashrom_building.md).
+2. [Flash your device with flashrom usage](flashrom_building.md).
 
 If you have `flashrom` installed on your OS you can jump to 
 `Flashing firmware with flashrom usage` section of instruction linked above.
@@ -146,7 +146,7 @@ cat ~/.ssh/id_rsa.pub | ssh root@192.168.0.100 'cat >> .ssh/authorized_keys'
 
 and enter the correct user password.
 
-If there were no errors you should be able to connect to your slave device via
+If there were no errors you should be able to connect to your target device via
 SSH without entering user password.
 
 Eg.:

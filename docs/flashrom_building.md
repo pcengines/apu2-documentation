@@ -17,12 +17,12 @@ Building process
 
 ```
 apt-get update \
-apt-get install git -y \
-apt-get install build-essential -y \
-apt-get install libpci-dev -y \
-apt-get install libusb-dev -y \
-apt-get install libusb-1.0-0-dev -y \
-apt-get install libftdi-dev -y
+	git -y \
+	build-essential -y \
+	libpci-dev -y \
+	libusb-dev -y \
+	libusb-1.0-0-dev -y \
+	libftdi-dev -y
 ```
 
 2. Clone flashrom repository.

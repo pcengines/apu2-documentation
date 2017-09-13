@@ -16,8 +16,11 @@ Building process
 1. Install all required packages.
 
 ```
-apt-get update \
-	git -y \
+apt-get update
+```
+Then:
+```
+apt-get install	git -y \
 	build-essential -y \
 	libpci-dev -y \
 	libusb-dev -y \

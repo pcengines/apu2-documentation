@@ -31,18 +31,16 @@ Eg.:
 sudo umount /dev/sdc*
 ```
 
-3. 2. Unzip downloaded file and Flash your CF flash with unzipped image:
+3. Unzip downloaded file and Flash your CF flash with unzipped image:
 
 ```
-unzip -p voyage-0.9.2.img.zip
+unzip -p voyage-0.9.2.img | pv | sudo dd of=<DIRECTORY_TO_CF_CARD_DEVICE> bs=16M
 
-```
-sudo dd if=voyage-0.9.2.img of=<DIRECTORY_TO_CF_CARD_DEVICE> bs=16M
 ```
 
 Eg.:
 ```
-sudo dd if=voyage-0.9.2.img of=/dev/sdc bs=16M
+unzip -p voyage-0.9.2.img | pv | sudo dd of=/dev/sdc bs=16M
 ```
 
 After succesful CF card flashing information similar to shown below may appear:

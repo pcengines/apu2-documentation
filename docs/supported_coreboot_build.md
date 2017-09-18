@@ -37,7 +37,7 @@ docker run --rm     -v ${PWD}:/workdir     -t -i pc-engines/apu2 bash
 
 4. Build crossgcc:
 
-> It's required only at first running.
+> It's required only on first run.
 
 ```
 cd /workdir/coreboot
@@ -49,8 +49,8 @@ make crossgcc-i386 CPUS=4
 
 5. Configure your build:
 
-If previously you built a ROM for another platform you should clean 
-configuration. You can make it by typing:
+If previously you've built a ROM for another platform you should clean 
+configuration. You make it so by typing:
 
 ```
 make distclean
@@ -96,7 +96,7 @@ To enable creating coreboot boot timestamps table select:
 ```
 General setup ---> [ ]Create a table of timestamps collected during boot
 ```
-Then press `Y` key to enable that function. If enabled `*` should appear:
+Then press `Y` key to enable that function. If enabled, `*` should appear:
 ```
 [*]Create a table of timestamps collected during boot
 ```

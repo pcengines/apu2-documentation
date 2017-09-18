@@ -3,7 +3,7 @@ Building Voyage Linux image for PC Engines ALIX platforms
 
 Intro
 -----
-* Example DIRECTORY_TO_CF_CARD_DEVICE used in instruction: `/dev/sdc`
+* Example DIRECTORY_TO_CF_CARD_DEVICE used in following instructions: `/dev/sdc`
 * Voyage Linux [image](http://pcengines.ch/file/voyage-0.9.2.img.zip) 
 downloaded from `http://pcengines.ch` website has no `flashrom` and `cbmem` 
 installed
@@ -16,7 +16,7 @@ set, which could be required for `coreboot 4.7.x`
 Requirements
 ------------
 * Compact Flash with a minimum of 1 GB of memory
-* Compact Flash cards reader
+* Compact Flash card reader
 
 Flashing CF card with Voyage Linux image from `http://pcengines.ch`
 -------------------------------------------------------------------
@@ -66,9 +66,9 @@ sync
 and wait until `sync` process end. After that `Dirty` and `Writeback` values
 should be near the `0` value. Now you can safety remove your CF card.
 
-> It's important to don't interrupt flashing process.
+> It's important to not interrupt the flashing process.
 
-After successful performing steps shown above Voyage Linux image may be 
+After successful performing steps shown above, Voyage Linux image may be 
 installed on your CF card.
 
 `cbmem` and `flashrom` installation
@@ -83,7 +83,7 @@ Boot to your OS and follow steps contained in the following instructions:
 Changing serial console baudrate
 --------------------------------
 
-To change set serial console baudrate to not default value follow steps 
+To change serial console baudrate to custom value follow steps 
 contained in [this instruction](./os_boot_serial_console.md).
 
 Voyage Linux kernel modification
@@ -107,7 +107,7 @@ That means that kernel version is `3.14.12`.
 Eg. for `3.14.12` is could be `3.14.X` version when `X >= 12`.
 Then extract the downloaded archive with kernel files.
 
-3. Send config file from target device `/boot` directory to your PC. It 
+3. Transfer config file from target device `/boot` directory to your PC. It 
 should be named similar to `config-3.14.12-voyage`.
 
 4. Rename config file to `.config` and place in the directory where 
@@ -129,7 +129,7 @@ make oldconfig
 
 You can be asked there for some kernel setting. Set them as you need. 
 
-7. Run configuration menu and enable wanted kernel elements:
+7. Run configuration menu and enable desired kernel elements:
 
 ```
 make menuconfig
@@ -147,7 +147,7 @@ make CPUS=$(nproc)
 make deb-pkg CPUS=$(nproc)
 ```
 
-Created packages should be in directory one upper
+Created packages should be in the directory one level above.
 
 7. Find package with `image` in name 
 (eg. `linux-image-3.10.107_3.10.107-2_i386.deb`) and send it to the target 
@@ -165,8 +165,8 @@ dpkg -i linux-image-3.10.107_3.10.107-2_i386.deb
 ```
 
 That process changes grub configuration. It adds new positions on grub menu 
-list. Often serial console redirections is disabled. To change this follow
+list. Often serial console redirection is disabled. To change this follow
 [this instruction](./os_boot_serial_console.md).
 
-9. After `reboot` system with updated kernel will be on the gryb menu list.
-It will have kernel version on the name.
+9. After `reboot` system with updated kernel will be on the Grub menu list.
+It will have kernel version contained within the name.

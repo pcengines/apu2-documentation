@@ -13,7 +13,7 @@ Checked configurations
 * Comparison with another ALIX.2D3 platform (correctly working board):
 
 There was no visible differences in appearance beetwen compared boards.
-They seems to have got the same periphery.
+They seems to have got the same peripherals.
 
 Tried to boot both platforms with the same CF card with Voyage Linux installed.
 Working platform booted to OS, booting logs were sent by serial console and 
@@ -38,15 +38,14 @@ connected.
 
 There is no switch on tested ALIX board. In case of a situation when the serial
 port is disabled pads of `S1` where shorted to enter to the boot configuration 
-menu as is written in [manual at page 11](http://www.pcengines.ch/pdf/alix2.pdf).
-This operation did not produce results. Informations didn't show in serial 
-console.
+menu as is written in [manual on page 11](http://www.pcengines.ch/pdf/alix2.pdf).
+This operation did not produce results. Output didn't show in serial console.
 
 * Different power supply voltages:
 
 Tested power supply voltages: 12 V, 18 V.
 There was no difference in operation of boards (working ALIX3D2 worked 
-correctly, not working board didn't start to work).
+correctly, not good board didn't start to work).
 
 Conclusion
 ----------

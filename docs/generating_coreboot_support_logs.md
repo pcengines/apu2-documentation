@@ -1,5 +1,5 @@
-Generating coreboot support logs and sending them to verify
-===========================================================
+Generating coreboot support logs and sending them for verification purposes
+===========================================================================
 
 Intro
 -----
@@ -16,19 +16,19 @@ coreboot boot logs redirection to the serial console
 * Git (type on target device`apt-get install git -y` to install git on it)
 * Internet connection
 
-Common steps for every generating logs process variant
-------------------------------------------------------
+Common steps for every log generation process
+---------------------------------------------
  
 1. [Build coreboot ROM](./supported_coreboot_build.md). 
 
-It's important to don't delete ROM image, because script used to generate 
+It's important to not delete the ROM image, because script used to generate 
 support logs requires that image. Default directory of built ROM image is
 `coreboot/build/`.
 
-2. [Flash your device with flashrom usage](./flashrom_building.md).
+2. [Flash your device with flashrom](./flashrom_building.md).
 
 If you have `flashrom` installed on your OS you can jump to 
-`Flashing firmware with flashrom usage` section of instruction linked above.
+`Flashing firmware with flashrom` section of instruction linked above.
 
 3. Enter to the `coreboot` directory. 
 
@@ -44,8 +44,8 @@ support logs.
 It's placed in `coreboot/util/board_status` directory. But don't enter there. 
 You have to stay in `coreboot` directory.
 
-> Sending logs to verify is descibred in `Generating logs and sending them to 
-verify` section.
+> Sending logs for verification is descibred in `Generating logs and sending 
+them for verification` section.
 
 Generating logs with SSH usage
 ------------------------------
@@ -70,8 +70,8 @@ Example output:
 ```
 output files are in /tmp/coreboot_board_status.XM0Q6Hn6/pcengines/alix2d/4.6-1329-g5bceca1c530c/2017-09-05T08_27_51Z
 ```
-Generating logs and sending them to verify
-------------------------------------------
+Generating logs and sending them for verification
+-------------------------------------------------
 
 To generate logs and then send them to coreboot supported boards repository
 add `-u` option:
@@ -87,17 +87,17 @@ Eg.:
 Logs will be sent to the https://review.coreboot.org/cgit/board-status.git/
 repository automatically.
 
-If you have no SSH key added correctly to coreboot gerrit you will be prompt to
-enter your user name and HTTP password. To generate temporary HTTP password
+If you have no SSH key added correctly to coreboot gerrit you will be prompted 
+to enter your user name and HTTP password. To generate temporary HTTP password
 enter to the settings of your coreboot [gerrit account](https://review.coreboot.org/#/settings/),
 select `HTTP Password` section and click on `Generate Password` button. 
 Generated password will appear next to the `Password` cell. You can use that 
-password to upload support logs with `board_status.sh` script usage.
+password to upload support logs with `board_status.sh` script.
 
-Generating logs with serial console usage
------------------------------------------
+Generating logs with serial console
+-----------------------------------
 
-There is possibility to get logs with serial port usage:
+There is a possibility to get logs with serial port:
 ```
 sudo ./util/board_status/board_status.sh -s <PLATFORM_SERIAL_DEVICE>
 ```
@@ -106,7 +106,7 @@ Eg.:
 ```
 sudo ./util/board_status/board_status.sh -s /dev/ttyUSB0
 ```
-That method is not that comfortable as SSH. Sometimes problems with logs 
+That method is not as comfortable as SSH. Sometimes problems with logs 
 formatting may occur. What is more you have to press `Enter` when 
 you log to the OS, because first phase of logs collecting ends when grub
 starts. Second phase of logs collecting start after pressing `Enter`.
@@ -126,8 +126,8 @@ Eg.:
 ./util/board_status/board_status.sh -i /tmp/coreboot.rom -r 192.168.0.100
 ```
 
-# Enabling possibility to SSH login without entering user password
-------------------------------------------------------------------
+# Enabling the possibility to SSH login without entering user password
+----------------------------------------------------------------------
 
 On master device:
 
@@ -137,11 +137,11 @@ ssh-keygen -t rsa
 ```
 2. Send generated public id via SSH:
 ```
-cat ~/.ssh/id_rsa.pub | ssh root@<PLATFORM_IP> 'cat >> .ssh/authorized_keys'
+ssh-copy-id root@<PLATFORM_IP>
 ```
 Eg.:
 ```
-cat ~/.ssh/id_rsa.pub | ssh root@192.168.0.100 'cat >> .ssh/authorized_keys'
+ssh-copy-id root@192.168.0.100
 ```
 
 and enter the correct user password.
@@ -162,7 +162,7 @@ SSH without entering user password.
 Eg.:
 
 ```
-arek@kal:~$ ssh root@192.168.0.112
+arek@kal:~$ ssh root@192.168.0.100
 Linux voyage 3.10.11 #2 SMP Thu Sep 7 11:36:30 UTC 2017 i586
 
 The programs included with the Debian GNU/Linux system are free software;

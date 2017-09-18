@@ -4,10 +4,12 @@ Building Voyage Linux image for PC Engines ALIX platforms
 Intro
 -----
 * Example DIRECTORY_TO_CF_CARD_DEVICE used in instruction: `/dev/sdc`
-* Voyage Linux image downloaded from `http://pcengines.ch` website has no
-`flashrom` and `cbmem` installed
-* Voyage Linux kernel of image downloaded from `http://pcengines.ch` website has
-`CONFIG_CPU_FREQ` option not set, which could be required for `coreboot 4.7.x`
+* Voyage Linux [image](http://pcengines.ch/file/voyage-0.9.2.img.zip) 
+downloaded from `http://pcengines.ch` website has no `flashrom` and `cbmem` 
+installed
+* Voyage Linux kernel of [image](http://pcengines.ch/file/voyage-0.9.2.img.zip) 
+downloaded from `http://pcengines.ch` website has `CONFIG_CPU_FREQ` option not 
+set, which could be required for `coreboot 4.7.x`
 * Linux Voyage default login/password: `root/voyage`
 * Linux Voyage default serial console baudrate: `38400`
 
@@ -49,6 +51,20 @@ After succesful CF card flashing information similar to shown below may appear:
 60+1 records out
 1014644736 bytes (1.0 GB, 968 MiB) copied, 32.4125 s, 31.3 MB/s
 ```
+
+But you still may check that data copying process has been finished. To check 
+that type in a new terminal or terminal tab:
+
+```
+watch grep -e Dirty: -e Writeback: /proc/meminfo
+```
+
+Then type in the first terminal command which cause cache dropping to device:
+```
+sync
+```
+and wait until `sync` process end. After that `Dirty` and `Writeback` values
+should be near the `0` value. Now you can safety remove your CF card.
 
 > It's important to don't interrupt flashing process.
 
@@ -103,8 +119,7 @@ extracted kernel files are placed.
 docker run --rm -v ${PWD}:/workdir -t -i pc-engines/apu2 bash
 ```
 
-If you don't have `pc-engines/apu2` environment built follow [this instruction](./building_env.md
-).
+If you don't have `pc-engines/apu2` environment built follow [this instruction](./building_env.md).
 
 6. Read old config file:
 

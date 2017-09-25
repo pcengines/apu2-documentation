@@ -32,3 +32,14 @@ Few more useful links below:
 * [One example of Intel chipset implementation](https://review.coreboot.org/#/c/19414/)
 
 * [Another example of Intel chipset implementation](https://review.coreboot.org/#/c/13131/)
+
+There is much work already done by Kyosti Malkki for AGESA [here](https://review.coreboot.org/#/c/19347/)
+I recommend to look at related topics too.
+
+This can be an inspiring source [AGESA: Add romstage timestamps](https://review.coreboot.org/#/c/20622/)
+
+I also advise to contact Kyosti and ask about the progress of his work. Maybe
+there is something we could do to help.
+
+
+

@@ -139,14 +139,15 @@ linux-headers-dev-sun8i_5.32_armhf.deb
 linux-source-dev-sun8i_5.32_all.deb
 
 ```
-There are also u-boot and source packages which are not necessary to update
-the Orange Pi. Send the following three packages to Orange Pi, via SCP for
+There are also headers and source packages which are not necessary to update
+the Orange Pi. Send the following four packages to Orange Pi, via SCP for
 example:
 
 ```
 scp linux-image-dev-sun8i_5.32_armhf.deb root@192.168.0.112:/root/
-scp linux-dtb-dev-sun8i_5.32_armhf.deb   root@192.168.0.112:/root/
-scp linux-headers-dev-sun8i_5.32_armhf.deb  root@192.168.0.112:/root/
+scp linux-dtb-dev-sun8i_5.32_armhf.deb root@192.168.0.112:/root/
+scp linux-firmware-image-dev-sun8i_5.32_armhf.deb root@192.168.0.112:/root/
+scp linux-u-boot-dev-orangepizero_5.32_armhf.deb root@192.168.0.112:/root/
 ```
 
 Now connect to Orange Pi, via SSH for example, as root. Default password is
@@ -154,11 +155,11 @@ Now connect to Orange Pi, via SSH for example, as root. Default password is
 
 ```
 cd
-dpkg -i linux-headers-dev-sun8i_5.32_armhf.deb linux-dtb-dev-sun8i_5.32_armhf.deb linux-image-dev-sun8i_5.32_armhf.deb
+dpkg -i linux-firmware-image-dev-sun8i_5.32_armhf.deb
+dpkg -i linux-dtb-dev-sun8i_5.32_armhf.deb
+dpkg -i linux-image-dev-sun8i_5.32_armhf.deb
+dpkg -i linux-u-boot-dev-orangepizero_5.32_armhf.deb
 ```
 
-This may take a while, especially the headers package, so I advise making
-a coffee break.
-
-After completion directory with old headers may be still present in `/usr/src/`.
-It can be safely removed if not needed.
+> I recommend to install them one by one, because the operation takes some time
+> and happens to hang.

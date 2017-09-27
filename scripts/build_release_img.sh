@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RELEASE_DIR=/release
+RELEASE_DIR=${RELEASE_DIR:-/release}
 ROOT_DIR=$RELEASE_DIR/apu2
 IPXE_PATH=$ROOT_DIR/ipxe
 APU2_PATH=$ROOT_DIR/apu2-documentation

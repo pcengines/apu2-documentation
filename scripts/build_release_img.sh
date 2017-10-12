@@ -58,7 +58,7 @@ create_image () {
 pack_release () {
   cd $CB_PATH
   VERSION=`git describe --tags`
-  TARGET=`cat .config | grep CONFIG_MAINBOARD_DIR | sed -e 's/.*pcengines\///' -e 's/.$//'`
+  TARGET=`cat .config | grep CONFIG_VARIANT_DIR= | sed -e 's/CONFIG_VARIANT_DIR=\"//' -e 's/.$//'`
   OUT_FILE_NAME="${TARGET}_${VERSION}.rom"
 
   cp build/coreboot.rom "${RELEASE_DIR}/${OUT_FILE_NAME}" && \

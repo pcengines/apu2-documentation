@@ -2,10 +2,49 @@ Overview
 --------
 
 This repository contain documentation and scripts that aim to help PC Engines
-APU2 platform users and developers to customize firmware to their needs.
+apuX platform users and developers to customize firmware to their needs.
 
-Please take a look at [changelog](CHANGELOG.md) to get information about recent
-update.
+Binary releases
+---------------
+
+Please take a look at changelog form more information:
+
+* [v4.6.x changelog](https://github.com/pcengines/release_manifests/blob/coreboot-4.6.x/CHANGELOG.md)
+* [v4.5.x changelog](https://github.com/pcengines/release_manifests/blob/coreboot-4.5.x/CHANGELOG.md)
+* [v4.0.x changelog](https://github.com/pcengines/release_manifests/blob/coreboot-4.0.x/CHANGELOG.md)
+
+
+## Mainline
+
+### apu2
+
+* [apu2 v4.5.5](http://pcengines.ch/file/apu2_v4.5.5.rom.tar.gz)
+* [apu2 v4.6.1](http://pcengines.ch/file/apu2_v4.6.1.rom.tar.gz)
+
+### apu3
+
+* [apu3 v4.5.5](http://pcengines.ch/file/apu3_v4.5.5.rom.tar.gz)
+* [apu3 v4.6.1](http://pcengines.ch/file/apu3_v4.6.1.rom.tar.gz)
+
+### apu5
+
+* [apu5 v4.6.1](http://pcengines.ch/file/apu5_v4.6.1.rom.tar.gz)
+
+## Legacy
+
+### apu2
+
+* [apu2 v4.0.12](http://pcengines.ch/file/apu2_v4.0.12.rom.tar.gz)
+* [apu2 v4.0.11](http://pcengines.ch/file/apu2_v4.0.11.rom.tar.gz)
+
+### apu3
+
+* [apu3 v4.0.12](http://pcengines.ch/file/apu3_v4.0.12.rom.tar.gz)
+* [apu3 v4.0.11](http://pcengines.ch/file/apu3_v4.0.11.rom.tar.gz)
+
+### apu5
+
+* [apu5 v4.0.12](http://pcengines.ch/file/apu5_v4.0.12.rom.tar.gz)
 
 Building firmware using APU2 image builder
 ------------------------------------------

@@ -18,33 +18,33 @@ Please take a look at changelog form more information:
 
 ### apu2
 
-* [apu2 v4.5.5](http://pcengines.ch/file/apu2_v4.5.5.rom.tar.gz)
-* [apu2 v4.6.1](http://pcengines.ch/file/apu2_v4.6.1.rom.tar.gz)
+* [apu2 v4.5.5](http://pcengines.ch/file/apu2_v4.5.5.rom.tar.gz) [2017-02-24]
+* [apu2 v4.6.1](http://pcengines.ch/file/apu2_v4.6.1.rom.tar.gz) [2017-08-31]
 
 ### apu3
 
-* [apu3 v4.5.5](http://pcengines.ch/file/apu3_v4.5.5.rom.tar.gz)
-* [apu3 v4.6.1](http://pcengines.ch/file/apu3_v4.6.1.rom.tar.gz)
+* [apu3 v4.5.5](http://pcengines.ch/file/apu3_v4.5.5.rom.tar.gz) [2017-02-24]
+* [apu3 v4.6.1](http://pcengines.ch/file/apu3_v4.6.1.rom.tar.gz) [2017-08-31]
 
 ### apu5
 
-* [apu5 v4.6.1](http://pcengines.ch/file/apu5_v4.6.1.rom.tar.gz)
+* [apu5 v4.6.1](http://pcengines.ch/file/apu5_v4.6.1.rom.tar.gz) [2017-08-31]
 
 ## Legacy
 
 ### apu2
 
-* [apu2 v4.0.12](http://pcengines.ch/file/apu2_v4.0.12.rom.tar.gz)
-* [apu2 v4.0.11](http://pcengines.ch/file/apu2_v4.0.11.rom.tar.gz)
+* [apu2 v4.0.12](http://pcengines.ch/file/apu2_v4.0.12.rom.tar.gz) [2017-08-31]
+* [apu2 v4.0.11](http://pcengines.ch/file/apu2_v4.0.11.rom.tar.gz) [2017-07-21]
 
 ### apu3
 
-* [apu3 v4.0.12](http://pcengines.ch/file/apu3_v4.0.12.rom.tar.gz)
-* [apu3 v4.0.11](http://pcengines.ch/file/apu3_v4.0.11.rom.tar.gz)
+* [apu3 v4.0.12](http://pcengines.ch/file/apu3_v4.0.12.rom.tar.gz) [2017-08-31]
+* [apu3 v4.0.11](http://pcengines.ch/file/apu3_v4.0.11.rom.tar.gz) [2017-07-21]
 
 ### apu5
 
-* [apu5 v4.0.12](http://pcengines.ch/file/apu5_v4.0.12.rom.tar.gz)
+* [apu5 v4.0.12](http://pcengines.ch/file/apu5_v4.0.12.rom.tar.gz) [2017-08-31]
 
 Building firmware using APU2 image builder
 ------------------------------------------

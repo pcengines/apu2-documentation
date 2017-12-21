@@ -27,13 +27,20 @@ as a console. These parameters allows to achieve such effect:
 
 ```
 CONSOLE flag_val
-If flag_val is 0, disable output to the normal video console. If flag_val is 1, enable output to the video console (this is the default). Some BIOSes try to forward this to the serial console which can make a total mess of things, so this option lets you disable the video console on these systems.
+If flag_val is 0, disable output to the normal video console. If flag_val is 1,
+enable output to the video console (this is the default). Some BIOSes try to
+forward this to the serial console which can make a total mess of things, so
+this option lets you disable the video console on these systems.
 
 SERIAL port [baudrate [flowcontrol]]
-Enable a serial port to act as the console. "port" is a number (0 = /dev/ttyS0 = COM1, etc.) or an I/O port address (e.g. 0x3F8). If "baudrate" is omitted, the baud rate defaults to 9600 bps. The serial parameters are hardcoded to 8 bits, no parity and 1 stop bit.
+Enable a serial port to act as the console. "port" is a number
+(0 = /dev/ttyS0 = COM1, etc.) or an I/O port address (e.g. 0x3F8). If "baudrate"
+is omitted, the baud rate defaults to 9600 bps. The serial parameters are
+hardcoded to 8 bits, no parity and 1 stop bit.
 ```
 
-These parameters must be placed in `pxelinux.cfg`. Example of correct `pxelinux.cfg`:
+These parameters must be placed in `pxelinux.cfg`. Example of correct
+`pxelinux.cfg`:
 
 ```
 # D-I config version 2.0

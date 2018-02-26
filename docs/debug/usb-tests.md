@@ -288,4 +288,4 @@ Tested coreboot v4.0.14 with SeaBIOS 1.11.0.3:
 |     3     |   PASS   |   PASS   |  PASS  |
 
 Other results of not-working sticks are presented in this
-[document](docs/debug/usb-debugging.md)
+[document](https://github.com/pcengines/apu2-documentation/blob/master/docs/debug/usb-debugging.md)

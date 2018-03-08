@@ -36,15 +36,18 @@ Please take a look at changelog form more information:
 
 * 2017-08-31 - [apu2 v4.0.12](http://pcengines.ch/file/apu2_v4.0.12.rom.tar.gz)
 * 2017-07-21 - [apu2 v4.0.11](http://pcengines.ch/file/apu2_v4.0.11.rom.tar.gz)
+* 2018-03-01 - [apu2 v4.0.15](https://cloud.3mdeb.com/index.php/s/13od9cvY0LEmREv/download)
 
 ### apu3
 
 * 2017-08-31 - [apu3 v4.0.12](http://pcengines.ch/file/apu3_v4.0.12.rom.tar.gz)
 * 2017-07-21 - [apu3 v4.0.11](http://pcengines.ch/file/apu3_v4.0.11.rom.tar.gz)
+* 2018-03-01 - [apu3 v4.0.15](https://cloud.3mdeb.com/index.php/s/J3Z5nAbXFP6y2Wz/download)
 
 ### apu5
 
 * 2017-08-31 - [apu5 v4.0.12](http://pcengines.ch/file/apu5_v4.0.12.rom.tar.gz)
+* 2018-03-01 - [apu5 v4.0.15](https://cloud.3mdeb.com/index.php/s/ircYOIP1FsLwtsv/download)
 
 Building firmware using APU2 image builder
 ------------------------------------------

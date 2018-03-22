@@ -1,7 +1,7 @@
 ## Intro
 
 Following document describes release process for new versions of firmware for PC
-Engines APU2 and APU3 platform. It is intended for developers who want to create
+Engines APU2, APU3, APU4 and APU5 platform. It is intended for developers who want to create
 fully featured binaries and test those with various versions of sortbootorder,
 SeaBIOS, memtest86+ or iPXE.
 
@@ -23,9 +23,9 @@ repo sync --force-sync
 ```
 
 where:
-* `<tag_release>` - is the release version number (e.g. `v4.5.3.1`)
+* `<tag_release>` - is the release version number (e.g. `v4.6.4`)
 * `<branch_name>` - is the release branch (i.e. `coreboot-4.0.x` for legacy,
-and `coreboot-4.5.x` for mainline
+and `coreboot-4.6.x` for mainline
 
 You can look-up changes, available branches and release tags on this
 [github repository](https://github.com/pcengines/release_manifests).
@@ -46,8 +46,10 @@ exists).
 Assuming you initialized the repo with *mainline* release:
 
 ```
-./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml menuconfig
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml
 ```
+
+If config file was not created yet, the menuconfig will pop up.
 
 Please choose:
 
@@ -56,30 +58,27 @@ Mainboard -> Mainboard vendor -> PC Engines
 Mainboard -> Mainboard model  -> APU2
 or
 Mainboard -> Mainboard model  -> APU3
+or
+Mainboard -> Mainboard model  -> APU4
+or
+Mainboard -> Mainboard model  -> APU5
 ```
 
 All other pieces will be set according to recent release configuration.
 *coreboot* image will start to build after exiting menu.
 
-For *legacy* release you can use this command. You don't need to run
-`menuconfig` first, because *legacy* release get's initialized by custom
-`.config` file:
+For *legacy* release you can use this command:
 ```
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build
 ```
 
-For APU3 target in *legacy* build this command should be used:
-```
-./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build apu3
-```
-
-For APU5 target in *legacy* build:
-```
-./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build apu5
-```
-
 There are also additional commands like:
 ```
+# menuconfig
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml menuconfig
+# or for legacy
+./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build menuconfig
+
 # distclean
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh build-ml distclean
 # or for legacy

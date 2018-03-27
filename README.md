@@ -26,6 +26,10 @@ Please take a look at changelog form more information:
 * 2017-02-24 - [apu3 v4.5.5](http://pcengines.ch/file/apu3_v4.5.5.rom.tar.gz)
 * 2017-08-31 - [apu3 v4.6.1](http://pcengines.ch/file/apu3_v4.6.1.rom.tar.gz)
 
+### apu4
+
+* 2018-03-01 - [apu4 v4.6.7](https://cloud.3mdeb.com/index.php/s/IsWijTyWw8MFY2Y)
+
 ### apu5
 
 * 2017-08-31 - [apu5 v4.6.1](http://pcengines.ch/file/apu5_v4.6.1.rom.tar.gz)

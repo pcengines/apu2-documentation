@@ -15,12 +15,12 @@ medias:
 
 *1 - issues with installation and system functionality (installation break,
      unwanted reboots), can be fixed by adding a hint `hint.ahci.0.msi="0"`,
-     for more information see this [document](docs/pfSense-install-guide.md)
+     for more information see this [document](pfSense-install-guide.md)
 
 *2 - all apu boards have problems with USB 3.x stick detection in BIOS,
      system is working properly, but after reboot/warmboot/coldboot USB stick
      may not appear in BIOS boot menu (depends on the stick, well working sticks
-     are mentioned in this [document](docs/debug/usb-tests.md))
+     are mentioned in this [document](debug/usb-tests.md))
 
 X1 - Voyage Linux is bootable on SD card and works well in read-only mode,
      remounting as read-write and writing changes to SD sometimes results
@@ -105,4 +105,4 @@ SMART support is: Available - device has SMART capability.
 SMART support is: Enabled
 ```
 
-USB sticks parameters are presented in this document: [USB tests](docs/debug/usb-tests.md)
+USB sticks parameters are presented in this document: [USB tests](debug/usb-tests.md)

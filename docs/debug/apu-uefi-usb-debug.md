@@ -18,6 +18,8 @@ affects detectability of USB sticks (SeaBIOS and/or coreboot debug as well).
 - [Experiment conditions](#experiment-conditions)
 - [SeaBIOS](#seabios)
 - [Tianocore UEFI payload](#tianocore-uefi-payload)
+- [PCI configuration](#pci-configuration)
+- [Test summary](#test-summary)
 
 ## Experiment conditions:
 
@@ -426,3 +428,26 @@ Device mapping table
 ```
 
 Only 1 USB device is detected: `USB(0x0,0x0)`
+
+## PCI configuration
+
+Dumping PCI resgisters configuring the xHCI on the good and bad board did not
+reveal anything suspicious. Only one register differs between the boards.
+
+D10F0x4C_x4000_0008 USB Common PHY Calibration and Control:
+- bad board: `0x33320330`
+- good board: `0x2b320328`
+```
+
+The difference lies in the automatic calibration which can be different on each board.
+
+
+## Test summary
+
+Test performed with 2 pairs of sticks: Sony + Intenso, 2x Kingston. Each boot
+sequence repeated 10 times.
+
+|Binarytype \ board| WN1226344_1749 | WN1142384_1708 | WN1142380_1708 |
+|------------------|----------------|----------------|----------------|
+|v4.6.7 based no debug| fail top port*| fail top port |OK |
+|v4.6.7 based with SeaBIOS debug level 8|  fail top port | fail top port | fail top port|

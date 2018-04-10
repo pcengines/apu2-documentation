@@ -5,6 +5,7 @@ Release notes describing changes, fixes and known issues in PC Engines apux
 releases:
 
 - [Mainline releases](#mainline-releases)
+	- [v4.6.8](#v468)
 	- [v4.6.7](#v467)
 	- [v4.6.6](#v466)
 	- [v4.6.5](#v465)
@@ -14,6 +15,7 @@ releases:
 	- [v4.6.1](#v461)
 
 - [Legacy releases](#legacy-releases)
+	- [v4.0.16](#v4016)
 	- [v4.0.15](#v4015)
 	- [v4.0.14](#v4014)
 	- [v4.0.13](#v4013)
@@ -23,6 +25,29 @@ releases:
 	- [v4.0.9](#v409)
 
 ## Mainline releases
+
+### v4.6.8
+
+Release date: 2018-04-06
+
+- Fixed/added:
+    - support for apu1
+    - S1 button feature (serial console enable)
+    - switched SATA controller mode from IDE to AHCI mode
+- Knowns issues:
+    - some PCIe cards are not detected on certain OSes
+    - booting with 2 USB 3.x sticks plugged in apu4 sometimes results in
+      detecting only 1 stick
+    - certain USB 3.x sticks happen to not appear in boot menu
+    - sortbootorder boots quite slowly on apu1
+    - memtest86+ does not work on apu1
+
+Binaries:
+- [apu1 v4.6.8](https://cloud.3mdeb.com/index.php/s/TCTOzAMqmnOVKYr/download)
+- [apu2 v4.6.8](https://cloud.3mdeb.com/index.php/s/apIlDj1x7hVWpZq/download)
+- [apu3 v4.6.8](https://cloud.3mdeb.com/index.php/s/SV145FjpQSxbzHH/download)
+- [apu4 v4.6.8](https://cloud.3mdeb.com/index.php/s/VyRfAPwWhaKUgZr/download)
+- [apu5 v4.6.8](https://cloud.3mdeb.com/index.php/s/OjOuV3b1AAJVcYi/download)
 
 ### v4.6.7
 
@@ -36,6 +61,7 @@ Release date: 2018-03-01
 - Knowns issues:
     - pfSense installation may fail on hard disks - [workaround](pfSense-install-guide.md)
     - some PCIe cards are not detected on certain OSes
+    - certain USB 3.x sticks happen to not appear in boot menu
 
 Binaries:
 - [apu2 v4.6.7](https://cloud.3mdeb.com/index.php/s/VLbTs6yHKkv1rmX/download)
@@ -191,6 +217,22 @@ Binaries:
 
 ## Legacy releases
 
+### v4.0.16
+
+Release date: 2018-04-06
+
+- Fixed/added:
+    - S1 button feature (serial console enable)
+    - apu4 support
+- Known issues:
+    - certain USB 3.x sticks happen to not appear in boot menu
+
+Binaries:
+- [apu2 v4.0.16](https://cloud.3mdeb.com/index.php/s/UgjMcsbo8CzB6uy/download)
+- [apu3 v4.0.16](https://cloud.3mdeb.com/index.php/s/QIXjGGoGfP7oe4A/download)
+- [apu4 v4.0.16](https://cloud.3mdeb.com/index.php/s/LbgBDWuugzsmDWT/download)
+- [apu5 v4.0.16](https://cloud.3mdeb.com/index.php/s/IJwwKE1zQCe8dYq/download)
+
 ### v4.0.15
 
 Release date: 2018-03-01
@@ -204,7 +246,7 @@ Release date: 2018-03-01
     - updated SeaBIOS to 1.11.0.3 (xHCI timeouts adjusted - USB 3.x
       sticks detection rate increased)
 - Known issues:
-    - USB 3.x sticks happen to not appear in boot menu
+    - certain USB 3.x sticks happen to not appear in boot menu
 
 Binaries:
 - [apu2 v4.0.15](https://cloud.3mdeb.com/index.php/s/13od9cvY0LEmREv/download)
@@ -219,7 +261,7 @@ Release date: 2017-12-22
     - updated SeaBIOS to 1.11.0.2 (removed sgabios)
     - iPXE is built from official iPXE repository
 - Known issues:
-    - USB 3.x sticks happen to not appear in boot menu
+    - certain USB 3.x sticks happen to not appear in boot menu
     - wrong names in SMBIOS causes some modules not being loaded on
       certain OSes
     - restoring default configuration in sortbootorder works only for
@@ -239,7 +281,7 @@ Release date: 2017-09-29
     - removed duplicated sign-of-life
     - sign-of-life do appears right after power on now
 - Known issues:
-    - USB 3.x sticks happen to not appear in boot menu
+    - certain USB 3.x sticks happen to not appear in boot menu
     - wrong names in SMBIOS causes some modules not being loaded on
       certain OSes
 
@@ -255,7 +297,7 @@ Release date: 2017-08-30
 - Fixed/added:
     - apu5 support
 - Known issues:
-    - USB 3.x sticks happen to not appear in boot menu
+    - certain USB 3.x sticks happen to not appear in boot menu
     - wrong names in SMBIOS causes some modules not being loaded on
       certain OSes
     - restoring default configuration in sortbootorder works only for
@@ -273,7 +315,7 @@ Release date: 2017-07-21
 - Fixed/added:
     - force mPCIe2 CLK option in sortbootorder
 - Known issues:
-    - USB 3.x sticks happen to not appear in boot menu
+    - certain USB 3.x sticks happen to not appear in boot menu
     - restoring default configuration in sortbootorder works only for
       bootorder
 
@@ -288,7 +330,7 @@ Release date: 2017-06-30
 - Fixed/added:
     - sortbootorder is now available in Kconfig
 - Known issues:
-    - USB 3.x sticks happen to not appear in boot menu
+    - certain USB 3.x sticks happen to not appear in boot menu
     - restoring default configuration in sortbootorder works only for
       bootorder
 
@@ -303,7 +345,7 @@ Release date: 2017-05-30
 - Fixed/added:
     - minor fixes to sortbootorder used letters
 - Known issues:
-    - USB 3.x sticks happen to not appear in boot menu
+    - certain USB 3.x sticks happen to not appear in boot menu
     - restoring default configuration in sortbootorder works only for
       bootorder
 

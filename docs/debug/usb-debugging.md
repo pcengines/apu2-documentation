@@ -190,7 +190,7 @@ wire impedance fall because of the temperature fall).
 
 apu4 boards seem to have problems with detecting two USB 3.x sticks
 simultaneously. To ensure repeatable results, identical sticks with identical
-content were used:
+content were used in the tests:
 
 ```
 Device Descriptor:
@@ -213,38 +213,39 @@ Device Descriptor:
 In the first place it is worth mentioning that xHCI initialisation is done in
 coreboot by setting just one boolean variable to TRUE. AGESA handles out the
 rest (xHCI fimrware loading, setting port routing, power management etc.) as
-specified in BKDG. Used xHCi firmware is the newest available.
+specified in BKDG. Used xHCI firmware is the newest available.
 
-Interfacing with with USB devices is done in SeaBIOS via dedicated xHCi PCI
+Interfacing with with USB devices is done in SeaBIOS via dedicated xHCI PCI
 registers and xHCI memory mapped IO configuration registers, so there is no
-mistake in the implementation (but not every register is documented in BKDG,
-some registers were assumed according to Intel e8000 SoC datasheet which
-described every register and every bit, example: BKDG describes only 1 bit in
-port status and control register, rest is "reserved").
+mistake in the implementation (however not all registers are documented in BKDG,
+we had to assume some register content according to Intel e8000 SoC datasheet
+which described every register and every bit, example: BKDG describes only 1 bit
+in port status and control register, rest is "reserved").
 
 After deep investigation with verbose debug output in SeaBIOS we have discovered
-that one port is not functioning properly (bottom one). It turns out that after
-a hub reset when SeaBIOS is polling `USB Port Status and Control` register for
+that one port is not functioning properly (bottom one). It turned out that after
+a hub reset, when SeaBIOS is polling `USB Port Status and Control` register for
 `Current Connect Status` bit (device detection procedure), this bit is not being
-asserted even if polling time is significantly increased. This bit is updated by
-hardware. USB2.0 sticks does not have such problems because they do not use
-Super Speed TX and RX lines and require a manual reset. USB3.x sticks are reset
-automatically by host controller after host controller reset.
+asserted even if polling time is significantly increased (this bit is updated by
+hardware). If this bit is not asserted, USB 3.0 protocol can not kick in. Given
+that we suspect an electrical issue on the Super Speed TX and RX lines which are
+used in the device detection procedure. USB2.0 sticks does not have such
+problems because they do not use Super Speed TX and RX lines.
 
-SeaBIOS has also implemented a delay called `XHCI_TIME_POST_POWER` defined at
+When the device is detected the USB protocol kicks in and USB stick is
+configured properly (although a KINGSTON USB3.1 stick gives weird responses
+during adress command which were described earlier in this document).
+
+SeaBIOS has also implemented a delay called `XHCI_TIME_POST_POWER` defined as
 100ms. After host controller reset, platform waits 100ms for power stabilization
-on USB HUB. Increasing the delay to 200 or 250 seconds does not make any
-difference in device detection.
+on USB hub. Unfortunately increasing the delay to 200 or 250 seconds does not
+make any difference in device detection.
 
 We did some improvements in the terms of timings again, increased slightly the
 detection maximum time etc. As a result we were able to improve the detection
 rate slightly and even make two ports work on the apu4b Serial Number:
 WN1226344_1749. But still the other two apu4a boards we had available do not
 detect USB stick in bottom port (`Current Connect Status` bit not asserted).
-
-When the device is detected the USB protocol kicks in and USB stick is
-configured properly (although a KINGSTON USB3.1 stick gives weird responses
-during adress command which were described earlier in this document).
 
 We have carried out some test on the debug binary to show the statistics of
 detection and `Current Connect Status` bit assertion. The problem exists only on
@@ -264,8 +265,44 @@ The table shows the rate of `Current Connect Status` bit assertion in
 corresponding hub ports. The table clearly shows the "toxic" port, but it is not
 affecting the neighbouring port.
 
+What is interesting, on the apu4a board when cross-swapped the sticks, the top
+port started to be "toxic". It turned out that one stick is not detected on any
+port on that particular apu4a board (however it is detected on apu4b and apu2c
+tested boards). Despite identical manufacturer, product id and content the
+sticks behave in different way on this particular board. To confirm it, a not
+working stick was exchanged with following stick:
+
+```
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               3.00
+  bDeviceClass            0 (Defined at Interface level)
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0         9
+  idVendor           0x090c Silicon Motion, Inc. - Taiwan (formerly Feiya Technology Corp.)
+  idProduct          0x1000 Flash Drive
+  bcdDevice           11.00
+  iManufacturer           1 Intenso
+  iProduct                2 Intenso Premium Line
+  iSerial                 3 0130000000021889
+```
+
+Now both ports detected USB3.0 sticks:
+
+```
+Select boot device:
+
+1. USB MSC Drive Kingston DataTraveler 3.0 PMAP
+2. USB MSC Drive Intenso Premium Line 1100
+3. AHCI/0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+4. Payload [memtest]
+5. Payload [setup]
+```
+
 Taking all results above into consideration, we suspect an eletrical problem on
-the USB3.0 lines. The eletrical level detection accordign to USB3.x spec is as
+the USB3.0 lines. The eletrical level detection according to USB3.x spec is as
 follows:
 
 ```
@@ -290,10 +327,10 @@ dictated by the Transmitter impedance, the series capacitor, the interconnect
 capacitance, and the Receiver termination.
 ```
 
-So basically if eletrical characteristics of the USB3.x lines change, the charge
-time can be improper, causing hardware be unable to detect device. Eletrical
-engineer should investigate the USB3.0 lines and check them on defected apu4
-board and other working board like apu2 in order to exclude the possibility of
-wrong board layout, wiring etc. Without it we can not possibly make any step
-further.
+So basically if impedance of the USB3.x lines does not change due to stick
+presence, the charge time will remain the same, causing hardware be unable to
+detect device. Eletrical engineer should investigate the USB3.0 lines and check
+them on apu4 board (the not-working scenario) and other working board like apu2
+in order to exclude the possibility of wrong board layout, wiring etc. Without
+a report we can not possibly make any step further.
 

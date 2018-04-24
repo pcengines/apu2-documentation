@@ -301,8 +301,6 @@ Select boot device:
 5. Payload [setup]
 ```
 
-That still do not explain why other
-
 Taking all results above into consideration, we suspect an eletrical problems on
 the USB3.0 lines or on the physical connection. After looking onto not-working
 USB3.0 stick I noticed that SSTX+ line was a little bit curved downside, which

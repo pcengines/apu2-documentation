@@ -252,7 +252,7 @@ detection and `Current Connect Status` bit assertion. The problem exists only on
 apu4 boards, so to compare the results, apu2 board was used too:
 
 |port\board|apu2c|apu4a|apu4b|
-|----|----|----|
+|----|----|----|-----|
 |top| 100% | 100% | 100% |
 |bottom| 100% | 0% | 100% |
 
@@ -309,7 +309,7 @@ SSTX+ pin upside the stick was suddenly detected properly. Proper detection has
 been confirmed with automated validation test with apu4_v4.6.8 image:
 
 |port\board|apu4a 1|apu4a 2|apu4b|
-|----------|-----|-----|
+|----------|-----|-----|-----|
 | top | cold:54%, warm:OK, reset:OK | cold:OK, warm:OK, reset:OK | cold:OK, warm:OK, reset:OK |
 | bottom | cold:OK, warm:OK, reset:OK | cold:OK, warm:OK, reset:68% | cold:OK, warm:OK, reset:OK |
 

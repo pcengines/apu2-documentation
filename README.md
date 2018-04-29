@@ -8,11 +8,9 @@ Binary releases
 ---------------
 
 All information about firmware releases (including changes, fixes and known
-issues) are available on the PC Engines Github site:
-https://pcengines.github.io/
+issues) are available on the PC Engines Github site [pcengines.github.io](https://pcengines.github.io/).
 
 All the newest binaries can be found there.
-
 
 Also please take a look at changelogs:
 
@@ -28,7 +26,7 @@ Since releases v4.6.9 and v4.0.17 build process has been simplified.
 PC Engines firmware builder is a dedicated tool to build fully featured apu
 firmware binaries using separated docker environment. It provides users-friendly
 scripts that allow to build release and custom binaries. For more information
-and usage details please visit: https://github.com/pcengines/pce-fw-builder
+and usage details please visit: [pce-fw-builder](https://github.com/pcengines/pce-fw-builder).
 
 For releases older than v4.0.17 and v4.6.9 use the procedure described in this
 [document](docs/release_process.md)
@@ -71,12 +69,6 @@ We are in favor of [Test Driven Bug Fixing (TDBF)](https://geeknarrator.com/2018
 6. If results are accepted merge it to `release` branch
 7. Add tag, which should trigger CI and publish binaries
 8. Merge release branch to develop
-
-Other resources
-----------------
-
-* [sortbootorder payload](https://github.com/pcengines/sortbootorder)
-  - coreboot payload that give ability to make persistent changes to boot order
 
 Contribute
 ----------

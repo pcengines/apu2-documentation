@@ -40,12 +40,28 @@ apuX over iPXE.
 ```
 git clone https://github.com/3mdeb/pxe-server.git
 cd pxe-server
-NFS_SRV_IP=<host-pc-ip> ./init.sh
+NFS_SRV_IP=<your_ip> ./init.sh
 ./start.sh
 ```
 
 Please note that you may have NFS server running on host what leads to ports
 conflicts.
+
+After starting NFS and HTTP you can boot apuX. Please enable network booting
+using [sortbootorder](https://github.com/pcengines/sortbootorder#theory-of-operation).
+
+```
+iPXE> ifconf net0
+iPXE> dhcp net0
+iPXE> chain http://<your_ip>:8000/menu.ipxe
+```
+
+Choose `Debian stable netboot 4.14.y` after boot login (`[root:debian]`) and
+run:
+
+```
+flashrom -p internal -w apuX_x.y.z.rom
+```
 
 ## Known issues
 

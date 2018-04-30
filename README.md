@@ -31,6 +31,41 @@ If you have any problems with `pce-fw-builder` please report through [project is
 Flashing PC Engines firmware
 ----------------------------
 
+# Using iPXE
+
+This option assume that your apuX is in the same networks as your PC. Your PC
+in this case us used as HTTP and NFS server, which will be utilized to boot
+apuX over iPXE.
+
+```
+git clone https://github.com/3mdeb/pxe-server.git
+cd pxe-server
+NFS_SRV_IP=<host-pc-ip> ./init.sh
+./start.sh
+```
+
+Please note that you may have NFS server running on host what leads to ports
+conflicts.
+
+## Known issues
+
+### Incorrect privileges
+
+```
+$ ./start.sh
+Error checking context: 'can't stat '/path/pxe-server/debian/debian-stable/var/lib/sudo''.         '
+```
+
+To fix that run:
+
+```
+sudo chown $USER:$USER . -R
+```
+
+# Using apuX firmware builder image
+
+TBD
+
 Contribute
 ----------
 

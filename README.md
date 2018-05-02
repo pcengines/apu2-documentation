@@ -73,7 +73,7 @@ We are in favor of [Test Driven Bug Fixing (TDBF)](https://geeknarrator.com/2018
 # Using iPXE
 
 This option assume that your apuX is in the same networks as your PC. Your PC
-in this case us used as HTTP and NFS server, which will be utilized to boot
+in this case is used as HTTP and NFS server, which will be utilized to boot
 apuX over iPXE.
 
 ```
@@ -103,6 +103,12 @@ flashrom -p internal -w apuX_x.y.z.rom
 ```
 
 ## Known issues
+
+### Board mismatch
+
+Some binaries may need `boardmismatch=force` flashrom option because of SMBIOS
+table issue we had in old releases. Please double check you flashing correct
+binary before forcing.
 
 ### Incorrect privileges
 

@@ -19,8 +19,14 @@ This document is related to changes submitted to [mainline coreboot](https://rev
 (XEN) AMD-Vi: IOMMU 0 Enabled.
 ```
 
-# How to check features with Xen
+**NOTE**: feature currently is not stable and hangs on Xen kernel 29/100 boots.:
 
+```
+(XEN) CPU1: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) CPU2: No irq handler for vector e7 (IRQ -2147483648)    
+```
+
+# How to check features with Xen
 Please [read this blog post](TBD)
 
 # How to test IOMMU features

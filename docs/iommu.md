@@ -6,7 +6,7 @@ This document is related to changes submitted to [mainline coreboot](https://rev
 # Status
 
 * patches submitted upstream
-* patches included in v4.6.9 of PC Engined firmware release
+* patches included in v4.6.9 of PC Engines firmware release
 * tested on Xen 4.8 with Linux 4.14.33:
 ```
 (XEN) AMD-Vi: Disabled HAP memory map sharing with IOMMU

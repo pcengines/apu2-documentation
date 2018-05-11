@@ -28,7 +28,7 @@ dd if=pfSense-CE-memstick-serial-2.4.2-RELEASE-amd64.img of/dev/sdx status=progr
 
 where `sdx` is the correct USB drive.
 
-> On BIOS v4.6.4 or later and v4.0.14 or later one will have to deal with double
+> On BIOS v4.6.4 or newer and v4.0.14 or newer one will have to deal with double
 > console redirection in newer BIOSes due to multiconsole option in installer.
 > In the [Installation section](#installation) there is a description how to fix
 > it. If one has a write access to the stick, just edit `/boot.config` to
@@ -50,8 +50,8 @@ Plug the USB stick prepared earlier to apu and boot from it.
 
 When main installer menu pops up do the following:
 
-- for BIOS v4.0.13 or earlier let it boot automatically
-- for BIOS v4.6.3 or earlier, interrupt the installer by pressing `ESC` and type
+- for BIOS v4.0.x let it boot automatically
+- for BIOS v4.6.7 or older, interrupt the installer by pressing `ESC` and type
   following commands:
 
   ```
@@ -59,9 +59,9 @@ When main installer menu pops up do the following:
   boot
   ```
 
-> v4.6.x BIOSes need to have MSI disabled, due to signal races causing disk
-> write commands timeouts. This issue is not present in legacy BIOSes v4.0.x
-> Do it if did not edit `/boot/device.hints` earlier.
+> BIOS versions v4.6.7 and older need to have MSI disabled, due to signal races
+> causing disk write commands timeouts. This issue is not present in legacy
+> BIOSes v4.0.x. Do it now if did not edit `/boot/device.hints` earlier.
 
 Installer should load the kernel now and begin installation process.
 
@@ -69,9 +69,9 @@ Installer should load the kernel now and begin installation process.
 
 Proceed with the installation choosing the options that fit you.
 
-> Only for installation on BIOS v4.6.4 or later and v4.0.14 or later
-
 At the end of installation open the shell to customize the system:
+
+> Only for installation on BIOS v4.6.4 or later and v4.0.14 or later
 
 ```
 echo "-S115200 -h" > /boot/config
@@ -89,12 +89,13 @@ cp /boot/loader.conf /boot/loader.conf.local
 ```
 
 Open `/boot/loadef.conf.local`, change `console="comconsole,vidconsole"` to
-`console="comconsole"` and delete `boot_multicons="YES"` line. Append
-`hint.ahci.0.msi="0"` at the end and save.
+`console="comconsole"` and delete `boot_multicons="YES"` line.
 
-> This is needed for BIOS v4.6.4 or later and v4.0.14 or later to avoid doubled
-> output in loader. `hint.ahci.0.msi="0"` is needed when system hangs or reboots
-> after few hours uptime.
+> This is needed for BIOS v4.6.4 or newer and v4.0.14 or newer to avoid doubled
+> output in loader.
+
+Also append `hint.ahci.0.msi="0"` on BIOS v4.6.7 or older to
+prevent system hangs or reboots after few hours uptime.
 
 Edit `/boot/defaults/loader.conf`:
 - change `#boot_serial=""` to `boot_serial="YES"`

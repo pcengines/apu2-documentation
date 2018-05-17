@@ -1,6 +1,8 @@
 Building environment
 --------------------
 
+> NOTE: this document applies only to releases older than v4.0.17 and v4.6.9
+
 This document describe how to create firmware building environment. Below
 instruction rely on [Docker containers](https://www.docker.com/) to make sure
 that all dependencies were resolved and target build environment is the same

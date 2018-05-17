@@ -1,6 +1,8 @@
 iPXE - compilation, configuration and including in firmware
 -----------------------------------------------------------
 
+> NOTE: this procedure applies to legacy releases older than v4.0.14
+
 ## Compilation
 
 1. Prepare [build environment](building_env.md), if you haven't done so yet

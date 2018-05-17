@@ -1,7 +1,9 @@
 Building firmware
 =================
 
-coreboot-4.5.x
+> NOTE: this document applies only to releases older than v4.0.17 and v4.6.9
+
+coreboot-4.5.x, coreboot-4.6.x
 --------------
 
 1. Prepare [build environment](building_env.md), if you haven't done so yet
@@ -20,6 +22,7 @@ coreboot-4.5.x
     # git clone git@github.com:pcengines/apu2-documentation.git
     git clone https://github.com/pcengines/apu2-documentation.git
     ```
+> Use coreboot-4.5.x or coreboot-4.6.x branch respectively
 
 4. Run contatiner with correct path to working directory (can be bypassed, if
     coreboot builds on host Linux):

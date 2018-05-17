@@ -30,6 +30,7 @@ sudo minicom -b 115200 -o -D /dev/<name of APUx serial console visible in PC>
 ```
 
 E.g.
+
 ```
 sudo minicom -b 115200 -o -D /dev/ttyUSB0
 ```
@@ -37,9 +38,11 @@ sudo minicom -b 115200 -o -D /dev/ttyUSB0
 2. Turn on APUx.
 
 3. When following communicate appears:
+
 ```
 Press F10 key now for boot menu, N for PXE boot
 ```
+
 press `N` to enter to the PXE boot menu.
 
 ```
@@ -52,20 +55,24 @@ press `N` to enter to the PXE boot menu.
 it will be selected after few seconds.
 
 5. After successful running the ipxe shell the following prompt will appear
+
 ```
-iPXE> 
+iPXE>
 ```
+
 Now you have to type commands showed below:
+
 ```
 dhcp net1
 set filename pxelinux.0
 set next-server 192.168.0.108
-chain tftp://${next-server}/${filename} 
+chain tftp://${next-server}/${filename}
 ```
 
 > The `X` number in `netX` interface can be different depending on the connector 
 to which Ethernet is connected. If selected interface is connected to network
 information similar to the showed below should appear:
+
 ```
 Configuring (net1 00:0d:b9:47:bb:e1).................. ok
 ```
@@ -73,6 +80,7 @@ Configuring (net1 00:0d:b9:47:bb:e1).................. ok
 there is no connection to the network for that interface.
 
 > IP placed next to `next-server` should be correct IP of used PXE server.
+> In case http server is used use http:// instead of tftp://
 
 6. After few seconds PXE server boot menu  should appear:
 
@@ -99,66 +107,81 @@ there is no connection to the network for that interface.
 
 Select `Debian-netboot` because it's the only OS with installed `flashrom`
 available in PXE server boot menu when instruction is being written. After that
-OS booting should start. 
+OS booting should start.
 
 Number of OSes can be increased in the future.
 
-> When `Legacy Console Redirection` is turned on displayed characters are 
+> When `Legacy Console Redirection` is turned on displayed characters are
 doubled. It's beacause iPXE is outputting data to the serial console and
 to the screen, which is emulated on serial console.
 
 7. When a prompt similar to the shown below appears:
-```
-pcengines login: 
 
 ```
+pcengines login:
+
+```
+
 Type `root` as login. Then next prompt should appear:
+
 ```
-Password: 
+Password:
 ```
+
 Type `root` as password to finish logging process.
 
 > Steps shown above can be automated using Robot Framework and [this test](https://github.com/pcengines/apu-test-suite/pull/2/files).
 
 8. Now you can start flashing process. To flash firmware with `flashrom` usage
 type:
+
 ```
 flashrom -w <directory to ROM> -p internal
 ```
+
 E.g.:
+
 ```
 flashrom -w /tmp/coreboot.rom -p internal
 ```
 
 After correct firmware flashing the following message should appear:
+
 ```
 Reading old flash chip contents... done.
 Erasing and writing flash chip... Erase/write done.
 Verifying flash... VERIFIED.
 ```
+
 9. Now you can reboot the platform.
 
-> Sometimes after APUx flashing platform doesn't turn on after warm boot. In 
+> Sometimes after APUx flashing platform doesn't turn on after warm boot. In
 that situation cold boot is required.
 
 Sending ROM image to APUx device with `scp` usage
 -------------------------------------------------
 
 To send ROM image to device you can use `scp`.
+
 ```
 cd <directory with ROM image>
 scp <ROM image> root@<IP of APUx to flash>:<directory to store ROM image on APUx>
 ```
+
 E.g.:
+
 ```
 cd /home/me/coreboot/build
 scp coreboot.rom root@192.168.0.123:/tmp
 ```
+
 Then to flash APUx type in the serial console:
+
 ```
-cd 
+cd
 flashrom -w /tmp/coreboot.rom -p internal
 ```
+
 
 Enabling PXE boot in SeaBIOS
 ----------------------------
@@ -166,18 +189,22 @@ Enabling PXE boot in SeaBIOS
 1. Turn on APUx.
 
 2. When the following prompt shows:
+
 ```
 Press F10 key now for boot menu
 ```
-Press `F10`. 
+
+Press `F10`.
 
 3. Then menu similar to the showed below should appear:
+
 ```
 Select boot device:
 
 1. Payload [setup]
 2. Payload [memtest]
 ```
+
 Select `1. Payload [setup]` by pressing `1`.
 
 4. Next menu will be showed:
@@ -202,9 +229,10 @@ Boot order - type letter to move device to top.
   x Exit setup without save
   s Save configuration and exit
 ```
-Select `n Network/PXE boot - Currently Disabled` by pressing `n`. This position
-should change to `n Network/PXE boot - Currently Enabled`. 
 
-5. Now you can reboot platform by choosing `s Save configuration and exit`, so 
+Select `n Network/PXE boot - Currently Disabled` by pressing `n`. This position
+should change to `n Network/PXE boot - Currently Enabled`.
+
+5. Now you can reboot platform by choosing `s Save configuration and exit`, so
 press `s` to do that.
 

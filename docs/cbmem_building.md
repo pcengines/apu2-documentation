@@ -10,6 +10,7 @@ Intro
 ```
 apt-get install git -y
 ```
+
 Building and installation process
 ---------------------------------
 
@@ -18,12 +19,16 @@ Building and installation process
 ```
 git clone https://review.coreboot.org/coreboot.git
 ```
+
 If an error similar to the showed below occurs:
+
 ```
 error: Problem with the SSL CA cert (path? access rights?) while accessing https://review.coreboot.org/coreboot.git/info/refs
 fatal: HTTP request failed
 ```
+
 Install `ca-certificates` package:
+
 ```
 apt-get install ca-certificates -y
 ```
@@ -35,6 +40,7 @@ cd coreboot/util/cbmem/
 make
 make install
 ```
+
 `cbmem` tool should be installed in OS to display help you can type:
 
 ```

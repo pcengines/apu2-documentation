@@ -1,11 +1,11 @@
 Change log for PC Engines binary releases
 =========================================
 
-You can find recent changelogs in [release_manifest](https://github.com/pcengines/release_manifests)
+You can find changelogs for older releases in [release_manifest](https://github.com/pcengines/release_manifests)
 repository.
 
-Direct links:
+For newer releases please refer to the changelogs:
 
-* [mainline releases changelog](https://github.com/macpijan/release_manifests/blob/coreboot-4.5.x/CHANGELOG.md)
+* [mainline releases changelog](https://github.com/macpijan/release_manifests/blob/coreboot-4.6.x/CHANGELOG.md)
 
 * [legacy releases changelog](https://github.com/macpijan/release_manifests/blob/coreboot-4.0.x/CHANGELOG.md)

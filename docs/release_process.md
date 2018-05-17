@@ -1,9 +1,12 @@
 ## Intro
 
+
 Following document describes release process for new versions of firmware for PC
 Engines APU2, APU3, APU4 and APU5 platform. It is intended for developers who want to create
 fully featured binaries and test those with various versions of sortbootorder,
 SeaBIOS, memtest86+ or iPXE.
+
+For releases **v4.0.17 and v4.6.9 or newer** please use [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
 
 Please note that flashing without recovery procedure is not recommended and we
 are not responsible for any damage that inexperienced person can do to the
@@ -101,10 +104,9 @@ After successful build, you can flash target device.
 ## Flash release
 
 Note that below script assume that you have ssh enabled connection with target
-device and destination OS
-[APU2 image builder](https://github.com/pcengines/apu2-documentation#building-firmware-using-apu2-image-builder)
-or other distro that have working `flashrom` available in `PATH`. Without keys
-added you will see question about password couple times during flashing.
+device and destination OS or other distro that have working `flashrom` available
+in `PATH`. Without keys added you will see question about password couple times
+during flashing.
 
 ```
 ./apu2/apu2-documentation/scripts/apu2_fw_rel.sh flash <user>@<ip_address>

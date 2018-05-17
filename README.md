@@ -14,7 +14,7 @@ https://pcengines.github.io/
 All the newest binaries can be found there.
 
 
-Also lease take a look at changelogs:
+Also please take a look at changelogs:
 
 * [v4.6.x changelog](https://github.com/pcengines/release_manifests/blob/coreboot-4.6.x/CHANGELOG.md)
 * [v4.5.x changelog](https://github.com/pcengines/release_manifests/blob/coreboot-4.5.x/CHANGELOG.md)

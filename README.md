@@ -32,6 +32,9 @@ firmware binaries using separated docker environment. It provides users-friendly
 scripts that allow to build release and custom binaries. For more information
 and usage details please visit: https://github.com/pcengines/pce-fw-builder
 
+For releases older than v4.0.17 and v4.6.9 use the procedure described in this
+[document](docs/release_process.md)
+
 
 Other resources
 ----------------

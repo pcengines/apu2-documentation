@@ -13,11 +13,10 @@ medias:
 |   Debian   |    OK   |     OK    |     OK     |    *2     |
 |   pfSense  |    OK   |     OK*   | not tested |    *2     |
 
-*- works well with BIOS v4.6.8 or later in mainline and all legacy releases
-
-*1 - issues with installation and system functionality (installation break,
-     unwanted reboots), can be fixed by adding a hint `hint.ahci.0.msi="0"`,
-     for more information see this [document](pfSense-install-guide.md)
+*- works well with BIOS v4.6.8 or later in mainline and all legacy releases;
+   for v4.6.7 and older mainline versions issues with installation and system
+   functionality (installation break, unwanted reboots), can be fixed by adding
+   a hint `hint.ahci.0.msi="0"`, for more information see this [document](pfSense-install-guide.md)
 
 *2 - all apu boards have problems with USB 3.x stick detection in BIOS,
      system is working properly, but after reboot/warmboot/coldboot USB stick

@@ -5,17 +5,21 @@ PC Engines apu feature set
 
 | Feature | Supported |
 |---------|-----------|
-| CBFS option mCPIe2 clk|  |
-| CBFS option EHCI0 |  |
-| CBFS option console |  |
-| CBFS option UARTc/d |  |
-| Serial number from NIC |  |
-| Serial number from SPI flash |  |
-| S1 button |  |
-| SATA AHCI |  |
-| Serial console enable/disable |  |
-| SIMSWAPs |  |
+| CBFS option mCPIe2 clk| YES |
+| CBFS option EHCI0 | YES |
+| CBFS option console | YES |
+| CBFS option UARTc/d | YES |
+| Serial number from NIC | YES |
+| Serial number from SPI flash | YES |
+| S1 button | NO`*` |
+| SATA AHCI | YES `**` |
+| Serial console enable/disable | YES |
+| SIMSWAPs | YES`***` |
+| SMBIOS table short partnumber |  |
 
+`*` - apu5 has no support for S1
+`**` - only mainline releases
+`***` - apu3 seems to have inverted functionality
 
 # SeaBIOS features
 
@@ -33,13 +37,19 @@ PC Engines apu feature set
 | Serial console enable/disable |  |
 | Bootorder configuration file |  |
 | Sercon-port configuration file |  |
-|  |  |
+
+# iPXE features
+
+| Feature | Supported |
+|---------|-----------|
+| Output not duplicated |  |
+| Custom iPXE menu |  |
 
 # Memtest86+ features
 
 | Feature | Supported |
 |---------|-----------|
-| Correct SMBIOS base |  |
+| Correct SMBus base |  |
 | Screen refresh |  |
 
 # Sortbootorder features

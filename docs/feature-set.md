@@ -13,9 +13,9 @@ PC Engines apu feature set
 | Serial number from SPI flash | YES |
 | S1 button | NO`*` |
 | SATA AHCI | YES `**` |
-| Serial console enable/disable | YES |
+| Serial console enable/disable | YES`*` |
 | SIMSWAPs | YES`***` |
-| SMBIOS table short partnumber |  |
+| SMBIOS table short partnumber | YES |
 
 `*` - apu5 has no support for S1
 `**` - only mainline releases
@@ -25,44 +25,50 @@ PC Engines apu feature set
 
 | Feature | Supported |
 |---------|-----------|
-| OHCI/UHCI disabled |  |
-| ATA UDMA |  |
-| Boot menu timeout 6s |  |
-| F10 button to enter boot menu |  |
-| Custom boot menu string |  |
-| N for PXe boot string |  |
-| PXE shadowing |  |
-| USB boot shadowing |  |
-| USB xHCI timing adjustments |  |
-| Serial console enable/disable |  |
-| Bootorder configuration file |  |
-| Sercon-port configuration file |  |
+| OHCI/UHCI disabled | YES |
+| ATA UDMA | YES |
+| Boot menu timeout 6s | YES |
+| F10 button to enter boot menu | YES |
+| Custom boot menu string | YES |
+| N for PXe boot string | YES |
+| PXE shadowing | YES |
+| USB boot shadowing | YES |
+| USB xHCI timing adjustments | YES`*` |
+| Serial console enable/disable | YES`**` |
+| Bootorder configuration file | YES |
+| Sercon-port configuration file | YES |
+
+`*` - some sticks seem to not work still, additionally apu4 has problems with
+two sticks simultaneously plugged
+`**` - apu5 do not yet support serial console enable
 
 # iPXE features
 
 | Feature | Supported |
 |---------|-----------|
-| Output not duplicated |  |
-| Custom iPXE menu |  |
+| Output not duplicated | YES |
+| Custom iPXE menu | YES |
 
 # Memtest86+ features
 
 | Feature | Supported |
 |---------|-----------|
-| Correct SMBus base |  |
-| Screen refresh |  |
+| Correct SMBus base | YES`*` |
+| Screen refresh | YES |
+
+`*` - SMBus base is correct for apu2 series, Memtest86+ hangs on apu1
 
 # Sortbootorder features
 
 | Feature | Supported |
 |---------|-----------|
-| Setting bootorder priority |  |
-| PXE boot enable/disable |  |
-| USB boot enable/disable |  |
-| Serial console enable/disable |  |
-| UARTc/d enable/disable |  |
-| Force mPCIe2 clk |  |
-| BIOS WP enable/disable |  |
-| Restore default options |  |
-| EHCI0 enable/disable |  |
-| Bootorder is aligned correctly |  |
+| Setting bootorder priority | YES |
+| PXE boot enable/disable | YES |
+| USB boot enable/disable | YES |
+| Serial console enable/disable | YES |
+| UARTc/d enable/disable | YES |
+| Force mPCIe2 clk | YES |
+| BIOS WP enable/disable | YES |
+| Restore default options | YES |
+| EHCI0 enable/disable | YES |
+| Bootorder is aligned correctly | YES |

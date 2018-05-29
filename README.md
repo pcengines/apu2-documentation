@@ -21,8 +21,6 @@ Also please take a look at changelogs:
 * [v4.0.x changelog](https://github.com/pcengines/release_manifests/blob/coreboot-4.0.x/CHANGELOG.md)
 
 
-
-
 Building firmware using PC Engines firmware builder
 ---------------------------------------------------
 
@@ -35,6 +33,38 @@ and usage details please visit: https://github.com/pcengines/pce-fw-builder
 For releases older than v4.0.17 and v4.6.9 use the procedure described in this
 [document](docs/release_process.md)
 
+Branch description
+------------------
+
+* `master` - keeps track of [coreboot's master branch](https://review.coreboot.org/cgit/coreboot.git/log/)
+* `release` - where all releases are merged
+* `develop` - where current development takes place periodically synced with
+  coreboot master
+* `rel_x.y.z` - release branches described below
+
+# Steps for new release
+
+1. Create new branch `rel_x.y.z`, where:
+    * `x` is coreboot major version
+    * `y` is coreboot minor version
+    * `z` is PC Engines firmware fork patch number
+2. Create PR for all required changes for version `rel_x.y.z`
+3. When all changes pushed we closing merge window and start testing - this is
+   typically first week of each month
+4. Perform automated regression testing on `rel_x.y.z`
+5. Fix all required issues and repeat point 4 until fixed - this doesn't mean
+   all tests pass, this mean that approved set passed
+6. If results are accepted merge it to `release` branch
+7. Add tag, which should trigger CI and publish binaries
+8. Merge release branch to develop
+
+# Feature/bug fix development
+
+1. Update `develop` by margining coreboot's master
+2. Checkout feature branch from `develop`
+3. Commit changes to feature branch
+4. Run regression tests
+5. Setup PR to `develop`
 
 Other resources
 ----------------

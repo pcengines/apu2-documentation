@@ -62,7 +62,7 @@ We are in favor of [Test Driven Bug Fixing (TDBF)](https://geeknarrator.com/2018
 1. Checkout new branch `rel_x.y.z` from recent commit on `release`, where:
     * `x` is coreboot major version
     * `y` is coreboot minor version
-    * `z` is PC Engines firmware fork patch number
+    * `z` is PC Engines firmware fork patch number counted from `0`
 2. Merge current `develop` to `rel_x.y.z`
 3. End of month we close merge window
 4. Perform automated regression testing on `rel_x.y.z` including all new tests

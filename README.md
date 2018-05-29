@@ -44,7 +44,7 @@ Branch description
 
 # Steps for new release
 
-1. Create new branch `rel_x.y.z`, where:
+1. Checkout new branch `rel_x.y.z` from recent commit on `release`, where:
     * `x` is coreboot major version
     * `y` is coreboot minor version
     * `z` is PC Engines firmware fork patch number

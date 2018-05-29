@@ -41,6 +41,21 @@ Branch description
 * `develop` - where current development takes place periodically synced with
   coreboot master
 * `rel_x.y.z` - release branches described below
+* `feature_branch` - sample feature branch name for workflow explanation needs
+
+# Feature/bug fix development
+
+We are in favor of [Test Driven Bug Fixing (TDBF)](https://geeknarrator.com/2018/01/28/test-driven-bug-fixing-guidelines/).
+
+1. Create automated test that validate feature or reproduce bug - test fails at
+   this point
+2. Push `coreboot's master branch` to `master`
+3. Update `develop` by `master`
+4. Checkout `feature_branch` from `develop`
+5. Commit changes to `feature_branch`
+6. Run regression tests and fix bugs - test written in point 1 should pass at
+   this point
+7. Submit PR to `develop`
 
 # Steps for new release
 
@@ -48,23 +63,14 @@ Branch description
     * `x` is coreboot major version
     * `y` is coreboot minor version
     * `z` is PC Engines firmware fork patch number
-2. Create PR for all required changes for version `rel_x.y.z`
-3. When all changes pushed we closing merge window and start testing - this is
-   typically first week of each month
-4. Perform automated regression testing on `rel_x.y.z`
+2. Merge current `develop` to `rel_x.y.z`
+3. End of month we close merge window
+4. Perform automated regression testing on `rel_x.y.z` including all new tests
 5. Fix all required issues and repeat point 4 until fixed - this doesn't mean
    all tests pass, this mean that approved set passed
 6. If results are accepted merge it to `release` branch
 7. Add tag, which should trigger CI and publish binaries
 8. Merge release branch to develop
-
-# Feature/bug fix development
-
-1. Update `develop` by margining coreboot's master
-2. Checkout feature branch from `develop`
-3. Commit changes to feature branch
-4. Run regression tests
-5. Setup PR to `develop`
 
 Other resources
 ----------------

@@ -49,9 +49,9 @@ We are in favor of [Test Driven Bug Fixing (TDBF)](https://geeknarrator.com/2018
 
 1. Create automated test that validate feature or reproduce bug - test fails at
    this point
-2. Push `coreboot's master branch` to `master`
-3. Update `develop` by `master`
-4. Checkout `feature_branch` from `develop`
+2. Pull `coreboot's master branch` to `master`
+3. Merge `master` to `develop`
+4. Create new branch `feature_branch` from `develop`
 5. Commit changes to `feature_branch`
 6. Run regression tests and fix bugs - test written in point 1 should pass at
    this point

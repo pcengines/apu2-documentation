@@ -13,5 +13,5 @@ apu2 vs apu4
 - SIMSWAP pin added
 - APU straps changed
 - I'm not sure about mSATA changes, but it looks something is different
-- internal us2.0 header added
+- internal USB2.0 header added
 - some PCIe connections removed (page 5)

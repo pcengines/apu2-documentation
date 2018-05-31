@@ -8,11 +8,9 @@ Binary releases
 ---------------
 
 All information about firmware releases (including changes, fixes and known
-issues) are available on the PC Engines Github site:
-https://pcengines.github.io/
+issues) are available on the PC Engines Github site [pcengines.github.io](https://pcengines.github.io/).
 
 All the newest binaries can be found there.
-
 
 Also please take a look at changelogs:
 
@@ -28,7 +26,7 @@ Since releases v4.6.9 and v4.0.17 build process has been simplified.
 PC Engines firmware builder is a dedicated tool to build fully featured apu
 firmware binaries using separated docker environment. It provides users-friendly
 scripts that allow to build release and custom binaries. For more information
-and usage details please visit: https://github.com/pcengines/pce-fw-builder
+and usage details please visit: [pce-fw-builder](https://github.com/pcengines/pce-fw-builder).
 
 For releases older than v4.0.17 and v4.6.9 use the procedure described in this
 [document](docs/release_process.md)
@@ -72,11 +70,51 @@ We are in favor of [Test Driven Bug Fixing (TDBF)](https://geeknarrator.com/2018
 7. Add tag, which should trigger CI and publish binaries
 8. Merge release branch to develop
 
-Other resources
-----------------
+# Using iPXE
 
-* [sortbootorder payload](https://github.com/pcengines/sortbootorder)
-  - coreboot payload that give ability to make persistent changes to boot order
+This option assume that your apuX is in the same networks as your PC. Your PC
+in this case is used as HTTP and NFS server, which will be utilized to boot
+apuX over iPXE.
+
+```
+git clone https://github.com/3mdeb/pxe-server.git
+cd pxe-server
+NFS_SRV_IP=<your_ip> ./init.sh
+./start.sh
+```
+
+Please note that you may have NFS server running on host what leads to ports
+conflicts.
+
+After starting NFS and HTTP you can boot apuX. Please enable network booting
+using [sortbootorder](https://github.com/pcengines/sortbootorder#theory-of-operation).
+
+```
+iPXE> ifconf net0
+iPXE> dhcp net0
+iPXE> chain http://<your_ip>:8000/menu.ipxe
+```
+
+Choose `Debian stable netboot 4.14.y` after boot login (`[root:debian]`) and
+for apu2/3/4/5 run:
+
+```
+flashrom -p internal -w apuX_x.y.z.rom
+```
+
+For apu1 `flashrom` command line looks like that:
+
+```
+flashrom -p internal -w apu1_x.y.z.rom -c MX25L1605A/MX25L1606E/MX25L1608E
+```
+
+## Known issues
+
+### Board mismatch
+
+Some binaries may need `boardmismatch=force` flashrom option because of SMBIOS
+table issue we had in old releases. Please double check you flashing correct
+binary before forcing.
 
 Contribute
 ----------

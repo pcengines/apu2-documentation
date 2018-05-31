@@ -96,10 +96,16 @@ iPXE> chain http://<your_ip>:8000/menu.ipxe
 ```
 
 Choose `Debian stable netboot 4.14.y` after boot login (`[root:debian]`) and
-run:
+for apu2/3/4/5 run:
 
 ```
 flashrom -p internal -w apuX_x.y.z.rom
+```
+
+For apu1 `flashrom` command line looks like that:
+
+```
+flashrom -p internal -w apu1_x.y.z.rom -c MX25L1605A/MX25L1606E/MX25L1608E
 ```
 
 ## Known issues

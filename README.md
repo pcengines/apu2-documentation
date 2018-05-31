@@ -110,23 +110,6 @@ Some binaries may need `boardmismatch=force` flashrom option because of SMBIOS
 table issue we had in old releases. Please double check you flashing correct
 binary before forcing.
 
-### Incorrect privileges
-
-```
-$ ./start.sh
-Error checking context: 'can't stat '/path/pxe-server/debian/debian-stable/var/lib/sudo''.         '
-```
-
-To fix that run:
-
-```
-sudo chown $USER:$USER . -R
-```
-
-# Using apuX firmware builder image
-
-TBD
-
 Contribute
 ----------
 

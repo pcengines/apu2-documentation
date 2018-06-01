@@ -16,12 +16,12 @@ time to connect RPi to apu.
 
 | Signal     | RPi Pin number | APU SPI pin header      |
 |------------|----------------|-------------------------|
-| 3V power   | 17  	 		  |	1 VCC (may be omitted)	|
-| GND        | 20      		  |	2 GND				  	|
-| SPI0 CS0   | 24      		  |	3 SPICS					|
-| SPI0 CLK   | 23      		  |	4 SPICLK				|
-| SPI0 MISO  | 21      		  |	5 SPIDI					|
-| SPI0 MOSI  | 19      		  |	6 SPIDO					|
+| 3V power   | 17             | 1 VCC (may be omitted)  |
+| GND        | 20             | 2 GND                   |
+| SPI0 CS0   | 24             | 3 SPICS                 |
+| SPI0 CLK   | 23             | 4 SPICLK                |
+| SPI0 MISO  | 21             | 5 SPIDI                 |
+| SPI0 MOSI  | 19             | 6 SPIDO                 |
 
 > Except that before flashing we have to make sure that APU2 is on and
   in S5 state. That means we have to connect pins 2 and 3 on J2 header
@@ -65,13 +65,13 @@ On RPi side we can use other pins as well. There are 2xSPI, 2x3V power and
     ssh pi@192.168.0.16
 ```
 
-    * install flashrom
+* install flashrom
 
 ```sh
     pi@raspberrypi:~$ sudo apt-get install flashrom
 ```
 
-    * read ROM image:
+* read ROM image:
 
 ```sh
     pi@raspberrypi:~$ sudo flashrom -p linux_spi:dev=/dev/spidev0.0,spispeed=16000 -r apu.rom
@@ -79,11 +79,12 @@ On RPi side we can use other pins as well. There are 2xSPI, 2x3V power and
 
 3. Connecting via serial port:
 
-    * RS232 connection - according to the image (rs-232.jpg). TX & RX crossed.
-      terminal command:
+* RS232 connection - according to the image (TX & RX crossed)
+
+![RS232 connection](rs-232.jpg)
+
+Terminal command:
 
 ```sh
 sudo screen -L /dev/ttyUSB0 115200,-cstopb
 ```
-
-

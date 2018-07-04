@@ -4,6 +4,37 @@ Overview
 This repository contain documentation and scripts that aim to help PC Engines
 apuX platform users and developers to customize firmware to their needs.
 
+Versioning scheme change
+------------------------
+
+Since version `v4.8.0.1` we changed versioning scheme skipping coreboot `v4.7`
+release.
+
+# Why we changed versioning scheme?
+
+In recent version coreboot community introduced tag `v4.8.1` this breaks our
+previous versioning scheme which was `v4.6.z`, where `z` was PC Engines fork
+patch number. Because 3rd digit was already taken by coreboot tag this breaks
+our versioning scheme. As a result we start to use new versioning scheme
+`v4.8.0.w`, where `w` will be PC Engines fork patch number as always for each
+new release counted from 0.
+
+# Why we skipped coreboot 4.7?
+
+If you take a look at coreboot tag dates:
+
+```
+refs/tags/4.6 Sun Apr 30 19:48:38 2017 -0600
+refs/tags/4.7 Mon Jan 15 00:57:04 2018 +0000
+refs/tags/4.8 Tue May 15 17:40:15 2018 +0000
+refs/tags/4.8.1 Wed May 16 19:07:34 2018 +0000
+```
+
+After release of 4.7 we simply didn't have enough time to adjust to 4.7 before
+4.8 popped up. Please note that coreboot releases are just arbitrary points in
+time, so trying to follow mainline in each release may make more sense, but
+requires decent testing.
+
 Binary releases
 ---------------
 
@@ -38,7 +69,11 @@ Branch description
 * `release` - where all releases are merged
 * `develop` - where current development takes place periodically synced with
   coreboot master
-* `rel_x.y.z` - release branches described below
+* `rel_x.y.z.w` - release branches, where:
+    * `x` is coreboot major version
+    * `y` is coreboot minor version
+    * `z` is coreboot patch number
+    * `w` is PC Engines firmware fork patch number counted from `0`
 * `feature_branch` - sample feature branch name for workflow explanation needs
 
 # Feature/bug fix development
@@ -57,13 +92,10 @@ We are in favor of [Test Driven Bug Fixing (TDBF)](https://geeknarrator.com/2018
 
 # Steps for new release
 
-1. Checkout new branch `rel_x.y.z` from recent commit on `release`, where:
-    * `x` is coreboot major version
-    * `y` is coreboot minor version
-    * `z` is PC Engines firmware fork patch number counted from `0`
-2. Merge current `develop` to `rel_x.y.z`
+1. Checkout new branch `rel_x.y.z.w` from recent commit on `release`
+2. Merge current `develop` to `rel_x.y.z.w`
 3. End of month we close merge window
-4. Perform automated regression testing on `rel_x.y.z` including all new tests
+4. Perform automated regression testing on `rel_x.y.z.w` including all new tests
 5. Fix all required issues and repeat point 4 until fixed - this doesn't mean
    all tests pass, this mean that approved set passed
 6. If results are accepted merge it to `release` branch

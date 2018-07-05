@@ -23,7 +23,7 @@ from official mirror.
 Extract the image somewhere and burn it onto usb stick using `dd`:
 
 ```
-dd if=pfSense-CE-memstick-serial-2.4.2-RELEASE-amd64.img of/dev/sdx status=progress
+dd if=pfSense-CE-memstick-serial-2.4.2-RELEASE-amd64.img of=/dev/sdx status=progress
 ```
 
 where `sdx` is the correct USB drive.

@@ -1,0 +1,12 @@
+# Unattended installation variables
+
+#!/bin/bash
+tar -vxzf ~/pfsense.tar.gz --directory /tmp/  #extract prepared archive
+mv /tmp/boot.config /boot/config
+mv /tmp/boot.loader.conf /boot/loader.conf
+mv /tmp/boot.loader.conf.local /boot/loader.conf.local
+mv /tmp/boot/defaults/loader.conf
+echo "hint.ahci.msi=\"0\"" >> /boot/device.hints
+rm /boot.config
+ln /boot/config /boot.config
+reboot

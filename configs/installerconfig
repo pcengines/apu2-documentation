@@ -1,5 +1,7 @@
 # Unattended installation variables
 
+export NONINTERACTIVE="YES"
+
 #!/bin/bash
 echo "-S115200 -h" > /boot/config
 rm /boot.config
@@ -12,4 +14,4 @@ sed -i -e 's$#boot_serial=""$boot_serial="YES"$' /boot/defaults/loader.conf
 sed -i -e 's$#comconsole_speed="9600"$comconsole_speed="115200"$' /boot/defaults/loader.conf
 sed -i -e 's$console="vidconsole"$console="comconsole"$' /boot/defaults/loader.conf
 sed -i -e 's$loader_conf_files="/boot/device.hints /boot/loader.conf /boot/loader.conf.local$loader_conf_files="/boot/device.hints /boot/loader.conf.local$' /boot/defaults/loader.conf
-reboot
+reboot now

@@ -1,25 +1,8 @@
 # Unattended installation variables
 
+exit 1
+
 #!/bin/bash
-dlv=`/sbin/sysctl -n vfs.nfs.diskless_valid 2> /dev/null`
-        if [ ${dlv:=0} -eq 0 -a ! -f /etc/diskless ]; then
-                BSDINSTALL_CONFIGCURRENT=yes; export BSDINSTALL_CONFIGCURRENT
-        fi
-
-        trap true SIGINT        # Ignore cntrl-C here
-        bsdinstall
-        if [ $? -eq 0 ]; then
-                dialog --backtitle "pfSense Installer" --title "Complete" --yes-
-label "Reboot" --no-label "Shell" --yesno "Installation of pfSense complete! Wou
-ld you like to reboot into the installed system now?" 0 0 && reboot
-                clear
-                echo "When finished, type 'exit' to reboot."
-        else
-                . /etc/rc.local
-        fi
-        ;;
-
-
 echo "-S115200 -h" > /boot/config
 rm /boot.config
 ln /boot/config /boot.config
@@ -30,4 +13,3 @@ sed -i -e 's$#boot_serial=""$boot_serial="YES"$' /boot/defaults/loader.conf
 sed -i -e 's$#comconsole_speed="9600"$comconsole_speed="115200"$' /boot/defaults/loader.conf
 sed -i -e 's$console="vidconsole"$console="comconsole"$' /boot/defaults/loader.conf
 sed -i -e 's$loader_conf_files="/boot/device.hints /boot/loader.conf /boot/loader.conf.local$loader_conf_files="/boot/device.hints /boot/loader.conf.local$' /boot/defaults/loader.conf
-exit 1

@@ -1,5 +1,5 @@
 # Execute post-install script on PFSense
-After successfully installation installerconfig script is called if exists. It has defined structure:
+After successfully installation **installerconfig** script is called if exists. It has defined structure:
 ```bash
 # Unattended installation variables
 ...
@@ -9,6 +9,6 @@ After successfully installation installerconfig script is called if exists. It h
 # When work is done reboot is called
 reboot
 ```
-This file is must be located in **/etc/** directory.
+This file must be located in **/etc/** directory.
 #### installerconfig
-In **/configs/installerconfig** script we'll use archive with modified configuration files and replace existing files. Script assumes that archive **pfsense.tar.gz** is located in **/home** directory.  
+**/configs/installerconfig** script will replace all options in configuration files that we want to change before first boot.

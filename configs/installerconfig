@@ -1,12 +1,15 @@
 # Unattended installation variables
 
 #!/bin/bash
-tar -vxzf ~/pfsense.tar.gz --directory /tmp/  #extract prepared archive
-mv /tmp/boot.config /boot/config
-mv /tmp/boot.loader.conf /boot/loader.conf
-mv /tmp/boot.loader.conf.local /boot/loader.conf.local
-mv /tmp/boot/defaults/loader.conf
-echo "hint.ahci.msi=\"0\"" >> /boot/device.hints
+echo "-S115200 -h" > /boot/config
 rm /boot.config
 ln /boot/config /boot.config
+cp /boot/loader.conf /boot/loader.conf.local
+sed -i -e 's$console="comconsole,vidconsole"$console="comconsole"$' /boot/loader.conf.local
+sed -i -e '/boot_multicons="YES"/d' /boot/loader.conf.local
+echo "hint.ahci.0.msi=\"0\"" >> /boot/device.hints
+sed -i -e 's$#boot_serial=""$boot_serial="YES"$' /boot/defaults/loader.conf
+sed -i -e 's$#comconsole_speed="9600"$comconsole_speed="115200"$' /boot/defaults/loader.conf
+sed -i -e 's$console="vidconsole"$console="comconsole"$' /boot/defaults/loader.conf
+sed -i -e 's$loader_conf_files="/boot/device.hints /boot/loader.conf /boot/loader.conf.local$loader_conf_files="/boot/device.hints /boot/loader.conf.local$' /boot/defaults/loader.conf
 reboot

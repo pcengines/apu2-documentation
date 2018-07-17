@@ -1,15 +1,207 @@
-# Unattended installation variables
-
-exit 1
-
 #!/bin/bash
-echo "-S115200 -h" > /boot/config
-rm /boot.config
-ln /boot/config /boot.config
-cp /boot/loader.conf /boot/loader.conf.local
-sed -i -e 's$console="comconsole,vidconsole"$console="comconsole"$' /boot/loader.conf.local
-sed -i -e '/boot_multicons="YES"/d' /boot/loader.conf.local
-sed -i -e 's$#boot_serial=""$boot_serial="YES"$' /boot/defaults/loader.conf
-sed -i -e 's$#comconsole_speed="9600"$comconsole_speed="115200"$' /boot/defaults/loader.conf
-sed -i -e 's$console="vidconsole"$console="comconsole"$' /boot/defaults/loader.conf
-sed -i -e 's$loader_conf_files="/boot/device.hints /boot/loader.conf /boot/loader.conf.local$loader_conf_files="/boot/device.hints /boot/loader.conf.local$' /boot/defaults/loader.conf
+
+dlv=`/sbin/sysctl -n vfs.nfs.diskless_valid 2> /dev/null`
+if [ ${dlv:=0} -eq 0 -a ! -f /etc/diskless ]; then
+        BSDINSTALL_CONFIGCURRENT=yes
+        export BSDINSTALL_CONFIGCURRENT
+fi
+
+############################################################ Configuration
+
+############## user configuration
+
+export ZFSBOOT_DISKS=ada0
+export INTERFACE=igb0
+export ZFSBOOT_POOL_NAME=usbzfssystem
+export ZFSBOOT_SWAP_SIZE=2g
+export ZFSBOOT_SWAP_ENCRYPTION=0
+export ZFSBOOT_VDEV_TYPE=stripe
+export MIRROR="ftp://ftp.freebsd.org"
+
+############## bsdinstall configuration
+
+export BSDINSTALL_TMPETC="/tmp/bsdinstall_etc"
+export PATH_FSTAB="$BSDINSTALL_TMPETC/fstab"
+export BSDINSTALL_TMPBOOT="/tmp/bsdinstall_boot"
+export BSDINSTALL_DISTDIR="/usr/freebsd-dist"
+export BSDINSTALL_CHROOT="/mnt"
+export nonInteractive=0
+
+############################################################ bsdinstall auto
+
+BSDCFG_SHARE="/usr/share/bsdconfig"
+. $BSDCFG_SHARE/common.subr || exit 1
+
+############################################################ FUNCTIONS
+
+error() {
+        local msg
+        if [ -n "$1" ]; then
+                msg="$1\n\n"
+        fi
+        test -n "$DISTDIR_IS_UNIONFS" && umount -f $BSDINSTALL_DISTDIR
+        test -f $PATH_FSTAB && bsdinstall umount
+        dialog --backtitle "FreeBSD Installer" --title "Abort" \
+            --no-label "Exit" --yes-label "Restart" --yesno \
+            "${msg}An installation step has been aborted. Would you like to rest
+art the installation or exit the installer?" 0 0
+        if [ $? -ne 0 ]; then
+        exit 1
+else
+exec $0
+fi
+}
+
+############################################################ MAIN
+
+f_dprintf "Began Installation at %s" "$( date )"
+
+rm -rf $BSDINSTALL_TMPETC
+mkdir $BSDINSTALL_TMPETC
+
+export DISTRIBUTIONS="base.txz kernel.txz"
+if [ -f $BSDINSTALL_DISTDIR/MANIFEST ]; then
+DISTMENU=`awk -F'\t' '!/^(kernel|base)/{print $4,$5,$6}' $BSDINSTALL_DIS
+TDIR/MANIFEST`
+fi
+
+FETCH_DISTRIBUTIONS=""
+for dist in $DISTRIBUTIONS; do
+        if [ ! -f $BSDINSTALL_DISTDIR/$dist ]; then
+                FETCH_DISTRIBUTIONS="$FETCH_DISTRIBUTIONS $dist"
+        fi
+done
+FETCH_DISTRIBUTIONS=`echo $FETCH_DISTRIBUTIONS` # Trim white space
+
+echo ifconfig_$INTERFACE=\"DHCP\">> $BSDINSTALL_TMPETC/._rc.conf.net
+err=$( dhclient $INTERFACE 2>&1 )
+if [ $? -ne 0 ]; then
+        f_dprintf "%s" "$err"
+fi
+
+
+IP_ADDRESS=`ifconfig $INTERFACE inet | awk '/inet/ {printf("%s\n", $2); }'`
+NETMASK=`ifconfig $INTERFACE inet | awk '/inet/ {printf("%s\n", $4); }'`
+ROUTER=`netstat -rn -f inet | awk '/default/ {printf("%s\n", $2);}'`
+
+SEARCH=""
+IP4_1=""
+IP4_2=""
+IP6_1=""
+IP6_2=""
+
+RESOLV="
+            'Search' 1 0 \"${SEARCH}\" 1 16 50 0 0
+            'Nameserver' 2 0 \"Nameserver\" 2 16 50 0 2
+            'IPv4 DNS #1' 2 0 \"${IP4_1}\" 2 16 16 0 0
+            'IPv4 DNS #2' 3 0 \"${IP4_2}\" 3 16 16 0 0"
+
+echo ${RESOLV} | tr ' ' '\n' | \
+awk '
+BEGIN {
+        search=-1;
+}
+{
+        if (/^[[:space:]]+$/) {
+                next;
+        }
+        if (/^Nameserver$/) {
+        printf "\n";
+        search=0;
+        next;
+}
+if (search == -1) {
+        printf "search ";
+        search=1;
+}
+if (search > 0) {
+        printf "%s%s", (search > 1) ? " " : "", $1;
+        search++;
+        next;
+}
+printf "nameserver %s\n", $1;
+}' > ${BSDINSTALL_TMPETC}/resolv.conf
+
+mv $BSDINSTALL_TMPETC/._rc.conf.net $BSDINSTALL_TMPETC/rc.conf.net
+
+NETCONFIG_DONE=yes
+
+if [ -n "$FETCH_DISTRIBUTIONS" ]; then
+    _UNAME_R=`uname -r`
+    _UNAME_R=${_UNAME_R%-p*}
+    case ${_UNAME_R} in
+        *-CURRENT|*-STABLE|*-PRERELEASE)
+                RELDIR="snapshots"
+                ;;
+        *)
+                RELDIR="releases"
+                ;;
+    esac
+    BSDINSTALL_DISTSITE="$MIRROR/pub/FreeBSD/${RELDIR}/`uname -m`/`uname -p`/${_UNAME_R}"
+    export BSDINSTALL_DISTSITE
+fi
+
+
+rm -f $PATH_FSTAB
+touch $PATH_FSTAB
+
+bsdinstall zfsboot || error "ZFS setup failed"
+bsdinstall mount || error "Failed to mount filesystem"
+
+if [ ! -z "$FETCH_DISTRIBUTIONS" ]; then
+        ALL_DISTRIBUTIONS="$DISTRIBUTIONS"
+
+        # Download to a directory in the new system as scratch space
+        BSDINSTALL_FETCHDEST="$BSDINSTALL_CHROOT/usr/freebsd-dist"
+        mkdir -p "$BSDINSTALL_FETCHDEST" || error "Could not create directory $B
+SDINSTALL_FETCHDEST"
+
+        export DISTRIBUTIONS="$FETCH_DISTRIBUTIONS"
+        # Try to use any existing distfiles
+        if [ -d $BSDINSTALL_DISTDIR ]; then
+                DISTDIR_IS_UNIONFS=1
+                mount_nullfs -o union "$BSDINSTALL_FETCHDEST" "$BSDINSTALL_DISTD
+IR"
+        else
+                export DISTRIBUTIONS="MANIFEST $ALL_DISTRIBUTIONS"
+                export BSDINSTALL_DISTDIR="$BSDINSTALL_FETCHDEST"
+        fi
+
+        export FTP_PASSIVE_MODE=YES
+        bsdinstall distfetch || error "Failed to fetch distribution"
+        export DISTRIBUTIONS="$ALL_DISTRIBUTIONS"
+fi
+
+bsdinstall checksum || error "Distribution checksum failed"
+bsdinstall distextract || error "Distribution extract failed"
+
+trap error SIGINT
+bsdinstall config || error "Failed to save config"
+
+if [ ! -z "$BSDINSTALL_FETCHDEST" ]; then
+        [ "$BSDINSTALL_FETCHDEST" != "$BSDINSTALL_DISTDIR" ] && \
+            umount "$BSDINSTALL_DISTDIR"
+        rm -rf "$BSDINSTALL_FETCHDEST"
+fi
+
+mount -t devfs devfs "$BSDINSTALL_CHROOT/dev"
+
+chroot "$BSDINSTALL_CHROOT" /bin/sh -c "
+echo Installeronfig is working inside new OS!;
+echo -S115200 -h > /boot/config;
+rm /boot.config;
+ln /boot/config /boot.config;
+cp /boot/loader.conf /boot/loader.conf.local;
+sed -i -e 's/console="'"'"comconsole,vidconsole"'"'"/console="'"'"comconsole"'"'"/' /boot/loader.conf.local;
+sed -i -e '/boot_multicons="'"'"YES"'"'"/d' /boot/loader.conf.local;
+sed -i -e 's/#boot_serial="'"'""'"'"/boot_serial="'"'"YES"'"'"/' /boot/defaults/loader.conf;
+sed -i -e 's/#comconsole_speed="'"'"9600"'"'"/comconsole_speed="'"'"115200"'"'"/' /boot/defaults/loader.conf;
+sed -i -e 's/console="'"'"vidconsole"'"'"/console="'"'"comconsole"'"'"/' /boot/defaults/loader.conf;
+sed -i -e 's&loader_conf_files="'"'"/boot/device.hints /boot/loader.conf /boot/loader.conf.local/loader_conf_files="'"'"&boot/device.hints /boot/loader.conf.local&' /boot/defaults/loader.conf;" 2>&1
+
+bsdinstall entropy
+bsdinstall umount
+
+f_dprintf "Installation Completed at %s " "$( date )"
+
+exit

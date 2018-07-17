@@ -53,13 +53,13 @@ Also please take a look at changelogs:
 Building firmware using PC Engines firmware builder
 ---------------------------------------------------
 
-Since releases v4.6.9 and v4.0.17 build process has been simplified.
+Since releases v4.6.10 and v4.0.17 build process has been simplified.
 PC Engines firmware builder is a dedicated tool to build fully featured apu
 firmware binaries using separated docker environment. It provides users-friendly
 scripts that allow to build release and custom binaries. For more information
 and usage details please visit: [pce-fw-builder](https://github.com/pcengines/pce-fw-builder).
 
-For releases older than v4.0.17 and v4.6.9 use the procedure described in this
+For releases older than v4.0.17 and v4.6.10 use the procedure described in this
 [document](docs/release_process.md)
 
 Branch description

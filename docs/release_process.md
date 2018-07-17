@@ -6,7 +6,7 @@ Engines APU2, APU3, APU4 and APU5 platform. It is intended for developers who wa
 fully featured binaries and test those with various versions of sortbootorder,
 SeaBIOS, memtest86+ or iPXE.
 
-For releases **v4.0.17 and v4.6.9 or newer** please use [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
+For releases **v4.0.17 and v4.6.10 or newer** please use [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
 
 Please note that flashing without recovery procedure is not recommended and we
 are not responsible for any damage that inexperienced person can do to the

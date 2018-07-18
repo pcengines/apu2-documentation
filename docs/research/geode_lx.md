@@ -1,13 +1,11 @@
 ALIX and AMD Geode LX
 =====================
 
-
 This paper contains research about Geode LX CAR and whole effort to implement
 `EARLY_CBMEM_INIT` in coreboot for PC Engines ALIX platforms.
 
 Table of Contents
-=================
-
+-----------------
 
 * [List of abbreviations](#list-of-abbreviations)
 * [Memory initialisation](#memory-initialisation)
@@ -16,8 +14,6 @@ Table of Contents
 		* [Fixed MTRRs](#fixed-mtrrs)
 		* [Variable MTRRs](#variable-mtrrs)
 		* [Geode LX MTRRs](#geode-lx-mtrrs)
-
-
 
 List of abbreviations
 ---------------------
@@ -34,7 +30,6 @@ List of abbreviations
 * `WP` - Write Protected
 * `SMM` - System Management Mode
 * `DMM` - Debug Management Mode
-
 
 # Memory initialisation
 

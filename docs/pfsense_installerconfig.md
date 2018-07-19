@@ -4,7 +4,8 @@ Unattanded installation PFSense
 rc.local
 --------
 
-After booting from USB stick installer rc.local is executed. Changes have to be applied to this file to eliminate interactive dialog options.
+After booting from USB stick installer rc.local is executed. Changes have to be
+applied to this file to eliminate interactive dialog options.
 
 1. Add environment variable defining terminal type:
 ```bash
@@ -54,9 +55,9 @@ installerconfig
 exit
 ```
 
-This file must be located in **/etc/** diyrectory.
+This file must be located in **/etc/** directory.
 
-**/etc/installerconfig** script will install pfSense and replace all configuration  files that we want to change before first boot.
+**/etc/installerconfig** script will install pfSense and replace all configuration files that we want to change before first boot.
 
 Examples
 --------

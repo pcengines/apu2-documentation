@@ -1,0 +1,40 @@
+APU2B
+-----
+
+Configuration
+-------------
+| Element | Interfaces
+|:-------:|:----------
+| J14     | USB, PCIe, SIM
+| J13     | USB, PCIe
+| J12     | mSATA
+
+Possible usage
+--------------
+
+| Element | Module
+|:-------:|:----------
+| J14     | Huawei ME909u, WLE200NX, TL-WN722N
+| J13     | WLE200NX, TL-WN722N
+| J12     | -
+
+APU3A, APU3B, APU4B
+-------------------
+
+Configuration
+-------------
+
+| Element | Interfaces
+|:-------:|:----------
+| J16     | PCIe,USB
+| J15     | USB, SIM1
+| J14     | mSATA,USB, SIM2
+
+Possible usage
+--------------
+
+| Element | Modules
+|:-------:|:----------
+| J16     | WLE200NX, TL-WN722N
+| J15     | Huawei ME909u, TL-WN722N
+| J16     | Huawei ME909u

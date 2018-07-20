@@ -20,7 +20,7 @@ export TERM=vt100
         echo
         echo "Welcome to pfSense!"
         echo
-        echo "Please choose the appropriate terminal type for your system."
+        echo "Please choose the appropriate terminal type for you system."
         echo "Common console types are:"
         echo "   ansi     Standard ANSI terminal"
         echo "   vt100    VT100 or compatible terminal"
@@ -43,7 +43,8 @@ fi
 installerconfig
 ---------------
 
-**installerconfig** script is called if exists. If doesn't exist manual installation is performed.
+**installerconfig** script is called if exists. If doesn't exist manual
+installation is performed.
 
 ```bash
 #!/bin/bash
@@ -57,7 +58,8 @@ exit
 
 This file must be located in **/etc/** directory.
 
-**/etc/installerconfig** script will install pfSense and replace all configuration files that we want to change before first boot.
+**/etc/installerconfig** script will install pfSense and replace all
+configuration files that we want to change before first boot.
 
 Examples
 --------
@@ -66,4 +68,6 @@ Example file, **installerconfig**, is located in **conifgs/** directory
 Problems
 --------
 
-During extracting distribution files phase installation sometimes hangs up. I've waited for 15 minutes and nothing happend. My solution was to reset platform.
+During extracting distribution files phase installation sometimes hangs up.
+I've waited for 15 minutes and nothing happend. My solution was to reset
+platform.

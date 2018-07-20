@@ -43,8 +43,8 @@ error() {
         test -f $PATH_FSTAB && bsdinstall umount
         dialog --backtitle "FreeBSD Installer" --title "Abort" \
             --no-label "Exit" --yes-label "Restart" --yesno \
-            "${msg}An installation step has been aborted. Would you like to rest
-art the installation or exit the installer?" 0 0
+            "${msg}An installation step has been aborted. Would you like to \
+            restart the installation or exit the installer?" 0 0
         if [ $? -ne 0 ]; then
         exit 1
 else
@@ -137,7 +137,8 @@ if [ -n "$FETCH_DISTRIBUTIONS" ]; then
                 RELDIR="releases"
                 ;;
     esac
-    BSDINSTALL_DISTSITE="$MIRROR/pub/FreeBSD/${RELDIR}/`uname -m`/`uname -p`/${_UNAME_R}"
+    BSDINSTALL_DISTSITE="$MIRROR/pub/FreeBSD/${RELDIR}/`uname -m`/`uname -p`/ \
+    ${_UNAME_R}"
     export BSDINSTALL_DISTSITE
 fi
 
@@ -153,15 +154,15 @@ if [ ! -z "$FETCH_DISTRIBUTIONS" ]; then
 
         # Download to a directory in the new system as scratch space
         BSDINSTALL_FETCHDEST="$BSDINSTALL_CHROOT/usr/freebsd-dist"
-        mkdir -p "$BSDINSTALL_FETCHDEST" || error "Could not create directory $B
-SDINSTALL_FETCHDEST"
+        mkdir -p "$BSDINSTALL_FETCHDEST" || error "Could not create directory \
+        $BSDINSTALL_FETCHDEST"
 
         export DISTRIBUTIONS="$FETCH_DISTRIBUTIONS"
         # Try to use any existing distfiles
         if [ -d $BSDINSTALL_DISTDIR ]; then
                 DISTDIR_IS_UNIONFS=1
-                mount_nullfs -o union "$BSDINSTALL_FETCHDEST" "$BSDINSTALL_DISTD
-IR"
+                mount_nullfs -o union "$BSDINSTALL_FETCHDEST" \
+                "$BSDINSTALL_DISTDIR"
         else
                 export DISTRIBUTIONS="MANIFEST $ALL_DISTRIBUTIONS"
                 export BSDINSTALL_DISTDIR="$BSDINSTALL_FETCHDEST"
@@ -192,12 +193,18 @@ echo -S115200 -h > /boot/config;
 rm /boot.config;
 ln /boot/config /boot.config;
 cp /boot/loader.conf /boot/loader.conf.local;
-sed -i -e 's/console="'"'"comconsole,vidconsole"'"'"/console="'"'"comconsole"'"'"/' /boot/loader.conf.local;
+sed -i -e 's/console="'"'"comconsole,vidconsole"'"'"/console="'"'"comconsole \
+"'"'"/' /boot/loader.conf.local;
 sed -i -e '/boot_multicons="'"'"YES"'"'"/d' /boot/loader.conf.local;
-sed -i -e 's/#boot_serial="'"'""'"'"/boot_serial="'"'"YES"'"'"/' /boot/defaults/loader.conf;
-sed -i -e 's/#comconsole_speed="'"'"9600"'"'"/comconsole_speed="'"'"115200"'"'"/' /boot/defaults/loader.conf;
-sed -i -e 's/console="'"'"vidconsole"'"'"/console="'"'"comconsole"'"'"/' /boot/defaults/loader.conf;
-sed -i -e 's&loader_conf_files="'"'"/boot/device.hints /boot/loader.conf /boot/loader.conf.local/loader_conf_files="'"'"&boot/device.hints /boot/loader.conf.local&' /boot/defaults/loader.conf;" 2>&1
+sed -i -e 's/#boot_serial="'"'""'"'"/boot_serial="'"'"YES"'"'"/' \
+/boot/defaults/loader.conf;
+sed -i -e 's/#comconsole_speed="'"'"9600"'"'"/comconsole_speed= \
+"'"'"115200"'"'"/' /boot/defaults/loader.conf;
+sed -i -e 's/console="'"'"vidconsole"'"'"/console="'"'"comconsole"'"'"/' \
+/boot/defaults/loader.conf;
+sed -i -e 's&loader_conf_files="'"'"/boot/device.hints /boot/loader.conf \
+/boot/loader.conf.local/loader_conf_files="'"'"&boot/device.hints \
+/boot/loader.conf.local&' /boot/defaults/loader.conf;" 2>&1
 
 bsdinstall entropy
 bsdinstall umount

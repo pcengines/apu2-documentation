@@ -58,7 +58,7 @@ f_dprintf "Began Installation at %s" "$( date )"
 rm -rf $BSDINSTALL_TMPETC
 mkdir $BSDINSTALL_TMPETC
 
-export DISTRIBUTIONS="base.txz kernel.txz"
+export DISTRIBUTIONS="base.txz"
 if [ -f $BSDINSTALL_DISTDIR/MANIFEST ]; then
     DISTMENU=`awk -F'\t' '!/^(kernel|base)/{print $4,$5,$6}' $BSDINSTALL_DISTDIR/MANIFEST`
 fi

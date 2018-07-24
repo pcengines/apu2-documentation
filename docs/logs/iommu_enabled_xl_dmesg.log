@@ -1,0 +1,278 @@
+(XEN) Xen version 4.8.3 (Debian 4.8.3+comet2+shim4.10.0+comet3-1+deb9u5) (ijackson@chiark.greenend.org.uk) (gcc (Debian 6.3.0-18) 6.3.0 20170516) debug=n  Fri Mar  2 16:10:09 UTC 2018
+(XEN) Bootloader: iPXE 1.0.0+ (fd6d1)
+(XEN) Command line: dom0_mem=512M loglvl=all guest_loglvl=all com1=115200,8n1 console=com1 apic_verbosity=verbose iommu=verbose
+(XEN) Video information:
+(XEN)  No VGA detected
+(XEN) Disc information:
+(XEN)  Found 1 MBR signatures
+(XEN)  Found 4 EDD information structures
+(XEN) Xen-e820 RAM map:
+(XEN)  0000000000000000 - 000000000009fc00 (usable)
+(XEN)  000000000009fc00 - 00000000000a0000 (reserved)
+(XEN)  00000000000f0000 - 0000000000100000 (reserved)
+(XEN)  0000000000100000 - 00000000cfe98000 (usable)
+(XEN)  00000000cfe98000 - 00000000d0000000 (reserved)
+(XEN)  00000000f8000000 - 00000000fc000000 (reserved)
+(XEN)  00000000fed40000 - 00000000fed45000 (reserved)
+(XEN)  0000000100000000 - 000000012f000000 (usable)
+(XEN) ACPI: RSDP 000F3BF0, 0024 (r2 CORE  )
+(XEN) ACPI: XSDT CFEAC0E0, 006C (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: FACP CFEAD900, 00F4 (r4 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: DSDT CFEAC280, 1677 (r2 AMD    COREBOOT    10001 INTL 20161222)
+(XEN) ACPI: FACS CFEAC240, 0040
+(XEN) ACPI: SSDT CFEADA00, 01E1 (r2 CORE   COREBOOT       2A CORE       2A)
+(XEN) ACPI: TCPA CFEADBF0, 0032 (r2 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: APIC CFEADC30, 007E (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: HEST CFEADCB0, 01D0 (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: IVRS CFEADE80, 0108 (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: SSDT CFEADF90, 48A6 (r2 AMD    AGESA           2 MSFT  4000000)
+(XEN) ACPI: SSDT CFEB2840, 07C8 (r1 AMD    AGESA           1 AMD         1)
+(XEN) ACPI: HPET CFEB3010, 0038 (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) System RAM: 4078MB (4176092kB)
+(XEN) No NUMA configuration found
+(XEN) Faking a node at 0000000000000000-000000012f000000
+(XEN) Domain heap initialised
+(XEN) CPU Vendor: AMD, Family 22 (0x16), Model 48 (0x30), Stepping 1 (raw 00730f01)
+(XEN) found SMP MP-table at 000f3a20
+(XEN) DMI present.
+(XEN) Using APIC driver default
+(XEN) ACPI: PM-Timer IO Port: 0x818 (32 bits)
+(XEN) ACPI: SLEEP INFO: pm1x_cnt[1:804,1:0], pm1x_evt[1:800,1:0]
+(XEN) ACPI: 32/64X FACS address mismatch in FADT - cfeac240/0000000000000000, using 32
+(XEN) ACPI:             wakeup_vec[cfeac24c], vec_size[20]
+(XEN) ACPI: Local APIC address 0xfee00000
+(XEN) ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
+(XEN) ACPI: LAPIC (acpi_id[0x01] lapic_id[0x01] enabled)
+(XEN) ACPI: LAPIC (acpi_id[0x02] lapic_id[0x02] enabled)
+(XEN) ACPI: LAPIC (acpi_id[0x03] lapic_id[0x03] enabled)
+(XEN) ACPI: LAPIC_NMI (acpi_id[0xff] high edge lint[0x1])
+(XEN) ACPI: IOAPIC (id[0x04] address[0xfec00000] gsi_base[0])
+(XEN) IOAPIC[0]: apic_id 4, version 33, address 0xfec00000, GSI 0-23
+(XEN) ACPI: IOAPIC (id[0x05] address[0xfec20000] gsi_base[24])
+(XEN) IOAPIC[1]: apic_id 5, version 33, address 0xfec20000, GSI 24-55
+(XEN) ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)
+(XEN) ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 low level)
+(XEN) ACPI: IRQ0 used by override.
+(XEN) ACPI: IRQ2 used by override.
+(XEN) ACPI: IRQ9 used by override.
+(XEN) Enabling APIC mode:  Flat.  Using 2 I/O APICs
+(XEN) ACPI: HPET id: 0x10228201 base: 0xfed00000
+(XEN) ERST table was not found
+(XEN) HEST: Table parsing has been initialized
+(XEN) Using ACPI (MADT) for SMP configuration information
+(XEN) SMP: Allowing 4 CPUs (0 hotplug CPUs)
+(XEN) mapped APIC to ffff82cfffffb000 (fee00000)
+(XEN) mapped IOAPIC to ffff82cfffffa000 (fec00000)
+(XEN) mapped IOAPIC to ffff82cfffff9000 (fec20000)
+(XEN) IRQ limits: 56 GSI, 728 MSI/MSI-X
+(XEN) xstate: size: 0x340 and states: 0x7
+(XEN) AMD Fam16h machine check reporting enabled
+(XEN) Using scheduler: SMP Credit Scheduler (credit)
+(XEN) Platform timer is 14.318MHz HPET
+(XEN) Detected 998.167 MHz processor.
+(XEN) Initing memory sharing.
+(XEN) alt table ffff82d0802bef18 -> ffff82d0802c0574
+(XEN) AMD-Vi: Disabled HAP memory map sharing with IOMMU
+(XEN) AMD-Vi: IOMMU Extended Features:
+(XEN)  - Peripheral Page Service Request
+(XEN)  - Guest Translation
+(XEN)  - Invalidate All Command
+(XEN)  - Guest APIC supported
+(XEN)  - Performance Counters
+(XEN) AMD-Vi: IOMMU 0 Enabled.
+(XEN) I/O virtualisation enabled
+(XEN)  - Dom0 mode: Relaxed
+(XEN) Interrupt remapping enabled
+(XEN) nr_sockets: 1
+(XEN) enabled ExtINT on CPU#0
+(XEN) ESR value before enabling vector: 0x48  after: 0
+(XEN) ENABLING IO-APIC IRQs
+(XEN)  -> Using new ACK method
+(XEN) init IO_APIC IRQs
+(XEN)  IO-APIC (apicid-pin) 4-0, 4-16, 4-17, 4-18, 4-19, 4-20, 4-21, 4-22, 4-23, 5-0, 5-1, 5-2, 5-3, 5-4, 5-5, 5-6, 5-7, 5-8, 5-9, 5-10, 5-11, 5-12, 5-13, 5-14, 5-15, 5-16, 5-17, 5-18, 5-19, 5-20, 5-21, 5-22, 5-23, 5-24, 5-25, 5-26, 5-27.
+(XEN) ..TIMER: vector=0xF0 apic1=0 pin1=2 apic2=0 pin2=0
+(XEN) number of MP IRQ sources: 15.
+(XEN) number of IO-APIC #4 registers: 24.
+(XEN) number of IO-APIC #5 registers: 32.
+(XEN) testing the IO APIC.......................
+(XEN) IO APIC #4......
+(XEN) .... register #00: 04000000
+(XEN) .......    : physical APIC id: 04
+(XEN) .......    : Delivery Type: 0
+(XEN) .......    : LTS          : 0
+(XEN) .... register #01: 00178021
+(XEN) .......     : max redirection entries: 0017
+(XEN) .......     : PRQ implemented: 1
+(XEN) .......     : IO APIC version: 0021
+(XEN) .... register #02: 04000000
+(XEN) .......     : arbitration: 04
+(XEN) .... register #03: 04178021
+(XEN) .......     : Boot DT    : 1
+(XEN) .... IRQ redirection table:
+(XEN)  NR Log Phy Mask Trig IRR Pol Stat Dest Deli Vect:
+(XEN)  00 000 00  1    0    0   0   0    0    7    00
+(XEN)  01 001 01  0    0    0   0   0    1    1    30
+(XEN)  02 001 01  0    0    0   0   0    1    1    F0
+(XEN)  03 001 01  0    0    0   0   0    1    1    38
+(XEN)  04 001 01  0    0    0   0   0    1    1    F1
+(XEN)  05 001 01  0    0    0   0   0    1    1    40
+(XEN)  06 001 01  0    0    0   0   0    1    1    48
+(XEN)  07 001 01  0    0    0   0   0    1    1    50
+(XEN)  08 001 01  0    0    0   0   0    1    1    58
+(XEN)  09 001 01  1    1    0   1   1    1    1    60
+(XEN)  0a 001 01  0    0    0   0   0    1    1    68
+(XEN)  0b 001 01  0    0    0   0   0    1    1    70
+(XEN)  0c 001 01  0    0    0   0   0    1    1    78
+(XEN)  0d 001 01  0    0    0   0   0    1    1    88
+(XEN)  0e 001 01  0    0    0   0   0    1    1    90
+(XEN)  0f 001 01  0    0    0   0   0    1    1    98
+(XEN)  10 000 00  1    0    0   0   0    0    0    00
+(XEN)  11 000 00  1    0    0   0   0    0    0    00
+(XEN)  12 000 00  1    0    0   0   0    0    0    00
+(XEN)  13 000 00  1    0    0   0   0    0    0    00
+(XEN)  14 000 00  1    0    0   0   0    0    0    00
+(XEN)  15 000 00  1    0    0   0   0    0    0    00
+(XEN)  16 000 00  1    0    0   0   0    0    0    00
+(XEN)  17 000 00  1    0    0   0   0    0    0    00
+(XEN) IO APIC #5......
+(XEN) .... register #00: 00000000
+(XEN) .......    : physical APIC id: 00
+(XEN) .......    : Delivery Type: 0
+(XEN) .......    : LTS          : 0
+(XEN) .... register #01: 001F8021
+(XEN) .......     : max redirection entries: 001F
+(XEN) .......     : PRQ implemented: 1
+(XEN) .......     : IO APIC version: 0021
+(XEN) .... register #02: 00000000
+(XEN) .......     : arbitration: 00
+(XEN) .... IRQ redirection table:
+(XEN)  NR Log Phy Mask Trig IRR Pol Stat Dest Deli Vect:
+(XEN)  00 000 00  1    0    0   0   0    0    0    00
+(XEN)  01 000 00  1    0    0   0   0    0    0    00
+(XEN)  02 000 00  1    0    0   0   0    0    0    00
+(XEN)  03 000 00  1    0    0   0   0    0    0    00
+(XEN)  04 000 00  1    0    0   0   0    0    0    00
+(XEN)  05 000 00  1    0    0   0   0    0    0    00
+(XEN)  06 000 00  1    0    0   0   0    0    0    00
+(XEN)  07 000 00  1    0    0   0   0    0    0    00
+(XEN)  08 000 00  1    0    0   0   0    0    0    00
+(XEN)  09 000 00  1    0    0   0   0    0    0    00
+(XEN)  0a 000 00  1    0    0   0   0    0    0    00
+(XEN)  0b 000 00  1    0    0   0   0    0    0    00
+(XEN)  0c 000 00  1    0    0   0   0    0    0    00
+(XEN)  0d 000 00  1    0    0   0   0    0    0    00
+(XEN)  0e 000 00  1    0    0   0   0    0    0    00
+(XEN)  0f 000 00  1    0    0   0   0    0    0    00
+(XEN)  10 000 00  1    0    0   0   0    0    0    00
+(XEN)  11 000 00  1    0    0   0   0    0    0    00
+(XEN)  12 000 00  1    0    0   0   0    0    0    00
+(XEN)  13 000 00  1    0    0   0   0    0    0    00
+(XEN)  14 000 00  1    0    0   0   0    0    0    00
+(XEN)  15 000 00  1    0    0   0   0    0    0    00
+(XEN)  16 000 00  1    0    0   0   0    0    0    00
+(XEN)  17 000 00  1    0    0   0   0    0    0    00
+(XEN)  18 000 00  1    0    0   0   0    0    0    00
+(XEN)  19 000 00  1    0    0   0   0    0    0    00
+(XEN)  1a 000 00  1    0    0   0   0    0    0    00
+(XEN)  1b 000 00  1    0    0   0   0    0    0    00
+(XEN)  1c 000 00  1    0    0   0   0    0    0    00
+(XEN)  1d 000 00  1    0    0   0   0    0    0    00
+(XEN)  1e 000 00  1    0    0   0   0    0    0    00
+(XEN)  1f 000 00  1    0    0   0   0    0    0    00
+(XEN) Using vector-based indexing
+(XEN) IRQ to pin mappings:
+(XEN) IRQ240 -> 0:2
+(XEN) IRQ48 -> 0:1
+(XEN) IRQ56 -> 0:3
+(XEN) IRQ241 -> 0:4
+(XEN) IRQ64 -> 0:5
+(XEN) IRQ72 -> 0:6
+(XEN) IRQ80 -> 0:7
+(XEN) IRQ88 -> 0:8
+(XEN) IRQ96 -> 0:9
+(XEN) IRQ104 -> 0:10
+(XEN) IRQ112 -> 0:11
+(XEN) IRQ120 -> 0:12
+(XEN) IRQ136 -> 0:13
+(XEN) IRQ144 -> 0:14
+(XEN) IRQ152 -> 0:15
+(XEN) .................................... done.
+(XEN) Using local APIC timer interrupts.
+(XEN) calibrating APIC timer ...
+(XEN) ..... CPU clock speed is 997.8911 MHz.
+(XEN) ..... host bus clock speed is 99.7889 MHz.
+(XEN) ..... bus_scale = 0x662f
+(XEN) Allocated console ring of 32 KiB.
+(XEN) mwait-idle: does not run on family 22 model 48
+(XEN) HVM: ASIDs enabled.
+(XEN) SVM: Supported advanced features:
+(XEN)  - Nested Page Tables (NPT)
+(XEN)  - Last Branch Record (LBR) Virtualisation
+(XEN)  - Next-RIP Saved on #VMEXIT
+(XEN)  - DecodeAssists
+(XEN)  - Pause-Intercept Filter
+(XEN)  - TSC Rate MSR
+(XEN) HVM: SVM enabled
+(XEN) HVM: Hardware Assisted Paging (HAP) detected
+(XEN) HVM: HAP page sizes: 4kB, 2MB, 1GB
+(XEN) HVM: PVH mode not supported on this platform
+(XEN) masked ExtINT on CPU#1
+(XEN) spurious 8259A interrupt: IRQ7.
+(XEN) CPU1: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) masked ExtINT on CPU#2
+(XEN) CPU2: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) masked ExtINT on CPU#3
+(XEN) Brought up 4 CPUs
+(XEN) CPU3: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) build-id: dff6bad5189f35adc717d7989e1e2c87b87860cc
+(XEN) ACPI sleep modes: S3
+(XEN) VPMU: disabled
+(XEN) MCA: Use hw thresholding to adjust polling frequency
+(XEN) mcheck_poll: Machine check polling timer started.
+(XEN) Dom0 has maximum 632 PIRQs
+(XEN) NX (Execute Disable) protection active
+(XEN) *** LOADING DOMAIN 0 ***
+(XEN)  Xen  kernel: 64-bit, lsb, compat32
+(XEN)  Dom0 kernel: 64-bit, PAE, lsb, paddr 0x1000000 -> 0x26e0000
+(XEN) PHYSICAL MEMORY ARRANGEMENT:
+(XEN)  Dom0 alloc.:   0000000124000000->0000000128000000 (114688 pages to be allocated)
+(XEN) VIRTUAL MEMORY ARRANGEMENT:
+(XEN)  Loaded kernel: ffffffff81000000->ffffffff826e0000
+(XEN)  Init. ramdisk: 0000000000000000->0000000000000000
+(XEN)  Phys-Mach map: 0000008000000000->0000008000100000
+(XEN)  Start info:    ffffffff826e0000->ffffffff826e04b4
+(XEN)  Page tables:   ffffffff826e1000->ffffffff826f8000
+(XEN)  Boot stack:    ffffffff826f8000->ffffffff826f9000
+(XEN)  TOTAL:         ffffffff80000000->ffffffff82800000
+(XEN)  ENTRY ADDRESS: ffffffff8249a180
+(XEN) Dom0 has maximum 4 VCPUs
+(XEN) Scrubbing Free RAM on 1 nodes using 4 CPUs
+(XEN) ..........done.
+(XEN) Initial low memory virq threshold set at 0x4000 pages.
+(XEN) Std. Loglevel: All
+(XEN) Guest Loglevel: All
+(XEN) *** Serial input -> DOM0 (type 'CTRL-a' three times to switch input to Xen)
+(XEN) Freed 312kB init memory
+(XEN) PCI add device 0000:00:00.0
+(XEN) PCI add device 0000:00:00.2
+(XEN) PCI add device 0000:00:02.0
+(XEN) PCI add device 0000:00:02.2
+(XEN) PCI add device 0000:00:02.3
+(XEN) PCI add device 0000:00:02.4
+(XEN) PCI add device 0000:00:08.0
+(XEN) PCI add device 0000:00:10.0
+(XEN) PCI add device 0000:00:11.0
+(XEN) PCI add device 0000:00:13.0
+(XEN) PCI add device 0000:00:14.0
+(XEN) PCI add device 0000:00:14.3
+(XEN) PCI add device 0000:00:14.7
+(XEN) PCI add device 0000:00:18.0
+(XEN) PCI add device 0000:00:18.1
+(XEN) PCI add device 0000:00:18.2
+(XEN) PCI add device 0000:00:18.3
+(XEN) PCI add device 0000:00:18.4
+(XEN) PCI add device 0000:00:18.5
+(XEN) PCI add device 0000:01:00.0
+(XEN) PCI add device 0000:02:00.0
+(XEN) PCI add device 0000:03:00.0
+

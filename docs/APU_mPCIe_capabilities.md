@@ -14,8 +14,8 @@ Possible usage
 
 | Element | Module
 |:-------:|:----------
-| J14     | Huawei ME909u, WLE200NX, TL-WN722N
-| J13     | WLE200NX, TL-WN722N
+| J14     | Huawei ME909u, WLE200NX
+| J13     | WLE200NX
 | J12     | -
 
 APU3A, APU3B, APU4B
@@ -35,6 +35,6 @@ Possible usage
 
 | Element | Modules
 |:-------:|:----------
-| J16     | WLE200NX, TL-WN722N
-| J15     | Huawei ME909u, TL-WN722N
-| J16     | Huawei ME909u
+| J16     | WLE200NX
+| J15     | Huawei ME909u
+| J14     | Huawei ME909u

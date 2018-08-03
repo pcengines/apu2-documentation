@@ -11,13 +11,13 @@ not occur when doing coldboot or reboot.
 Initial ideas
 -------------
 
-AGESA specification 44065 Rev. 3.03 (not publicly available) on page 41 and
-followings in the operational overview says:
+[AGESA specification 44065 Rev. 3.04](https://support.amd.com/TechDocs/44065_Arch2008.pdf)
+on page 38 and followings in the operational overview says:
 
 > E — Main boot path. Proceed with full hardware initialization.
 > Warm reset may be needed to instantiate new values into some registers.
 
- Next page, about AGESA software call entry points' duties:
+Page 40, about AGESA software call entry points' duties:
 
 ```
 AmdInitReset

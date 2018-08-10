@@ -1,11 +1,11 @@
-Flashing apu with Raspberry Pi
+Flashing APUx with Raspberry Pi
 ==============================
 
 # Preparing environment and building image
 
 Details about building firmware are mentioned in [README](https://github.com/pcengines/apu2-documentation#building-firmware-using-pc-engines-firmware-builder)
 
-# Flashing APU2 using RPi2/3/zero
+# Flashing APUx using RPi2/3/zero
 
 If You have already built an image with descriptions provided earlier, it is
 time to connect RPi to apu.
@@ -14,7 +14,7 @@ time to connect RPi to apu.
 
 * pinout:
 
-| Signal     | RPi Pin number | APU SPI pin header      |
+| Signal     | RPi Pin number | APUx SPI pin header      |
 |------------|----------------|-------------------------|
 | 3V power   | 17             | 1 VCC (may be omitted)  |
 | GND        | 20             | 2 GND                   |
@@ -23,7 +23,7 @@ time to connect RPi to apu.
 | SPI0 MISO  | 21             | 5 SPIDI                 |
 | SPI0 MOSI  | 19             | 6 SPIDO                 |
 
-> Except that before flashing we have to make sure that APU2 is on and
+> Except that before flashing we have to make sure that APUx is on and
   in S5 state. That means we have to connect pins 2 and 3 on J2 header
   before turning power on. In such case there will be no output on serial
   port.
@@ -73,10 +73,16 @@ On RPi side we can use other pins as well. There are 2xSPI, 2x3V power and
 
 * read ROM image:
 
+#### For APU1
+```sh
+    pi@raspberrypi:~$ sudo flashrom -p linux_spi:dev=/dev/spidev0.0,spispeed=16000 -r apu.rom -c "MX25L1605A/MX25L1606E/MX25L1608E"
+``` 
+
+#### For APU2/3/4/5:
+
 ```sh
     pi@raspberrypi:~$ sudo flashrom -p linux_spi:dev=/dev/spidev0.0,spispeed=16000 -r apu.rom
-```
-
+``` 
 3. Connecting via serial port:
 
 * RS232 connection - according to the image (TX & RX crossed)

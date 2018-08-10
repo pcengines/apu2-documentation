@@ -15,12 +15,12 @@ You can also use minimal distributions with already installed `flashrom` like
 
 ## coreboot.rom flashing
 
-#### APU1
+##### APU1
 ```sh
 flashrom -w coreboot.rom -p internal -c "MX25L1605A/MX25L1606E/MX25L1608E"
 ```
 
-#### APU2/3/4/5
+##### APU2/3/4/5
 ```sh
 flashrom -w coreboot.rom -p internal
 ```

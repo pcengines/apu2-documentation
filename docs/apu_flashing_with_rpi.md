@@ -73,16 +73,16 @@ On RPi side we can use other pins as well. There are 2xSPI, 2x3V power and
 
 * read ROM image:
 
-#### For APU1
+##### APU1
 ```sh
     pi@raspberrypi:~$ sudo flashrom -p linux_spi:dev=/dev/spidev0.0,spispeed=16000 -r apu.rom -c "MX25L1605A/MX25L1606E/MX25L1608E"
-``` 
+```
 
-#### For APU2/3/4/5:
+##### APU2/3/4/5:
 
 ```sh
     pi@raspberrypi:~$ sudo flashrom -p linux_spi:dev=/dev/spidev0.0,spispeed=16000 -r apu.rom
-``` 
+```
 3. Connecting via serial port:
 
 * RS232 connection - according to the image (TX & RX crossed)

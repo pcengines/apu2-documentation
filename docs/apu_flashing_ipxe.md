@@ -135,12 +135,12 @@ Type `root` as password to finish logging process.
 8. Now you can start flashing process. To flash firmware with `flashrom` usage
 type:
 
-##### For APU1
+##### APU1
 ```
 flashrom -w <directory to ROM> -p internal -c "MX25L1605A/MX25L1606E/MX25L1608E"
 ```
 
-##### For APU2/3/4/5
+##### APU2/3/4/5
 ```
 flashrom -w <directory to ROM> -p internal
 ```

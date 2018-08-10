@@ -69,7 +69,7 @@ set next-server 192.168.0.108
 chain tftp://${next-server}/${filename}
 ```
 
-> The `X` number in `netX` interface can be different depending on the connector 
+> The `X` number in `netX` interface can be different depending on the connector
 to which Ethernet is connected. If selected interface is connected to network
 information similar to the showed below should appear:
 
@@ -135,11 +135,17 @@ Type `root` as password to finish logging process.
 8. Now you can start flashing process. To flash firmware with `flashrom` usage
 type:
 
+##### APU1
+```
+flashrom -w <directory to ROM> -p internal -c "MX25L1605A/MX25L1606E/MX25L1608E"
+```
+
+##### APU2/3/4/5
 ```
 flashrom -w <directory to ROM> -p internal
 ```
 
-E.g.:
+E.g. (APU2):
 
 ```
 flashrom -w /tmp/coreboot.rom -p internal
@@ -168,14 +174,14 @@ cd <directory with ROM image>
 scp <ROM image> root@<IP of APUx to flash>:<directory to store ROM image on APUx>
 ```
 
-E.g.:
+E.g (APU2).:
 
 ```
 cd /home/me/coreboot/build
 scp coreboot.rom root@192.168.0.123:/tmp
 ```
 
-Then to flash APUx type in the serial console:
+Then to flash APU2 type in the serial console:
 
 ```
 cd
@@ -213,11 +219,11 @@ Select `1. Payload [setup]` by pressing `1`.
 ### PC Engines apu2 setup v4.5.7 ###
 Boot order - type letter to move device to top.
 
-  a USB 1 / USB 2 SS and HS 
-  b SDCARD 
-  c mSATA 
-  d SATA 
-  e mPCIe1 SATA1 and SATA2 
+  a USB 1 / USB 2 SS and HS
+  b SDCARD
+  c mSATA
+  d SATA
+  e mPCIe1 SATA1 and SATA2
   f iPXE (disabled)
 
 
@@ -235,4 +241,3 @@ should change to `n Network/PXE boot - Currently Enabled`.
 
 5. Now you can reboot platform by choosing `s Save configuration and exit`, so
 press `s` to do that.
-

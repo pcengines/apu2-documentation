@@ -6,7 +6,7 @@ On this platforms USB sticks were detected by SeaBIOS (both USB2.0 and USB3.0) a
 booting was successful.
 
 ## APU4
-SeaBIOS doesn't detect any USB device.
+SeaBIOS doesn't detect any USB device. More verbose [log](logs/usb-detect-bug-apu4_seabios-1-11-2_verbose.log).
 ```
 SeaBIOS (version rel-1.11.2-0-gf9626cc-dirty-20180810_104534-f05dcb890877XHCI init on dev 00:10.0: regs @ 0xf7f22000, 4 ports, 32 slots, 32 bys
 XHCI    extcap 0x1 @ 0xf7f22500

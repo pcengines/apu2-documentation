@@ -10,30 +10,32 @@ memory training.
 Using version of AGESA that doesn't set mentioned bit results in working
 ECC error injection in MemTest86 V7.4 Pro on apu2 and apu4:
 
->2018-09-25 16:59:03 - MtSupportRunAllTests - Injecting ECC error
->2018-09-25 16:59:03 - inject_amd64 - new nb_arr_add = 80000000
->2018-09-25 16:59:03 - inject_amd64 - new dram_ecc = 0012000F
->2018-09-25 16:59:03 - MCA NB Status High=00000000
->2018-09-25 16:59:03 - inject_amd64 - new nb_arr_add = 80000002
->2018-09-25 16:59:03 - inject_amd64 - new dram_ecc = 0012000F
->2018-09-25 16:59:03 - MCA NB Status High=00000000
->2018-09-25 16:59:03 - inject_amd64 - new nb_arr_add = 80000004
->2018-09-25 16:59:03 - inject_amd64 - new dram_ecc = 0012000F
->2018-09-25 16:59:03 - MCA NB Status High=00000000
->2018-09-25 16:59:03 - MtSupportRunAllTests - Setting random seed to 0x50415353
->2018-09-25 16:59:03 - MtSupportRunAllTests - Start time: 453 ms
->2018-09-25 16:59:03 - ReadMemoryRanges - Available Pages = 1035071
->2018-09-25 16:59:03 - MtSupportRunAllTests - Enabling memory cache for test
->2018-09-25 16:59:03 - MtSupportRunAllTests - Enabling memory cache complete
->2018-09-25 16:59:03 - Start memory range test (0x0 - 0x12F000000)
->2018-09-25 16:59:03 - Pre-allocating memory ranges >=16MB first...
->2018-09-25 16:59:04 - All memory ranges successfully locked
->2018-09-25 16:59:04 - MCA NB Status=846FC000F2080813 
->2018-09-25 16:59:04 - MCA NB Address=00000000CFE528E0
->2018-09-25 16:59:04 - [MEM ERROR - ECC] Test: 3, Address: CFE528E0, ECC Corrected: yes, Syndrome: F2DF, Channel/Slot: N/A
->2018-09-25 17:00:08 - MCA NB Status=846FC000F2080813 
->2018-09-25 17:00:08 - MCA NB Address=00000000CE3F46C0
->2018-09-25 17:00:08 - [MEM ERROR - ECC] Test: 3, Address: CE3F46C0, ECC Corrected: yes, Syndrome: F2DF, Channel/Slot: N/A
+```
+2018-09-25 16:59:03 - MtSupportRunAllTests - Injecting ECC error
+2018-09-25 16:59:03 - inject_amd64 - new nb_arr_add = 80000000
+2018-09-25 16:59:03 - inject_amd64 - new dram_ecc = 0012000F
+2018-09-25 16:59:03 - MCA NB Status High=00000000
+2018-09-25 16:59:03 - inject_amd64 - new nb_arr_add = 80000002
+2018-09-25 16:59:03 - inject_amd64 - new dram_ecc = 0012000F
+2018-09-25 16:59:03 - MCA NB Status High=00000000
+2018-09-25 16:59:03 - inject_amd64 - new nb_arr_add = 80000004
+2018-09-25 16:59:03 - inject_amd64 - new dram_ecc = 0012000F
+2018-09-25 16:59:03 - MCA NB Status High=00000000
+2018-09-25 16:59:03 - MtSupportRunAllTests - Setting random seed to 0x50415353
+2018-09-25 16:59:03 - MtSupportRunAllTests - Start time: 453 ms
+2018-09-25 16:59:03 - ReadMemoryRanges - Available Pages = 1035071
+2018-09-25 16:59:03 - MtSupportRunAllTests - Enabling memory cache for test
+2018-09-25 16:59:03 - MtSupportRunAllTests - Enabling memory cache complete
+2018-09-25 16:59:03 - Start memory range test (0x0 - 0x12F000000)
+2018-09-25 16:59:03 - Pre-allocating memory ranges >=16MB first...
+2018-09-25 16:59:04 - All memory ranges successfully locked
+2018-09-25 16:59:04 - MCA NB Status=846FC000F2080813 
+2018-09-25 16:59:04 - MCA NB Address=00000000CFE528E0
+2018-09-25 16:59:04 - [MEM ERROR - ECC] Test: 3, Address: CFE528E0, ECC Corrected: yes, Syndrome: F2DF, Channel/Slot: N/A
+2018-09-25 17:00:08 - MCA NB Status=846FC000F2080813 
+2018-09-25 17:00:08 - MCA NB Address=00000000CE3F46C0
+2018-09-25 17:00:08 - [MEM ERROR - ECC] Test: 3, Address: CE3F46C0, ECC Corrected: yes, Syndrome: F2DF, Channel/Slot: N/A
+```
 
 On apu3 ECC isn't detected at all because of SPD which doesn't report this feature.
 Reasons for injection not working on apu5 are still being investigated, as well

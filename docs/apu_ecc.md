@@ -59,9 +59,19 @@ a build time option:
 
 There is also a runtime option `UmaMode` in `MemConfig`, which is parameter for
 `AmdInitPost`, but it isn't clear if AGESA uses data received from host or changes
-it along the way before memory initialization.
+it along the way before memory initialization. However, initial value of `UmaMode`
+already is `UMA_NONE`, and neither changing it before calling `AmdInitPost` nor
+in any callout functions doesn't change the outcome.
 
->#TODO: to be tested
+Clearing bit EccExclEn in register D18F5x240 from coreboot after it gets set by
+AGESA seems to work as well. Description of this register in
+[BKDG, 52740 Rev 3.06](https://www.amd.com/system/files/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf)
+informs that
+>BIOS must quiesce all other forms of DRAM traffic when configuring this range.
+>See MSRC001_001F[DisDramScrub].
+
+Additional findings
+-------------------
 
 Somewhere between memory training and setting UMA I receive
 `WARNING Event: 04012200 Data: 0, 0, 0, 0`.
@@ -69,3 +79,10 @@ From specification:
 > MEM_WARNING_BANK_INTERLEAVING_NOT_ENABLED
 
 I don't know if this is connected in any way to problems with ECC.
+
+Every corrected ECC error has the same syndrome - F2DF. It is caused by MemTest86
+setting D18F3xBC_x8 (DRAM ECC) to `0012000F`. More info about meaning of these is
+available in [BKDG](https://www.amd.com/system/files/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf)
+on pages 172-174 (ECC syndromes) and 456 (DRAM ECC register). Another register
+that is set by MemTest86 is D18F3xB8 (NB Array Address), but according to page 456
+only valid option for this register is `80000008`, all other values are reserved.

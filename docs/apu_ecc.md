@@ -37,9 +37,27 @@ ECC error injection in MemTest86 V7.4 Pro on apu2 and apu4:
 2018-09-25 17:00:08 - [MEM ERROR - ECC] Test: 3, Address: CE3F46C0, ECC Corrected: yes, Syndrome: F2DF, Channel/Slot: N/A
 ```
 
-On apu3 ECC isn't detected at all because of SPD which doesn't report this feature.
-Reasons for injection not working on apu5 are still being investigated, as well
-as any negative side effects on older platforms.
+Configuration file used:
+```
+TSTLIST=3,5,13
+NUMPASS=2
+
+DISABLEMP=1
+ECCPOLL=1
+ECCINJECT=1
+
+AUTOMODE=1
+SKIPSPLASH=1
+CONSOLEMODE=0
+```
+List of tests and number of passed were stripped down to speed up research.
+`DISABLEMP` is set because of buggy multiprocessor support in UEFI. `ECCPOLL`
+enables checking for detected ECC errors after each test and `ECCINJECT` enables
+ECC error injection on start of each test. The rest of options enables automode
+with report generation.
+
+On apu3 with 2GB RAM ECC isn't detected at all because of SPD which doesn't
+report this feature.
 
 Potential workarounds
 ---------------------
@@ -84,5 +102,9 @@ Every corrected ECC error has the same syndrome - F2DF. It is caused by MemTest8
 setting D18F3xBC_x8 (DRAM ECC) to `0012000F`. More info about meaning of these is
 available in [BKDG](https://www.amd.com/system/files/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf)
 on pages 172-174 (ECC syndromes) and 456 (DRAM ECC register). Another register
-that is set by MemTest86 is D18F3xB8 (NB Array Address), but according to page 456
-only valid option for this register is `80000008`, all other values are reserved.
+that is set by MemTest86 is D18F3xB8 (NB Array Address) as `8000000x`, where `x`
+is 0, 2 and 4.
+
+On apu3 (4GB version) and apu5 register D18F3xB8 have some bits set on fields
+marked as reserved in BKDG. After clearing these bits before starting MemTest86
+ECC injection started to work as expected on all platforms with ECC-capable memory.

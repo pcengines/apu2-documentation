@@ -37,7 +37,7 @@ ECC error injection in MemTest86 V7.4 Pro on apu2 and apu4:
 2018-09-25 17:00:08 - [MEM ERROR - ECC] Test: 3, Address: CE3F46C0, ECC Corrected: yes, Syndrome: F2DF, Channel/Slot: N/A
 ```
 
-Configuration file used:
+[Configuration file](mt86.cfg) used:
 ```
 TSTLIST=3,5,13
 NUMPASS=2

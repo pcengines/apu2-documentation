@@ -11,7 +11,7 @@ are used. All boosted P-states are always higher performance than non-boosted
 P-states. Hardware P0 is software Pb0. rest of states is mapped 1-to-1, with the
 same names corresponding to different states, which can be confusing. Number of
 boost states is written in `D18F4x15C[NumBoostStates]`, in case of apu it is 2.
-** BIOS should not provide ACPI _PSS entries for boosted P-states.**
+**BIOS should not provide ACPI _PSS entries for boosted P-states.**
 
 Boost states cannot be requested directly, some conditions that must be met:
 
@@ -72,93 +72,26 @@ voltage differences), OSes and warm/cold boots.
 
 | Register     | Value              | Decoded
 |--------------|-------------------:|-------------------------
-| D18F3x64     |         0x426a0025 | HtcPstateLimit = 4 (low, HW)
-|              |                    | HtcHystLimit = 2
-|              |                    | HtcTmpLimit = 0x6a = 105 &deg;C
-|              |                    | HtcActSts = 1 *processor entered HTC since reset*
-|              |                    | HtcAct = 0 *processor is not in HTC state currently*
-|              |                    | HtcEn = 1
-| D18F3x68     |         0x40000000 | SwPstateLimit = 4 (low, HW)
-|              |                    | SwPstateLimitEn = 0
+| D18F3x64     |         0x426a0025 | HtcPstateLimit = 4 (low, HW)<br>HtcHystLimit = 2<br>HtcTmpLimit = 0x6a = 105 &deg;C<br>HtcActSts = 1 *processor entered HTC since reset*<br>HtcAct = 0 *processor is not in HTC state currently*<br>HtcEn = 1
+| D18F3x68     |         0x40000000 | SwPstateLimit = 4 (low, HW)<br>SwPstateLimitEn = 0
 | D18F3xC4     |         0x00000000 | *mentioned but not described in BKDG*
-| D18F3xDC     |         0x68786400 | NbsynPtrAdjPstate = 2
-|              |                    | NbsynPtrAdjLo = 5
-|              |                    | CacheFlushOnHaltTmr = 0xf
-|              |                    | NbsynPtrAdj = 6
-|              |                    | HwPstateMaxVal = 4 (low, HW)
-| D18F4x110    |         0x000c4014 | MinResTmr = 0x62 = 98
-|              |                    | CSampleTimer = 0x14 = 20 *(~10 ms)*
-| D18F4x13C    |         0x00000001 | SmuPstateLimitEn = 1
-|              |                    | SmuPstateLimit = 0 (high, HW)
-| D18F4x15C    |         0x00000189 | BoostLock = 0
-|              |                    | CstatePowerEn = 1
-|              |                    | ApmMasterEn = 1
-|              |                    | NumBoostStates = 2
-|              |                    | BoostSrc = 1 *use of Pb0 and Pb1 enabled*
-| D18F4x16C    |         0x000024bc | CstateCores = 1 *whether CstateCnt describes cores or compute units, 1 = cores*
-|              |                    | CstateCnt = 2 *how many cores/CUs need to be in CC6 for boosting others*
-|              |                    | CstateBoost = 2 (HW) *core needs to be in this **P**-state before being boosted*
-|              |                    | ApmTdpLimitSts = 1
-|              |                    | ApmTdpLimitIntEn = 1
-|              |                    | TdpLimitDis = 1
-| D18F5x84     |         0x0e0ef003 | DdrMaxRateEnf = 0xe
-|              |                    | DdrMaxRate = 0xe
-|              |                    | DctEn = 0xf
-|              |                    | CmpCap = 3 *(4 cores)*
-| D18F5xE0     |         0x0000xxx1 | RunAvgRange = 1 *(interval = 40ms)*
-|              |                    | *bits marked with x are reserved, they change between reads*
-| MSRC001_0061 | 0x0000000000000020 | CurPstateLimit = 0 (high, SW)
-|              |                    | PstateMaxVal = 2 (low, SW)
+| D18F3xDC     |         0x68786400 | NbsynPtrAdjPstate = 2<br>NbsynPtrAdjLo = 5<br>CacheFlushOnHaltTmr = 0xf<br>NbsynPtrAdj = 6<br>HwPstateMaxVal = 4 (low, HW)
+| D18F4x110    |         0x000c4014 | MinResTmr = 0x62 = 98<br>CSampleTimer = 0x14 = 20 *(~10 ms)*
+| D18F4x13C    |         0x00000001 | SmuPstateLimitEn = 1<br>SmuPstateLimit = 0 (high, HW)
+| D18F4x15C    |         0x00000189 | BoostLock = 0<br>CstatePowerEn = 1<br>ApmMasterEn = 1<br>NumBoostStates = 2<br>BoostSrc = 1 *use of Pb0 and Pb1 enabled*
+| D18F4x16C    |         0x000024bc | CstateCores = 1 *whether CstateCnt describes cores or compute units, 1 = cores*<br>CstateCnt = 2 *how many cores/CUs need to be in CC6 for boosting others*<br>CstateBoost = 2 (HW) *core needs to be in this **P**-state before being boosted*<br>ApmTdpLimitSts = 1<br>ApmTdpLimitIntEn = 1<br>TdpLimitDis = 1
+| D18F5x84     |         0x0e0ef003 | DdrMaxRateEnf = 0xe<br>DdrMaxRate = 0xe<br>DctEn = 0xf<br>CmpCap = 3 *(4 cores)*
+| D18F5xE0     |         0x0000xxx1 | RunAvgRange = 1 *(interval = 40ms)*<br>*bits marked with x are reserved, they change between reads*
+| MSRC001_0061 | 0x0000000000000020 | CurPstateLimit = 0 (high, SW)<br>PstateMaxVal = 2 (low, SW)
 | MSRC001_0062 | 0x0000000000000000 | PstateCmd = 0 *see notes below*
 | MSRC001_0063 | 0x0000000000000000 | CurPstate = 0 *see notes below*
-| MSRC001_0064 | 0x8000025f0000b84c | PstateEn = 1
-|              |                    | IddDiv = 2
-|              |                    | IddValue = 0x5f
-|              |                    | NbPstate = 0
-|              |                    | CpuVid = 0x5c
-|              |                    | CpuDid = 1 *(divide by 2)*
-|              |                    | CpuFid = 0xc *(COF = 1400 MHz)*
-| MSRC001_0065 | 0x8000024d0000c848 | PstateEn = 1
-|              |                    | IddDiv = 2
-|              |                    | IddValue = 0x4d
-|              |                    | NbPstate = 0
-|              |                    | CpuVid = 0x64
-|              |                    | CpuDid = 1 *(divide by 2)*
-|              |                    | CpuFid = 8 *(COF = 1200 MHz)*
-| MSRC001_0066 | 0x800002700000d844 | PstateEn = 1
-|              |                    | IddDiv = 2
-|              |                    | IddValue = 0x70
-|              |                    | NbPstate = 0
-|              |                    | CpuVid = 0x6c
-|              |                    | CpuDid = 1 *(divide by 2)*
-|              |                    | CpuFid = 4 *(COF = 1000 MHz)*
-| MSRC001_0067 | 0x8000025f0040e040 | PstateEn = 1
-|              |                    | IddDiv = 2
-|              |                    | IddValue = 0x5f
-|              |                    | NbPstate = 1
-|              |                    | CpuVid = 0x70
-|              |                    | CpuDid = 1 *(divide by 2)*
-|              |                    | CpuFid = 0 *(COF = 800 MHz)*
-| MSRC001_0068 | 0x8000024b0040ece0 | PstateEn = 1
-|              |                    | IddDiv = 2
-|              |                    | IddValue = 0x4b
-|              |                    | NbPstate = 1
-|              |                    | CpuVid = 0x76
-|              |                    | CpuDid = 3 *(divide by 8)*
-|              |                    | CpuFid = 0x20 *(COF = 600 MHz)*
-| MSRC001_0069 | 0x000000000041fe00 | PstateEn = 0
-| MSRC001_006A |                    |
-| MSRC001_006B |                    |
-| MSRC001_0071 | 0x3a1c00027442d844 | MaxNbCof = 7 *(700 MHz)*
-|              |                    | CurPstateLimit = 2 (high, HW)
-|              |                    | MaxCpuCof = 0xe = 14 *(1400 MHz)*
-|              |                    | StartupPstate = 2 (HW) *cold reset, may be different after reboot/reset*
-|              |                    | CurNbVid = 0x74
-|              |                    | NbPstateDis = 0
-|              |                    | CurPstate = 2 (HW) *see notes below*
-|              |                    | CurCpuVid = 0x6c
-|              |                    | CurCpuDid = 1
-|              |                    | CurCpuFid = 4
+| MSRC001_0064 | 0x8000025f0000b84c | PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x5f<br>NbPstate = 0<br>CpuVid = 0x5c<br>CpuDid = 1 *(divide by 2)*<br>CpuFid = 0xc *(COF = 1400 MHz)*
+| MSRC001_0065 | 0x8000024d0000c848 | PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x4d<br>NbPstate = 0<br>CpuVid = 0x64<br>CpuDid = 1 *(divide by 2)*<br>CpuFid = 8 *(COF = 1200 MHz)*
+| MSRC001_0066 | 0x800002700000d844 | PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x70<br>NbPstate = 0<br>CpuVid = 0x6c<br>CpuDid = 1 *(divide by 2)*<br>CpuFid = 4 *(COF = 1000 MHz)*
+| MSRC001_0067 | 0x8000025f0040e040 | PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x5f<br>NbPstate = 1<br>CpuVid = 0x70<br>CpuDid = 1 *(divide by 2)*<br>CpuFid = 0 *(COF = 800 MHz)*
+| MSRC001_0068 | 0x8000024b0040ece0 | PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x4b<br>NbPstate = 1<br>CpuVid = 0x76<br>CpuDid = 3 *(divide by 8)*<br>CpuFid = 0x20 *(COF = 600 MHz)*
+| MSRC001_0069<br>MSRC001_006A<br>MSRC001_006B | 0x000000000041fe00 | PstateEn = 0
+| MSRC001_0071 | 0x3a1c00027442d844 | MaxNbCof = 7 *(700 MHz)*<br>CurPstateLimit = 2 (high, HW)<br>MaxCpuCof = 0xe = 14 *(1400 MHz)*<br>StartupPstate = 2 (HW) *cold reset, may be different after reboot/reset*<br>CurNbVid = 0x74<br>NbPstateDis = 0<br>CurPstate = 2 (HW) *see notes below*<br>CurCpuVid = 0x6c<br>CurCpuDid = 1<br>CurCpuFid = 4
 
 In the table SW means software numbering, HW - hardware. High limit means
 an upper limit on frequency (performance), lowest P-state number. COF (current

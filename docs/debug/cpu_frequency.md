@@ -118,3 +118,28 @@ Firmware is required to transition the processor to valid COF and VID settings.
 This can be the source of some reboot problems, but it is hard to test in a
 reliable way - reset is asynchronous event that have to take place in very short
 amount of time during transition.
+
+## ACPI tables
+
+All required objects for P-states are present, even the optional _PPC. Only
+difference between actual tables and recommendations from BKDG is entry
+DUTY_WIDTH in Fixed ACPI Description Table (FADT) - AMD recommends value of 0,
+while real entry has 3. Description of this entry from [ACPI specification](http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf):
+
+>The bit width of the processor’s duty cycle setting value in the P_CNT
+>register. Each processor’s duty cycle setting allows the software to select
+>a nominal processor frequency below its absolute frequency as defined by:
+>
+>    THTL_EN = 1
+>
+>    BF*DC/(2^DUTY_WIDTH)
+>
+>    Where:
+>
+>BF – Base frequency
+>
+>DC – Duty cycle setting
+>
+>When THTL_EN is 0, the processor runs at its absolute BF.
+>A DUTY_WIDTH value of 0 indicates that processor duty cycle is not
+>supported and the processor continuously runs at its base frequency.

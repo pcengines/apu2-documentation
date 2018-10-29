@@ -1,10 +1,10 @@
 Serial console output in coreboot
 =================================
 
-Along with v4.8.0.6 we introduced possibility to enable COM2 as the main serial
-port for serial console output in coreboot and SeaBIOS. Because this is not
-enabled in runtime configuration, separate binary must be built in order to get
-the output on COM2.
+Along with v4.8.0.6 and v4.0.21 we introduced possibility to enable COM2 as the
+main serial port for serial console output in coreboot and SeaBIOS. Because this
+is not enabled in runtime configuration, separate binary must be built in order
+to get the output on COM2.
 
 ## Building coreboot firmware with console on COM2
 
@@ -26,10 +26,10 @@ steps:
   > COM2 is supported only on mainline releases for now, so legacy container is
   > not needed
 
-3. Build v4.8.0.6 image:
+3. Build v4.8.0.6 image (v4.0.21 for legacy):
 
   ```
-  ./build.sh release v4.8.0.6 apux
+  ./build.sh release v4.8.0.6 {apu2|apu3|apu4}
   ```
 
 4. Make changes to menuconfig:
@@ -39,16 +39,16 @@ steps:
   ```
 
   In order to change serial port, go to Console menu and change
-  `Index for UART port to use for console` to `1`. You will see that comment below
-  `*** Serial port base address = 0x3f8 ***` will change to
-  `*** Serial port base address = 0x2f8 ***`. Then go to Payload menu and type the
-  changed serial port base address (`0x2f8`) to `SeaBIOS sercon-port base address`
-  field. Now save new config.
+  `Index for UART port to use for console` to `1`. You will see that comment
+  below `*** Serial port base address = 0x3f8 ***` will change to
+  `*** Serial port base address = 0x2f8 ***` (this comment is not displayed in
+  legacy). Then go to Payload menu and type the changed serial port base address
+  (`0x2f8`) to `SeaBIOS sercon-port base address`  field. Now save new config.
 
 5. Build the image again:
 
   ```
-  ./build.sh dev-build $PWD/release/coreboot apux CPUS=$(nproc)
+  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} CPUS=$(nproc)
   ```
 
 6. Flash the new image with serial output on COM2. The firmware image can be
@@ -65,12 +65,15 @@ make olddefconfig
 make menuconfig
 ```
 
+> `make olddefconfig` step is valid only on mainline. For legacy releases, omit
+> this step
+
 In order to change serial port, go to Console menu and change
-`Index for UART port to use for console` to `1`. You will see that comment below
-`*** Serial port base address = 0x3f8 ***` will change to
-`*** Serial port base address = 0x2f8 ***`. Then go to Payload menu and type the
-changed serial port base address to `SeaBIOS sercon-port base address` field.
-Now save new config and run make to build the firmware.
+`Index for UART port to use for console` to `1`. You will see that comment
+below `*** Serial port base address = 0x3f8 ***` will change to
+`*** Serial port base address = 0x2f8 ***` (this comment is not displayed in
+legacy). Then go to Payload menu and type the changed serial port base address
+(`0x2f8`) to `SeaBIOS sercon-port base address`  field. Now save new config.
 
 ## Summary
 

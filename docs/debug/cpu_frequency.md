@@ -1,6 +1,32 @@
-[Github issue](https://github.com/pcengines/coreboot/issues/196)
+[GitHub issue](https://github.com/pcengines/coreboot/issues/196)
 
-Most of information is taken from [BKDG](https://www.amd.com/system/files/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf).
+Most of information is taken from [BKDG](https://www.amd.com/system/files/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf),
+unless noted otherwise.
+
+## Reproducing the issue
+
+Because our knowledge of pfSense and FreeBSD in general is limited steps
+described in linked GitHub issue were used.
+
+For some reason, our installation of pfSense doesn't include `cpuctl` module,
+so `turbostat` didn't work at all. According to its source code, the `Bzy_MHz`
+field shows real CPU frequency. It is counted as ratio of clock ticks of CPU
+divided by clock ticks of P0 as a reference over some period of time, and scaled
+appropriately. It is thus a good measurement of real CPU frequency.
+
+Another approach was to indirectly compare CPU frequencies by comparing bogo ops
+from `stress-ng`. This method can give different results depending on system
+load or interrupts, but can be used as an approximation. In our tests, bogo ops
+after the issue occurred were slightly lower than those reported on GitHub
+(1250-1350 vs. 1407), however they were definitely lower than when the issue
+did not happen (~1950). This was mostly consistent with what was described on
+GitHub when it comes to triggering this issue.
+
+However, after a couple of days we couldn't reproduce this anymore, no matter
+which platform or firmware version was used. Every test showed high bogo ops
+value (1900-2050), with no difference after a couple of days of runtime and
+different ways of starting the system (cold boot, warm boot, reset, reboot from
+pfSense and another operating system).
 
 ## P-states
 
@@ -59,7 +85,7 @@ of P-state, current P-state limit (2 in this case, so no boost is allowed),
 startup P-state, maximum frequency of CPU and NB, current frequency and voltage.
 All P-states here use hardware numbering.
 
-## Values obtained from registers
+#### Values obtained from registers
 
 Values of the mentioned registers were read using BITS, `lspci -xxxx` (Debian)
 and `pciconf` (pfSense). `pciconf` doesn't allow to read registers above 0x100
@@ -119,7 +145,7 @@ This can be the source of some reboot problems, but it is hard to test in a
 reliable way - reset is asynchronous event that have to take place in very short
 amount of time during transition.
 
-## ACPI tables
+#### ACPI tables
 
 All required objects for P-states are present, even the optional _PPC. Only
 difference between actual tables and recommendations from BKDG is entry
@@ -143,3 +169,19 @@ while real entry has 3. Description of this entry from [ACPI specification](http
 >When THTL_EN is 0, the processor runs at its absolute BF.
 >A DUTY_WIDTH value of 0 indicates that processor duty cycle is not
 >supported and the processor continuously runs at its base frequency.
+
+## C-states
+
+Only theoretical research on registers was done from C0, and everything seems to
+be correct. Practical research (i.e. transitions between states) is impossible,
+because when CPU is in lower C-state it doesn't process instructions and thus
+cannot report any of its register values.
+
+As for ACPI tables, we couldn't find _CRS object. P_LVL2_LAT showed a
+value 0f 0x65 = 101, which disables C2 state according to [specification](http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf).
+First recorded value of this field actually showed 0x64 = 100, that is as
+specified in BKDG, but all subsequent logs show 0x65. This could either be an
+error with serial connection or this value did change, which could possibly
+explain sudden problems with reproducing. A look at the source code however
+shows that it is set as 0x65, against instructions from BKDG. If this value was
+indeed different it had to be set by some other agent (payload, OS, AGESA).

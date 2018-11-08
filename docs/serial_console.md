@@ -23,8 +23,11 @@ steps:
   docker pull pcengines/pce-fw-builder
   ```
 
-  > COM2 is supported only on mainline releases for now, so legacy container is
-  > not needed
+  or for legacy:
+
+  ```
+  docker pull pcengines/pce-fw-builder-legacy
+  ```
 
 3. Build v4.8.0.6 image (v4.0.21 for legacy):
 
@@ -52,7 +55,7 @@ steps:
   ```
 
 6. Flash the new image with serial output on COM2. The firmware image can be
-   found in `release/coreboo` which is relative to clone `pce-fw-builder`
+   found in `release/coreboot` which is relative to cloned `pce-fw-builder`
    directory.
 
 ### Developers guide

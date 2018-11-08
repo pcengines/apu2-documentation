@@ -1,3 +1,5 @@
+# Debug notes for CPU frequency issues
+
 [GitHub issue](https://github.com/pcengines/coreboot/issues/196)
 
 Most of information is taken from [BKDG](https://www.amd.com/system/files/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf),
@@ -5,8 +7,7 @@ unless noted otherwise.
 
 ## Reproducing the issue
 
-Because our knowledge of pfSense and FreeBSD in general is limited steps
-described in linked GitHub issue were used.
+Steps described in linked GitHub issue were used.
 
 For some reason, our installation of pfSense doesn't include `cpuctl` module,
 so `turbostat` didn't work at all. According to its source code, the `Bzy_MHz`
@@ -34,7 +35,7 @@ AMD processors have 2 sets of P-state numeration: software and hardware. They
 both start with P0 being highest-performance accessible, but hardware P0 isn't
 the same as software P0. On the software side additional boost states (Pb0, Pb1)
 are used. All boosted P-states are always higher performance than non-boosted
-P-states. Hardware P0 is software Pb0. rest of states is mapped 1-to-1, with the
+P-states. Hardware P0 is software Pb0. Rest of states is mapped 1-to-1, with the
 same names corresponding to different states, which can be confusing. Number of
 boost states is written in `D18F4x15C[NumBoostStates]`, in case of apu it is 2.
 **BIOS should not provide ACPI _PSS entries for boosted P-states.**
@@ -42,10 +43,17 @@ boost states is written in `D18F4x15C[NumBoostStates]`, in case of apu it is 2.
 Boost states cannot be requested directly, some conditions that must be met:
 
 * P0 (software) requested
-* boost enabled (i.e. boost states exist and not disabled in `MSRC001_0015[CpbDis]`)
+* boost enabled (i.e. boost states exist and not disabled in `MSRC001_0015[CpbDis]`,
+  this bit is clear in our case so boost isn't disabled here)
 * actual demand on CPU
-* no upper limit set (`D18F4x13C[SmuPstateLimit]`)
-* additional hardware limits: temperature, TDP, power consumption
+* no upper limit set (`D18F4x13C[SmuPstateLimit]`, set as 0 so no limit)
+* additional hardware limits (these values vary, most of them is set by AGESA):
+  * temperature (temperature limit is set in `D18F3x64` as 105 &deg;C)
+  * TDP - whole CPU (set as a dynamic in `D18F3x1FC`, there is a dead link to
+    section 2.5.11.8 in BKDG)
+  * power consumption - individual cores (power required by core is also
+    calculated or hard-coded in AGESA, but a P-state would be disabled if it
+    were to require more power than a board can supply)
 
 CPU can temporarily go above the TDP for one core, given that enough of other
 cores are halted or waiting on IO operation. This is configured in `D18F4x16C`.
@@ -69,7 +77,10 @@ There is a maximum of 8 states, but only 5 are used in apu:
 | n/a      | n/a      |           | MSRC001_006B
 
 Problem is that platform doesn't go back to 1.0 GHz, so it isn't probably
-connected to boost.
+connected to boost. However boost states were not observed despite no visible
+limits (except for dynamic TDP, not sufficiently described in BKDG). This could
+be due to the nature of checking for P-states - perhaps a function that reads
+registers uses IO operations which don't require computing power as much.
 
 Other MSRs directly connected to P-states:
 

@@ -38,7 +38,7 @@ steps:
 4. Make changes to menuconfig:
 
   ```
-  ./build.sh dev-build $PWD/release/coreboot apux menuconfig
+  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} menuconfig
   ```
 
   In order to change serial port, go to Console menu and change
@@ -47,6 +47,15 @@ steps:
   `*** Serial port base address = 0x2f8 ***` (this comment is not displayed in
   legacy). Then go to Payload menu and type the changed serial port base address
   (`0x2f8`) to `SeaBIOS sercon-port base address`  field. Now save new config.
+
+  For legacy it may not build the firmware with expected changes. One has to do
+  a distclean first, copy the config and make the changes again:
+
+  ```
+  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} distclean
+  cp $PWD/release/coreboot/configs/pcengines_{apu2|apu3|apu4}.config  $PWD/release/coreboot/.config
+  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} menuconfig
+  ```
 
 5. Build the image again:
 

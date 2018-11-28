@@ -2,7 +2,7 @@ Microcode patching on PC Engines apu2/3/4/5
 ===========================================
 
 With v4.8.0.7 release we have implemented an experimental feature of microcode
-patching. Inspired by our [users](https://github.com/pcengines/apu2-documentation/issues/75)
+patching. Inspired by [community](https://github.com/pcengines/apu2-documentation/issues/75)
 we decided to add such feature to the PC Engines firmware.
 
 The first implementation did not work as expected unfortunately. The procedure

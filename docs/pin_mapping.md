@@ -19,4 +19,4 @@ Pins no. **2, 4, 6, 8, 10, 12 and 17** should be connected to **GND** and pin no
 ## APU3/4
 Pin no. **6** should be connected to **GND** and pin no. **9** should be connected to **V3**.
 
-![TPM1a](/TPM1a.png)
+![TPM1a](/docs/TPM1a.png)

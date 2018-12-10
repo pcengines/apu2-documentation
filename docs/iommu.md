@@ -5,6 +5,18 @@ This document is related to changes submitted to [mainline coreboot](https://rev
 
 # Status
 
+# 03/08/2018
+
+* tested on [Linux 4.14.59](../configs/config-4.14.59)
+* `xl pci-*` commands no longer hang
+* `CPUX: No irq handler for vector e7` - platform sporadically hangs on this
+log - [no irq handler](#no-irq-handler)
+* patches cleanup according to review - compatibility was verified based on
+  `dmesg` and `xl dmesg` comparison to previous patch version
+
+Current [xl dmesg](logs/iommu_enabled_xl_dmesg_03082018.log) and [dmesg](logs/iommu_enabled_dmesg_03082018.log).
+
+
 # 24/07/2018
 
 * patches under redesign in upstream
@@ -15,7 +27,7 @@ This document is related to changes submitted to [mainline coreboot](https://rev
 boot process. We look for solution for that log [here](https://github.com/pcengines/coreboot/pull/186)
 * platform survived 100x reboots to Xen without issue
 * IOMMU groups are probably not assigned correctly to devices e.g. all NICs are in
-  one group - [tl;dr: IOMMU groups](#iommu-groups)
+  one group - [tl;dr: IOMMU groups](#iommu-groups) - this makes sense only for KVM
 * after booting Debian (Linux 4.14.50) as dom0 I'm getting:
 ```
 [    0.827436] AMD IOMMUv2 functionality not available on this system
@@ -37,13 +49,7 @@ root@apu2:~# xl pci-assignable-add 00:10.0
 
 ## Questions
 
-* why in dom0 I can't see IOMMU groups? Is this related to xen vs kvm? -
-comparison of `lsmod` indicate that when no Xen KVM modules take over and
-groups assignment is probably related with KVM drivers since there is no
-information about groups in AMD IOMMU spec.
 * are we sure that IVRS contain correct entries for bridges?
-
-
 
 # 06/05/2018
 
@@ -76,7 +82,22 @@ Please [read this blog post](TBD)
 
 ## PCE pass-through
 
-TBD
+Boot Xen to Dom0:
+
+```
+modprobe xen-pciback
+root@apu2:~# xl pci-assignable-add 02:00.0
+[  136.778839] igb 0000:02:00.0: removed PHC on enp2s0
+[  136.887658] pciback 0000:02:00.0: seizing device
+[  136.888115] Already setup the GSI :32
+root@apu2:~# xl pci-assignable-list
+0000:02:00.0
+```
+
+Xen configured eth1 as PCI pass-through device. Now this device should be
+assigned to guest and tested.
+
+### pfSense HVM
 
 Debugging
 ---------
@@ -86,7 +107,7 @@ Kyosti correct implementation should rely not on AGESA returned values, but on
 custom IVRS generated in coreboot - this is approach that Timothy took
 developing initial support.
 
-Dump of IVRS from AGESA and custom made in above mentioned implemntation:
+Dump of IVRS from AGESA and custom made in above mentioned implementation:
 
 ```
 Dump AGESA IVRS:
@@ -296,8 +317,85 @@ There are many great resources to learn about IOMMU groups:
 All commands from this family hangs, trying to enable pass-through using sysfs
 seem to finish without problems. Didn't tested that yet.
 
+## xendomains failed
+
+```
+● xendomains.service - LSB: Start/stop secondary xen domains
+   Loaded: loaded (/etc/init.d/xendomains; generated; vendor preset: enabled)
+   Active: failed (Result: timeout) since Thu 2018-08-02 21:13:41 UTC; 2min 22s 
+     Docs: man:systemd-sysv-generator(8)
+  Process: 452 ExecStart=/etc/init.d/xendomains start (code=killed, signal=TERM)
+    Tasks: 1 (limit: 4915)
+   CGroup: /system.slice/xendomains.service
+           └─459 /usr/lib/xen-4.8/bin/xl list
+
+Aug 02 21:08:41 apu2 systemd[1]: Starting LSB: Start/stop secondary xen domains.
+Aug 02 21:13:41 apu2 systemd[1]: xendomains.service: Start operation timed out. 
+Aug 02 21:13:41 apu2 systemd[1]: Failed to start LSB: Start/stop secondary xen d
+Aug 02 21:13:41 apu2 systemd[1]: xendomains.service: Unit entered failed state.
+Aug 02 21:13:41 apu2 systemd[1]: xendomains.service: Failed with result 'timeout
+```
+
+It looks like no Xen services were correctly loaded to Dom0:
+
+```
+  UNIT               LOAD   ACTIVE SUB    DESCRIPTION
+● xen.service        loaded failed failed LSB: Xen daemons
+● xendomains.service loaded failed failed LSB: Start/stop secondary xen domains
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+2 loaded units listed. Pass --all to see loaded but inactive units, too.
+To show all installed unit files use 'systemctl list-unit-files'.
+```
+
+First create `/var/lib/xenstored`:
+
+```
+Aug 02 21:08:41 apu2 systemd[1]: xen.service: Control process exited, code=exited status=1
+Aug 02 21:08:41 apu2 systemd[1]: Failed to start LSB: Xen daemons.
+Aug 02 21:08:41 apu2 systemd[1]: xen.service: Unit entered failed state.
+Aug 02 21:08:41 apu2 systemd[1]: xen.service: Failed with result 'exit-code'.
+Aug 02 21:41:08 apu2 systemd[1]: Starting LSB: Xen daemons...
+Aug 02 21:41:09 apu2 xenstored[702]: Checking store ...
+Aug 02 21:41:09 apu2 xenstored[702]: Checking store complete.
+Aug 02 21:41:09 apu2 xenstored[702]: Checking store ...
+Aug 02 21:41:09 apu2 xen[678]: Starting Xen daemons: xenstoredWARNING: Failed to open connection to gnttab
+Aug 02 21:41:09 apu2 xen[678]: FATAL: Failed to open evtchn device: No such file or directory
+Aug 02 21:41:39 apu2 xen[678]:  failed!
+Aug 02 21:41:39 apu2 systemd[1]: xen.service: Control process exited, code=exited status=1
+Aug 02 21:41:39 apu2 systemd[1]: Failed to start LSB: Xen daemons.
+Aug 02 21:41:39 apu2 systemd[1]: xen.service: Unit entered failed state.
+Aug 02 21:41:39 apu2 systemd[1]: xen.service: Failed with result 'exit-code'.
+```
+
+After reinstalling recent kernel with more XEN drivers xen service starts
+without problem.
+
+# No irq handler
+
+Sporadically we see issue like this:
+
+```
+(XEN) CPU1: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) CPU2: No irq handler for vector e7 (IRQ -2147483648)
+<hang>
+```
+
+After long observation we think it can be related with our workflow. Typically
+when we deploy new kernel, rootfs or firmware we just simply cut the power off
+from machine where typically NFS-mounted Debian is running. This may lead to
+some stalled connection on network device.
+
+The problem appears always just once after kernel, rootfs or firmware update.
+This happen always during first boot after update, further booting is not
+affected.
+
 
 # TODO:
 - compare device entries
 - enable EFRSup
 - try various sets of features and capabilities
+- install pfSense as HVM

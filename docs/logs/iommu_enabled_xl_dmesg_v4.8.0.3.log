@@ -1,0 +1,243 @@
+(XEN) Xen version 4.8.3 (Debian 4.8.3+comet2+shim4.10.0+comet3-1+deb9u5) (ijackson@chiark.greenend.org.uk) (gcc (Debian 6.3.0-18) 6.3.0 20170516) debug=n  Fri Mar  2 16:10:09 UTC 2018
+(XEN) Bootloader: iPXE 1.0.0+ (fd6d1)
+(XEN) Command line: dom0_mem=512M loglvl=all guest_loglvl=all com1=115200,8n1 console=com1 iommu=verbose,debug
+(XEN) Video information:
+(XEN)  No VGA detected
+(XEN) Disc information:
+(XEN)  Found 1 MBR signatures
+(XEN)  Found 4 EDD information structures
+(XEN) Xen-e820 RAM map:
+(XEN)  0000000000000000 - 000000000009fc00 (usable)
+(XEN)  000000000009fc00 - 00000000000a0000 (reserved)
+(XEN)  00000000000f0000 - 0000000000100000 (reserved)
+(XEN)  0000000000100000 - 00000000cfe98000 (usable)
+(XEN)  00000000cfe98000 - 00000000d0000000 (reserved)
+(XEN)  00000000f8000000 - 00000000fc000000 (reserved)
+(XEN)  00000000fed40000 - 00000000fed45000 (reserved)
+(XEN)  0000000100000000 - 000000012f000000 (usable)
+(XEN) ACPI: RSDP 000F3BF0, 0024 (r2 CORE  )
+(XEN) ACPI: XSDT CFEAC0E0, 006C (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: FACP CFEAD900, 00F4 (r4 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: DSDT CFEAC280, 1677 (r2 AMD    COREBOOT    10001 INTL 20161222)
+(XEN) ACPI: FACS CFEAC240, 0040
+(XEN) ACPI: SSDT CFEADA00, 01E1 (r2 CORE   COREBOOT       2A CORE       2A)
+(XEN) ACPI: TCPA CFEADBF0, 0032 (r2 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: APIC CFEADC30, 007E (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: HEST CFEADCB0, 01D0 (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: IVRS CFEADE80, 0108 (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) ACPI: SSDT CFEADF90, 48A6 (r2 AMD    AGESA           2 MSFT  4000000)
+(XEN) ACPI: SSDT CFEB2840, 07C8 (r1 AMD    AGESA           1 AMD         1)
+(XEN) ACPI: HPET CFEB3010, 0038 (r1 CORE   COREBOOT        0 CORE        0)
+(XEN) System RAM: 4078MB (4176092kB)
+(XEN) No NUMA configuration found
+(XEN) Faking a node at 0000000000000000-000000012f000000
+(XEN) Domain heap initialised
+(XEN) CPU Vendor: AMD, Family 22 (0x16), Model 48 (0x30), Stepping 1 (raw 00730f01)
+(XEN) found SMP MP-table at 000f3a20
+(XEN) DMI present.
+(XEN) Using APIC driver default
+(XEN) ACPI: PM-Timer IO Port: 0x818 (32 bits)
+(XEN) ACPI: SLEEP INFO: pm1x_cnt[1:804,1:0], pm1x_evt[1:800,1:0]
+(XEN) ACPI: 32/64X FACS address mismatch in FADT - cfeac240/0000000000000000, using 32
+(XEN) ACPI:             wakeup_vec[cfeac24c], vec_size[20]
+(XEN) ACPI: Local APIC address 0xfee00000
+(XEN) ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
+(XEN) ACPI: LAPIC (acpi_id[0x01] lapic_id[0x01] enabled)
+(XEN) ACPI: LAPIC (acpi_id[0x02] lapic_id[0x02] enabled)
+(XEN) ACPI: LAPIC (acpi_id[0x03] lapic_id[0x03] enabled)
+(XEN) ACPI: LAPIC_NMI (acpi_id[0xff] high edge lint[0x1])
+(XEN) ACPI: IOAPIC (id[0x04] address[0xfec00000] gsi_base[0])
+(XEN) IOAPIC[0]: apic_id 4, version 33, address 0xfec00000, GSI 0-23
+(XEN) ACPI: IOAPIC (id[0x05] address[0xfec20000] gsi_base[24])
+(XEN) IOAPIC[1]: apic_id 5, version 33, address 0xfec20000, GSI 24-55
+(XEN) ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)
+(XEN) ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 low level)
+(XEN) ACPI: IRQ0 used by override.
+(XEN) ACPI: IRQ2 used by override.
+(XEN) ACPI: IRQ9 used by override.
+(XEN) Enabling APIC mode:  Flat.  Using 2 I/O APICs
+(XEN) ACPI: HPET id: 0x10228201 base: 0xfed00000
+(XEN) ERST table was not found
+(XEN) HEST: Table parsing has been initialized
+(XEN) Using ACPI (MADT) for SMP configuration information
+(XEN) SMP: Allowing 4 CPUs (0 hotplug CPUs)
+(XEN) IRQ limits: 56 GSI, 728 MSI/MSI-X
+(XEN) xstate: size: 0x340 and states: 0x7
+(XEN) AMD Fam16h machine check reporting enabled
+(XEN) Using scheduler: SMP Credit Scheduler (credit)
+(XEN) Platform timer is 14.318MHz HPET
+(XEN) Detected 998.168 MHz processor.
+(XEN) Initing memory sharing.
+(XEN) alt table ffff82d0802bef18 -> ffff82d0802c0574
+(XEN) AMD-Vi: Found MSI capability block at 0x64
+(XEN) AMD-Vi: IVRS Block: Found type 0x10 flags 0x1e len 0xd8 id 0x2
+(XEN) AMD-Vi: Using IVHD type 0x10
+(XEN) AMD-Vi: ACPI Table:
+(XEN) AMD-Vi:  Signature IVRS
+(XEN) AMD-Vi:  Length 0x108
+(XEN) AMD-Vi:  Revision 0x1
+(XEN) AMD-Vi:  CheckSum 0x2f
+(XEN) AMD-Vi:  OEM_Id CORE
+(XEN) AMD-Vi:  OEM_Table_Id COREBOOT
+(XEN) AMD-Vi:  OEM_Revision 0
+(XEN) AMD-Vi:  Creator_Id CORE
+(XEN) AMD-Vi:  Creator_Revision 0
+(XEN) AMD-Vi: IVRS Block: type 0x10 flags 0x1e len 0xd8 id 0x2
+(XEN) AMD-Vi: IVHD Device Entry: type 0x48 id 0 flags 0xd7
+(XEN) AMD-Vi: IVHD Special: 0000:00:14.0 variety 0x2 handle 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x2 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x10 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x12 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x100 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x13 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x200 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x14 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x300 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x40 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x80 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x88 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0x98 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xa0 flags 0x97
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xa3 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xa7 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xc0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xc1 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xc2 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xc3 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xc4 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x2 id 0xc5 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0 id 0 flags 0
+(XEN) AMD-Vi: IVHD Device Entry: type 0x48 id 0 flags 0
+(XEN) AMD-Vi: IVHD Special: 0000:00:00.0 variety 0x1 handle 0x5
+(XEN) AMD-Vi: IVHD Device Entry: type 0x48 id 0 flags 0xd7
+(XEN) AMD-Vi: IVHD Special: 0000:00:14.0 variety 0x1 handle 0x4
+(XEN) AMD-Vi: Disabled HAP memory map sharing with IOMMU
+(XEN) AMD-Vi: IOMMU Extended Features:
+(XEN)  - Peripheral Page Service Request
+(XEN)  - Guest Translation
+(XEN)  - Invalidate All Command
+(XEN)  - Guest APIC supported
+(XEN)  - Performance Counters
+(XEN) AMD-Vi: PPR Log Enabled.
+(XEN) AMD-Vi: Guest Translation Enabled.
+(XEN) AMD-Vi: IOMMU 0 Enabled.
+(XEN) I/O virtualisation enabled
+(XEN)  - Dom0 mode: Relaxed
+(XEN) Interrupt remapping enabled
+(XEN) nr_sockets: 1
+(XEN) ENABLING IO-APIC IRQs
+(XEN)  -> Using new ACK method
+(XEN) ..TIMER: vector=0xF0 apic1=0 pin1=2 apic2=0 pin2=0
+(XEN) Allocated console ring of 32 KiB.
+(XEN) mwait-idle: does not run on family 22 model 48
+(XEN) HVM: ASIDs enabled.
+(XEN) SVM: Supported advanced features:
+(XEN)  - Nested Page Tables (NPT)
+(XEN)  - Last Branch Record (LBR) Virtualisation
+(XEN)  - Next-RIP Saved on #VMEXIT
+(XEN)  - DecodeAssists
+(XEN)  - Pause-Intercept Filter
+(XEN)  - TSC Rate MSR
+(XEN) HVM: SVM enabled
+(XEN) HVM: Hardware Assisted Paging (HAP) detected
+(XEN) HVM: HAP page sizes: 4kB, 2MB, 1GB
+(XEN) HVM: PVH mode not supported on this platform
+(XEN) spurious 8259A interrupt: IRQ7.
+(XEN) CPU1: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) CPU2: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) Brought up 4 CPUs
+(XEN) CPU3: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) build-id: dff6bad5189f35adc717d7989e1e2c87b87860cc
+(XEN) ACPI sleep modes: S3
+(XEN) VPMU: disabled
+(XEN) MCA: Use hw thresholding to adjust polling frequency
+(XEN) mcheck_poll: Machine check polling timer started.
+(XEN) Dom0 has maximum 632 PIRQs
+(XEN) NX (Execute Disable) protection active
+(XEN) *** LOADING DOMAIN 0 ***
+(XEN)  Xen  kernel: 64-bit, lsb, compat32
+(XEN)  Dom0 kernel: 64-bit, PAE, lsb, paddr 0x1000000 -> 0x2962000
+(XEN) PHYSICAL MEMORY ARRANGEMENT:
+(XEN)  Dom0 alloc.:   0000000124000000->0000000128000000 (114688 pages to be allocated)
+(XEN) VIRTUAL MEMORY ARRANGEMENT:
+(XEN)  Loaded kernel: ffffffff81000000->ffffffff82962000
+(XEN)  Init. ramdisk: 0000000000000000->0000000000000000
+(XEN)  Phys-Mach map: 0000008000000000->0000008000100000
+(XEN)  Start info:    ffffffff82962000->ffffffff829624b4
+(XEN)  Page tables:   ffffffff82963000->ffffffff8297c000
+(XEN)  Boot stack:    ffffffff8297c000->ffffffff8297d000
+(XEN)  TOTAL:         ffffffff80000000->ffffffff82c00000
+(XEN)  ENTRY ADDRESS: ffffffff82707180
+(XEN) Dom0 has maximum 4 VCPUs
+(XEN) AMD-Vi: Setup I/O page table: device id = 0, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x2, type = 0x7, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x10, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x12, type = 0x2, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x13, type = 0x2, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x14, type = 0x2, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x40, type = 0x7, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x80, type = 0x1, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x88, type = 0x7, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x98, type = 0x7, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xa0, type = 0x7, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xa3, type = 0x7, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xa7, type = 0x7, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xc0, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xc1, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xc2, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xc3, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xc4, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0xc5, type = 0x6, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x100, type = 0x1, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x200, type = 0x1, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) AMD-Vi: Setup I/O page table: device id = 0x300, type = 0x1, root table = 0x1296ff000, domain = 0, paging mode = 3
+(XEN) Scrubbing Free RAM on 1 nodes using 4 CPUs
+(XEN) ..........done.
+(XEN) Initial low memory virq threshold set at 0x4000 pages.
+(XEN) Std. Loglevel: All
+(XEN) Guest Loglevel: All
+(XEN) *** Serial input -> DOM0 (type 'CTRL-a' three times to switch input to Xen)
+(XEN) Freed 312kB init memory
+(XEN) PCI add device 0000:00:00.0
+(XEN) PCI add device 0000:00:00.2
+(XEN) PCI add device 0000:00:02.0
+(XEN) PCI add device 0000:00:02.2
+(XEN) PCI add device 0000:00:02.3
+(XEN) PCI add device 0000:00:02.4
+(XEN) PCI add device 0000:00:08.0
+(XEN) PCI add device 0000:00:10.0
+(XEN) PCI add device 0000:00:11.0
+(XEN) PCI add device 0000:00:13.0
+(XEN) PCI add device 0000:00:14.0
+(XEN) PCI add device 0000:00:14.3
+(XEN) PCI add device 0000:00:14.7
+(XEN) PCI add device 0000:00:18.0
+(XEN) PCI add device 0000:00:18.1
+(XEN) PCI add device 0000:00:18.2
+(XEN) PCI add device 0000:00:18.3
+(XEN) PCI add device 0000:00:18.4
+(XEN) PCI add device 0000:00:18.5
+(XEN) PCI add device 0000:01:00.0
+(XEN) PCI add device 0000:02:00.0
+(XEN) PCI add device 0000:03:00.0
+

@@ -26,7 +26,7 @@ pin no. **18** should be connected to **V3**.
 * Pin no. **6** should be connected to **GND** and pin no. **9** should be 
 connected to **V3**.
 
-### Importand
+### Important!
 
 It should be noticed, that the LPC debug holes on apu board are much smaller, so 
 regular pin header will not fir there.

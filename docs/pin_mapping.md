@@ -15,11 +15,18 @@ APU3/4 | TPM1a
 9 (**V3**) | 18
 
 ## TPM1a
-+ At least one pin of no. **2, 4, 6, 8, 10, 12 and 17** should be connected to **GND** and 
+
+* At least one pin of no. **2, 4, 6, 8, 10, 12 and 17** should be connected to **GND** and 
 pin no. **18** should be connected to **V3**.
-+ Pins no. **14, 15, 16, 19 and 20** stay unconnected.
+* Pins no. **14, 15, 16, 19 and 20** stay unconnected.
 
 
 ## APU3/4
-+ Pin no. **6** should be connected to **GND** and pin no. **9** should be 
+
+* Pin no. **6** should be connected to **GND** and pin no. **9** should be 
 connected to **V3**.
+
+### Importand
+
+It should be noticed, that the LPC debug holes on apu board are much smaller, so 
+regular pin header will not fir there.

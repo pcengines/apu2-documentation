@@ -38,7 +38,7 @@ are used. All boosted P-states are always higher performance than non-boosted
 P-states. Hardware P0 is software Pb0. Rest of states is mapped 1-to-1, with the
 same names corresponding to different states, which can be confusing. Number of
 boost states is written in `D18F4x15C[NumBoostStates]`, in case of apu it is 2.
-**BIOS should not provide ACPI _PSS entries for boosted P-states.**
+**BIOS should not provide ACPI `_PSS` entries for boosted P-states.**
 
 Boost states cannot be requested directly, some conditions that must be met:
 
@@ -206,9 +206,9 @@ was used?
 
 #### ACPI tables
 
-All required objects for P-states are present, even the optional _PPC. Only
+All required objects for P-states are present, even the optional `_PPC`. Only
 difference between actual tables and recommendations from BKDG is entry
-DUTY_WIDTH in Fixed ACPI Description Table (FADT) - AMD recommends value of 0,
+`DUTY_WIDTH` in Fixed ACPI Description Table (FADT) - AMD recommends value of 0,
 while real entry has 3. Description of this entry from [ACPI specification](http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf):
 
 >The bit width of the processor’s duty cycle setting value in the P_CNT
@@ -236,7 +236,7 @@ be correct. Practical research (i.e. transitions between states) is impossible,
 because when CPU is in lower C-state it doesn't process instructions and thus
 cannot report any of its register values.
 
-As for ACPI tables, we couldn't find _CRS object. P_LVL2_LAT showed a
+As for ACPI tables, we couldn't find `_CRS` object. `P_LVL2_LAT` showed a
 value 0f 0x65 = 101, which disables C2 state according to [specification](http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf).
 First recorded value of this field actually showed 0x64 = 100, that is as
 specified in BKDG, but all subsequent logs show 0x65. This could either be an

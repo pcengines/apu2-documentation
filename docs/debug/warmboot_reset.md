@@ -48,21 +48,26 @@ management registers in [BKDG for AMD Family 16h Models 30h-3Fh Processors, 5274
 Registers of interest were those with `Cold reset` value, as they were remembered
 through resets and transitions to/from S5, but not after full power cycle. The most
 important one is PMxC0 S5/Reset Status:
+
 > This register shows the source of previous reset.
+
 This register is also defined in AGESA headers in coreboot repository:
-`#define FCH_PMIOxC0_S5ResetStatus          0xFED803C0ul`
+
+```
+#define FCH_PMIOxC0_S5ResetStatus          0xFED803C0ul
+```
 
 Reading content of PMxC0 right before printing sign of life after different ways
 of (re)booting the platform resulted in the following values:
 
 | Entering/leaving S5 | PMxC0 during SOL | Bits set                     |
 |---------------------|------------------|------------------------------|
-| rte_ctrl -rel *     | 0x00000800       | SlpS3ToLtdPwrGdEn            |
-| poff/pon **         | 0x40200402       | SleepReset, FourSecondPwrBtn |
-| thermal/pon **      | 0x40200401       | SleepReset, ThermalTrip      |
+| full power cycle *  | 0x00000800       | SlpS3ToLtdPwrGdEn            |
+| hold PWR button **  | 0x40200402       | SleepReset, FourSecondPwrBtn |
+| thermal/power on ** | 0x40200401       | SleepReset, ThermalTrip      |
 | reboot              | 0x40080400       | DoReset                      |
-| rte_ctrl -reset     | 0x40010400       | UsrReset                     |
-| halt/pon            | 0x40200400       | SleepReset                   |
+| reset button        | 0x40010400       | UsrReset                     |
+| halt/power on       | 0x40200400       | SleepReset                   |
 |                     | 0x001003FF       | S5ResetStatus_All_Status     |
 
 \*) not S5, included for completeness
@@ -73,6 +78,7 @@ platform is reset and during second boot PMxC0 has the same value as after `rebo
 Table is stripped from some common bits that don't seem to affect the problem:
 - 0x40000000 - reserved
 - 0x00000400 - PwrGdDwnBeforeSlp3 - [BKDG, p. 932](https://support.amd.com/techdocs/52740_16h_models_30h-3fh_bkdg.pdf):
+
 > **PwrGdDwnBeforeSlpS3**. Read-write. Cold reset: 0. BIOS: 1.
 > 1=Delay SLP_S3 by 64 μs and also qualify the FCH PwrGood with SLP_S3;
 > This allows internal logic to put signals into correct states before

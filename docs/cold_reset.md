@@ -9,6 +9,12 @@ are not.
 
 ### Discovered ways to perform reset
 
+Table below gives initial values, they are changed during boot sequence. Bits
+changing in D18F0x6C (Link Initialization Control) are set and checked by AGESA
+to differentiate cold boot from warm boot. Some bits (0x1003ff) in PMxC0
+(S5/Reset Status) are checked by FCH initialization code, they result in
+additional reset when set.
+
 | Reset type       | D18F0x6C   | PMxC0      |
 |------------------|------------|------------|
 | Cold boot        | 0x000ff800 | 0x00000800 |
@@ -19,20 +25,19 @@ are not.
 | ACPI reset       | 0x000ff800 | 0x40000400 |
 | PCI reset        | 0x000ffe00 | 0x40020400 |
 
-These are initial values, they are changed during boot sequence. Bits changing
-in D18F0x6C are checked by AGESA to differentiate cold boot from warm boot.
-Some of bits in PMxC0 (0x1003ff) are checked by FCH initialization code, they
-result in additional reset when set.
+Bits 10 and 11 in PMxC0 can't be changed by software, even though they are
+described as read-write in BKDG. Bits describing reset reasons can be cleared
+by writing 1 to them, others were not tested.
 
 ###### Reboot
 
 Done with `reboot` in shell or after changing options in sortbootorder. It
-performs warm reset.
+performs warm reset. Sets DoReset in PMxC0.
 
 ###### Reset button
 
 Done by temporary shorting reset pin to the ground. Performs cold reset from
-AGESA's point of view.
+AGESA's point of view. Sets UsrReset in PMxC0.
 
 ###### Power button
 
@@ -40,7 +45,8 @@ By shorting power button pin to the ground for more than 4 seconds platform
 enters S5 state. After second, short press the platform starts up. It is
 considered to be cold reset, but during FCH initialization platform will perform
 another reset (after which PMxC0 is set as in reboot, D18F0x6C as in cold boot).
-This was one of causes for doubled sign of life.
+This was one of causes for doubled sign of life. During first reboot SleepReset
+and FourSecondPwrBtn are set in PMxC0.
 
 ###### FullRst through IO port CF9
 
@@ -52,7 +58,7 @@ Bit 3 of IO port CF9 is:
 Bits 1 (SysRst) and 2 (RstCmd) need to be set as well. CF9 can be accessed
 through its shadow in ACPI space (PMxC5, at address 0xFED803C5 when MMIO is
 enabled). Performs cold reset and gives time for most peripheral devices to get
-into stable state.
+into stable state. SleepReset is set in PMxC0.
 
 ###### ACPI emulated reset button
 
@@ -64,7 +70,7 @@ physical button does.
 
 Also triggered through PMxC4. Reset is done after setting bit 0 (Reset), but
 only if bit 7 (ResetEn) was set. They need to be set with two separate writes.
-Performs "soft PCI reset", which is a warm reset.
+Performs "soft PCI reset" (SoftPciRst in PMxC0), which is a warm reset.
 
 ### Forcing cold reset from started OS
 
@@ -96,7 +102,12 @@ echo -ne "\xe" | dd of=/dev/port bs=1 count=1 seek=$((0xcf9))
 enters S5 immediately, so save your work, sync all filesystems etc. using e.g.
 [SysRq](https://askubuntu.com/a/491153), of course do not perform last step
 (reboot or shutdown), as it will be done by FullRst. We found that sometimes
-5 seconds is not enough for syncing.
+5 seconds is not enough for syncing. Full sequence required for reset is:
+
+```
+for i in s u; do echo $i | sudo tee /proc/sysrq-trigger; sleep 15; done
+echo -ne "\xe" | dd of=/dev/port bs=1 count=1 seek=$((0xcf9))
+```
 
 ###### pfSense
 
@@ -110,4 +121,11 @@ printf "\016" | dd of=/dev/mem bs=1 count=1 seek=4275569605
 
 `\016` is the same as `\xe`, in octal. Seek value is 0xFED803C5 written in
 decimal. There is no SysRq as in Linux, so manual sync and read-only remount is
-required.
+required, most likely it needs to be forced because of open file descriptors.
+It needs to be performed for all mounted filesystems, this example for forced
+reboot shows only root filesystem:
+
+```
+sync && mount -u -f -r /
+printf "\016" | dd of=/dev/mem bs=1 count=1 seek=4275569605
+```

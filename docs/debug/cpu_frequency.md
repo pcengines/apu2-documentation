@@ -186,7 +186,8 @@ Multiple requests can be grouped:
 Setting `D18F5x12C[WaitVidCompDis]` changes behaviour of transition towards
 higher performance - instead of waiting for voltage regulator to report end of
 transition next request can be made after a defined time period
-(`D18F3xD8[VSRampSlamTime]`).
+(`D18F3xD8[VSRampSlamTime]`). BKDG recommends 2.00 μs per 15 mV, it is set as
+such by AGESA, but can be modified by OEM callouts.
 
 ## Findings from logs obtained from community
 

@@ -358,3 +358,139 @@ detect device. Eletrical engineer should investigate the USB3.0 lines and check
 them on apu4 board (the not-working scenario) and other working board like apu2
 in order to exclude the possibility of wrong board layout, wiring etc. Without
 a report we can not possibly make any step further.
+
+## Testing UEFI (Tianocore) stack
+
+Similar tests were performed with debug `tianocore` payload. First of all, USB
+sticks rarely were detected as SuperSpeed (3.0) devices, usually only in a few
+boots after platform was turned off for some time.
+
+This is log from first boot:
+
+```
+XhcClearRootHubPortFeature: status Success
+UsbEnumeratePort: port 1 state - 803, change - 01 on CF71FD18
+UsbEnumeratePort: Device Connect/Disconnect Normally
+UsbEnumeratePort: new device connected at port 1
+XhcUsbPortReset!
+XhcSetRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+Enable Slot Successfully, The Slot ID = 0x2
+    Address 2 assigned successfully
+UsbEnumerateNewDev: hub port 1 is reset
+UsbEnumerateNewDev: PortStatus - 803 PortChangeStatus - 0
+UsbEnumerateNewDev: device is of 3 speed
+UsbEnumerateNewDev: device uses translator (0, 0)
+UsbEnumerateNewDev: device is now ADDRESSED at 2
+UsbEnumerateNewDev: max packet size for EP 0 is 512
+Evaluate context
+UsbBuildDescTable: device has 1 configures
+UsbGetOneConfig: total length is 44
+UsbParseConfigDesc: config 1 has 1 interfaces
+UsbParseInterfaceDesc: interface 0(setting 0) has 2 endpoints
+Endpoint[81]: Created BULK ring [CF729200~CF72A200)
+Endpoint[2]: Created BULK ring [CF72A200~CF72B200)
+Configure Endpoint
+UsbEnumerateNewDev: device 2 is now in CONFIGED state
+UsbSelectConfig: config 1 selected for device 2
+UsbSelectSetting: setting 0 selected for interface 0
+```
+
+This is from another boot:
+
+```
+XhcClearRootHubPortFeature: status Success
+UsbEnumeratePort: port 3 state - 01, change - 01 on CF71FD18
+UsbEnumeratePort: Device Connect/Disconnect Normally
+UsbEnumeratePort: new device connected at port 3
+XhcUsbPortReset!
+XhcSetRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+Enable Slot Successfully, The Slot ID = 0x2
+    Address 2 assigned successfully
+UsbEnumerateNewDev: hub port 3 is reset
+UsbEnumerateNewDev: device is of 2 speed
+UsbEnumerateNewDev: device uses translator (0, 0)
+UsbEnumerateNewDev: device is now ADDRESSED at 2
+UsbEnumerateNewDev: max packet size for EP 0 is 64
+Evaluate context
+UsbBuildDescTable: device has 1 configures
+UsbGetOneConfig: total length is 32
+UsbParseConfigDesc: config 1 has 1 interfaces
+UsbParseInterfaceDesc: interface 0(setting 0) has 2 endpoints
+Endpoint[81]: Created BULK ring [CF729200~CF72A200)
+Endpoint[2]: Created BULK ring [CF72A200~CF72B200)
+Configure Endpoint
+UsbEnumerateNewDev: device 2 is now in CONFIGED state
+UsbSelectConfig: config 1 selected for device 2
+UsbSelectSetting: setting 0 selected for interface 0
+```
+
+These are taken from the same platform and stick, nothing was changed between
+them, but device speed is different. This could point to hardware problem,
+either thermal issue or some parasite capacitance. When a stick isn't recognized
+as a SuperSpeed one, it is initialized as HighSpeed device usually, but not
+always. `lsusb` started from Debian seems to match the speed detected by UEFI,
+but not much tests from Linux were done. For some reason hot-plug was not
+working, it is unclear if this issue is connected.
+
+Total detection rate is about 80% for cold boot (success means that both sticks
+were detected). It gets lower for longer tests, down to 70% for 1000 iterations.
+Warm boot and reset results are better, but it is possible that these depend on
+initial cold boot result. Most runs for warm boot and reboot showed 100% success
+rate, while for a few this rate was significantly lower (about 40-50%),
+intermediate values were not observed.
+
+In very rare cases firmware hang during boot process. This is an example of such
+a hang:
+
+```
+(...)
+UsbSelectSetting: setting 0 selected for interface 0
+InstallProtocolInterface: 09576E91-6D3F-11D2-8E39-00A0C969723B CF71F598
+InstallProtocolInterface: 2B2F68D6-0CD2-44CF-8E8B-BBA20B1B5B75 CF71EEC0
+UsbConnectDriver: TPL before connect is 8, CF71F398
+Stop Slot = 1,Dci = 3
+XhcStopEndpoint: Slot = 0x1, Dci = 0x3
+XhcSetTrDequeuePointer: Slot = 0x1, Dci = 0x3, Urb = 0xCF71DD98
+XhcBulkTransfer: error - Time out, transfer - 40
+UsbBotDataTransfer: (Time out)
+Stop Slot = 1,Dci = 3
+XhcStopEndpoint: Slot = 0x1, Dci = 0x3
+XhcSetTrDequeuePointer: Slot = 0x1, Dci = 0x3, Urb = 0xCF71DD98
+XhcBulkTransfer: error - Time out, transfer - 40
+Stop Slot = 1,Dci = 3
+XhcStopEndpoint: Slot = 0x1, Dci = 0x3
+XhcSetTrDequeuePointer: Slot = 0x1, Dci = 0x3, Urb = 0xCF71DD98
+XhcBulkTransfer: error - Time out, transfer - 40
+```
+
+Last lines are repeated every 60 seconds or so. This particular log is from
+reboot test immediately after failed cold boot (only one stick was detected).
+
+Full boot logs:
+
+* [tiano.log](../log/tiano.log) - both sticks detected
+* [tiano2.log](../log/tiano2.log) - one stick detected
+
+The stick that was not detected for some reason is still visible as a boot
+option in the second log, but boot order was changed. Note that there are more
+USB devices connected to mPCIe connectors, they are also visible in log files,
+along with `Device Error`:
+
+```
+UsbBuildDescTable: device has 1 configures
+UsbGetOneConfig: total length is 25
+UsbParseConfigDesc: config 1 has 1 interfaces
+UsbParseInterfaceDesc: interface 0(setting 0) has 1 endpoints
+EhcExecTransfer: transfer failed with 2
+EhcControlTransfer: error - Device Error, transfer - 2
+UsbBuildDescTable: get language ID table Unsupported
+UsbEnumerateNewDev: device 1 is now in CONFIGED state
+UsbSelectConfig: config 1 selected for device 1
+UsbSelectSetting: setting 0 selected for interface 0
+```
+
+Turning off all EHCI controllers doesn't affect USB stick detection rate.

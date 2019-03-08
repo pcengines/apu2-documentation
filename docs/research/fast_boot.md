@@ -135,3 +135,42 @@ AMD has taken a pretty strong position that an Intel-like "fast boot" is not pra
 
 Given that it is impossible to use available AGESA binary to implement fast
 boot feature.
+
+## Providing initial training data
+
+AGESA has more parameters that can be specified when calling AmdInitPost. Some
+of them are:
+
+```
+IN UINT8             *TableBasedAlterations;
+IN PSO_TABLE         *PlatformMemoryConfiguration;
+IN FORCE_TRAIN_MODE   ForceTrainMode;
+```
+
+`PlatformMemoryConfiguration` is filled with a set of macros available in
+`AGESA.h`. Things like number of DIMMs or channels supported, motherboard layers
+and signal maps can be set, but it doesn't have any measurable effect. Format
+for `TableBasedAlterations` isn't specified in the available documentation, but
+can be read from source code available in coreboot repository, assuming that
+AGESA blob follows the same format. `ForceTrainMode` can force 1D training only,
+which is slightly faster.
+
+### Results
+
+Using all of those settings with data taken from full memory training seems to
+speed up that process, but the changes are minimal (less than 2%):
+
+| type of boot | v4.9.0.2  | with filled data |
+|--------------|-----------|------------------|
+| cold         | 2,544,751 | 2,509,498        |
+| warm         | 2,529,474 | 2,484,815        |
+| reboot       | 2,494,380 | 2,470,353        |
+
+It is possible that there are more not documented, configurable options than
+those found which could give additional gain. Some of the entries to the
+`TableBasedAlterations` can override final data, but they are applied *after*
+the training finishes, not *instead of* the training.
+
+Initial data was obtained from one platform, data obtained from different
+platforms can be different. Because of that results on other platforms might
+differ too.

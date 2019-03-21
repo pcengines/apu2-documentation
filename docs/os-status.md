@@ -9,9 +9,10 @@ medias:
 
 |     OS     | SD card | SATA disk | mSATA disk | USB stick |
 |------------|---------|-----------|------------|-----------|
-|   Voyage   |    X1   |     OK    |     OK     |    *2     |
-|   Debian   |    OK   |     OK    |     OK     |    *2     |
-|   pfSense  |    OK   |     OK*   | not tested |    *2     |
+|   Voyage   |    X1   |     OK    |     OK     |    OK*2   |
+|   Debian   |    OK   |     OK    |     OK     |    OK*2   |
+|   pfSense  |    OK   |     OK*   |     OK     |    OK*2   |
+|   OPNsense |    OK   | Not Tested|     OK     |    OK*2   |
 
 *- works well with BIOS v4.6.8 or later in mainline and all legacy releases;
    for v4.6.7 and older mainline versions issues with installation and system
@@ -46,6 +47,12 @@ pfSense:
 FreeBSD pfSense.localdomain 11.1-RELEASE-p4 FreeBSD 11.1-RELEASE-p4 #5
 r313908+79c92265a31(RELENG_2_4): Mon Nov 20 08:18:22 CST 2017
 root@buildbot2.netgate.com:/builder/ce-242/tmp/obj/builder/ce-242/tmp/FreeBSD-src/sys/pfSense  amd64
+```
+
+OPNsense:
+
+```
+OPNsense-19.1-OpenSSL-serial-amd64.img.bz2 
 ```
 
 ## Tested mediasos-

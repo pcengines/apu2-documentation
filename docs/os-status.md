@@ -11,8 +11,9 @@ medias:
 |------------|---------|-----------|------------|-----------|
 |   Voyage   |    X1   |     OK    |     OK     |    OK*2   |
 |   Debian   |    OK   |     OK    |     OK     |    OK*2   |
-|   pfSense  |    OK   |     OK*   |     OK     |    OK*2   |
 |   OPNsense |    OK   | Not Tested|     OK     |    OK*2   |
+|   pfSense  |    OK   |     OK*   |     OK     |    OK*2   |
+
 
 *- works well with BIOS v4.6.8 or later in mainline and all legacy releases;
    for v4.6.7 and older mainline versions issues with installation and system

@@ -4,7 +4,7 @@ Tested operating systems
 ## OS status
 
 Some operating system have problems running with different storage medias.
-These table shows currently tested systems on BIOS v4.6.x with corresponding
+These table shows currently tested systems on BIOS v4.9.0.x with corresponding
 medias:
 
 |     OS     | SD card | SATA disk | mSATA disk | USB stick |

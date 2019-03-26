@@ -11,7 +11,7 @@ medias:
 |------------|---------|-----------|------------|-----------|
 |   Voyage   |    X1   |     OK    |     OK     |    OK*2   |
 |   Debian   |    OK   |     OK    |     OK     |    OK*2   |
-|   OPNsense |    OK   | Not Tested|     OK     |    OK*2   |
+|   OPNsense |    OK   |     OK    |     OK     |    OK*2   |
 |   pfSense  |    OK   |     OK*   |     OK     |    OK*2   |
 
 

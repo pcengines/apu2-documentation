@@ -32,9 +32,19 @@ ERROR: Tss2_Sys_CreatePrimary(0x902) - tpm:warn(2.0): out of memory for object c
 ```
 
 In this case either rebooting or [flushing open handles manually](https://github.com/tpm2-software/tpm2-tools/issues/303#issuecomment-455309118)
-helps. Only `handles-transient` needs to be flushed.
+helps. Only `handles-transient` need to be flushed:
 
-## Extracting keys hashes
+```
+$ tpm2_getcap -c handles-transient
+- 0x80000000
+- 0x80000001
+- 0x80000002
+$ tpm2_flushcontext -c 0x80000000
+$ tpm2_flushcontext -c 0x80000001
+$ tpm2_flushcontext -c 0x80000002
+```
+
+#### Extracting keys hashes
 
 File `key.pub` is a binary file with a TPM-specific header. It is not supported
 by the tool for checking for ROCA vulnerability, so the key needs to be
@@ -75,7 +85,7 @@ This operation should take no more than a couple of seconds, as it only checks
 if the key was generated from insecure prime numbers, without finding the exact
 numbers used. It does not generate private keys.
 
-## Results
+#### Results
 
 This is output from test run on 2 different modules, with both 1024 and 2048-bit
 keys generated on each of them:
@@ -109,3 +119,128 @@ firmware update will be required.
 
 Note that ROCA is connected only with RSA, it doesn't affect any other security
 functions, as long as they don't use RSALib.
+
+## Updating TPM firmware
+
+Tools for updating Infineon TPM firmware can be easily found, unfortunately,
+most of them are either UEFI or Windows applications. A Linux port of them can
+be found [here](https://github.com/iavael/infineon-firmware-updater). It
+requires openssl-1.0 (both developer files and runtime library), but it can be
+updated to 1.1.0 version with [this patch](openssl_1_1_0.patch).
+
+First, check if `TPMFactoryUpd` was built successfully and TPM is detected
+properly:
+
+```
+$ ./TPMFactoryUpd -info
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM information:
+       ----------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.61.2785.0
+       TPM platformAuth                  :    Empty Buffer
+       Remaining updates                 :    64
+```
+
+Remember the current firmware version number, it will be needed later. Also note
+what is the value of `TPM platformAuth` - it must be `Empty Buffer` in order to
+perform an update. To do this, build and flash coreboot with TPM disabled in
+config menu. SeaBIOS doesn't need any modifications, it will not initialize TPM
+unless coreboot does.
+
+TPM firmwares are available with some of the UEFI and Windows images, like
+[these](ftp://ftp.supermicro.com/driver/TPM/9665FW%20update%20package_1.5.zip).
+Only `9665FW update package_1.5/Firmware/TPM20_<old_version>_to_TPM20_5.63.3144.0.BIN`
+file is required. Extract this file to the same directory as the `TPMFactoryUpd`
+and run:
+
+```
+$ ./TPMFactoryUpd -update tpm20-emptyplatformauth -firmware TPM20_<old_version>_to_TPM20_5.63.3144.0.BIN
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM update information:
+       -----------------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.61.2785.0
+       TPM platformAuth                  :    Empty Buffer
+       Remaining updates                 :    64
+       New firmware valid for TPM        :    Yes
+       TPM family after update           :    2.0
+       TPM firmware version after update :    5.63.3144.0
+
+       Preparation steps:
+       TPM2.0 policy session created to authorize the update.
+
+    DO NOT TURN OFF OR SHUT DOWN THE SYSTEM DURING THE UPDATE PROCESS!
+
+       Updating the TPM firmware ...
+       Completion: 100 %
+       TPM Firmware Update completed successfully.
+```
+
+This can take 3-5 minutes. After it completes, TPM is not useful until the next
+reboot:
+
+```
+$ ./TPMFactoryUpd -info
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM information:
+       ----------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.63.3144.0
+       TPM platformAuth                  :    N/A - System restart required
+       Remaining updates                 :    N/A - System restart required
+```
+
+Reboot platform immediately. Using TPM functions in this state isn't safe.
+After successful reboot and flashing original coreboot firmware the result
+should be:
+
+```
+$ ./TPMFactoryUpd -info
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM information:
+       ----------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.63.3144.0
+       TPM platformAuth                  :    Not Empty Buffer
+       Remaining updates                 :    63
+```
+
+#### Results from new version of TPM firmware
+
+Repeating all steps from generating TPM context to using `roca-detect` shows
+that the vulnerability is **no longer present**:
+
+```
+2019-03-26 18:40:42 [4325] INFO ### SUMMARY ####################
+2019-03-26 18:40:42 [4325] INFO Records tested: 8
+2019-03-26 18:40:42 [4325] INFO .. PEM certs: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. DER certs: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. RSA key files: . 0
+2019-03-26 18:40:42 [4325] INFO .. PGP master keys: 0
+2019-03-26 18:40:42 [4325] INFO .. PGP total keys:  0
+2019-03-26 18:40:42 [4325] INFO .. SSH keys:  . . . 0
+2019-03-26 18:40:42 [4325] INFO .. APK keys:  . . . 0
+2019-03-26 18:40:42 [4325] INFO .. JSON keys: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. LDIFF certs: . . 0
+2019-03-26 18:40:42 [4325] INFO .. JKS certs: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. PKCS7: . . . . . 0
+2019-03-26 18:40:42 [4325] INFO No fingerprinted keys found (OK)
+2019-03-26 18:40:42 [4325] INFO ################################
+```

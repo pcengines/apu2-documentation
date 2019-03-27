@@ -149,8 +149,9 @@ $ ./TPMFactoryUpd -info
 Remember the current firmware version number, it will be needed later. Also note
 what is the value of `TPM platformAuth` - it must be `Empty Buffer` in order to
 perform an update. To do this, build and flash coreboot with TPM disabled in
-config menu. SeaBIOS doesn't need any modifications, it will not initialize TPM
-unless coreboot does.
+config menu, or use older version of BIOS - none of the v4.8.0.* versions have
+TPM support enabled. SeaBIOS doesn't need any modifications, it will not
+initialize TPM unless coreboot does.
 
 TPM firmwares are available with some of the UEFI and Windows images, like
 [these](ftp://ftp.supermicro.com/driver/TPM/9665FW%20update%20package_1.5.zip).
@@ -185,8 +186,8 @@ $ ./TPMFactoryUpd -update tpm20-emptyplatformauth -firmware TPM20_<old_version>_
        TPM Firmware Update completed successfully.
 ```
 
-This can take 3-5 minutes. After it completes, TPM is not useful until the next
-reboot:
+This can take 3-5 minutes, depending on the firmware update size. After it
+completes, TPM is not useful until the next reboot:
 
 ```
 $ ./TPMFactoryUpd -info
@@ -221,6 +222,46 @@ $ ./TPMFactoryUpd -info
        TPM platformAuth                  :    Not Empty Buffer
        Remaining updates                 :    63
 ```
+
+#### Updating TPM firmware - automatic version detection
+
+Assuming that a whole `Firmware` directory was extracted to directory containing
+`TPMFactoryUpd` from the [update package](ftp://ftp.supermicro.com/driver/TPM/9665FW%20update%20package_1.5.zip),
+one can use single command to do the update. Appropriate file is chosen
+automatically, depending on the old version. The command is:
+
+```
+$ ./TPMFactoryUpd -update config-file -config Firmware/TPM20_latest.cfg
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM update information:
+       -----------------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.51.2098.0
+       TPM platformAuth                  :    Empty Buffer
+       Remaining updates                 :    64
+       New firmware valid for TPM        :    Yes
+       TPM family after update           :    2.0
+       TPM firmware version after update :    5.63.3144.0
+
+       Selected firmware image:
+       TPM20_5.51.2098.0_to_TPM20_5.63.3144.0.BIN
+
+       Preparation steps:
+       TPM2.0 policy session created to authorize the update.
+
+    DO NOT TURN OFF OR SHUT DOWN THE SYSTEM DURING THE UPDATE PROCESS!
+
+       Updating the TPM firmware ...
+       Completion: 100 %
+       TPM Firmware Update completed successfully.
+```
+
+Remember to use BIOS with TPM disabled, and re-flash newer BIOS firmware
+afterwards.
 
 #### Results from new version of TPM firmware
 

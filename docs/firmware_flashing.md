@@ -25,6 +25,27 @@ flashrom -w coreboot.rom -p internal -c "MX25L1605A/MX25L1606E/MX25L1608E"
 flashrom -w coreboot.rom -p internal
 ```
 
+A full power cycle is required after flashing. If it is not possible (e.g.
+remote firmware upgrade), when flashing coreboot v4.9.0.4 or newer a full reset
+can be forced with the following commands after using `flashrom`. For older
+firmware versions please refer to [cold_reset.md](cold_reset.md#forcing-cold-reset-from-started-os).
+
+##### Linux
+
+```sh
+setpci -s 18.0 6c.L=10:10
+```
+
+##### FreeBSD
+
+```sh
+pciconf -w pci0:24:0 0x6c 0x580ffe10
+```
+
+After that reboot as usual. Platform will turn off for 3-5 seconds. Note that
+there are parts of the platform which cannot be reset with this approach. A full
+power cycle is strongly suggested when possible.
+
 Developer tricks
 ----------------
 

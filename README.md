@@ -140,7 +140,7 @@ For apu1 `flashrom` command line looks like that:
 flashrom -p internal -w apu1_x.y.z.rom -c MX25L1605A/MX25L1606E/MX25L1608E
 ```
 
-A full power cycle is required after flashing. See [firmware_flashing.md](docs/firmware_flashing.md)
+A full power cycle is required after flashing. See [firmware_flashing.md](docs/firmware_flashing.md#corebootrom-flashing)
 for a workaround when this is not possible (e.g. when upgrading remotely).
 
 ## Known issues

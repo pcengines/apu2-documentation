@@ -28,7 +28,7 @@ flashrom -w coreboot.rom -p internal
 A full power cycle is required after flashing. If it is not possible (e.g.
 remote firmware upgrade), when flashing coreboot v4.9.0.4 or newer a full reset
 can be forced with the following commands after using `flashrom`. For older
-firmware versions please refer to [cold_reset.md#forcing-cold-reset-from-started-os].
+firmware versions please refer to [cold_reset.md](cold_reset.md#forcing-cold-reset-from-started-os).
 
 ##### Linux
 

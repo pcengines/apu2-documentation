@@ -2,8 +2,8 @@ SeaBIOS TPM configuration menu
 ==============================
 
 Since SeaBIOS rel-1.12.0.1 TPM 2.0 module from PC Engines is supported on apu2
-platforms (and apu5 where the chip may be soldered down according to BOM
-option) in the payload as a configuration menu.
+and apu1 platforms (and apu5 where the chip may be soldered down depending on
+BOM option) in the payload as a configuration menu.
 
 When entering the boot menu on serial console via F10 key, one may notice an
 additional option when TPM module is connected to LPC header:

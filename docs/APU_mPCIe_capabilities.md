@@ -1,40 +1,44 @@
-APU2B
------
-
-Configuration
--------------
-| Element | Interfaces
-|:-------:|:----------
-| J14     | USB, PCIe, SIM
-| J13     | USB, PCIe
-| J12     | mSATA
-
-Possible usage
---------------
-
-| Element | Module
-|:-------:|:----------
-| J14     | Huawei ME909u, WLE200NX
-| J13     | WLE200NX
-| J12     | -
-
-APU3A, APU3B, APU4B
+APU2B, APU2C, APU2D
 -------------------
 
 Configuration
 -------------
 
-| Element | Interfaces
-|:-------:|:----------
-| J16     | PCIe,USB
-| J15     | USB, SIM1
-| J14     | mSATA,USB, SIM2
+|     Slot     | Interfaces     |
+|:------------:|:---------------|
+| J14 (mPCIe1) | USB, PCIe, SIM |
+| J13 (mPCIe2) | USB, PCIe  SIM |
+| J12 (mSATA)  | mSATA          |
 
-Possible usage
---------------
+mPCIe1 - LTE and Wifi modules
+mPCIe2 - LTE and Wifi modules
+mSATA - only mSATA disks
 
-| Element | Modules
-|:-------:|:----------
-| J16     | WLE200NX
-| J15     | Huawei ME909u
-| J14     | Huawei ME909u
+APU3A, APU3B, APU3C
+-------------------
+
+Configuration
+-------------
+
+|     Slot     | Interfaces       |
+|:------------:|:-----------------|
+| J16 (mPCIe1) | USB, PCIe        |
+| J15 (mPCIe2) | USB, SIM1        |
+| J14 (mSATA)  | mSATA, USB, SIM2 |
+
+mPCIe1 - USB and Wifi modules
+mPCIe2 - only LTE modules
+mSATA - mSATA disks and LTE modules
+
+APU4A, APU4B, APU4C
+-------------------
+
+|     Slot     | Interfaces       |
+|:------------:|:-----------------|
+| J15 (mPCIe1) | USB, PCIe        |
+| J14 (mPCIe2) | USB, SIM1        |
+| J13 (mSATA)  | mSATA, USB, SIM2 |
+
+mPCIe1 - USB and Wifi modules
+mPCIe2 - only LTE modules
+mSATA - mSATA disks and LTE modules

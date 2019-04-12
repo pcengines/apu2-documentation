@@ -25,8 +25,8 @@ t. TPM Configuration
 
 ## Payload menu
 
-It let using some coreboot/seaBIOS features. To enter Payload menu choose `6.
-Payload [setup]` option in Boot menu.
+It let using some coreboot/seaBIOS features. To enter Payload menu choose
+`Payload [setup]` option in Boot menu.
 
 #### Example view of Payload menu
 ```
@@ -72,7 +72,76 @@ chip. To enter Hidden menu type `shift + z` in Payload menu.
   q        - exit menu
 ```
 
-## coreboot features
+## Coreboot features
+
+- **Reading/Writing Serial number to SPI flash**
+
+	This feature let user write and/or read serial number which is contained in
+	hidden security register. To use it first go to security registers menu.
+
+  In security registers menu, to read Serial number from SPI flash press `r` and
+  then `ENTER`. To write serial number press type `w <new-serial-number>`, where
+  <new-serial-number> is 9 decimal serial number.
+
+  >NOTE: When writing new serial number, only 9 first decimals are taken  
+
+  Watch [Video](https://asciinema.org/a/240504) showing how to R/W Serial number
+  to SPI flash.
+
+
+## Sortbootorder features
+
+- **Setting bootorder priority**
+
+  In Boot menu user can freely change bootorder. To do it press `a,b,..,f` key
+  to move selected device to the top of the list.
+
+  Watch [Video](https://asciinema.org/a/240509) showing how to change bootorder
+  in Boot menu.
+
+
+- **Enable/Disable Network/PXE boot**
+
+  This option let user `Enable/Disable` booting from PXE. If it is `Enabled`
+  then appropriate boot device should be available in boot menu (e.g. `iPXE`).
+  If it is `Disabled` then no PXE device should be listed in boot menu and
+  feature `N for PXE boot` in boot menu is also no longer available.
+
+  To `Enable/Disable` booting from Network/PXE press `n` in payload menu.
+
+  Watch [Video](https://asciinema.org/a/240518) showing how to enable/disable
+  PXE boot and what outcome to expect.
+
+
+- **Enable/Disable USB boot**
+
+	This feature let user `Enable/Disable` booting from USB device.   If USB boot
+	is `Enabled` then after restarting apu, USB devices should be listed in `boot
+	menu`.   If USB boot is `Disabled` then after restarting apu, no USB devices
+	should be listed in `boot menu` (even if USB device is attached to USB slot).  
+
+  Watch [Video](https://asciinema.org/a/239796) showing how to enable/disable
+  USB boot.
+
+
+- **Enable/Disable serial console**
+
+	This feature let user enable/disable serial console. If it is disabled no data
+	will be displayed in serial output. It means when using serial connection no
+	output will be available no more.  
+
+	To `Enable/Disable` serial console type `t` in Payload menu.
+
+
+- **Enable/Disable UARTC/UARTD**
+	This feature let user enable/disable UARTx.  
+
+	To `Enable/Disable` UARTC type `o` in Payload menu.
+	To `Enable/Disable` UARTD type `p` in Payload menu.
+
+	Watch [Video](https://asciinema.org/a/239817) showing how to enable/disable
+	UARTC/UARTD
+
 
 - **Enable/Disable mPCIe2 clk**
 
@@ -96,63 +165,39 @@ chip. To enter Hidden menu type `shift + z` in Payload menu.
 	EHCI0 controller]
 
 
-- **Enable/Disable UARTC/UARTD**
-	This feature let user enable/disable UARTx.  
-
-	To `Enable/Disable` UARTC type `o` in Payload menu.
-	To `Enable/Disable` UARTD type `p` in Payload menu.
-
-	Watch [Video](https://asciinema.org/a/239817) showing how to enable/disable
-	UARTC/UARTD
-
-
-- **Enable/Disable serial console**
-
-	This feature let user enable/disable serial console. If it is disabled no data
-	will be displayed in serial output. It means when using serial connection no
-	output will be avaiable no more.  
-
-	To `Enable/Disable` serial console type `t` in Payload menu.  
-
-
-- **Getting device serial number from NIC**
-
-	This feature gives device serial number which is calculated using its
-	MAC-address.  
-
-
-- **Reading/Writing Serial number from SPI flash**
-
-	This feature let user write and/or read serial number which is contained in
-	hidden security register.
-
-
 ## seaBIOS features
 
-- **Enable/Disable USB boot**
+- **Press `F10` button to enter boot menu and boot menu 6s timeout**
 
-	This feature let user `Enable/Disable` booting from USB device.   If USB boot
-	is `Enabled` then after restarting apu, USB devices should be listed in `boot
-	menu`.   If USB boot is `Disabled` then after restarting apu, no USB devices
-	should be listed in `boot menu` (even if USB device is attached to USB slot).  
+	To enter boot menu, press `F10` button.
 
-  Watch [Video](https://asciinema.org/a/239796) showing how to enable/disable
-  USB boot.
+  >NOTE: After power on user has 6 seconds to enter boot menu. If no button is
+  pressed then automatically boot is performed.
 
-
-- **Press `F10 button` to enter boot menu**
-
-	To enter boot menu, press `f10` button. If `f10` button isn't pressed within 6
-	seconds, then automatically booting will be performed.  
-
-
-- **Boot menu timeout 6s**
-
-  After entering Boot menu if no key is pressed within 6 seconds, automatically
-  booting is performed.
+  Watch [Video](https://asciinema.org/a/240500) showing how to enter boot menu
+  via `F10` button and boot menu 6s timeout feature.
 
 
 - **Press `n` for iPXE boot string**
 
+  After power on, press `n` to enter iPXE boot menu.
 
-- **Bootorder configuration file**
+  > NOTE: If this option isn't available check if Network/PXE boot is `Enabled`
+  in payload menu. If not - enable it, save changes and restart device.
+
+  Watch [Video](https://asciinema.org/a/240529) showing how to enter iPXE boot
+  menu after power on.
+
+
+## Memtest 86+ features
+
+To perform Memory Test choose `Payload [memtest]` option in boot menu.
+
+- **Screen refresh**
+
+  During memory test user can refresh screen if the output in terminal is
+  unreadable (e.g. due to text overlaps). To refresh screen during test type
+  `c`, then choose option `(5). Refresh screen`.
+
+  Watch [Video](https://asciinema.org/a/240533) showing how screen refresh
+  feature works.

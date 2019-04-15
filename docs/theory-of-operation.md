@@ -72,24 +72,27 @@ chip. To enter Hidden menu type `shift + z` in Payload menu.
   q        - exit menu
 ```
 
-## Coreboot features
+## coreboot features
 
 - **Reading/Writing Serial number to SPI flash**
 
 	This feature let user write and/or read serial number which is contained in
-	hidden security register. To use it first go to security registers menu.
+	hidden security register. To use it first, go to security registers menu.
 
   In security registers menu, to read Serial number from SPI flash press `r` and
-  then `ENTER`. To write serial number press type `w <new-serial-number>`, where
-  <new-serial-number> is 9 decimal serial number.
+  then `ENTER`.
+To write serial number type `w <new-serial-number>`, where
+  `new-serial-number` is 9 character serial number. To erase serial number from
+  SPI flash, type `e`.
 
-  >NOTE: When writing new serial number, only 9 first decimals are taken  
+  >NOTE: When writing new serial number, only 9 first characters are taken, even
+  if user gives more.
 
   Watch [Video](https://asciinema.org/a/240504) showing how to R/W Serial number
   to SPI flash.
 
 
-## Sortbootorder features
+## sortbootorder features
 
 - **Setting bootorder priority**
 
@@ -124,13 +127,49 @@ chip. To enter Hidden menu type `shift + z` in Payload menu.
   USB boot.
 
 
-- **Enable/Disable serial console**
+- **Disable serial console and enable with S1 button**
 
-	This feature let user enable/disable serial console. If it is disabled no data
-	will be displayed in serial output. It means when using serial connection no
-	output will be available no more.  
+  To `Disable` serial console type `t` in Payload menu. If it is disabled no
+  data will be displayed in serial output.
 
-	To `Enable/Disable` serial console type `t` in Payload menu.
+  After changing state to `Disabled` restoring console can be done only via S1
+  button.
+
+  Watch [video](https://asciinema.org/a/240951) showing how to disable serial
+  console with payload menu option and then enable it with S1 button.
+
+
+- **Redirect console output to COM2**
+
+  Console output is available via COM1 in default. This feature let user
+  redirect console output to COM2.
+  >NOTE: Changing this option from `Disabled` to `Enabled` (or the opposite way)
+  will cause losing current output in terminal. The advice is to open new
+  connection in another terminal window on another COM.
+
+  To `Enable/Disable` redirect console output to COM2 type `k` in payload menu.
+
+  Watch [video](https://asciinema.org/a/240926) showing how to redirect console
+  output to COM2.
+  >NOTE: In above example connection is first opened on 13541 port (COM1). After
+  enabling redirect to COM2, console output is no longer available. New
+  connection is opened on 13542 port (COM2) and console output is available
+  there.
+
+
+- **Enable/Disable CPU boost**
+
+  This feature let user `Enable/Disable` CPU performance boost . To verify if it
+  works, memory test can be done (in boot menu choose `payload[memtest]`).
+
+  To `Enable/Disable` CPU boost type `l` in payload menu.
+
+  Watch [video](https://asciinema.org/a/240928) showing how to enable/disable
+  CPU performance boost.
+  >NOTE: In the example, 2 memory test are performed - one with CPU boost
+  disabled and one with CPU boost enabled. Notice, how long both tests are
+  running and what progress is made during that time. Also look at speed of data
+  transfer to cache memory.
 
 
 - **Enable/Disable UARTC/UARTD**
@@ -165,11 +204,21 @@ chip. To enter Hidden menu type `shift + z` in Payload menu.
 	EHCI0 controller]
 
 
+- **Restore default sortbootorder settings**
+
+  If user wants to bring back default settings in sortbootorder, it can be
+  restored by typing `r` in payload menu. It will reset enable/disable features
+  and boot order to defaults.
+
+  Watch [video](https://asciinema.org/a/240935) showing how to restore settings
+  to its default values.
+
+
 ## seaBIOS features
 
 - **Press `F10` button to enter boot menu and boot menu 6s timeout**
 
-	To enter boot menu, press `F10` button.
+	After device restart, press `F10` button to enter boot menu.
 
   >NOTE: After power on user has 6 seconds to enter boot menu. If no button is
   pressed then automatically boot is performed.
@@ -180,10 +229,11 @@ chip. To enter Hidden menu type `shift + z` in Payload menu.
 
 - **Press `n` for iPXE boot string**
 
-  After power on, press `n` to enter iPXE boot menu.
+  After device restart, press `n` to enter iPXE boot menu.
 
-  > NOTE: If this option isn't available check if Network/PXE boot is `Enabled`
-  in payload menu. If not - enable it, save changes and restart device.
+  > NOTE: If this option isn't available check if *Network/PXE boot* is
+  `Enabled` in payload menu. If not - enable it, save changes and restart
+  device.
 
   Watch [Video](https://asciinema.org/a/240529) showing how to enter iPXE boot
   menu after power on.
@@ -196,8 +246,9 @@ To perform Memory Test choose `Payload [memtest]` option in boot menu.
 - **Screen refresh**
 
   During memory test user can refresh screen if the output in terminal is
-  unreadable (e.g. due to text overlaps). To refresh screen during test type
-  `c`, then choose option `(5). Refresh screen`.
+  unreadable (e.g. due to text overlaps). Screen refresh can be done by:  
+    - type `c`, then choose option `(5). Refresh screen`
+    - type `l` or `L` during test
 
   Watch [Video](https://asciinema.org/a/240533) showing how screen refresh
   feature works.

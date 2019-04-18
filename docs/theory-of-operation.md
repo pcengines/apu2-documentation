@@ -2,8 +2,9 @@
 
 ## Boot menu
 
-It let selecting boot device (first options) and enter another menus to extended
-coreboot/seaBIOS features. To enter boot menu Press `F10` key after reboot.
+It lets selecting boot device (first options) and enter another menus to
+extended coreboot/seaBIOS features. To enter boot menu press `F10` key during
+boot process.
 
 #### Example view of boot menu
 ```
@@ -25,10 +26,10 @@ t. TPM Configuration
 
 ## Payload menu
 
-It let using some coreboot/seaBIOS features. To enter Payload menu choose
-`Payload [setup]` option in Boot menu.
+It lets using some coreboot/seaBIOS features. To enter payload menu choose
+`Payload [setup]` option in boot menu.
 
-#### Example view of Payload menu
+#### Example view of payload menu
 ```
 ### PC Engines apu2 setup v4.6.13 ###
 Boot order - type letter to move device to top.
@@ -58,70 +59,44 @@ Boot order - type letter to move device to top.
 
 ## Hidden security registers menu
 
-It let writing and reading serial number to security registers of the SPI flash
-chip. To enter Hidden menu type `shift + z` in Payload menu.
+It lets writing and reading serial number to security registers of the SPI flash
+chip. To enter hidden menu type `shift + z` in payload menu.
 
-#### Example view of Hidden security registers menu
-```
---- Security registers menu ---
-
-  r        - read serial from security register 1
-  w serial - write serial to security register 1
-  e        - erase security registers content
-  s        - get security registers OTP status
-  q        - exit menu
-```
-
-## coreboot features
+## PC Engines apu firmware features
 
 - **Reading/Writing Serial number to SPI flash**
 
-	This feature let user write and/or read serial number which is contained in
+	This feature lets user write and/or read serial number which is contained in
 	hidden security register. To use it first, go to security registers menu.
-
-  In security registers menu, to read Serial number from SPI flash press `r` and
-  then `ENTER`.
-To write serial number type `w <new-serial-number>`, where
-  `new-serial-number` is 9 character serial number. To erase serial number from
-  SPI flash, type `e`.
 
   >NOTE: When writing new serial number, only 9 first characters are taken, even
   if user gives more.
 
-  Watch [Video](https://asciinema.org/a/240504) showing how to R/W Serial number
-  to SPI flash.
+  Watch [Video](https://asciinema.org/a/241568) showing how Reading/Writing
+  Serial number to SPI flash feature works.
 
-
-## sortbootorder features
 
 - **Setting bootorder priority**
 
-  In Boot menu user can freely change bootorder. To do it press `a,b,..,f` key
-  to move selected device to the top of the list.
+  In boot menu user can freely change bootorder.
 
   Watch [Video](https://asciinema.org/a/240509) showing how to change bootorder
   in Boot menu.
 
 
-- **Enable/Disable Network/PXE boot**
+- **Enable/Disable Network/PXE boot and press `n` for iPXE boot string**
 
-  This option let user `Enable/Disable` booting from PXE. If it is `Enabled`
-  then appropriate boot device should be available in boot menu (e.g. `iPXE`).
-  If it is `Disabled` then no PXE device should be listed in boot menu and
-  feature `N for PXE boot` in boot menu is also no longer available.
+  This feature lets user `Enable/Disable` booting from PXE. If it is `Enabled`
+  then during boot process user can access PXE boot string with `n` button. Also
+  appropriate boot device should be available in boot menu (e.g. `iPXE`).
 
-  To `Enable/Disable` booting from Network/PXE press `n` in payload menu.
-
-  Watch [Video](https://asciinema.org/a/240518) showing how to enable/disable
-  PXE boot and what outcome to expect.
+  Watch [Video](https://asciinema.org/a/241583) showing how to enable/disable
+  PXE boot and how to open PXE boot string.
 
 
 - **Enable/Disable USB boot**
 
-	This feature let user `Enable/Disable` booting from USB device.   If USB boot
-	is `Enabled` then after restarting apu, USB devices should be listed in `boot
-	menu`.   If USB boot is `Disabled` then after restarting apu, no USB devices
-	should be listed in `boot menu` (even if USB device is attached to USB slot).  
+	This feature let user `Enable/Disable` booting from USB device.
 
   Watch [Video](https://asciinema.org/a/239796) showing how to enable/disable
   USB boot.
@@ -129,11 +104,9 @@ To write serial number type `w <new-serial-number>`, where
 
 - **Disable serial console and enable with S1 button**
 
-  To `Disable` serial console type `t` in Payload menu. If it is disabled no
-  data will be displayed in serial output.
-
-  After changing state to `Disabled` restoring console can be done only via S1
-  button.
+  To `Disable` serial console type `t` in payload menu. If it is disabled no
+  data will be displayed in serial output. After changing state to `Disabled`
+  restoring console can be done only via S1 button.
 
   Watch [video](https://asciinema.org/a/240951) showing how to disable serial
   console with payload menu option and then enable it with S1 button.
@@ -147,61 +120,51 @@ To write serial number type `w <new-serial-number>`, where
   will cause losing current output in terminal. The advice is to open new
   connection in another terminal window on another COM.
 
-  To `Enable/Disable` redirect console output to COM2 type `k` in payload menu.
-
   Watch [video](https://asciinema.org/a/240926) showing how to redirect console
   output to COM2.
-  >NOTE: In above example connection is first opened on 13541 port (COM1). After
-  enabling redirect to COM2, console output is no longer available. New
-  connection is opened on 13542 port (COM2) and console output is available
-  there.
+  >NOTE: In above example serial connection is redirect to telnet. First, it is
+  opened on 13541 port (COM1). After enabling redirect console to COM2, output
+  is no longer available. New telnet connection is opened on 13542 port (COM2)
+  and console output is available there.
 
 
 - **Enable/Disable CPU boost**
 
-  This feature let user `Enable/Disable` CPU performance boost . To verify if it
-  works, memory test can be done (in boot menu choose `payload[memtest]`).
+  This feature lets user `Enable/Disable` CPU performance boost. To verify if
+  it works, memory test can be done (in boot menu choose `payload[memtest]`).
 
-  To `Enable/Disable` CPU boost type `l` in payload menu.
+  >NOTE: Notice how memory transfer speed changes depending on CPU boost
+  enable/disable.
 
-  Watch [video](https://asciinema.org/a/240928) showing how to enable/disable
-  CPU performance boost.
-  >NOTE: In the example, 2 memory test are performed - one with CPU boost
-  disabled and one with CPU boost enabled. Notice, how long both tests are
-  running and what progress is made during that time. Also look at speed of data
-  transfer to cache memory.
+  Watch [video](https://asciinema.org/a/241571) showing how to enable/disable
+  CPU performance boost and verify it.
 
 
 - **Enable/Disable UARTC/UARTD**
-	This feature let user enable/disable UARTx.  
 
-	To `Enable/Disable` UARTC type `o` in Payload menu.
-	To `Enable/Disable` UARTD type `p` in Payload menu.
+	This feature lets user enable/disable superIO UARTx on GPIO header.  
 
-	Watch [Video](https://asciinema.org/a/239817) showing how to enable/disable
-	UARTC/UARTD
+	Watch [Video](https://asciinema.org/a/241576) showing how to enable/disable
+	UARTC/UARTD.
 
 
 - **Enable/Disable mPCIe2 clk**
 
-  If mPCIe2 clk is enabled then GPP3 PCIe clock (which is attached to mPCIe2
-  slot) is always on. It is used when extension card is attached to mPCIe2 slot.
-  If no extension card is attached it is advised to set to `Disable`.
-
-  To `Enable/Disable` this feature type `m` in Payload menu.
+  If mPCIe2 clk is enabled then GPP3 PCIe clock (which is attached to apu2
+  mPCIe2 slot) is always on. It is used when extension card is attached to
+  mPCIe2 slot. If no extension card is attached it is advised to set to
+  `Disable`.
 
   Watch [Video](https://asciinema.org/a/239813) showing how to enable/disable
-  mPCIe2 clk
+  mPCIe2 clk.
 
 
 - **Enable/Disable EHCI0 controller**
 
-	This feature let user enables/disable EHCI0 controller.
-
-	To `Enable/Disable` this feature type `h` in Payload menu.
+	This feature lets user enable/disable EHCI0 controller.
 
 	Watch [Video](https://asciinema.org/a/239816) showing how to enable/disable
-	EHCI0 controller]
+	EHCI0 controller.
 
 
 - **Restore default sortbootorder settings**
@@ -214,11 +177,9 @@ To write serial number type `w <new-serial-number>`, where
   to its default values.
 
 
-## seaBIOS features
-
 - **Press `F10` button to enter boot menu and boot menu 6s timeout**
 
-	After device restart, press `F10` button to enter boot menu.
+	During boot performance, press `F10` button to enter boot menu.
 
   >NOTE: After power on user has 6 seconds to enter boot menu. If no button is
   pressed then automatically boot is performed.
@@ -227,28 +188,21 @@ To write serial number type `w <new-serial-number>`, where
   via `F10` button and boot menu 6s timeout feature.
 
 
-- **Press `n` for iPXE boot string**
+- **Screen refresh during memory test performance**
 
-  After device restart, press `n` to enter iPXE boot menu.
+  To perform memory test choose `Payload [memtest]` option in boot menu.
 
-  > NOTE: If this option isn't available check if *Network/PXE boot* is
-  `Enabled` in payload menu. If not - enable it, save changes and restart
-  device.
+  During memory test user can refresh screen if the output in terminal is not
+  available. It happens when serial connection is opened during test
+  performance. Screen refresh can be done by typing `l` or `L`.
 
-  Watch [Video](https://asciinema.org/a/240529) showing how to enter iPXE boot
-  menu after power on.
+  Watch [Video](https://asciinema.org/a/241564) showing how screen refresh
+  during memory test works.
 
+- **TPM SHA1 and SHA256 banks enable/disable**
 
-## Memtest 86+ features
+  PC Engines apu2 supports TPM module. This feature lets user choose which PCR
+  banks are active.
 
-To perform Memory Test choose `Payload [memtest]` option in boot menu.
-
-- **Screen refresh**
-
-  During memory test user can refresh screen if the output in terminal is
-  unreadable (e.g. due to text overlaps). Screen refresh can be done by:  
-    - type `c`, then choose option `(5). Refresh screen`
-    - type `l` or `L` during test
-
-  Watch [Video](https://asciinema.org/a/240533) showing how screen refresh
-  feature works.
+  Watch [video](https://asciinema.org/a/241633) showing how to enable/disable
+  SHAx banks in TPM menu.

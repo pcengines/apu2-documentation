@@ -29,119 +29,86 @@ analyze USB device detection process. Mostly it references to USB 3.0.
 | USB 3.0       | 5V @900mA     |  5Gbps  | VCC, GND, D+, D-, Rx+, Rx-, Tx+, Tx-
 
 
+
+## Device detection process debugging
+
 ### USB device enumeration process
 
 USB enumeration process lets a host determine if USB device was plugged into USB
-port and what kind of device is that. Enumeration process consists of 3 stages:
+port and what kind of device is that. Enumeration process could be divided into
+multiple stages proceeded after previous one has no error:
 
-1. Device detection
-2. Device identification
-3. Device driver load
+  1. RxDetect mode (*USB 3.0 Specification Section 6.11*)
+  2. Polling LFPS (*USB 3.0 Specification Section 6.9.2*)
+  3. TSEQ Ordered Sets (*USB 3.0 Specification Section 6.4.1.1.3 and Table 6-3*)
+  4. TS1 Ordered Sets (*USB 3.0 Specification Section 6.4.1.1.3 and Table 6-4*)
+  5. TS2 Ordered Sets (*USB 3.0 Specification Section 6.4.1.1.3 and Table 6-5*)
+  6. Logical idle (sending idle data)
+  7. Exit Initialization to U0 state
 
+  >NOTE: Link Initialization and Training (stages 3,4,5) could be different
+  depending on USB 3.0 (Gen 1) or USB 3.1 (Gen 2) devices. More details are
+  available in USB 3.0 Specification Section 6.4.
 
-### Device detection process
-
-During that process host detects connected device and establish speed of
-communication (LS, FS, HS or SS).
-
->NOTE: If host's port can operate as USB 3.0, first *SS device detection
-process* is performed. Only if it's failed host go to *FS/HS device detection
-process*
-
-
-#### SS device detection process
-
-Tx+/Tx- and Rx+/Rx- lines are connected between host and device. Now, host can
-initialize device detection process.
-
-1. Receiver detect (Rx.Detect)
-
-  The Rx detection operates on the principle of the RC time constant of the
-  circuit. This time constant changes based on the presence of the receiver
-  termination. Host starts changing common mode voltage on Tx+ and Tx-. If time
-  constant differs from 'open' line time constant it means that there is device
-  connected to Tx host's lines. Host can proceed to the next stage.
-
-  >NOTE: This stage with all details (including voltage levels, impedances,
-  resistances etc.) is described in section *6.11 Receiver Detection* in USB 3.0
-  Specification.   
+After last stage device should be recognized by host and communication between
+them is opened. To test device detection in system it should be checked if all
+above stages are performed correctly. Hence electrical compliance tests and link
+layer tests should be performed to compare data, timing and electrical values
+with Specification requirements.
 
 
-2. LFPS handshake (Polling.LFPS)
+### Link Training and Status State Machine (LTSSM)
 
-  Host starts sending LFPS on its Tx lines and waits for device's response. At
-  the same time (but independently on host) the device is starting its own
-  Rx.Detect procedure. If termination is detected by device, it starts its own
-  Polling.LFPS signaling. If host detects LFPS signal from device in
-  appropriately short time (timing is defined in table 6-21 in USB 3.0
-  Specification) host and device move to next stage - link training sequence.
-
-  >NOTE: The timeout response for Polling.LFPS is 360ms. Device must response in
-  that time.
-
-  >NOTE: Detailed description with all reference values and figures is in
-  section *6.9 Low Frequency Periodic Signaling (LFPS)* in USB 3.0
-  Specification.
-
-
-3. Link training sequence
-
-
-
-#### FS/HS device detection process
-
-USB host port with no devices connected uses 15kohm pull-down resistors to
-connect both D+ and D- to GND. When a stick is plugged into a port, the
-resistance on data lines is changed with pull-up resistors:
-
-- LS device use 1k5ohm resistor between VCC and D-
-- FS device use 1k5ohm resistor between VCC and D+
-- HS device initially appears as FS to host
+Link Training and Status State Machine (LTSSM) is a state machine consists of 12
+link states. It is described in *USB 3.0 Specification Section 7.5*. LTSSM
+diagram is presented in figure 7.14. During USB device detection process LTSSM
+changes stages according to diagram flow. To test if device detection process is
+done correctly state machine analyze should be done.
 
 
 ## Compliance tests
 
+
 ### Compliance tests tools
 
-- [USB3CV](https://www.usb.org/document-library/usb3cvx64-tool-ver-21110)
+>NOTE: Official USB-IF testing software is supported under Windows only.
 
-  This tool is used to test a USB products control messaging, descriptors and
-  basic protocol when connected to an xHCI controller. This tool takes control
-  over the USB host controller and renders all products connected to it unusable
+USB Protocol Analyzer:
 
-- [SigTest Tool](https://www.intel.com/content/www/us/en/design/technology/high-speed-io/tools.html?grouping=rdc%20Content%20Types&sort=title:asc)
+- [Ellisys USB Explorer 280](https://www.ellisys.com/products/usbex280/index.php)
+- [Teledyne LeCroy Voyager M3x](https://teledynelecroy.com/protocolanalyzer/usb/voyager-m3x)
+- [Beagle USB 5000 v2 SuperSpeed Protocol Analyzer](https://www.totalphase.com/products/beagle-usb5000-v2-ultimate/)
 
-  SigTest is tool for SuperSpeed USB transmitter voltage, LFPS, and Signal
-  Quality electrical compliance testing as well as for calibrating SuperSpeed
-  receiver test solutions
+USB Protocol Analyzer Software:
 
-- [USB 3.1 USB Electrical Test Fixture Kit](https://www.usb.org/estore)
+- [Totalphase Data Center Software](https://www.totalphase.com/products/data-center/)
+- [Virtual USB Analyzer](http://vusb-analyzer.sourceforge.net/)
 
 
-#### Electrical compliance tests
+### Electrical compliance tests
 
-These tests verify that electrical signals between host and device meet USB 3.0
+These tests verify that electrical signals send between host and device meet USB 3.0
 criteria which are described in USB 3.0 Specification Document. All details
 about tests are described in [Electrical Compliance Test Specification SuperSpeed Universal Serial Bus](https://www.usb.org/sites/default/files/SuperSpeedPHYComplianceTest_Spec1_0a.pdf).
 
+Should be considered to carry out those tests:
 
-- LFPS Tx Test
+- TD.1.1 Low Frequency Periodic Signaling TX Test
 
-  This test verifies that the low frequency periodic signal transmitter meets
-  the timing requirements when measured at the compliance test port.
+- TD.1.2 Low Frequency Periodic Signaling RX Test
 
-- LFPS Rx Tests
+- TD.1.3 Transmitted Eye Test
 
-  This test verifies that the DUT low frequency periodic signal receiver
-  recognizes LFPS signaling with voltage swings and duty cycles that are at the
-  limits of what the specification allows.
 
-- Transmitted Eye Test
+### Link layer compliance tests
 
-- Transmitted SSC Profile Test
+These tests verify that data sends between host and device meets requirements
+described in USB 3.0 Specification. Especially, if detection process is done
+correctly i.e. no data packets missing, states are proceed in exact way, no
+errors between stages etc. All tests with details are described in [USB 3.1 Link Layer Test Specification](https://www.usb.org/sites/default/files/USB_3_1_Link_Layer_Test_Specification_2018_01_02.pdf)
 
-- Receiver Jitter Tolerance Test
-
-#### Link layer compliance tests
+Should be considered to carry out those tests:
 
 - Link Initialization Sequence
+
+### State machine compliance tests

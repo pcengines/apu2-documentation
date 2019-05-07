@@ -163,7 +163,7 @@ chip. To enter hidden menu type `shift + z` in payload menu.
 
 	This feature lets user enable/disable EHCI0 controller.
 
-	Watch [Video](https://asciinema.org/a/239816) showing how to enable/disable
+	Watch [Video](https://asciinema.org/a/244786) showing how to enable/disable
 	EHCI0 controller.
 
 
@@ -204,5 +204,5 @@ chip. To enter hidden menu type `shift + z` in payload menu.
   PC Engines apu2 supports TPM module. This feature lets user choose which PCR
   banks are active.
 
-  Watch [video](https://asciinema.org/a/241633) showing how to enable/disable
+  Watch [video](https://asciinema.org/a/244774) showing how to enable/disable
   SHAx banks in TPM menu.

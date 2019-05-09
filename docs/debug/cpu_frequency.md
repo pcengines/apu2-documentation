@@ -38,7 +38,7 @@ are used. All boosted P-states are always higher performance than non-boosted
 P-states. Hardware P0 is software Pb0. Rest of states is mapped 1-to-1, with the
 same names corresponding to different states, which can be confusing. Number of
 boost states is written in `D18F4x15C[NumBoostStates]`, in case of apu it is 2.
-**BIOS should not provide ACPI _PSS entries for boosted P-states.**
+**BIOS should not provide ACPI `_PSS` entries for boosted P-states.**
 
 Boost states cannot be requested directly, some conditions that must be met:
 
@@ -156,11 +156,60 @@ This can be the source of some reboot problems, but it is hard to test in a
 reliable way - reset is asynchronous event that have to take place in very short
 amount of time during transition.
 
+## Voltage regulator
+
+CPU communicates with voltage regulator using SVI2 (Serial VID Interface 2.0).
+Typically, after all frequency and voltage dependencies described above are
+resolved, transition to higher performance follows a sequence:
+
+1. SVI2 command is send to the voltage regulator, `D18F5x12C[Svi2CmdBusy]`
+   is set.
+2. Voltage regulator sets the requested voltage, waits for it to stabilize and
+   clears `Svi2CmdBusy`.
+3. After `Svi2CmdBusy` is clear frequency change is performed.
+
+Transition towards lower performance starts with frequency change and doesn't
+have to wait for it to finish before changing voltage. Because of these
+restrictions it is impossible for CPU to work with high frequency and too low
+voltage for that frequency.
+
+Multiple requests can be grouped:
+
+> * If multiple commands are issued that affect the P-state of a domain prior
+>   to when the processor initiates the change of the P-state of that domain,
+>   then the processor operates on the last one issued.
+> * Once a P-state change starts, the P-state state machine (PSSM) continues
+>   through completion unless interrupted by a PWROK deassertion. If multiple
+>   P-state changes are requested concurrently, the PSSM may group the
+>   associated VID changes separately from the associated COF changes.
+
+Setting `D18F5x12C[WaitVidCompDis]` changes behaviour of transition towards
+higher performance - instead of waiting for voltage regulator to report end of
+transition next request can be made after a defined time period
+(`D18F3xD8[VSRampSlamTime]`). BKDG recommends 2.00 μs per 15 mV, it is set as
+such by AGESA, but can be modified by OEM callouts.
+
+## Findings from logs obtained from community
+
+Registers values from community revealed that CPU had voltage of (software) P0,
+but its frequency was stuck at a value of P2. Voltage change to P0 was requested
+but not reported as done by voltage regulator for some reason.
+
+It is possible that under certain circumstances an infinite loop occurs during
+boot - CPU is not requested to transition to P0 as its voltage already is equal
+to that of P0, so AGESA waits for frequency change to catch up, which doesn't
+happen. An explicit request to transition to P0 during boot could help with
+[the other issue](https://github.com/pcengines/apu2-documentation/issues/64).
+
+It is unclear why some platforms are influenced and others are not. Maybe
+different batch of voltage regulator (chip U7 on the bottom side of board)
+was used?
+
 #### ACPI tables
 
-All required objects for P-states are present, even the optional _PPC. Only
+All required objects for P-states are present, even the optional `_PPC`. Only
 difference between actual tables and recommendations from BKDG is entry
-DUTY_WIDTH in Fixed ACPI Description Table (FADT) - AMD recommends value of 0,
+`DUTY_WIDTH` in Fixed ACPI Description Table (FADT) - AMD recommends value of 0,
 while real entry has 3. Description of this entry from [ACPI specification](http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf):
 
 >The bit width of the processor’s duty cycle setting value in the P_CNT
@@ -188,7 +237,7 @@ be correct. Practical research (i.e. transitions between states) is impossible,
 because when CPU is in lower C-state it doesn't process instructions and thus
 cannot report any of its register values.
 
-As for ACPI tables, we couldn't find _CRS object. P_LVL2_LAT showed a
+As for ACPI tables, we couldn't find `_CRS` object. `P_LVL2_LAT` showed a
 value 0f 0x65 = 101, which disables C2 state according to [specification](http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf).
 First recorded value of this field actually showed 0x64 = 100, that is as
 specified in BKDG, but all subsequent logs show 0x65. This could either be an
@@ -196,3 +245,9 @@ error with serial connection or this value did change, which could possibly
 explain sudden problems with reproducing. A look at the source code however
 shows that it is set as 0x65, against instructions from BKDG. If this value was
 indeed different it had to be set by some other agent (payload, OS, AGESA).
+
+#### Fix
+
+Setting `D18F5x12C[WaitVidCompDis]` resolved both this issue as well as problems
+with reboot. This bit is protected by `D18F2x1B4[SmuCfgLock]` after system or a
+payload starts, but is cleared during init.

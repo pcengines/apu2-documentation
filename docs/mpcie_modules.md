@@ -162,6 +162,51 @@ operating system.
 
 (1) Refer to quirks, it is known to not work stably on all apu2 board revisions
 
+## Ethernet controllers
+
+### Dual Ethernet Controller Realtek RTL8111
+
+![RTL8111](images/realtek_controller.jpg)
+
+**Compatible slots**
+
+| Platform |  mPCIe1  |     mPCIe2      |  mSATA   |
+|:--------:|:--------:|:---------------:|:--------:|
+|   apu2   | &#10004; | &#10004; &sup1; | &#10006; |
+|   apu3   | &#10004; | &#10006;        | &#10006; |
+|   apu4   | &#10004; | &#10006;        | &#10006; |
+
+(1) If RTL8111 is attached to mPCIe2 slot then option *force mPCIe2 slot Clk* in
+Payload menu must be enabled
+
+This model works well with apu1 boards. However, on apu2, apu3 and apu4
+platforms following steps should be done to correctly enable it:
+
+1. On apu2 board (apu1, apu3 and apu4 boards aren't affected) make sure to
+enable option *force mPCIe2 slot Clk* in Payload menu if you attached module to
+mPCIe2 slot. This menu is available during boot process by pressing `F10`
+button. In OS now, you should be able to see your Ethernet controller under PCI
+devices.
+
+2. Manually download and install missing Realtek firmware. Even if Ethernet
+controller is recognized by OS it won't work correctly without it. Installation
+can be done, for example in Debian OS, by performing those steps:
+
+    - Edit `/etc/apt/sources.list` file. It should contain additional two
+    lines:
+    ```
+    deb http://ftp.pl.debian.org/debian stretch main non-free
+    deb-src  http://ftp.pl.debian.org/debian stretch main non-free   
+    ```
+    - Update apt-get:
+    ```
+    sudo apt-get update
+    ```
+    - Install Realtek firmware
+    ```
+    sudo apt-get install firmware-realtek
+    ```
+
 ## Other hardware fixes
 
 A good source of hardware fixes information of Your board is the
@@ -182,7 +227,7 @@ Set of changes for apu2:
 - Reduce leakage current between V3 and V3A power rails (can cause problems
   with SD cards).
 - Add options for better compatibility with LTE modem modules.
-  
+
 **Version apu2c:**
 
 - Integrate blue wire patches (EMI, power-up circuit) into PCB fab.

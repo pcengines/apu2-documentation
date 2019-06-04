@@ -87,7 +87,7 @@ PC Engines apu1/2/3/4/5 firmware and hardware. Structure of the repository:
   module pinout. It may be useful for users that would like to connect the
   TPM1a module to boards other than apu2.
 
-- [VBOOT HOWTO](docs/apu2_vboot.md) - document describing hwo to build a
+- [VBOOT HOWTO](docs/apu2_vboot.md) - document describing how to build a
   coreboot image with vboot support and measured boot mode
 
 You may also find many other documents out there, but we have listed only the

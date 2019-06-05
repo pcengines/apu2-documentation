@@ -207,6 +207,30 @@ can be done, for example in Debian OS, by performing those steps:
     sudo apt-get install firmware-realtek
     ```
 
+## SATA controllers
+
+### ASMedia ASM1061
+
+Module is NOT SUPPORTED by PC Engines apu platforms. ASM1061 was tested with
+Delock 95233 mPCIe 2xSATA module.
+
+![ASM1061](images/delock_95233.png)
+
+**Compatible slots**
+
+Due to apu boards construction, it is possible to test that module only under
+apu2 mPCIe2 slot. Capacitors placed near the mPCIe1 slot prevent connecting the
+SATA cables to the module. Therefore, module was tested only in mPCIe2 slot.
+After multiple tests performed, it turned out that ASM1061 module is not
+supported by PC Engines apu2 platform.  
+
+**Tests results**
+
+Carried out tests and their results are presented in [debug documentation](/debug/mpcie2.md).
+Detection problem is described more precisely there. Also, possible reasons
+of ASM1061 behavior are presented. Anyway, in every case and configuration
+that module doesn't work properly.
+
 ## Other hardware fixes
 
 A good source of hardware fixes information of Your board is the

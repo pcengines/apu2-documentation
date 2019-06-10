@@ -30,7 +30,7 @@ only on apu2 versions v4.9.0.6 and newer.
 5. Copy the vboot miniconfig:
 
   ```
-  cp $PWD/release/coreboot/configs.pcengines_apu2_vboot $PWD/release/coreboot/.config
+  cp $PWD/release/coreboot/configs/config.pcengines_apu2_vboot $PWD/release/coreboot/.config
   ```
 
 6. Create full config:

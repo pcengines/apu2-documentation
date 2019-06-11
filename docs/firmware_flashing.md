@@ -46,6 +46,20 @@ After that reboot as usual. Platform will turn off for 3-5 seconds. Note that
 there are parts of the platform which cannot be reset with this approach. A full
 power cycle is strongly suggested when possible.
 
+## Motherboard mismatch warning
+
+When you update firmware and try to flash image to apu board, `motherboard
+mismatch warning` can be yielded. It is known issue related to SMBIOS table
+entries. Since `v4.6.7` in mainline and `v4.0.15` in legacy, part number entry
+is in shorter (correct) form. Therefore, if you update to those version (or
+newer) a warning will appear. To flash BIOS correctly, just add `-p
+internal:boardmismatch=force` flag. Entire flashing command should look like
+this:
+
+```sh
+flashrom -w coreboot.rom -p internal:boardmismatch=force
+```
+
 Developer tricks
 ----------------
 

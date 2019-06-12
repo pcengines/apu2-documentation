@@ -76,3 +76,8 @@ tgptboot:
    - load and checksum kernel and modules (path, size and hash in DATA)
    - load disk keys (if specified in DATA)
    - execute kernel
+
+https://lists.freebsd.org/pipermail/freebsd-hackers/2015-March/047376.html
+
+Unfotunately it utilizes TPM1.2 only. The status of tgptboot development still
+needs to be researched.

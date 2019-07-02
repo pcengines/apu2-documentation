@@ -46,15 +46,15 @@ PC Engines apu2 platform.
 
 8. In menuconfig go to `Payload` menu and next:
 
-  a. In `Add a payload` choose *Tianocore coreboot payload package*
+  - In `Add a payload` choose *Tianocore coreboot payload package*
 
-  b. Select tianocore build type release
+  - Select tianocore build type release
 
-  c. In `Secondary Payloads` disable all options
+  - In `Secondary Payloads` disable all options
 
-  d. Rest options in `Payload` menu leave default
+  - Rest options in `Payload` menu leave default
 
-  e. Save settings and leave menuconfig
+  - Save settings and leave menuconfig
 
 9. Build coreboot image
 
@@ -77,8 +77,8 @@ option. Selecting the highlighted option will lead to boot process from selected
 device.
 
 >NOTE: It may happen that even if device is seen in boot menu, tianocore could
-not boot from it. It is probably because OS on the selected device uses legacy
-mode and therefore it is not UEFI-aware system.
+not boot from it. It is because OS on the selected device uses legacy mode and
+therefore it is not UEFI-aware system.
 
 In `Boot Maintenance Manager` user has access to change some basic options, such
 as boot order or console options. However, it is not recommended to change

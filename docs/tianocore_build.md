@@ -1,5 +1,5 @@
-# Coreboot with tianocore payload on apu2
-=========================================
+Coreboot with tianocore payload on apu2
+=======================================
 
 This document describes how to build coreboot image with tianocore payload for
 PC Engines apu2 platform. Payload is supported since v4.9.0.7 release.

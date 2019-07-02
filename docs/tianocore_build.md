@@ -2,7 +2,7 @@
 =========================================
 
 This document describes how to build coreboot image with tianocore payload for
-PC Engines apu2 platform.
+PC Engines apu2 platform. Payload is supported since v4.9.0.7 release.
 
 ## Building coreboot image
 
@@ -14,10 +14,10 @@ PC Engines apu2 platform.
   docker pull pcengines/pce-fw-builder
   ```
 
-3. Build v4.9.0.6 image:
+3. Build v4.9.0.7 image:
 
   ```
-  ./build.sh release v4.9.0.6 apu2
+  ./build.sh release v4.9.0.7 apu2
   ```
 
 4. Invoke distclean:
@@ -47,13 +47,9 @@ PC Engines apu2 platform.
 8. In menuconfig go to `Payload` menu and next:
 
   - In `Add a payload` choose *Tianocore coreboot payload package*
-
   - Select tianocore build type release
-
   - In `Secondary Payloads` disable all options
-
   - Rest options in `Payload` menu leave default
-
   - Save settings and leave menuconfig
 
 9. Build coreboot image

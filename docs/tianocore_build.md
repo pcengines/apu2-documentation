@@ -1,58 +1,54 @@
 # Coreboot with tianocore payload on apu2
+=========================================
 
-This documentation describes how to build coreboot image with tianocore payload
-for PC Engines apu2 platform.
+This document describes how to build coreboot image with tianocore payload for
+PC Engines apu2 platform.
 
 ## Building coreboot image
 
-1. Download coreboot-sdk docker image
-```
-docker pull coreboot/coreboot-sdk:1.52
-```
+1. Clone the [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
+2. Pull or [build](https://github.com/pcengines/pce-fw-builder#building-docker-image)
+  docker container:
 
-2. Run docker container with passing coreboot project directory
-```
-docker run --rm -it -v <coreboot-directory>:/home/coreboot coreboot/coreboot-sdk:1.52 /bin/bash
-```
+  ```
+  docker pull pcengines/pce-fw-builder
+  ```
 
-  Notice that `<coreboot-directory>` is your local directory with coreboot
-  project. `/home/coreboot` will be directory for that project in docker
-  container. Therefore, it's up to you what path to give.  
+3. Build v4.9.0.6 image:
 
-3. In docker container go to coreboot main folder
-```
-coreboot@32ceb7327125:/$ cd home/coreboot
-coreboot@32ceb7327125:~$ ls
-3rdparty  CHANGELOG.md	COPYING  Documentation	MAINTAINERS  Makefile  
-Makefile.inc  README.md	build  configs	gnat.adc  payloads  src  toolchain.inc
-util
-```
+  ```
+  ./build.sh release v4.9.0.6 apu2
+  ```
 
-4. Run distclean
-```
-coreboot@32ceb7327125:~$ make distclean
-```
+4. Invoke distclean:
+
+  ```
+  ./build.sh dev-build $PWD/release/coreboot apu2 distclean
+  ```
 
 5. Copy config file for target platform
-```
-coreboot@32ceb7327125:~$ cp configs/config.pcengines_apu2 .config
-```
 
-6. Run olddefconfig
-```
-coreboot@32ceb7327125:~$ make olddefconfig
-```
+  ```
+  cp $PWD/release/coreboot/configs/config.pcengines_apu2 $PWD/release/coreboot/.config
+  ```
 
-7. Run menuconfig
-```
-coreboot@32ceb7327125:~$ make menuconfig
-```
+6. Create full config:
+
+  ```
+  ./build.sh dev-build $PWD/release/coreboot apu2 olddefconfig
+  ```
+
+7. Invoke menuconfig:
+
+  ```
+  ./build.sh dev-build $PWD/release/coreboot apu2 menuconfig
+  ```
 
 8. In menuconfig go to `Payload` menu and next:
 
   a. In `Add a payload` choose *Tianocore coreboot payload package*
 
-  b. Select tianocore build type (debug or release)
+  b. Select tianocore build type release
 
   c. In `Secondary Payloads` disable all options
 
@@ -60,12 +56,14 @@ coreboot@32ceb7327125:~$ make menuconfig
 
   e. Save settings and leave menuconfig
 
-9. Run make
-```
-coreboot@32ceb7327125:~$ make
-```
+9. Build coreboot image
 
-10. After successful build coreboot image file is in *coreboot/build* directory.
+  ```
+  ./build.sh dev-build $PWD/release/coreboot apu2 CPUS=$(nproc)
+  ```
+
+10. After successful build coreboot image file is in `release/coreboot/build`
+directory.
 
 ## Coreboot + tianocore working example
 
@@ -77,6 +75,10 @@ In `Boot Manager` user can see what bootable device are visible and what is boot
 order. UEFI Shell is shown also and in default settings it is always last boot
 option. Selecting the highlighted option will lead to boot process from selected
 device.
+
+>NOTE: It may happen that even if device is seen in boot menu, tianocore could
+not boot from it. It is probably because OS on the selected device uses legacy
+mode and therefore it is not UEFI-aware system.
 
 In `Boot Maintenance Manager` user has access to change some basic options, such
 as boot order or console options. However, it is not recommended to change

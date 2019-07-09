@@ -8,6 +8,7 @@ After booting from USB stick installer rc.local is executed. Changes have to be
 applied to this file to eliminate interactive dialog options.
 
 1. Add environment variable defining terminal type:
+
 ```bash
 #!/bin/sh
 # $FreeBSD$
@@ -15,6 +16,7 @@ export TERM=vt100
 ```
 
 2. Comment out console type input:
+
 ```bash
 # Serial or other console
         echo
@@ -33,6 +35,7 @@ export TERM=vt100
 ```
 
 3. Add reboot command after installerconfig finishes:
+
 ```bash
 if [ -f /etc/installerconfig ]; then
         bsdinstall script /etc/installerconfig
@@ -63,7 +66,8 @@ configuration files that we want to change before first boot.
 
 Examples
 --------
-Example file, **installerconfig**, is located in **conifgs/** directory
+
+Example file, **installerconfig**, is located in **scripts/** directory.
 
 Problems
 --------

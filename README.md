@@ -93,6 +93,9 @@ PC Engines apu1/2/3/4/5 firmware and hardware. Structure of the repository:
 - [coreboot with Tianocore payload](docs/tianocore_build.md) - document
   describes how to build a coreboot image with Tianocore payload
 
+- [GPIO guide](docs/gpio.md) - quick guide how to manipulate GPIOs from Linux
+  sysfs
+
 You may also find many other documents out there, but we have listed only the
 most useful. Other are mostly developers notes which may not be that
 interesting.

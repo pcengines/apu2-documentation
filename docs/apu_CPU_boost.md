@@ -3,7 +3,7 @@ APU Core Performance Boost
 
 Since coreboot v4.9.0.2 PC Engines firmware for apu2/3/4/5 has the Core
 Performance Boost (aka CPU boost) enabled by default. The feature automatically
-detects huge loads on the processorr and temporarily raises the core frequency
+detects huge loads on the processor and temporarily raises the core frequency
 to 1400MHz. More details how to check whether boost works available in the [blog post](https://blog.3mdeb.com/2019/2019-02-14-enabling-cpb-on-pcengines-apu2/)
 
 ## Checking frequency in the operating system

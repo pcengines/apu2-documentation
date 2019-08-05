@@ -151,7 +151,8 @@ $ ls /sys/class/gpio/gpio391
 active_low  device  direction  edge  power  subsystem  uevent  value
 ```
 
-- `active_low` - indicates whether this pin is an active low signal
+- `active_low` - indicates whether this pin is an active low signal (for input
+  only)
 - `direction` - can be either `in` or `out`
 - `edge` - for inputs, whether pin should be active on `rising, falling, both`,
   `none` edge
@@ -194,26 +195,27 @@ exported**:
 
 1. APU2:
 
-- `386` - mPCIe1 reset (active low, default state output high)
-- `387` - mPCIe2 reset (active low, default state output high)
-- `391` - mPCIe1 WLAN disable (active low, default state output high)
-- `392` - mPCIe2 WLAN disable (active low, default state output high)
+- `386` - mPCIe1 reset
+- `387` - mPCIe2 reset
+- `391` - mPCIe1 WLAN disable
+- `392` - mPCIe2 WLAN disable
 
 2. APU3/APU4:
 
-- `386` - mPCIe3 reset (active low, default state output high)
-- `387` - mPCIe2 reset (active low, default state output high)
-- `391` - mPCIe3 WLAN disable (active low, default state output high)
-- `392` - mPCIe2 WLAN disable (active low, default state output high)
-- `410` - SIM swap (active low, default state output high)
+- `386` - mPCIe3 reset
+- `387` - mPCIe2 reset
+- `391` - mPCIe3 WLAN disable
+- `392` - mPCIe2 WLAN disable
+- `410` - SIM swap
 
 3. APU5:
 
-- `386` - mPCIe3 reset (active low, default state output high)
-- `387` - mPCIe2 reset (active low, default state output high)
-- `391` - mPCIe3 WLAN disable (active low, default state output high)
-- `392` - mPCIe2 WLAN disable (active low, default state output high)
-- `410` - SIM swap (active low, default state output high)
+- `386` - mPCIe3 reset
+- `387` - mPCIe2 reset
+- `391` - mPCIe3 WLAN disable
+- `392` - mPCIe2 WLAN disable
+- `410` - SIM swap
 
-> Important: when exporting, pin changes its state to input and low state.
-> We are working on a solution.
+> Important: when exporting, pin changes its state to input and low state. In
+> BIOS these pins are configured as output high. Be sure to configure them to
+> output first before using them.

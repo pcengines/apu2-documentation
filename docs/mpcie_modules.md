@@ -76,7 +76,12 @@ This module works fairly well with all apu boards.
 
 ![WLE200NX](http://shop.compex.com.sg/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/l/wle200nx_new_1500.jpg)
 
-This module works fairly well with all apu boards.
+This module works fairly well with all apu boards. The module may have issues
+with interrupts. Related issues:
+
+- [coreboot #206](https://github.com/pcengines/coreboot/issues/206)
+- [coreboot #285](https://github.com/pcengines/coreboot/issues/285)
+- [coreboot #323](https://github.com/pcengines/coreboot/issues/323) 
 
 **Compatible slots:**
 
@@ -88,13 +93,30 @@ This module works fairly well with all apu boards.
 
 **Quirks:**
 
-- Sometimes the module may have problems with OS communication on mainline
-  releases. In such case providing `amd_iommu=off` to kernel command line may
-  help.
+The real culprit of interrupt routing problems is the ath9k kernel module
+responsible for WLE200NX operation. The module has no robust interrupt
+implementation and tries to remap legacy INTx interrupt with IOMMU which is not
+possible due to technical reasons. The correct solution is to force ath9k
+kernel module to use MSI interrupts which can be remapped. This can be done
+with:
+
+```
+echo "options ath9k use_msi=1" | sudo tee -a /etc/modprobe.d/ath9k.conf
+```
+
+When the module is loaded, it initializes interrupts coming from WiFi devices
+to be a MSI type. MSI interrupts are correctly remapped by kernel with IOMMU,
+thus the issue is not present.
+
+Other solutions with kernel command line options:
+
+- `amd_iommu=off` - disables the use of IOMMU in kernel.
+- `intremap=off` - disables security feature of IOMMU called interrupt
+  remapping.
 
 ### WLE600VX
 
-![WLE600VX](http://www.compexshop.com/images/WLE900VX_r.png)
+![WLE600VX](http://www.compexshop.com/images/WLE600VX_r.png)
 
 This module works fairly well with all apu boards. Tested by PC Engines and apu
 users.

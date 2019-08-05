@@ -39,6 +39,9 @@ PC Engines apu1/2/3/4/5 firmware and hardware. Structure of the repository:
 
 ## Useful documents
 
+- [CPU Boost](docs/apu_CPU_boost.md) - document briefly describes what the Core
+  Performance Boost is and how to verify it works in BIOS and operating system.
+
 - [Fast Boot](docs/research/fast_boot.md) - document describing research for
   Fast Boot path for apu boards. The Fast Boot was intended to restore memory
   configuration from non-volatile storage and reduce the boot time of the

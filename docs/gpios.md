@@ -10,7 +10,7 @@ GPIOs, in particular:
 - LEDs
 - S1 switch
 
-In order to make it possible to modify/read their state, a OS driver is
+In order to make it possible to modify/read their state, an OS driver is
 required. In Linux there is a `pinctrl_amd` module which is responsible for
 GPIO controller handling. The driver required special ACPI device definition
 for GPIO controller to work. Since 4.10.0.1 version, the ACPI support was added
@@ -219,3 +219,15 @@ exported**:
 > Important: when exporting, pin changes its state to input and low state. In
 > BIOS these pins are configured as output high. Be sure to configure them to
 > output first before using them.
+
+## Known issue
+
+Since coreboot release *v4.10.0.0* there is conflict with **apuled** driver in
+FreeBSD. It is because BIOS reserves resources for GPIOs with ACPI controller
+support. As a result, FreeBSD cannot reserve the memory for native driver
+anymore. Entire issue with details is described
+[here](https://github.com/pcengines/coreboot/issues/329).
+
+The **workaround** was found by *alexpro* user and is simply adding environment
+variable `debug.acpi.avoid="\_SB_.PCI0.GPIO` to `loader.conf`. It doesn't affect
+any other ACPI functionality then GPIOs.

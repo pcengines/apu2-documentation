@@ -224,7 +224,7 @@ exported**:
 
 Since coreboot release *v4.10.0.0* there is conflict with **apuled** driver in
 FreeBSD. It is because BIOS reserves resources for GPIOs with ACPI controller
-support. Then somehow, FreeBSD cannot reserve the memory for native driver
+support. As a result, FreeBSD cannot reserve the memory for native driver
 anymore. Entire issue with details is described
 [here](https://github.com/pcengines/coreboot/issues/329).
 

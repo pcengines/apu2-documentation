@@ -229,5 +229,5 @@ anymore. Entire issue with details is described
 [here](https://github.com/pcengines/coreboot/issues/329).
 
 The **workaround** was found by *alexpro* user and is simply adding environment
-variable `debug.acpi.avoid="\_SB_.PCI0.GPIO` to `loader.conf`. It doesn't affect
+variable `debug.acpi.avoid="\_SB_.PCI0.GPIO"` to `loader.conf`. It doesn't affect
 any other ACPI functionality then GPIOs.

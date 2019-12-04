@@ -124,9 +124,7 @@ functions, as long as they don't use RSALib.
 
 Tools for updating Infineon TPM firmware can be easily found, unfortunately,
 most of them are either UEFI or Windows applications. A Linux port of them can
-be found [here](https://github.com/iavael/infineon-firmware-updater). It
-requires openssl-1.0 (both developer files and runtime library), but it can be
-updated to 1.1.0 version with [this patch](openssl_1_1_0.patch).
+be found [here](https://github.com/iavael/infineon-firmware-updater).
 
 First, check if `TPMFactoryUpd` was built successfully and TPM is detected
 properly:

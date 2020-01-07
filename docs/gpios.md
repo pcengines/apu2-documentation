@@ -220,14 +220,18 @@ exported**:
 > BIOS these pins are configured as output high. Be sure to configure them to
 > output first before using them.
 
-## Known issue
+## Known issues
 
-Since coreboot release *v4.10.0.0* there is conflict with **apuled** driver in
-FreeBSD. It is because BIOS reserves resources for GPIOs with ACPI controller
-support. As a result, FreeBSD cannot reserve the memory for native driver
-anymore. Entire issue with details is described
-[here](https://github.com/pcengines/coreboot/issues/329).
+1. Since coreboot release *v4.10.0.0* there is conflict with **apuled** driver
+   in FreeBSD. It is because BIOS reserves resources for GPIOs with ACPI
+   controller support. As a result, FreeBSD cannot reserve the memory for
+   native driver anymore. Entire issue with details is described
+   [here](https://github.com/pcengines/coreboot/issues/329).
 
 The **workaround** was found by *alexpro* user and is simply adding environment
 variable `debug.acpi.avoid="\_SB_.PCI0.GPIO"` to `loader.conf`. It doesn't affect
 any other ACPI functionality then GPIOs.
+
+2. LED entries in sysfs in Linux are duplicated due to presence of *leds_apu*
+   module. Blacklisting *leds_apu* module will get rid of the duplicates. See
+   [issue](https://github.com/pcengines/coreboot/issues/352)

@@ -3,7 +3,12 @@
 We have started research and measurements of power consumption on apu platforms.
 Our goal is to optimize (if possible) power management on coreboot level. First
 stage of work is to collect data from various tests and create reports. For that
-purpose we have used RTE with power monitor sensor.
+purpose we have used RTE with power monitor sensor. RTE stands for *Remote
+Testing Environment* and it is a tool which helps debugging and testing devices.
+RTE gathers all necessary interfaces and ports in one device. Therefore, it is
+very versatile and convenient to use. More information can be found on
+[3mdeb official website](https://shop.3mdeb.com/product/rte/). It is also place
+where you can buy it.
 
 This document gathers all already carried out tests, their results and our
 conclusions. Over time, we will conduct next tests and hence extend this
@@ -16,7 +21,7 @@ document with further reports.
 Test case is following:
 
 1. Power on RTE and power on apu3.
-2. Boot to Debian on apu3.
+2. Boot to Debian 10 (buster) with kernel 4.19 on apu3.
 3. Start measurements on RTE: constantly measure *bus voltage*, *current* and
    *input power* in 0.5 seconds time intervals and save them to text file.
 4. After 10 seconds from starting measurements, invoke `sysbench` command on
@@ -137,8 +142,10 @@ Comparing those results to previous one (with `coreboot v4.11.0.4`), following
 differences can be noticed:
 
 - average bus voltage level in idle state and during stress-test is slightly
-  larger with `coreboot v4.11.0.5` than `coreboot v4.11.0.4`; as those
-  differences are very small, it can be treated as irrelevant;
+  larger with `coreboot v4.11.0.5` than `coreboot v4.11.0.4`; however, those
+  differences are only about 0,01/0,02 V, which makes 0,17% measurement error.
+  As power monitor sensor accuracy is up to 1%, obtained error is within the
+  norm;
 - in idle state, power consumption oscillates around 3.5W and when `sysbench` is
   running it increases to 5.3W top; it is improvement by approximately 0.5W in
   each state against `coreboot v4.11.0.4`;

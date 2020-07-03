@@ -47,10 +47,16 @@ PC Engines apu2 platform. Payload is supported since v4.9.0.7 release.
 8. In menuconfig go to `Payload` menu and next:
 
   - In `Add a payload` choose *Tianocore coreboot payload package*
-  - Select tianocore build type release
+  - Deselect PXE ROM
+  - Select Tianocore build type release
   - In `Secondary Payloads` disable all options
+  - Make sure that Tianocore revision is set to 
+  `origin/coreboot-4.7.x-uefi` in the
+  `Insert a commit’s SHA-1 or a branch name` line.
   - Rest options in `Payload` menu leave default
   - Save settings and leave menuconfig
+  ### Screenshot from correctly filled Payloads menu:
+   ![Payloads config menu](Payloads_config_menu.png)
 
 9. Build coreboot image
 

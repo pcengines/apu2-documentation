@@ -1,3 +1,24 @@
+Firmware version check
+----------------------
+
+To check firmware version you can use:
+
+```sh
+dmidecode -s bios-version
+```
+
+In case `dmidecode` is not installed use following command:
+
+#### For Debian-based distributions:
+```sh
+apt-get install dmidecode
+```
+
+#### For FreeBSD:
+```sh
+pkg install -y dmidecode
+```
+
 APUx firmware flashing
 ----------------------
 
@@ -8,6 +29,12 @@ For Debian-based distributions you can install `flashrom` by simply:
 
 ```sh
 sudo apt-get install flashrom
+```
+
+For FreeBSD you can install `flashrom` by:
+
+```sh
+pkg install -y flashrom
 ```
 
 You can also use minimal distributions with already installed `flashrom` like
@@ -77,3 +104,30 @@ scp build/coreboot.rom root@$APU2_IP:/root && \
 ssh root@$APU2_IP flashrom -w /root/coreboot.rom -p internal \
 && ssh root@$APU2_IP reboot
 ```
+
+Flashrom known problems
+----------------
+
+If flashrom tells you `/dev/mem mmap failed: Operation not permitted`:
+
+* Most common at the time of writing is a Linux kernel option, 
+CONFIG_IO_STRICT_DEVMEM, that prevents even the root user from 
+accessing hardware from user-space. Try again after rebooting with 
+iomem=relaxed in your kernel command line.
+* Some systems with incorrect memory reservations (e.g. E820 map) 
+may have the same problem even with CONFIG_STRICT_DEVMEM. 
+In that case iomem=relaxed in the kernel command line may help too.
+
+You can set iomem=relaxed via Grub by appending to file `/etc/default/grub` 
+this line:
+
+```sh
+GRUB_CMDLINE_LINUX="iomem=relaxed"
+```
+Then run following commad:
+
+```sh
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+Finally reboot

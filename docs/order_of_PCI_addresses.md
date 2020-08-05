@@ -5,7 +5,7 @@ Order of PCI addresses
 
 Initial coreboot port for APU2 was made with badly implemented PCIe engines
 definition passed to AGESA. It's done in the way that mPCIe cards get lower
-address then Network interface controllers (NICs). It causes weird and unwanted
+address than Network interface controllers (NICs). It causes weird and unwanted
 behavior like shifting addresses of NICs when a mPCIe device is added.
 Unfortunately it can’t be changed without consequences, because of many
 years of APU existence on the market. If it had been changed, many APU owners

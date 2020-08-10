@@ -99,6 +99,8 @@ PC Engines apu1/2/3/4/5 firmware and hardware. Structure of the repository:
 - [GPIO guide](docs/gpios.md) - quick guide how to manipulate GPIOs from Linux
   sysfs
 
+- [Order of PCI addresses](docs/order_of_PCI_addresses.md) - Describes how PCIe devices are being numbered on APU, and how it can be changed.
+
 You may also find many other documents out there, but we have listed only the
 most useful. Other are mostly developers notes which may not be that
 interesting.

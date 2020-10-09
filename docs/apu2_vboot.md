@@ -150,7 +150,7 @@ protected by SPI flash protection mechanism as it make the Root of Trust.
 
 By utlizing TPM capabilities, each boot component is cryptographically measured
 i.e. its hash is computed and extended in TPM's PCR (Platform Configuration
-Register). The has his not directly written into PCR, but extended, which means
+Register). The hash is not directly written into PCR, but extended, which means
 that TPM takes current PCR value, add the hash value of the component and
 rehashes the combined value. The final result is written to PCR. Such approach
 has the advantage that the final PCR values after boot process is finished are

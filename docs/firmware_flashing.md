@@ -131,3 +131,15 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 Finally reboot
+
+APU firmware updater for OPNsense
+----------------
+
+You can use a script to update the firmware on an OPNsense firewall.
+
+* Login via SSH to your OPNsense firewall.
+* Copy the script [apu_fw_updater_opnsense.sh](https://github.com/pcengines/apu2-documentation/tree/master/scripts/apu_fw_updater_opnsense.sh) where you want it.
+* Make the script executable using `chmod +x apu_fw_updater_opnsense.sh`.
+* Set the correct type, e.g. `TYPE="apu2"`.
+* Set the desired version, e.g. `VERSION="4.12.0.4"`.
+* Execute the script `./apu_fw_updater_opnsense.sh`.

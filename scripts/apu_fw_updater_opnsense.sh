@@ -17,7 +17,7 @@
 TYPE="apu2"
 
 # Version of firmware
-VERSION="4.12.0.4"
+VERSION="4.12.0.5"
 
 # Do not edit after this line
 SRC="https://3mdeb.com/open-source-firmware/pcengines/${TYPE}/"

@@ -17,7 +17,7 @@ pfSense Installation Guide
 ## pfSense Image
 
 In order to install pfSense on apu2/3/5 platforms from USB, obtain following
-[Image](https://sgpfiles.pfsense.org/mirror/downloads/pfSense-CE-memstick-serial-2.4.4-RELEASE-p3-amd64.img.gz)
+[Image](https://sgpfiles.netgate.com/mirror/downloads/pfSense-CE-memstick-serial-2.5.0-RELEASE-amd64.img.gz)
 from official mirror and follow the official
 [Writing Disk Images](https://docs.netgate.com/pfsense/en/latest/hardware/writing-disk-images.html) guide for
 Windows, Linux, UNIX or MAC OS X.

@@ -1,0 +1,327 @@
+SeaBIOS (version rel-1.11.2-0-gf9626cc-dirty-20180810_112822-f05dcb890877init usb
+phys_alloc zone=0xcfe5be84 size=72 align=10 ret=cfe9bfb0 (detail=0xcfe4cfe0)
+XHCI init on dev 00:10.0: regs @ 0xf7f22000, 4 ports, 32 slots, 32 byte contexts
+XHCI    extcap 0x1 @ 0xf7f22500
+XHCI    protocol USB  3.00, 2 ports (offset 1), def 0
+XHCI    protocol USB  2.00, 2 ports (offset 3), def 10
+XHCI    extcap 0xa @ 0xf7f22540
+phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe4b000 (detail=0xcfe4cfb0)
+/cfe4b000\ Start thread
+|cfe4b000| phys_alloc zone=0xcfe5be84 size=264 align=40 ret=cfe9be80 (detail=0xcfe4cf80)
+|cfe4b000| phys_alloc zone=0xcfe5be84 size=16 align=40 ret=cfe9be40 (detail=0xcfe4cf50)
+|cfe4b000| phys_alloc zone=0xcfe5be84 size=288 align=100 ret=cfe9bd00 (detail=0xcfe4cf20)
+|cfe4b000| phys_alloc zone=0xcfe5be84 size=288 align=100 ret=cfe9bb00 (detail=0xcfe4cef0)
+|cfe4b000| configure_xhci: resetting
+phys_alloc zone=0xcfe5be78 size=32 align=10 ret=cfe4ced0 (detail=0xcfe4cea0)
+EHCI init on dev 00:12.0 (regs=0xf7f26020)
+phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe4a000 (detail=0xcfe4ce70)
+/cfe4a000\ Start thread
+|cfe4a000| phys_alloc zone=0xcfe5be84 size=4096 align=1000 ret=cfe9a000 (detail=0xcfe4ce40)
+|cfe4a000| phys_alloc zone=0xcfe5be84 size=68 align=80 ret=cfe9bc80 (detail=0xcfe4ce10)
+|cfe4a000| phys_alloc zone=0xcfe5be84 size=68 align=80 ret=cfe9ba80 (detail=0xcfe4cde0)
+phys_alloc zone=0xcfe5be78 size=32 align=10 ret=cfe4cdc0 (detail=0xcfe4cd90)
+EHCI init on dev 00:13.0 (regs=0xf7f27020)
+phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe49000 (detail=0xcfe4cd60)
+/cfe49000\ Start thread
+|cfe49000| phys_alloc zone=0xcfe5be84 size=4096 align=1000 ret=cfe99000 (detail=0xcfe4cd30)
+|cfe49000| phys_alloc zone=0xcfe5be84 size=68 align=80 ret=cfe9ba00 (detail=0xcfe4cd00)
+|cfe49000| phys_alloc zone=0xcfe5be84 size=68 align=80 ret=cfe9b980 (detail=0xcfe4ccd0)
+|cfe4a000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4ccb0 (detail=0xcfe4cc80)
+|cfe4a000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe48000 (detail=0xcfe4cc50)
+/cfe48000\ Start thread
+|cfe4b000| WARNING - Timeout at wait_bit:302!
+|cfe4b000| phys_free cfe9be40 (detail=0xcfe4cf50)
+|cfe4b000| phys_free cfe9bb00 (detail=0xcfe4cef0)
+|cfe4b000| phys_free cfe9bd00 (detail=0xcfe4cf20)
+|cfe4b000| phys_free cfe9be80 (detail=0xcfe4cf80)
+|cfe4b000| phys_free cfe9bfb0 (detail=0xcfe4cfe0)
+\cfe4b000/ End thread
+phys_free cfe4b000 (detail=0xcfe4cfb0)
+init ps2port
+phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe4b000 (detail=0xcfe4cfe0)
+/cfe4b000\ Start thread
+|cfe4b000| i8042_flush
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| i8042 flushed ff (status=ff)
+|cfe4b000| WARNING - Timeout at i8042_flush:71!
+\cfe4b000/ End thread
+phys_free cfe4b000 (detail=0xcfe4cfe0)
+|cfe49000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4cff0 (detail=0xcfe4cfc0)
+|cfe49000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe4b000 (detail=0xcfe4cf90)
+/cfe4b000\ Start thread
+|cfe4a000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4cf70 (detail=0xcfe4cf40)
+|cfe4a000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe47000 (detail=0xcfe4cf10)
+/cfe47000\ Start thread
+|cfe47000| phys_free cfe4cf70 (detail=0xcfe4cf40)
+\cfe47000/ End thread
+phys_free cfe47000 (detail=0xcfe4cf10)
+init floppy drives
+init hard drives
+phys_alloc zone=0xcfe5be80 size=20 align=10 ret=f4e20 (detail=0xcfe4cf60)
+ATA controller 1 at 5010/5020/0 (irq 0 dev 88)
+phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe47000 (detail=0xcfe4cf30)
+/cfe47000\ Start thread
+|cfe47000| powerup iobase=5010 st=50
+|cfe47000| powerup iobase=5010 st=50
+|cfe47000| ata_detect ata0-0: sc=55 sn=aa dh=a0
+|cfe47000| ata_reset drive=0xcfe47dc0
+|cfe49000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4cf10 (detail=0xcfe4cc20)
+|cfe49000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe46000 (detail=0xcfe4cbf0)
+/cfe46000\ Start thread
+|cfe46000| phys_free cfe4cf10 (detail=0xcfe4cc20)
+\cfe46000/ End thread
+phys_free cfe46000 (detail=0xcfe4cbf0)
+|cfe48000| set_address 0xcfe4ced0
+phys_alloc zone=0xcfe5be80 size=20 align=10 ret=f4e00 (detail=0xcfe4cf00)
+ATA controller 2 at 5018/5024/0 (irq 0 dev 88)
+phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe46000 (detail=0xcfe4cc20)
+/cfe46000\ Start thread
+|cfe46000| powerup iobase=5018 st=7f
+|cfe46000| powerup iobase=5018 st=7f
+|cfe46000| ata_detect ata1-0: sc=ff sn=ff dh=ff
+|cfe46000| powerup iobase=5018 st=7f
+|cfe46000| powerup iobase=5018 st=7f
+|cfe46000| ata_detect ata1-1: sc=ff sn=ff dh=ff
+\cfe46000/ End thread
+phys_free cfe46000 (detail=0xcfe4cc20)
+|cfe47000| ata_reset exit status=50
+|cfe4b000| set_address 0xcfe4cdc0
+|cfe48000| ehci_alloc_async_pipe 0xcfe4ced0 0
+|cfe48000| phys_alloc zone=0xcfe5be78 size=92 align=80 ret=cfe4cb80 (detail=0xcfe4cc20)
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=0 data=0x00000000 size=0
+init ahci
+phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe46000 (detail=0xcfe4cbf0)
+/cfe46000\ Start thread
+|cfe46000| Searching bootorder for: /pci@i0cf8/*@14,7
+|cfe46000| sdhci@0xf7f28000 ver=1001 cap=31fe32b2 70
+|cfe47000| send_cmd : read error (status=51 err=04)
+|cfe4b000| ehci_alloc_async_pipe 0xcfe4cdc0 0
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=92 align=80 ret=cfe4cb00 (detail=0xcfe4cad0)
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=0 data=0x00000000 size=0
+init megasas
+init nvme
+init lpt
+Found 1 lpt ports
+init serial
+Found 2 serial ports
+phys_alloc zone=0xcfe5be78 size=80 align=10 ret=cfe4ca80 (detail=0xcfe4ca50)
+Searching bootorder for: /rom@img/memtest
+phys_alloc zone=0xcfe5be78 size=24 align=10 ret=cfe4cb60 (detail=0xcfe4ca20)
+Registering bootable: Payload [memtest] (type:32 prio:9999 data:ff8a69c0)
+)
+|cfe47000| phys_alloc zone=0xcfe5be80 size=44 align=10 ret=f4dd0 (detail=0xcfe4c9f0)
+|cfe47000| phys_alloc zone=0xcfe5be78 size=80 align=10 ret=cfe4c9a0 (detail=0xcfe4c970)
+|cfe47000| ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+|cfe47000| Searching bootorder for: /pci@i0cf8/*@11/drive@0/disk@0
+|cfe47000| phys_alloc zone=0xcfe5be78 size=24 align=10 ret=cfe4c950 (detail=0xcfe4c920)
+|cfe47000| Registering bootable: ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes) (type:2 prio:103 data:f4dd0)
+|cfe47000| ata_detect resetresult=0000
+|cfe47000| powerup iobase=5010 st=50
+|cfe47000| powerup iobase=5010 st=0
+|cfe47000| ata_detect ata0-1: sc=55 sn=aa dh=b0
+|cfe47000| send_cmd : DRQ not set (status 00)
+\cfe47000/ End thread
+phys_free cfe47000 (detail=0xcfe4cf30)
+|cfe48000| ehci_alloc_async_pipe 0xcfe4ced0 0
+|cfe48000| config_usb: 0xcfe4cbd0
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe48f8a size=8
+|cfe46000| phys_alloc zone=0xcfe5be80 size=44 align=10 ret=f4da0 (detail=0xcfe4cf30)
+|cfe46000| sdcard_set_frequency 50 400 4000
+|cfe4b000| ehci_alloc_async_pipe 0xcfe4cdc0 0
+|cfe4b000| config_usb: 0xcfe4cb50
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe4bf8a size=8
+|cfe48000| device rev=0200 cls=09 sub=00 proto=01 size=64
+|cfe48000| ehci_alloc_async_pipe 0xcfe4ced0 0
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe48fb0 size=9
+|cfe4b000| device rev=0200 cls=09 sub=00 proto=01 size=64
+|cfe4b000| ehci_alloc_async_pipe 0xcfe4cdc0 0
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe4bfb0 size=9
+|cfe48000| phys_alloc zone=0xcfe5be78 size=25 align=10 ret=cfe4c900 (detail=0xcfe4c8d0)
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe4c900 size=25
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=25 align=10 ret=cfe4c8b0 (detail=0xcfe4c880)
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe4c8b0 size=25
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=0 data=0x00000000 size=0
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=0 data=0x00000000 size=0
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe48f7a size=7
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe4bf7a size=7
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=0 data=0x00000000 size=0
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=0 data=0x00000000 size=0
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=0 data=0x00000000 size=0
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=0 data=0x00000000 size=0
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=0 data=0x00000000 size=0
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=0 data=0x00000000 size=0
+|cfe48000| ehci_send_pipe qh=0xcfe4cb80 dir=0 data=0x00000000 size=0
+|cfe4b000| ehci_send_pipe qh=0xcfe4cb00 dir=0 data=0x00000000 size=0
+|cfe48000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c860 (detail=0xcfe4c830)
+|cfe48000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe47000 (detail=0xcfe4c800)
+/cfe47000\ Start thread
+|cfe47000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe47f24 size=4
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c7e0 (detail=0xcfe4c7b0)
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe45000 (detail=0xcfe4c780)
+/cfe45000\ Start thread
+|cfe45000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe45f24 size=4
+|cfe48000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c760 (detail=0xcfe4c730)
+|cfe48000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe44000 (detail=0xcfe4c700)
+/cfe44000\ Start thread
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c6e0 (detail=0xcfe4c6b0)
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe43000 (detail=0xcfe4c680)
+/cfe43000\ Start thread
+|cfe48000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c660 (detail=0xcfe4c630)
+|cfe48000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe42000 (detail=0xcfe4c600)
+/cfe42000\ Start thread
+|cfe42000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe42f24 size=4
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c5e0 (detail=0xcfe4c5b0)
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe41000 (detail=0xcfe4c580)
+/cfe41000\ Start thread
+|cfe41000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe41f24 size=4
+|cfe48000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c560 (detail=0xcfe4c530)
+|cfe48000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe40000 (detail=0xcfe4c500)
+/cfe40000\ Start thread
+|cfe42000| phys_free cfe4c660 (detail=0xcfe4c630)
+\cfe42000/ End thread
+phys_free cfe42000 (detail=0xcfe4c600)
+|cfe44000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe44f24 size=4
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=28 align=10 ret=cfe4c660 (detail=0xcfe4c630)
+|cfe4b000| phys_alloc zone=0xcfe5be78 size=4096 align=1000 ret=cfe42000 (detail=0xcfe4c600)
+/cfe42000\ Start thread
+|cfe41000| phys_free cfe4c5e0 (detail=0xcfe4c5b0)
+\cfe41000/ End thread
+phys_free cfe41000 (detail=0xcfe4c580)
+|cfe43000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe43f24 size=4
+|cfe44000| phys_free cfe4c760 (detail=0xcfe4c730)
+\cfe44000/ End thread
+phys_free cfe44000 (detail=0xcfe4c700)
+|cfe47000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe47f24 size=4
+|cfe43000| phys_free cfe4c6e0 (detail=0xcfe4c6b0)
+\cfe43000/ End thread
+phys_free cfe43000 (detail=0xcfe4c680)
+|cfe45000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe45f24 size=4
+|cfe47000| phys_free cfe4c860 (detail=0xcfe4c830)
+\cfe47000/ End thread
+phys_free cfe47000 (detail=0xcfe4c800)
+|cfe45000| phys_free cfe4c7e0 (detail=0xcfe4c7b0)
+\cfe45000/ End thread
+phys_free cfe45000 (detail=0xcfe4c780)
+|cfe40000| ehci_send_pipe qh=0xcfe4cb80 dir=128 data=0xcfe40f24 size=4
+|cfe42000| ehci_send_pipe qh=0xcfe4cb00 dir=128 data=0xcfe42f24 size=4
+|cfe40000| phys_free cfe4c560 (detail=0xcfe4c530)
+\cfe40000/ End thread
+phys_free cfe40000 (detail=0xcfe4c500)
+|cfe42000| phys_free cfe4c660 (detail=0xcfe4c630)
+\cfe42000/ End thread
+phys_free cfe42000 (detail=0xcfe4c600)
+|cfe48000| Initialized USB HUB (0 ports used)
+|cfe48000| phys_free cfe4c900 (detail=0xcfe4c8d0)
+|cfe48000| phys_free cfe4ccb0 (detail=0xcfe4cc80)
+\cfe48000/ End thread
+phys_free cfe48000 (detail=0xcfe4cc50)
+|cfe46000| sdcard_set_frequency 50 25000 100
+|cfe46000| phys_alloc zone=0xcfe5be78 size=80 align=10 ret=cfe4cc80 (detail=0xcfe4cc50)
+|cfe46000| Found sdcard at 0xf7f28000: SD card SB16G 15193MiB
+|cfe46000| phys_alloc zone=0xcfe5be78 size=24 align=10 ret=cfe4c900 (detail=0xcfe4c8d0)
+|cfe46000| Registering bootable: SD card SB16G 15193MiB (type:2 prio:103 data:f4da0)
+\cfe46000/ End thread
+phys_free cfe46000 (detail=0xcfe4cbf0)
+|cfe4b000| Initialized USB HUB (0 ports used)
+|cfe4b000| phys_free cfe4c8b0 (detail=0xcfe4c880)
+|cfe4b000| phys_free cfe4cff0 (detail=0xcfe4cfc0)
+\cfe4b000/ End thread
+phys_free cfe4b000 (detail=0xcfe4cf90)
+|cfe4a000| ehci_free_pipes 0xcfe4ced0
+|cfe49000| ehci_free_pipes 0xcfe4cdc0
+|cfe4a000| phys_free cfe4cb80 (detail=0xcfe4cc20)
+|cfe49000| phys_free cfe4cb00 (detail=0xcfe4cad0)
+|cfe4a000| phys_free cfe9a000 (detail=0xcfe4ce40)
+|cfe4a000| phys_free cfe9bc80 (detail=0xcfe4ce10)
+|cfe4a000| phys_free cfe9ba80 (detail=0xcfe4cde0)
+|cfe4a000| phys_free cfe4ced0 (detail=0xcfe4cea0)
+\cfe4a000/ End thread
+phys_free cfe4a000 (detail=0xcfe4ce70)
+|cfe49000| phys_free cfe99000 (detail=0xcfe4cd30)
+|cfe49000| phys_free cfe9ba00 (detail=0xcfe4cd00)
+|cfe49000| phys_free cfe9b980 (detail=0xcfe4ccd0)
+|cfe49000| phys_free cfe4cdc0 (detail=0xcfe4cd90)
+\cfe49000/ End thread
+phys_free cfe49000 (detail=0xcfe4cd60)
+All threads complete.
+Scan for option roms
+Attempting to init PCI bdf 00:00.0 (vd 1022:1566)
+Attempting to map option rom on dev 00:00.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:02.0 (vd 1022:156b)
+Attempting to map option rom on dev 00:02.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:02.1 (vd 1022:1439)
+Attempting to map option rom on dev 00:02.1
+Skipping non-normal pci device (type=81)
+Attempting to init PCI bdf 00:02.2 (vd 1022:1439)
+Attempting to map option rom on dev 00:02.2
+Skipping non-normal pci device (type=81)
+Attempting to init PCI bdf 00:02.3 (vd 1022:1439)
+Attempting to map option rom on dev 00:02.3
+Skipping non-normal pci device (type=81)
+Attempting to init PCI bdf 00:02.4 (vd 1022:1439)
+Attempting to map option rom on dev 00:02.4
+Skipping non-normal pci device (type=81)
+Attempting to init PCI bdf 00:08.0 (vd 1022:1537)
+Attempting to map option rom on dev 00:08.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:14.0 (vd 1022:780b)
+Attempting to map option rom on dev 00:14.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:14.3 (vd 1022:780e)
+Attempting to map option rom on dev 00:14.3
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:18.0 (vd 1022:1580)
+Attempting to map option rom on dev 00:18.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:18.1 (vd 1022:1581)
+Attempting to map option rom on dev 00:18.1
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:18.2 (vd 1022:1582)
+Attempting to map option rom on dev 00:18.2
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:18.3 (vd 1022:1583)
+Attempting to map option rom on dev 00:18.3
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:18.4 (vd 1022:1584)
+Attempting to map option rom on dev 00:18.4
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 00:18.5 (vd 1022:1585)
+Attempting to map option rom on dev 00:18.5
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 01:00.0 (vd 8086:1539)
+Attempting to map option rom on dev 01:00.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 02:00.0 (vd 8086:1539)
+Attempting to map option rom on dev 02:00.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 03:00.0 (vd 8086:1539)
+Attempting to map option rom on dev 03:00.0
+Option rom sizing returned 0 0
+Attempting to init PCI bdf 04:00.0 (vd 8086:1539)
+Attempting to map option rom on dev 04:00.0
+Option rom sizing returned 0 0
+
+Press ESC for boot menuChecking for bootsplash
+.
+
+Select boot device:
+
+1. ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+2. SD card SB16G 15193MiB
+3. Payload [memtest]

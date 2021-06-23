@@ -70,6 +70,31 @@ This module works fairly well with all apu boards.
 |   apu3   | &#10006; | &#10004; | &#10004; &sup1;|
 |   apu4   | &#10006; | &#10004; | &#10004; &sup1;|
 
+(1) Do not forget to enable EHCI0 controller in sortbootorder
+
+### HUAWEI ME906s M.2
+
+There is an option to use the M.2 Key B to Mini PCIE PCI-E Adapter Converter
+for 3G/4G/5G and connect Huawei ME906s M.2 4G to compatible mPCIe slot. This
+adapter includes routing the SIM signals so APU SIM slot may be used without
+problems.
+
+Kudos to Jamie Lentin (@lentinj) for checking this.
+
+![M.2 Key B to Mini PCIE PCI-E Adapter Converter](images/m2_converter.jpg)
+
+![HUAWEI ME906s](images/m2_lte.jpg)
+
+**Compatible slots:**
+
+| Platform |  mPCIe1  |  mPCIe2  |     mSATA      |
+|:--------:|:--------:|:--------:|:--------------:|
+|   apu2   | &#10004; | &#10004; | &#10006;       |
+|   apu3   | &#10006; | &#10004; | &#10004; &sup1;|
+|   apu4   | &#10006; | &#10004; | &#10004; &sup1;|
+
+(1) Do not forget to enable EHCI0 controller in sortbootorder
+
 ## WiFi modules
 
 ### WLE200NX

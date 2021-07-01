@@ -47,10 +47,23 @@ You can also use minimal distributions with already installed `flashrom` like
 flashrom -w coreboot.rom -p internal -c "MX25L1605A/MX25L1606E/MX25L1608E"
 ```
 
-##### APU2/3/4/5
+##### APU2/3/4/5/6
 ```sh
 flashrom -w coreboot.rom -p internal
 ```
+
+**IMPORTANT**
+
+To update the firmware and remain the runtime configuration unchanged please
+use the following command:
+
+```
+flashrom -p internal -w apuX_v4.14.0.2.rom --fmap -i COREBOOT
+```
+
+The persistent runtime configuration works only when migrating from versions
+v4.14.0.1 and later. The feature is not yet supported on apu1. Flashrom version
+needs to v1.1 or newer.
 
 A full power cycle is required after flashing. If it is not possible (e.g.
 remote firmware upgrade), when flashing coreboot v4.9.0.4 or newer a full reset

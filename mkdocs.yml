@@ -1,5 +1,5 @@
 site_name: apu2 Documentation
-site_url: https://apu2.3mdeb.com/
+site_url: http://pcengines.github.io/apu2-documentation/
 theme:
     name: material
 # TODO: provide logo and styling
@@ -82,4 +82,3 @@ nav:
         - 'research/RPI_SPI_flasher.md'
         - 'research/tpm2-triage.md'
         - 'research/USB_compliance_test.md'
-

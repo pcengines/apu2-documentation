@@ -18,34 +18,34 @@ coreboot boot logs redirection to the serial console
 
 Common steps for every log generation process
 ---------------------------------------------
- 
-1. [Build coreboot ROM](./supported_coreboot_build.md). 
 
-It's important to not delete the ROM image, because script used to generate 
-support logs requires that image. Default directory of built ROM image is
-`coreboot/build/`.
+1. [Build coreboot ROM](./supported_coreboot_build.md).
+
+      It's important to not delete the ROM image, because script used to generate
+      support logs requires that image. Default directory of built ROM image is
+      `coreboot/build/`.
 
 2. [Flash your device with flashrom](./flashrom_building.md).
 
-If you have `flashrom` installed on your OS you can jump to 
-`Flashing firmware with flashrom` section of instruction linked above.
+      If you have `flashrom` installed on your OS you can jump to
+      `Flashing firmware with flashrom` section of instruction linked above.
 
-3. Enter to the `coreboot` directory. 
+3. Enter to the `coreboot` directory.
 
-It's important to run script from that directory, because it's root directory 
-for coreboot scripts. If you try to run script from another directory there 
-is a good chance that an error will be displayed and you will be prompted to 
-change the directory to the correct one.
+      It's important to run script from that directory, because it's root directory
+      for coreboot scripts. If you try to run script from another directory there
+      is a good chance that an error will be displayed and you will be prompted to
+      change the directory to the correct one.
 
-4. Choose one of the methods shown in sections below and generate coreboot 
-support logs. 
+4. Choose one of the methods shown in sections below and generate coreboot
+      support logs.
 
-`board_status.sh` is responsible for required logs collecting. 
-It's placed in `coreboot/util/board_status` directory. But don't enter there. 
-You have to stay in `coreboot` directory.
+      `board_status.sh` is responsible for required logs collecting.
+      It's placed in `coreboot/util/board_status` directory. But don't enter there.
+      You have to stay in `coreboot` directory.
 
-> Sending logs for verification is descibred in `Generating logs and sending 
-them for verification` section.
+      > Sending logs for verification is descibred in `Generating logs and sending
+      them for verification` section.
 
 Generating logs with SSH usage
 ------------------------------
@@ -61,8 +61,8 @@ Eg.:
 ./util/board_status/board_status.sh -r 192.168.0.100
 ```
 
-You will be requested to enter `root` user password many times. It is 
-uncomfortable for a longer period of time. To avoid this requirement follow 
+You will be requested to enter `root` user password many times. It is
+uncomfortable for a longer period of time. To avoid this requirement follow
 [those steps](#enabling-possibility-to-SSH-login-without-entering-user-password)
 
 After finishing that process information where logs were saved may be shown.
@@ -87,11 +87,11 @@ Eg.:
 Logs will be sent to the https://review.coreboot.org/cgit/board-status.git/
 repository automatically.
 
-If you have no SSH key added correctly to coreboot gerrit you will be prompted 
+If you have no SSH key added correctly to coreboot gerrit you will be prompted
 to enter your user name and HTTP password. To generate temporary HTTP password
 enter to the settings of your coreboot [gerrit account](https://review.coreboot.org/#/settings/),
-select `HTTP Password` section and click on `Generate Password` button. 
-Generated password will appear next to the `Password` cell. You can use that 
+select `HTTP Password` section and click on `Generate Password` button.
+Generated password will appear next to the `Password` cell. You can use that
 password to upload support logs with `board_status.sh` script.
 
 Generating logs with serial console
@@ -106,15 +106,15 @@ Eg.:
 ```
 sudo ./util/board_status/board_status.sh -s /dev/ttyUSB0
 ```
-That method is not as comfortable as SSH. Sometimes problems with logs 
-formatting may occur. What is more you have to press `Enter` when 
+That method is not as comfortable as SSH. Sometimes problems with logs
+formatting may occur. What is more you have to press `Enter` when
 you log to the OS, because first phase of logs collecting ends when grub
 starts. Second phase of logs collecting start after pressing `Enter`.
 
 Generating logs using earlier built ROM image
 ---------------------------------------------
 
-If you have ROM image built earlier you can set custom directory to ROM image 
+If you have ROM image built earlier you can set custom directory to ROM image
 (default directory is `coreboot/build/`). To do that use `-i` option:
 
 ```
@@ -132,55 +132,55 @@ Eg.:
 On master device:
 
 1. Generate public/private rsa key pair:
-```
-ssh-keygen -t rsa
-```
+      ```
+      ssh-keygen -t rsa
+      ```
 2. Send generated public id via SSH:
-```
-ssh-copy-id root@<PLATFORM_IP>
-```
-Eg.:
-```
-ssh-copy-id root@192.168.0.100
-```
+      ```
+      ssh-copy-id root@<PLATFORM_IP>
+      ```
+      Eg.:
+      ```
+      ssh-copy-id root@192.168.0.100
+      ```
 
-and enter the correct user password.
+      and enter the correct user password.
 
-If the following error message appears:
-```
-bash: .ssh/authorized_keys: No such file or directory
-```
+      If the following error message appears:
+      ```
+      bash: .ssh/authorized_keys: No such file or directory
+      ```
 
-That means you have to create `.ssh` folder. To do this type:
-```
-cd
-mkdir .ssh
-```
-If there were no errors you should be able to connect to your target device via
-SSH without entering user password.
+      That means you have to create `.ssh` folder. To do this type:
+      ```
+      cd
+      mkdir .ssh
+      ```
+      If there were no errors you should be able to connect to your target device via
+      SSH without entering user password.
 
-Eg.:
+      Eg.:
 
-```
-arek@kal:~$ ssh root@192.168.0.100
-Linux voyage 3.10.11 #2 SMP Thu Sep 7 11:36:30 UTC 2017 i586
+      ```
+      arek@kal:~$ ssh root@192.168.0.100
+      Linux voyage 3.10.11 #2 SMP Thu Sep 7 11:36:30 UTC 2017 i586
 
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
+      The programs included with the Debian GNU/Linux system are free software;
+      the exact distribution terms for each program are described in the
+      individual files in /usr/share/doc/*/copyright.
 
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
- __  __
- \ \/ /___ __  __ ___  ___  ___    Useful Commands:
-  \  // _ \\ \/ /,-_ |/ _ |/ -_)     remountrw - mount disk as read-write
-   \/ \___/ \  / \___,\_  |\___|     remountro - mount disk as read-only
-           _/_/        _'_|          remove.docs - remove all docs and manpages 
-     { V o y a g e } - L i n u x     
-      < http://linux.voyage.hk >   Version: 0.9.2 (Build Date 20131219)  
- 
-Last login: Tue Sep 12 10:16:21 2017 from 192.168.0.108
-root@voyage:~# 
+      Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+      permitted by applicable law.
+      __  __
+      \ \/ /___ __  __ ___  ___  ___    Useful Commands:
+      \  // _ \\ \/ /,-_ |/ _ |/ -_)     remountrw - mount disk as read-write
+      \/ \___/ \  / \___,\_  |\___|     remountro - mount disk as read-only
+            _/_/        _'_|          remove.docs - remove all docs and manpages
+      { V o y a g e } - L i n u x
+            < http://linux.voyage.hk >   Version: 0.9.2 (Build Date 20131219)
 
-```
+      Last login: Tue Sep 12 10:16:21 2017 from 192.168.0.108
+      root@voyage:~#
+
+      ```
 

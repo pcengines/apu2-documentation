@@ -3,77 +3,77 @@ hdd: Seagate Laptop SSHD 1000GB 8GB NAND flash
 
 1. mPCIe1 without resistor
 
+    > Note that CLKREQ has been already turned off for mPCIe1 when these test were
+    > proceeded.
 
-> Note that CLKREQ has been already turned off for mPCIe1 when these test were
-> proceeded.
+    * Cold boot: it takes 60-75 sec after power-on until boot menu appears. There
+      is no HDD entry in boot menu.
 
-  * Cold boot: it takes 60-75 sec after power-on until boot menu appears. There
-    is no HDD entry in boot menu.
+      ```
+      phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff58000 (detail=0xdff59b40)
+      /dff58000\ Start thread
+      |dff58000| AHCI/0: probing
+      |dff58000| AHCI/0: link up
+      |dff58000| AHCI/0: send cmd ...
+      |dff58000| WARNING - Timeout at ahci_command:154!
+      |dff58000| AHCI/0: send cmd ...
+      |dff58000| WARNING - Timeout at ahci_command:154!
+      |dff58000| phys_free dff59c00 (detail=0xdff59bd0)
+      |dff58000| phys_free dff59a00 (detail=0xdff59ba0)
+      |dff58000| phys_free dff59900 (detail=0xdff59b70)
+      |dff58000| phys_free dff61050 (detail=0xdff61020)
+      \dff58000/ End thread
+      phys_free dff58000 (detail=0xdff59b40)
+      ```
 
-    ```
-    phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff58000 (detail=0xdff59b40)
-    /dff58000\ Start thread
-    |dff58000| AHCI/0: probing
-    |dff58000| AHCI/0: link up
-    |dff58000| AHCI/0: send cmd ...
-    |dff58000| WARNING - Timeout at ahci_command:154!
-    |dff58000| AHCI/0: send cmd ...
-    |dff58000| WARNING - Timeout at ahci_command:154!
-    |dff58000| phys_free dff59c00 (detail=0xdff59bd0)
-    |dff58000| phys_free dff59a00 (detail=0xdff59ba0)
-    |dff58000| phys_free dff59900 (detail=0xdff59b70)
-    |dff58000| phys_free dff61050 (detail=0xdff61020)
-    \dff58000/ End thread
-    phys_free dff58000 (detail=0xdff59b40)
-    ```
+    * After OS boot: HDD is visible and usable under Debian
 
-  * After OS boot: HDD is visible and usable under Debian
+    * After reboot: boot menu appears as quickly as usual. HDD entry appears in
+      boot menu:
 
-  * After reboot: boot menu appears as quickly as usual. HDD entry appears in
-    boot menu:
-
-    ```
-    1. ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
-    2. AHCI/0: ST1000LM014-SSHD-8GB ATA-9 Hard-Disk (931 GiBytes)
-    3. Payload [memtest]
-    4. Payload [setup]
-    ```
+      ```
+      1. ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+      2. AHCI/0: ST1000LM014-SSHD-8GB ATA-9 Hard-Disk (931 GiBytes)
+      3. Payload [memtest]
+      4. Payload [setup]
+      ```
 
 2. mPCIe1 with resistor
 
-  * Cold boot: it takes 60-75 sec after power-on until boot menu appears. There
-    is no HDD entry in boot menu.
+    * Cold boot: it takes 60-75 sec after power-on until boot menu appears. There
+      is no HDD entry in boot menu.
 
-    ```
-    phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff58000 (detail=0xdff59b40)
-    /dff58000\ Start thread
-    |dff58000| AHCI/0: probing
-    |dff58000| AHCI/0: link up
-    |dff58000| AHCI/0: send cmd ...
-    |dff58000| WARNING - Timeout at ahci_command:154!
-    |dff58000| AHCI/0: send cmd ...
-    |dff58000| WARNING - Timeout at ahci_command:154!
-    |dff58000| phys_free dff59c00 (detail=0xdff59bd0)
-    |dff58000| phys_free dff59a00 (detail=0xdff59ba0)
-    |dff58000| phys_free dff59900 (detail=0xdff59b70)
-    |dff58000| phys_free dff61050 (detail=0xdff61020)
-    \dff58000/ End thread
-    phys_free dff58000 (detail=0xdff59b40)
-    All threads complete.
-    ```
+      ```
+      phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff58000 (detail=0xdff59b40)
+      /dff58000\ Start thread
+      |dff58000| AHCI/0: probing
+      |dff58000| AHCI/0: link up
+      |dff58000| AHCI/0: send cmd ...
+      |dff58000| WARNING - Timeout at ahci_command:154!
+      |dff58000| AHCI/0: send cmd ...
+      |dff58000| WARNING - Timeout at ahci_command:154!
+      |dff58000| phys_free dff59c00 (detail=0xdff59bd0)
+      |dff58000| phys_free dff59a00 (detail=0xdff59ba0)
+      |dff58000| phys_free dff59900 (detail=0xdff59b70)
+      |dff58000| phys_free dff61050 (detail=0xdff61020)
+      \dff58000/ End thread
+      phys_free dff58000 (detail=0xdff59b40)
+      All threads complete.
+      ```
 
-  * After OS boot: HDD is visible and usable under Debian
+    * After OS boot: HDD is visible and usable under Debian
 
-  * After reboot: boot menu appears as quickly as usual. HDD entry appears in
-    boot menu:
+    * After reboot: boot menu appears as quickly as usual. HDD entry appears in
+      boot menu:
 
-    ```
-    1. ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
-    2. AHCI/0: ST1000LM014-SSHD-8GB ATA-9 Hard-Disk (931 GiBytes)
-    3. Payload [memtest]
-    4. Payload [setup]
-    ```
-mPCIe1 behaves the same for both mPCIe -> SATA converterts
+      ```
+      1. ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+      2. AHCI/0: ST1000LM014-SSHD-8GB ATA-9 Hard-Disk (931 GiBytes)
+      3. Payload [memtest]
+      4. Payload [setup]
+      ```
+
+    mPCIe1 behaves the same for both mPCIe -> SATA converterts
 
 3. mPCIe2 without resistor
 
@@ -147,10 +147,10 @@ mPCIe1 behaves the same for both mPCIe -> SATA converterts
 
     coreboot-9cac328-dirty-4.0.1 Tue Oct  4 12:12:31 UTC 2016 starting...
     14-25-48Mhz Clock settings
-    FCH_MISC_REG28 is 0x00400012 
-    FCH_MISC_REG40 is 0x000c4040 
-    BSP Family_Model: 00730f01 
-    cpu_init_detectedx = 00000000 
+    FCH_MISC_REG28 is 0x00400012
+    FCH_MISC_REG40 is 0x000c4040
+    BSP Family_Model: 00730f01
+    cpu_init_detectedx = 00000000
     agesawrapper_amdinitreset() entry
 
     Fch_Oem_config in INIT RESET
@@ -224,9 +224,9 @@ boot loop, reboots there:
 
 [2016-10-22 15:58:03] coreboot-44ac0ed-dirty-4.0.1 sat oct 22 13:52:29 utc 2016 starting...
 [2016-10-22 15:58:03] 14-25-48mhz clock settings
-[2016-10-22 15:58:03] fch_misc_reg28 is 0x00400012 
-[2016-10-22 15:58:03] fch_misc_reg40 is 0x000c4040 
-[2016-10-22 15:58:03] bsp family_model: 00730f01 
-[2016-10-22 15:58:03] cpu_init_detectedx = 00000000 
+[2016-10-22 15:58:03] fch_misc_reg28 is 0x00400012
+[2016-10-22 15:58:03] fch_misc_reg40 is 0x000c4040
+[2016-10-22 15:58:03] bsp family_model: 00730f01
+[2016-10-22 15:58:03] cpu_init_detectedx = 00000000
 [2016-10-22 15:58:03] agesawrapper_amdinitreset() entry
 ```

@@ -16,35 +16,35 @@ Building and installation process
 
 1. Clone coreboot repository
 
-```
-git clone https://review.coreboot.org/coreboot.git
-```
+    ```
+    git clone https://review.coreboot.org/coreboot.git
+    ```
 
-If an error similar to the showed below occurs:
+    If an error similar to the showed below occurs:
 
-```
-error: Problem with the SSL CA cert (path? access rights?) while accessing https://review.coreboot.org/coreboot.git/info/refs
-fatal: HTTP request failed
-```
+    ```
+    error: Problem with the SSL CA cert (path? access rights?) while accessing https://review.coreboot.org/coreboot.git/info/refs
+    fatal: HTTP request failed
+    ```
 
-Install `ca-certificates` package:
+    Install `ca-certificates` package:
 
-```
-apt-get install ca-certificates -y
-```
+    ```
+    apt-get install ca-certificates -y
+    ```
 
 2. Build and install `cbmem` in OS
 
-```
-cd coreboot/util/cbmem/
-make
-make install
-```
+    ```
+    cd coreboot/util/cbmem/
+    make
+    make install
+    ```
 
-`cbmem` tool should be installed in OS to display help you can type:
+    `cbmem` tool should be installed in OS to display help you can type:
 
-```
-cbmem -h
-```
+    ```
+    cbmem -h
+    ```
 
 

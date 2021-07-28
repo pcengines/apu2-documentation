@@ -9,39 +9,39 @@ applied to this file to eliminate interactive dialog options.
 
 1. Add environment variable defining terminal type:
 
-```bash
-#!/bin/sh
-# $FreeBSD$
-export TERM=vt100
-```
+        ```bash
+        #!/bin/sh
+        # $FreeBSD$
+        export TERM=vt100
+        ```
 
 2. Comment out console type input:
 
-```bash
-# Serial or other console
-        echo
-        echo "Welcome to pfSense!"
-        echo
-        echo "Please choose the appropriate terminal type for you system."
-        echo "Common console types are:"
-        echo "   ansi     Standard ANSI terminal"
-        echo "   vt100    VT100 or compatible terminal"
-        echo "   xterm    xterm terminal emulator (or compatible)"
-        echo "   cons25w  cons25w terminal"
-        echo
-        echo -n "Console type [vt100]: "
-        #read TERM
-        #TERM=${TERM:-vt100}
-```
+        ```bash
+        # Serial or other console
+                echo
+                echo "Welcome to pfSense!"
+                echo
+                echo "Please choose the appropriate terminal type for you system."
+                echo "Common console types are:"
+                echo "   ansi     Standard ANSI terminal"
+                echo "   vt100    VT100 or compatible terminal"
+                echo "   xterm    xterm terminal emulator (or compatible)"
+                echo "   cons25w  cons25w terminal"
+                echo
+                echo -n "Console type [vt100]: "
+                #read TERM
+                #TERM=${TERM:-vt100}
+        ```
 
 3. Add reboot command after installerconfig finishes:
 
-```bash
-if [ -f /etc/installerconfig ]; then
-        bsdinstall script /etc/installerconfig
-        reboot
-fi
-```
+        ```bash
+        if [ -f /etc/installerconfig ]; then
+                bsdinstall script /etc/installerconfig
+                reboot
+        fi
+        ```
 
 installerconfig
 ---------------

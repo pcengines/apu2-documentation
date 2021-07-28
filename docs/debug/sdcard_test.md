@@ -27,141 +27,140 @@
 
 
 1. [GOOD-not-inserted.cap](https://github.com/pcengines/apu2-documentation/blob/master/docs/debug/logs/GOOD-not-inserted.cap)
-   vs [BAD-not-inserted.cap](https://github.com/pcengines/apu2-documentation/blob/master/docs/debug/logs/BAD-not-inserted.cap)
+      vs [BAD-not-inserted.cap](https://github.com/pcengines/apu2-documentation/blob/master/docs/debug/logs/BAD-not-inserted.cap)
 
-  No differences other than timing differences such as:
+      No differences other than timing differences such as:
 
-  ```
-  BS: BS_PAYLOAD_LOAD times (us): entry 0 run 48848 exit 0
+      ```
+      BS: BS_PAYLOAD_LOAD times (us): entry 0 run 48848 exit 0
 
-  vs
+      vs
 
-  BS: BS_PAYLOAD_LOAD times (us): entry 0 run 48978 exit 0
-  ```
+      BS: BS_PAYLOAD_LOAD times (us): entry 0 run 48978 exit 0
+      ```
 
 2. `GOOD-inserted.cap` vs `BAD-inserted.cap`
 
+      `77f59000` is card initialization thread
 
-  `77f59000` is card initialization thread
+      ```
+      |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eb80)
+      ```
 
-  ```
-  |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eb80)
-  ```
+      GOOD:
 
-  GOOD:
+      ```
+      phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f61110)
+      /77f59000\ Start thread
+      |77f59000| Searching bootorder for: /pci@i0cf8/*@14,7
+      |77f59000| sdhci@0xfeb25500 ver=1001 cap=21fe32b2 70
+      |77f59000| phys_alloc zone=0x77f6df18 size=44 align=10 ret=f0920 (detail=0x77f5eef0)
+      |77f59000| sdcard_set_frequency 50 400 4000
+      |77f59000| sdcard_set_frequency 50 200000 0
+      |77f59000| host_control contains 0x00000f04
+      |77f59000| phys_alloc zone=0x77f6df10 size=80 align=10 ret=77f5ef30 (detail=0x77f611e0)
+      |77f59000| Found sdcard at 0xfeb25500: SD card SS08G 7580MiB
+      |77f59000| phys_alloc zone=0x77f6df10 size=24 align=10 ret=77f61140 (detail=0x77f5ee90)
+      |77f59000| Registering bootable: SD card SS08G 7580MiB (type:2 prio:5 data:f0920)
+      \77f59000/ End thread
+      phys_free 77f59000 (detail=0x77f61110)
 
-  ```
-  phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f61110)
-  /77f59000\ Start thread
-  |77f59000| Searching bootorder for: /pci@i0cf8/*@14,7
-  |77f59000| sdhci@0xfeb25500 ver=1001 cap=21fe32b2 70
-  |77f59000| phys_alloc zone=0x77f6df18 size=44 align=10 ret=f0920 (detail=0x77f5eef0)
-  |77f59000| sdcard_set_frequency 50 400 4000
-  |77f59000| sdcard_set_frequency 50 200000 0
-  |77f59000| host_control contains 0x00000f04
-  |77f59000| phys_alloc zone=0x77f6df10 size=80 align=10 ret=77f5ef30 (detail=0x77f611e0)
-  |77f59000| Found sdcard at 0xfeb25500: SD card SS08G 7580MiB
-  |77f59000| phys_alloc zone=0x77f6df10 size=24 align=10 ret=77f61140 (detail=0x77f5ee90)
-  |77f59000| Registering bootable: SD card SS08G 7580MiB (type:2 prio:5 data:f0920)
-  \77f59000/ End thread
-  phys_free 77f59000 (detail=0x77f61110)
+      |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eca0)
+      /77f59000\ Start thread
+      |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+      |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+      |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+      |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+      |77f59000| phys_free 77f5ed00 (detail=0x77f5ecd0)
+      \77f59000/ End thread
+      phys_free 77f59000 (detail=0x77f5eca0)
+      ```
 
-  |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eca0)
-  /77f59000\ Start thread
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| phys_free 77f5ed00 (detail=0x77f5ecd0)
-  \77f59000/ End thread
-  phys_free 77f59000 (detail=0x77f5eca0)
-  ```
+      BAD:
 
-  BAD:
+      ```
+      phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f61110)
+      /77f59000\ Start thread
+      |77f59000| Searching bootorder for: /pci@i0cf8/*@14,7
+      |77f59000| sdhci@0xfeb25500 ver=1001 cap=21fe32b2 70
+      |77f59000| phys_alloc zone=0x77f6df18 size=44 align=10 ret=f0920 (detail=0x77f5ecc0)
+      |77f59000| sdcard_set_frequency 50 400 4000
+      |77f59000| sdcard_pio command stop (code=1)
+      |77f59000| sdcard_pio command stop (code=1)
+      |77f59000| sdcard_pio command stop (code=1)
+      |77f59000| phys_free f0920 (detail=0x77f5ecc0)
+      \77f59000/ End thread
+      phys_free 77f59000 (detail=0x77f61110)
 
-  ```
-  phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f61110)
-  /77f59000\ Start thread
-  |77f59000| Searching bootorder for: /pci@i0cf8/*@14,7
-  |77f59000| sdhci@0xfeb25500 ver=1001 cap=21fe32b2 70
-  |77f59000| phys_alloc zone=0x77f6df18 size=44 align=10 ret=f0920 (detail=0x77f5ecc0)
-  |77f59000| sdcard_set_frequency 50 400 4000
-  |77f59000| sdcard_pio command stop (code=1)
-  |77f59000| sdcard_pio command stop (code=1)
-  |77f59000| sdcard_pio command stop (code=1)
-  |77f59000| phys_free f0920 (detail=0x77f5ecc0)
-  \77f59000/ End thread
-  phys_free 77f59000 (detail=0x77f61110)
-
-  |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eb80)
-  /77f59000\ Start thread
-  |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
-  |77f59000| phys_free 77f5ebe0 (detail=0x77f5ebb0)
-  \77f59000/ End thread
-  phys_free 77f59000 (detail=0x77f5eb80)
-  ```
+      |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eb80)
+      /77f59000\ Start thread
+      |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
+      |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
+      |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
+      |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
+      |77f59000| ehci_send_pipe qh=0x77f5ed80 dir=128 data=0x77f59f64 size=4
+      |77f59000| phys_free 77f5ebe0 (detail=0x77f5ebb0)
+      \77f59000/ End thread
+      phys_free 77f59000 (detail=0x77f5eb80)
+      ```
 
 3. BAD-not-inserted
 
-  proper initializaton of `bad` card:
+   proper initializaton of `bad` card:
 
-  ```
-  phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f61110)
-  /77f59000\ Start thread
-  |77f59000| Searching bootorder for: /pci@i0cf8/*@14,7
-  |77f59000| sdhci@0xfeb25500 ver=1001 cap=21fe32b2 70
-  |77f59000| phys_alloc zone=0x77f6df18 size=44 align=10 ret=f0920 (detail=0x77f5eef0)
-  |77f59000| sdcard_set_frequency 50 400 4000
-  |77f59000| sdcard_set_frequency 50 200000 0
-  |77f59000| host_control contains 0x00000f04
-  |77f59000| phys_alloc zone=0x77f6df10 size=80 align=10 ret=77f5ef30 (detail=0x77f611e0)
-  |77f59000| Found sdcard at 0xfeb25500: SD card SS08G 7580MiB
-  |77f59000| phys_alloc zone=0x77f6df10 size=24 align=10 ret=77f61140 (detail=0x77f5ee90)
-  |77f59000| Registering bootable: SD card SS08G 7580MiB (type:2 prio:5 data:f0920)
-  \77f59000/ End thread
-  phys_free 77f59000 (detail=0x77f61110)
+   ```
+   phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f61110)
+   /77f59000\ Start thread
+   |77f59000| Searching bootorder for: /pci@i0cf8/*@14,7
+   |77f59000| sdhci@0xfeb25500 ver=1001 cap=21fe32b2 70
+   |77f59000| phys_alloc zone=0x77f6df18 size=44 align=10 ret=f0920 (detail=0x77f5eef0)
+   |77f59000| sdcard_set_frequency 50 400 4000
+   |77f59000| sdcard_set_frequency 50 200000 0
+   |77f59000| host_control contains 0x00000f04
+   |77f59000| phys_alloc zone=0x77f6df10 size=80 align=10 ret=77f5ef30 (detail=0x77f611e0)
+   |77f59000| Found sdcard at 0xfeb25500: SD card SS08G 7580MiB
+   |77f59000| phys_alloc zone=0x77f6df10 size=24 align=10 ret=77f61140 (detail=0x77f5ee90)
+   |77f59000| Registering bootable: SD card SS08G 7580MiB (type:2 prio:5 data:f0920)
+   \77f59000/ End thread
+   phys_free 77f59000 (detail=0x77f61110)
 
-  |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eca0)
-  /77f59000\ Start thread
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
-  |77f59000| phys_free 77f5ed00 (detail=0x77f5ecd0)
-  \77f59000/ End thread
-  phys_free 77f59000 (detail=0x77f5eca0)
-  ```
+   |77f5d000| phys_alloc zone=0x77f6df10 size=4096 align=1000 ret=77f59000 (detail=0x77f5eca0)
+   /77f59000\ Start thread
+   |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+   |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+   |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+   |77f59000| ehci_send_pipe qh=0x77f5ef80 dir=128 data=0x77f59f64 size=4
+   |77f59000| phys_free 77f5ed00 (detail=0x77f5ecd0)
+   \77f59000/ End thread
+   phys_free 77f59000 (detail=0x77f5eca0)
+   ```
 
-  It is exactly the same as GOOD
+   It is exactly the same as GOOD
 
 
-  BAD card does not respond to CMD8 - timeout
+   BAD card does not respond to CMD8 - timeout
 
-  ```
-  |77f59000| sdcard_pio cmd 0 0 1ff0000
-  |77f59000| sdcard cmd 0 response 0 0 0 0
-  |77f59000| Reset card. ret = 0
-  |77f59000| param[0] = 0
-  |77f59000| error irq status =  0
-  |77f59000| sdcard_pio cmd 81a 1aa 1ff0000
-  |77f59000| sdcard_pio command stop (code=1)
-  ```
+   ```
+   |77f59000| sdcard_pio cmd 0 0 1ff0000
+   |77f59000| sdcard cmd 0 response 0 0 0 0
+   |77f59000| Reset card. ret = 0
+   |77f59000| param[0] = 0
+   |77f59000| error irq status =  0
+   |77f59000| sdcard_pio cmd 81a 1aa 1ff0000
+   |77f59000| sdcard_pio command stop (code=1)
+   ```
 
-  GOOD card responds to CMD8 properly
+   GOOD card responds to CMD8 properly
 
-  ```
-  |77f59000| sdcard_pio cmd 0 0 1ff0000
-  |77f59000| sdcard cmd 0 response 0 0 0 0
-  |77f59000| Reset card. ret = 0
-  |77f59000| param[0] = 0
-  |77f59000| error irq status =  0
-  |77f59000| sdcard_pio cmd 81a 1aa 1ff0000
-  |77f59000| sdcard cmd 81a response 1aa 0 0 0
-  ```
+   ```
+   |77f59000| sdcard_pio cmd 0 0 1ff0000
+   |77f59000| sdcard cmd 0 response 0 0 0 0
+   |77f59000| Reset card. ret = 0
+   |77f59000| param[0] = 0
+   |77f59000| error irq status =  0
+   |77f59000| sdcard_pio cmd 81a 1aa 1ff0000
+   |77f59000| sdcard cmd 81a response 1aa 0 0 0
+   ```
 
 1. When `BAD` card is inserted before powering on platform, it does not respond
    to any command. If it is being inserted during boot (or reinserted after

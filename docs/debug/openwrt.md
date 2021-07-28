@@ -42,18 +42,19 @@ The solution
 
 ### Resolution
 
-Openwrt boots normally after using the kernel with compiled in `sdhci-pci`
-driver (in default kernels this module is disabled).
-For Openwrt Buildroot's:
-* `make menuconfig`
-* setup openwrt for target __x86__, subtarget __x86_64__
-* in __Target Images__ check __ext4__ and __Build GRUB images
-  (Linux x86 or x86_64 host only)__
-* `make kernel_menuconfig` - could not work at first try.
-  Try running `make target/linux/prepare` or `make target/linux/compile` first.
-* go into `Device Drivers → MMC/SD/SDIO`
-* enable `MMC block device driver`, `Secure Digital Host Controller Interface
-  support`, `SDHCI support on PCI bus`
-* commence normal build (`make`)
+  Openwrt boots normally after using the kernel with compiled in `sdhci-pci`
+  driver (in default kernels this module is disabled).
+  For Openwrt Buildroot's:
 
-Tested on `chaos_calmer` branch from https://github.com/openwrt/openwrt.
+  * `make menuconfig`
+  * setup openwrt for target __x86__, subtarget __x86_64__
+  * in __Target Images__ check __ext4__ and __Build GRUB images
+    (Linux x86 or x86_64 host only)__
+  * `make kernel_menuconfig` - could not work at first try.
+    Try running `make target/linux/prepare` or `make target/linux/compile` first.
+  * go into `Device Drivers → MMC/SD/SDIO`
+  * enable `MMC block device driver`, `Secure Digital Host Controller Interface
+    support`, `SDHCI support on PCI bus`
+  * commence normal build (`make`)
+
+  Tested on `chaos_calmer` branch from https://github.com/openwrt/openwrt.

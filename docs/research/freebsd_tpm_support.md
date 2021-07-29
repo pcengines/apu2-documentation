@@ -68,6 +68,7 @@ PMBR measure `freebsd-boot` partition (most likely the stage two and/or stage
 three) and hand control over to trusted gptboot.
 
 tgptboot:
+
    - select UFS partition (take gptboot(8) attributes into account)
    - get KEY from TPM NVRAM
    - get DATA_PATH from TPM NVRAM
@@ -77,7 +78,7 @@ tgptboot:
    - load disk keys (if specified in DATA)
    - execute kernel
 
-https://lists.freebsd.org/pipermail/freebsd-hackers/2015-March/047376.html
+[https://lists.freebsd.org/pipermail/freebsd-hackers/2015-March/047376.html](https://lists.freebsd.org/pipermail/freebsd-hackers/2015-March/047376.html)
 
 Unfotunately it utilizes TPM1.2 only. The status of tgptboot development still
 needs to be researched.

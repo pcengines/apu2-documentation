@@ -1,27 +1,27 @@
 
 #### GOOD-inserted
 
-    * Card is inserted into slot before power on.
-    * Check if card appears as a bootitem in bootmenu. (IT IS)
+   * Card is inserted into slot before power on.
+   * Check if card appears as a bootitem in bootmenu. (IT IS)
 
 #### GOOD-not-inserted
 
-    * Card is not inserted into slot
-    * Enter boot menu and insert card
-    * Go to setup, exit without save (`x`).
-    * Go to boot menu again and check if card appears as a bootitem (IT IS)
+   * Card is not inserted into slot
+   * Enter boot menu and insert card
+   * Go to setup, exit without save (`x`).
+   * Go to boot menu again and check if card appears as a bootitem (IT IS)
 
 #### BAD-inserted
 
-    * Card is inserted into slot before power on.
-    * Check if card appears as a bootitem in bootmenu. (IT IS NOT)
+   * Card is inserted into slot before power on.
+   * Check if card appears as a bootitem in bootmenu. (IT IS NOT)
 
 #### BAD-not-inserted
 
-    * Card is not inserted into slot.
-    * Enter boot menu and insert card.
-    * Go to setup, exit without save (`x`).
-    * Go to boot menu again and check if card appears as a bootitem. (IT IS)
+   * Card is not inserted into slot.
+   * Enter boot menu and insert card.
+   * Go to setup, exit without save (`x`).
+   * Go to boot menu again and check if card appears as a bootitem. (IT IS)
 
 ### Diff analyze
 

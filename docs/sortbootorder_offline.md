@@ -50,11 +50,16 @@ devices which are printed by the payload. These are the only strings which are
 printed by `sortbootorder` from any file, the rest of them is coded in the
 payload itself.
 
-The last and most important file is `bootorder`. This file is generated during
-coreboot build from `bootorder_def` - it is an exact copy, except it is padded
-to 4K with zeros and text message at the end: `this file needs to be 4096 bytes
-long in order to entirely fill 1 spi flash sector`. It is also aligned to 4K so
-this file can be flashed without overwriting other files.
+The last and most important "file" (see note below) is `bootorder`. This file is
+generated during coreboot build from `bootorder_def` - it is an exact copy,
+except it is padded to 4K with zeros and text message at the end: `this file
+needs to be 4096 bytes long in order to entirely fill 1 spi flash sector`. It is
+also aligned to 4K so this file can be flashed without overwriting other files.
+
+`bootorder` used to be a file in CBFS up to all v4.13 versions, since v4.14.0.1
+it is a separate FMAP region. This allows for firmware updates while preserving
+settings. The data is written into this new region without any header. Note that
+`bootorder_def` and `bootorder_map` are still located in CBFS on newer versions.
 
 ## Option 1 - modification of existing sortbootorder payload
 
@@ -159,7 +164,8 @@ and writes it back to SPI or file.
 - everything would have to be developed from scratch
 - access to files in both BSD and Linux can be done in the same way (POSIX)
 - access to flash is OS-specific
-- re-designing CBFS access functions requires some knowledge of coreboot
+- re-designing CBFS and FMAP access functions requires some knowledge of
+  coreboot
 - SPI access requires both knowledge about SPI flash vendors' implementations
   and low level access to the hardware in the OS
 - `bootorder` must be padded and aligned to 4K in order for `sortbootorder` to
@@ -174,7 +180,7 @@ CBFS image.
 #### Pros:
 - no need to implement what is already done in other utilities
   - hardware access done by flashrom
-  - CBFS parsing performed by cbfstool
+  - FMAP and CBFS parsing performed by cbfstool
 - new code will be smaller than for other options
 - may use GUI
 - doesn't have to be written in C
@@ -189,8 +195,12 @@ CBFS image.
 #### Implementation details
 - scripts for reading and writing back `bootorder` either from/to flash or
   binary file have to be developed
+- `bootorder_map` and `bootorder_def` are read with `cbfstool coreboot.rom
+  extract -n bootorder_<map or def> ...`, while for reading `bootorder` you have
+  to use `cbfstool coreboot.rom read -r BOOTORDER ...`
+- similarly, for writing use `add -t raw -a 0x1000` and `write -r BOOTORDER`
+  respectively
 - configuration file is simple text file so can be parsed in virtually all
   programming languages
   - remember about DOS newline characters when writing or use `unix2dos`
   - padding to 4K may need some trickery
-- `cbfstool` must be told to align new `bootorder` file appropriately

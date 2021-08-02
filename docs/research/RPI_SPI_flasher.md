@@ -25,35 +25,36 @@
 
 1. Getting the latest flashrom source code:
 
-  ```
-  sudo apt-get update && sudo apt-get upgrade
-  sudo apt-get install build-essential pciutils usbutils libpci-dev \
-  libusb-dev libftdi1 libftdi-dev zlib1g-dev subversion libusb-1.0-0-dev
-  svn co https://code.coreboot.org/svn/flashrom/trunk ~/flashrom
-  cd ~/flashrom
-  make
-  sudo make install
-  ```
+    ```
+    sudo apt-get update && sudo apt-get upgrade
+    sudo apt-get install build-essential pciutils usbutils libpci-dev \
+    libusb-dev libftdi1 libftdi-dev zlib1g-dev subversion libusb-1.0-0-dev
+    svn co https://code.coreboot.org/svn/flashrom/trunk ~/flashrom
+    cd ~/flashrom
+    make
+    sudo make install
+    ```
 
 2. Flashing:
 
-  If SPI device is not visible, enable SPI in:
+    If SPI device is not visible, enable SPI in:
 
-  ```
-  sudo raspi-config
-  ```
+    ```
+    sudo raspi-config
+    ```
 
-> spi_bcmxxxx modules may differ on different RPi's
+    > spi_bcmxxxx modules may differ on different RPi's
 
-  ```
-  sudo modprobe spi_bcm2835
-  sudo modprobe spidev
-  ```
-  Read from flash:
+    ```
+    sudo modprobe spi_bcm2835
+    sudo modprobe spidev
+    ```
 
-  ```
-  sudo flashrom -V -p linux_spi:dev=/dev/spidev0.0 -r coreboot.rom
-  ```
+    Read from flash:
+
+    ```
+    sudo flashrom -V -p linux_spi:dev=/dev/spidev0.0 -r coreboot.rom
+    ```
 
 ## First approach
 

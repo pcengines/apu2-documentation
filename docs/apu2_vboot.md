@@ -9,45 +9,45 @@ only on apu2 versions v4.9.0.6 and newer.
 
 1. Clone the [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
 2. Pull or [build](https://github.com/pcengines/pce-fw-builder#building-docker-image)
-  docker container:
+    docker container:
 
-  ```
-  docker pull pcengines/pce-fw-builder
-  ```
+    ```
+    docker pull pcengines/pce-fw-builder
+    ```
 
 3. Build v4.9.0.6 image:
 
-  ```
-  ./build.sh release v4.9.0.6 apu2
-  ```
+    ```
+    ./build.sh release v4.9.0.6 apu2
+    ```
 
 4. Invoke distclean:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 distclean
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 distclean
+    ```
 
 5. Copy the vboot miniconfig:
 
-  ```
-  cp $PWD/release/coreboot/configs/config.pcengines_apu2_vboot $PWD/release/coreboot/.config
-  ```
+    ```
+    cp $PWD/release/coreboot/configs/config.pcengines_apu2_vboot $PWD/release/coreboot/.config
+    ```
 
 6. Create full config:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 olddefconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 olddefconfig
+    ```
 
 7. Build the image again:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 CPUS=$(nproc)
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 CPUS=$(nproc)
+    ```
 
 8. Flash the new image. The firmware image can be found in
-  `release/coreboot/build` which is relative to cloned `pce-fw-builder`
-  directory.
+    `release/coreboot/build` which is relative to cloned `pce-fw-builder`
+    directory.
 
 ## Using custom keys
 
@@ -55,110 +55,110 @@ The config file present in repository builds the binary with default vboot
 developer keys. If one would like to use own keys, vboot has bash scripts that
 simplify the key generation process.
 
-Enter previously cloned coreboot directory and change directory to vboot:
+1. Enter previously cloned coreboot directory and change directory to vboot:
 
-```
-cd $PWD/release/coreboot/3rdparty/vboot
-```
+    ```
+    cd $PWD/release/coreboot/3rdparty/vboot
+    ```
 
-Compile and install the vboot library (outside docker on the host):
+2. Compile and install the vboot library (outside docker on the host):
 
-```
-make
-DESTDIR=/usr sudo make install
-```
+    ```
+    make
+    DESTDIR=/usr sudo make install
+    ```
 
-Then invoke from `$PWD/release/coreboot`:
+3. Then invoke from `$PWD/release/coreboot`:
 
-```
-3rdparty/vboot/scripts/keygeneration/create_new_keys.sh --4k --4k-root --output keys
-```
+    ```
+    3rdparty/vboot/scripts/keygeneration/create_new_keys.sh --4k --4k-root --output keys
+    ```
 
-This script will produce whole set of new random keys in the `keys` directory.
-In order to use them, follow the procedure described previously, but:
+    This script will produce whole set of new random keys in the `keys` directory.
+    In order to use them, follow the procedure described previously, but:
 
-6. Create full config:
+4. Create full config:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 olddefconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 olddefconfig
+    ```
 
-7. Enter menuconfig:
+5. Enter menuconfig:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 menuconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 menuconfig
+    ```
 
-Enter Security -> Verified boot (vboot) -> Vboot keys. Change the directories:
+6. Enter Security -> Verified boot (vboot) -> Vboot keys. Change the directories:
 
-```
-$(VBOOT_SOURCE)/tests/devkeys/some_key.vbpubk ----> $(top)/some_key.vbpubk
-```
+    ```
+    $(VBOOT_SOURCE)/tests/devkeys/some_key.vbpubk ----> $(top)/some_key.vbpubk
+    ```
 
-Do the change for all 4 key paths, but do not change the filename (generated
-keys have the same names):
+7. Do the change for all 4 key paths, but do not change the filename (generated
+    keys have the same names):
 
-```
-($(VBOOT_SOURCE)/tests/devkeys/root_key.vbpubk) Root key (public)
-($(VBOOT_SOURCE)/tests/devkeys/recovery_key.vbpubk) Recovery key (public)
-($(VBOOT_SOURCE)/tests/devkeys/firmware_data_key.vbprivk) Firmware key (private)($(VBOOT_SOURCE)/tests/devkeys/kernel_subkey.vbpubk) Kernel subkey (public)
-($(VBOOT_SOURCE)/tests/devkeys/firmware.keyblock) Keyblock to use for the RW regions
-```
+    ```
+    ($(VBOOT_SOURCE)/tests/devkeys/root_key.vbpubk) Root key (public)
+    ($(VBOOT_SOURCE)/tests/devkeys/recovery_key.vbpubk) Recovery key (public)
+    ($(VBOOT_SOURCE)/tests/devkeys/firmware_data_key.vbprivk) Firmware key (private)($(VBOOT_SOURCE)/tests/devkeys/kernel_subkey.vbpubk) Kernel subkey (public)
+    ($(VBOOT_SOURCE)/tests/devkeys/firmware.keyblock) Keyblock to use for the RW regions
+    ```
 
 8. Build the image again:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 CPUS=$(nproc)
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 CPUS=$(nproc)
+    ```
 
 9. Flash the new image. The firmware image can be found in
-  `release/coreboot/build` which is relative to cloned `pce-fw-builder`
-  directory.
+    `release/coreboot/build` which is relative to cloned `pce-fw-builder`
+    directory.
 
 ## Advantages of vboot
 
 1. Flashmap layout.
 
-Whole flash is divided into sections describe in an FMD (FlashMap Descriptor)
-file (located in `src/mainboard/pcengines/apu2` directory). Each section has
-strictly precised size. This allows to flash only certain flash regions with
-flashrom (requires quite fresh compilation of flashrom).
+    Whole flash is divided into sections describe in an FMD (FlashMap Descriptor)
+    file (located in `src/mainboard/pcengines/apu2` directory). Each section has
+    strictly precised size. This allows to flash only certain flash regions with
+    flashrom (requires quite fresh compilation of flashrom).
 
-Flashing a single region, for example RW_SECTION_A:
+    Flashing a single region, for example RW_SECTION_A:
 
-```
-flashrom -p internal -w coreboot.rom --fmap -i RW_SECTION_A
-```
+    ```
+    flashrom -p internal -w coreboot.rom --fmap -i RW_SECTION_A
+    ```
 
-> Region names are defined in the FMD file.
+    > Region names are defined in the FMD file.
 
 2. Verified boot
 
-Each boot component in firmware block A or B (depending which one is correctly
-booting) is verified again the keys that signed the blocks and the root key
-which public part lies in the recovery region. Only the firmware signed by the
-keys that belong to the cryptographical keychain (established during key
-generation) is allowed to boot. If the signatures are not matching, another
-firmware slot is used (also must pass verification). If everything else fails,
-boot from recovery. Recovery partition aka read-only is supposed to be
-protected by SPI flash protection mechanism as it make the Root of Trust.
+    Each boot component in firmware block A or B (depending which one is correctly
+    booting) is verified again the keys that signed the blocks and the root key
+    which public part lies in the recovery region. Only the firmware signed by the
+    keys that belong to the cryptographical keychain (established during key
+    generation) is allowed to boot. If the signatures are not matching, another
+    firmware slot is used (also must pass verification). If everything else fails,
+    boot from recovery. Recovery partition aka read-only is supposed to be
+    protected by SPI flash protection mechanism as it make the Root of Trust.
 
-> Note that firmware components signed by different keyset won't work. If You
-> change the keys, flash whole firmware.
+    > Note that firmware components signed by different keyset won't work. If You
+    > change the keys, flash whole firmware.
 
 3. Measured boot
 
-By utlizing TPM capabilities, each boot component is cryptographically measured
-i.e. its hash is computed and extended in TPM's PCR (Platform Configuration
-Register). The hash is not directly written into PCR, but extended, which means
-that TPM takes current PCR value, add the hash value of the component and
-rehashes the combined value. The final result is written to PCR. Such approach
-has the advantage that the final PCR values after boot process is finished are
-fixed. In other words, by measuring the same components, in same order, without
-any changes in its content we are able to obtain same PCR values. There is no
-other way to obtain the same result if any of the components changed, or if the
-measuring order has been altered. Given that, the PCR values can clearly assure
-that the firmware has not been tampered.
+    By utlizing TPM capabilities, each boot component is cryptographically measured
+    i.e. its hash is computed and extended in TPM's PCR (Platform Configuration
+    Register). The hash is not directly written into PCR, but extended, which means
+    that TPM takes current PCR value, add the hash value of the component and
+    rehashes the combined value. The final result is written to PCR. Such approach
+    has the advantage that the final PCR values after boot process is finished are
+    fixed. In other words, by measuring the same components, in same order, without
+    any changes in its content we are able to obtain same PCR values. There is no
+    other way to obtain the same result if any of the components changed, or if the
+    measuring order has been altered. Given that, the PCR values can clearly assure
+    that the firmware has not been tampered.
 
 ### How to check it works
 

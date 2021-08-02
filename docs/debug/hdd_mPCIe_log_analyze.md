@@ -90,11 +90,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0xffffffff, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
   |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae10 (detail=0xdff5ade0)
@@ -102,10 +102,10 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
   |dff57000| AHCI/1: Set transfer mode to UDMA-6
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0xffffffff, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
-  |dff57000| ahci_command rc = 0 
+  |dff57000| ahci_command rc = 0
 
   // REBOOTS HERE
 
@@ -115,11 +115,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0x2, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
   |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae10 (detail=0xdff5ade0)
@@ -127,10 +127,10 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
   |dff57000| AHCI/1: Set transfer mode to UDMA-6
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x1, status 0x50 ...
   |dff57000| AHCI/1: ... finished, status 0x50, OK
-  |dff57000| ahci_command rc = 0 
+  |dff57000| ahci_command rc = 0
 
   // REBOOTS HERE
 
@@ -140,11 +140,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0x2, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
   |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae10 (detail=0xdff5ade0)
@@ -152,12 +152,12 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
   |dff57000| AHCI/1: Set transfer mode to UDMA-6
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x1, status 0x50 ...
   |dff57000| AHCI/1: ... finished, status 0x50, OK
-  |dff57000| ahci_command rc = 0 
-  
-   // REBOOTS HERE 
+  |dff57000| ahci_command rc = 0
+
+   // REBOOTS HERE
 
   phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff57000 (detail=0xdff5a710)
   /dff57000\ Start thread
@@ -165,11 +165,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0x2, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
   |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae10 (detail=0xdff5ade0)
@@ -177,11 +177,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
   |dff57000| AHCI/1: Set transfer mode to UDMA-6
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x1, status 0x50 ...
   |dff57000| AHCI/1: ... finished, status 0x50, OK
-  |dff57000| ahci_command rc = 0 
-  
+  |dff57000| ahci_command rc = 0
+
   // REBOOTS HERE
 
   phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff57000 (detail=0xdff5a710)
@@ -190,11 +190,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0x2, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
   |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae10 (detail=0xdff5ade0)
@@ -202,11 +202,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
   |dff57000| AHCI/1: Set transfer mode to UDMA-6
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x1, status 0x50 ...
   |dff57000| AHCI/1: ... finished, status 0x50, OK
-  |dff57000| ahci_command rc = 0 
-  
+  |dff57000| ahci_command rc = 0
+
   // REBOOTS HERE
 
   phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff57000 (detail=0xdff5a710)
@@ -215,11 +215,11 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0xffffffff, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
   |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae10 (detail=0xdff5ade0)
@@ -227,24 +227,24 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
   |dff57000| AHCI/1: Set transfer mode to UDMA-6
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0xffffffff, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
-  |dff57000| ahci_command rc = 0 
+  |dff57000| ahci_command rc = 0
 
   // REBOOTS HERE
-  
+
   phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff57000 (detail=0xdff5a710)
   /dff57000\ Start thread
   |dff57000| ahci_port_detect
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| psfis 
+  |dff57000| psfis
   |dff57000| AHCI/1: ... intbits 0x2, status 0x58 ...
   |dff57000| AHCI/1: ... finished, status 0x58, OK
   |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae10 (detail=0xdff5ade0)
@@ -252,10 +252,10 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
   |dff57000| AHCI/1: Set transfer mode to UDMA-6
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x1, status 0x50 ...
   |dff57000| AHCI/1: ... finished, status 0x50, OK
-  |dff57000| ahci_command rc = 0 
+  |dff57000| ahci_command rc = 0
 
   // REBOOTS HERE
 
@@ -265,73 +265,73 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   |dff57000| AHCI/1: probing
   |dff57000| AHCI/1: link up
   |dff57000| AHCI/1: send cmd ...
-  |dff57000| rfis 
+  |dff57000| rfis
   |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
   |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
   |dff57000| AHCI/1: send cmd ...
   ```
 
-    After reboot, in mPCIe1 slot HDD gets registered, while in mPCIe2 slot it does
-    not - it reboots during AHCI thread.
+  After reboot, in mPCIe1 slot HDD gets registered, while in mPCIe2 slot it does
+  not - it reboots during AHCI thread.
 
-    It is not fully consistent. `intbits` and `status` values varies beteen
-    following reboots. `rfis` and `psfis` prints added to indicate `FIS` type:
-    `Register- Device to Host` or `PIO Setup - Device to Host`. Reboot appears
-    even if thread flow is identical to this from mPCIe1, where reboot does
-    not occur.
+  It is not fully consistent. `intbits` and `status` values varies beteen
+  following reboots. `rfis` and `psfis` prints added to indicate `FIS` type:
+  `Register- Device to Host` or `PIO Setup - Device to Host`. Reboot appears
+  even if thread flow is identical to this from mPCIe1, where reboot does
+  not occur.
 
-    Source of reboot is not yet discovered. It prints `rc=0` but probably does
-    not reach to `return 0` (function above, which is calling this one, does
-    not print returned value). This `else` does not matter since it is not
-    executing in this case.
+  Source of reboot is not yet discovered. It prints `rc=0` but probably does
+  not reach to `return 0` (function above, which is calling this one, does
+  not print returned value). This `else` does not matter since it is not
+  executing in this case.
 
-    This is done in file
-    [seabios/src/hw/ahci.c](https://github.com/pcengines/seabios/blob/apu2-support/src/hw/ahci.c),
-    function `ahci_port_setup` that starts with line 421.
+  This is done in file
+  [seabios/src/hw/ahci.c](https://github.com/pcengines/seabios/blob/apu2-support/src/hw/ahci.c),
+  function `ahci_port_setup` that starts with line 421.
 
-    ```
-            rc = ahci_command(port, 1, 0, 0, 0);
+  ```
+          rc = ahci_command(port, 1, 0, 0, 0);
 
-            dprintf(1, "ahci_command rc = %x \n", rc);
+          dprintf(1, "ahci_command rc = %x \n", rc);
 
-            if (rc < 0) {
-                dprintf(1, "AHCI/%d: Set transfer mode failed.\n", port->pnr);
-            }
-        }
-    else
-    {
-        // found cdrom (atapi)
-        port->drive.type = DTYPE_AHCI_ATAPI;
-        port->drive.blksize = CDROM_SECTOR_SIZE;
-        port->drive.sectors = (u64)-1;
-        u8 iscd = ((buffer[0] >> 8) & 0x1f) == 0x05;
-        if (!iscd) {
-            dprintf(1, "AHCI/%d: atapi device isn't a cdrom\n", port->pnr);
-            return -1;
-        }
-        port->desc = znprintf(MAXDESCSIZE
-                              , "DVD/CD [AHCI/%d: %s ATAPI-%d DVD/CD]"
-                              , port->pnr
-                              , ata_extract_model(model, MAXMODEL, buffer)
-                              , ata_extract_version(buffer));
-        port->prio = bootprio_find_ata_device(ctrl->pci_tmp, pnr, 0);
-    }
-    return 0;
-    ```
+          if (rc < 0) {
+              dprintf(1, "AHCI/%d: Set transfer mode failed.\n", port->pnr);
+          }
+      }
+  else
+  {
+      // found cdrom (atapi)
+      port->drive.type = DTYPE_AHCI_ATAPI;
+      port->drive.blksize = CDROM_SECTOR_SIZE;
+      port->drive.sectors = (u64)-1;
+      u8 iscd = ((buffer[0] >> 8) & 0x1f) == 0x05;
+      if (!iscd) {
+          dprintf(1, "AHCI/%d: atapi device isn't a cdrom\n", port->pnr);
+          return -1;
+      }
+      port->desc = znprintf(MAXDESCSIZE
+                            , "DVD/CD [AHCI/%d: %s ATAPI-%d DVD/CD]"
+                            , port->pnr
+                            , ata_extract_model(model, MAXMODEL, buffer)
+                            , ata_extract_version(buffer));
+      port->prio = bootprio_find_ata_device(ctrl->pci_tmp, pnr, 0);
+  }
+  return 0;
+  ```
 
   Function `ahci_port_detect`, which is calling function `ahci_port_setup`
   presented above. Below prints are not present in logs
 
-    ```
-   static void
-   ahci_port_detect(void *data)
-   {
-       struct ahci_port_s *port = data;
-       int rc;
+  ```
+  static void
+  ahci_port_detect(void *data)
+  {
+      struct ahci_port_s *port = data;
+      int rc;
 
-       dprintf(2, "AHCI/%d: probing\n", port->pnr);
-       ahci_port_reset(port->ctrl, port->pnr);
-       rc = ahci_port_setup(port);
+      dprintf(2, "AHCI/%d: probing\n", port->pnr);
+      ahci_port_reset(port->ctrl, port->pnr);
+      rc = ahci_port_setup(port);
 
-       dprintf(1, "ahci_port_setup rc = %d \n", rc);
-    ```
+      dprintf(1, "ahci_port_setup rc = %d \n", rc);
+  ```

@@ -152,40 +152,39 @@ active_low  device  direction  edge  power  subsystem  uevent  value
 ```
 
 - `active_low` - indicates whether this pin is an active low signal (for input
-  only)
+   only)
 - `direction` - can be either `in` or `out`
 - `edge` - for inputs, whether pin should be active on `rising, falling, both`,
-  `none` edge
+   `none` edge
 - `value` - state of the pin
 
-1. In order to change the state of the GPIO:
+---
 
-```
-# ensure pin is in output mode
-$ echo out > direction
-# check current state
-$ cat value
-1
-# change the state
-$ echo 0 > value
-$ cat value
-0
-```
+1. In order to change the state of the GPIO:
+   ```
+   # ensure pin is in output mode
+   $ echo out > direction
+   # check current state
+   $ cat value
+   1
+   # change the state
+   $ echo 0 > value
+   $ cat value
+   0
+   ```
 
 2. Change pin direction:
-
-```
-# set to input
-$ echo in > direction
-# set to output
-$ echo out > direction
-```
+   ```
+   # set to input
+   $ echo in > direction
+   # set to output
+   $ echo out > direction
+   ```
 
 3. Set pin to active low:
-
-```
-$ echo 1 > active_low
-```
+   ```
+   $ echo 1 > active_low
+   ```
 
 ### GPIO mappings
 
@@ -226,11 +225,11 @@ exported**:
    in FreeBSD. It is because BIOS reserves resources for GPIOs with ACPI
    controller support. As a result, FreeBSD cannot reserve the memory for
    native driver anymore. Entire issue with details is described
-   [here](https://github.com/pcengines/coreboot/issues/329).
-
-The **workaround** was found by *alexpro* user and is simply adding environment
-variable `debug.acpi.avoid="\_SB_.PCI0.GPIO"` to `loader.conf`. It doesn't affect
-any other ACPI functionality then GPIOs.
+   [here](https://github.com/pcengines/coreboot/issues/329).<br>
+   <br>
+   The **workaround** was found by *alexpro* user and is simply adding environment
+   variable `debug.acpi.avoid="\_SB_.PCI0.GPIO"` to `loader.conf`. It doesn't affect
+   any other ACPI functionality then GPIOs.
 
 2. LED entries in sysfs in Linux are duplicated due to presence of *leds_apu*
    module. Blacklisting *leds_apu* module will get rid of the duplicates. See

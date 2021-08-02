@@ -21,55 +21,55 @@ steps:
 
 1. Clone the [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
 2. Pull or [build](https://github.com/pcengines/pce-fw-builder#building-docker-image)
-  docker container:
+    docker container:
 
-  ```
-  docker pull pcengines/pce-fw-builder
-  ```
+    ```
+    docker pull pcengines/pce-fw-builder
+    ```
 
-  or for legacy:
+    or for legacy:
 
-  ```
-  docker pull pcengines/pce-fw-builder-legacy
-  ```
+    ```
+    docker pull pcengines/pce-fw-builder-legacy
+    ```
 
 3. Build v4.8.0.6 image (v4.0.21 for legacy):
 
-  ```
-  ./build.sh release v4.8.0.6 {apu2|apu3|apu4}
-  ```
+    ```
+    ./build.sh release v4.8.0.6 {apu2|apu3|apu4}
+    ```
 
 4. Make changes to menuconfig:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} menuconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} menuconfig
+    ```
 
-  In order to change serial port, go to Console menu and change
-  `Index for UART port to use for console` to `1`. You will see that comment
-  below `*** Serial port base address = 0x3f8 ***` will change to
-  `*** Serial port base address = 0x2f8 ***` (this comment is not displayed in
-  legacy). Then go to Payload menu and type the changed serial port base address
-  (`0x2f8`) to `SeaBIOS sercon-port base address`  field. Now save new config.
+    In order to change serial port, go to Console menu and change
+    `Index for UART port to use for console` to `1`. You will see that comment
+    below `*** Serial port base address = 0x3f8 ***` will change to
+    `*** Serial port base address = 0x2f8 ***` (this comment is not displayed in
+    legacy). Then go to Payload menu and type the changed serial port base address
+    (`0x2f8`) to `SeaBIOS sercon-port base address`  field. Now save new config.
 
-  For legacy it may not build the firmware with expected changes. One has to do
-  a distclean first, copy the config and make the changes again:
+    For legacy it may not build the firmware with expected changes. One has to do
+    a distclean first, copy the config and make the changes again:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} distclean
-  cp $PWD/release/coreboot/configs/pcengines_{apu2|apu3|apu4}.config  $PWD/release/coreboot/.config
-  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} menuconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} distclean
+    cp $PWD/release/coreboot/configs/pcengines_{apu2|apu3|apu4}.config  $PWD/release/coreboot/.config
+    ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} menuconfig
+    ```
 
 5. Build the image again:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} CPUS=$(nproc)
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4} CPUS=$(nproc)
+    ```
 
 6. Flash the new image with serial output on COM2. The firmware image can be
-   found in `release/coreboot` which is relative to cloned `pce-fw-builder`
-   directory.
+    found in `release/coreboot` which is relative to cloned `pce-fw-builder`
+    directory.
 
 ### Developers guide
 

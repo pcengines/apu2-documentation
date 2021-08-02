@@ -8,64 +8,64 @@ PC Engines apu2 platform. Payload is supported since v4.9.0.7 release.
 
 1. Clone the [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
 2. Pull or [build](https://github.com/pcengines/pce-fw-builder#building-docker-image)
-  docker container:
+    docker container:
 
-  ```
-  docker pull pcengines/pce-fw-builder
-  ```
+    ```
+    docker pull pcengines/pce-fw-builder
+    ```
 
 3. Build v4.9.0.7 image:
 
-  ```
-  ./build.sh release v4.9.0.7 apu2
-  ```
+    ```
+    ./build.sh release v4.9.0.7 apu2
+    ```
 
 4. Invoke distclean:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 distclean
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 distclean
+    ```
 
 5. Copy config file for target platform
 
-  ```
-  cp $PWD/release/coreboot/configs/config.pcengines_apu2 $PWD/release/coreboot/.config
-  ```
+    ```
+    cp $PWD/release/coreboot/configs/config.pcengines_apu2 $PWD/release/coreboot/.config
+    ```
 
 6. Create full config:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 olddefconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 olddefconfig
+    ```
 
 7. Invoke menuconfig:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 menuconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 menuconfig
+    ```
 
 8. In menuconfig go to `Payload` menu and next:
 
-  - In `Add a payload` choose *Tianocore coreboot payload package*
-  - Deselect PXE ROM
-  - Select Tianocore build type release
-  - In `Secondary Payloads` disable all options
-  - Make sure that Tianocore revision is set to 
-  `origin/coreboot-4.7.x-uefi` in the
-  `Insert a commit’s SHA-1 or a branch name` line.
-  - Rest options in `Payload` menu leave default
-  - Save settings and leave menuconfig
-  ### Screenshot from correctly filled Payloads menu:
-   ![Payloads config menu](Payloads_config_menu.png)
+    - In `Add a payload` choose *Tianocore coreboot payload package*
+    - Deselect PXE ROM
+    - Select Tianocore build type release
+    - In `Secondary Payloads` disable all options
+    - Make sure that Tianocore revision is set to
+    `origin/coreboot-4.7.x-uefi` in the
+    `Insert a commit’s SHA-1 or a branch name` line.
+    - Rest options in `Payload` menu leave default
+    - Save settings and leave menuconfig
+    ### Screenshot from correctly filled Payloads menu:
+    ![Payloads config menu](Payloads_config_menu.png)
 
 9. Build coreboot image
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot apu2 CPUS=$(nproc)
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot apu2 CPUS=$(nproc)
+    ```
 
 10. After successful build coreboot image file is in `release/coreboot/build`
-directory.
+  directory.
 
 ## Coreboot + tianocore working example
 

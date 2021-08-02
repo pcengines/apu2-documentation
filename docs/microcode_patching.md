@@ -18,51 +18,51 @@ steps:
 
 1. Clone the [pce-fw-builder](https://github.com/pcengines/pce-fw-builder)
 2. Pull or [build](https://github.com/pcengines/pce-fw-builder#building-docker-image)
-  docker container:
+    docker container:
 
-  ```
-  docker pull pcengines/pce-fw-builder
-  ```
+    ```
+    docker pull pcengines/pce-fw-builder
+    ```
 
-  or for legacy:
+    or for legacy:
 
-  ```
-  docker pull pcengines/pce-fw-builder-legacy
-  ```
+    ```
+    docker pull pcengines/pce-fw-builder-legacy
+    ```
 
 3. Build v4.8.0.7 image (v4.0.22 for legacy):
 
-  ```
-  ./build.sh release v4.8.0.7 {apu2|apu3|apu4|apu5}
-  ```
+    ```
+    ./build.sh release v4.8.0.7 {apu2|apu3|apu4|apu5}
+    ```
 
 4. Download the [microcode patch](https://github.com/platomav/CPUMicrocodes/raw/master/AMD/cpu00730F01_ver07030106_2018-02-09_88EDFAA0.bin)
-   and place it in `release/coreboot` which is relative to cloned `pce-fw-builder`
-   directory.
+    and place it in `release/coreboot` which is relative to cloned `pce-fw-builder`
+    directory.
 
 4. Make changes to menuconfig:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4|apu5} menuconfig
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4|apu5} menuconfig
+    ```
 
-  In the Chipset submenu find `Include CPU microcode in CBFS` and choose
-  `Add microcode patch for AMD fam16h (EXPERIMENTAL)` option. Then in the
-  Chipset submenu fill the `Microcode binary path and filename` field with
-  `cpu00730F01_ver07030106_2018-02-09_88EDFAA0.bin` which was downloaded in
-  previous step. If the binary has been renamed, please fill the renamed binary
-  here. Path is relative to coreboot root directory. When finished, save the
-  config file.
+    In the Chipset submenu find `Include CPU microcode in CBFS` and choose
+    `Add microcode patch for AMD fam16h (EXPERIMENTAL)` option. Then in the
+    Chipset submenu fill the `Microcode binary path and filename` field with
+    `cpu00730F01_ver07030106_2018-02-09_88EDFAA0.bin` which was downloaded in
+    previous step. If the binary has been renamed, please fill the renamed binary
+    here. Path is relative to coreboot root directory. When finished, save the
+    config file.
 
 5. Build the image again:
 
-  ```
-  ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4|apu5} CPUS=$(nproc)
-  ```
+    ```
+    ./build.sh dev-build $PWD/release/coreboot {apu2|apu3|apu4|apu5} CPUS=$(nproc)
+    ```
 
 6. Flash the new image. The firmware image can be found in
-  `release/coreboot/build` which is relative to cloned `pce-fw-builder`
-  directory.
+    `release/coreboot/build` which is relative to cloned `pce-fw-builder`
+    directory.
 
 
 ## Summary

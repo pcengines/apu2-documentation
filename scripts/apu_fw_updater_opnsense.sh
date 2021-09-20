@@ -107,7 +107,7 @@ cleanup () {
   log_sub "... done."
 }
 
-reboot () {
+do_reboot () {
   log "Rebooting in 5s ..."
 
   sleep 5
@@ -125,7 +125,7 @@ flash
 
 cleanup
 
-#reboot
+do_reboot
 
 echo
 exit 0

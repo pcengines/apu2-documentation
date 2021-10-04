@@ -19,6 +19,11 @@ apt-get install dmidecode
 pkg install -y dmidecode
 ```
 
+#### For NetBSD:
+```sh
+pkg_add dmidecode
+```
+
 APUx firmware flashing
 ----------------------
 
@@ -35,6 +40,11 @@ For FreeBSD you can install `flashrom` by:
 
 ```sh
 pkg install -y flashrom
+```
+
+For NetBSD:
+```sh
+pkg_add flashrom
 ```
 
 You can also use minimal distributions with already installed `flashrom` like
@@ -80,6 +90,14 @@ setpci -s 18.0 6c.L=10:10
 
 ```sh
 pciconf -w pci0:24:0 0x6c 0x580ffe10
+```
+
+##### NetBSD
+
+```sh
+pcictl pci0 read -d 24 -f 0 0x6c
+# verify that you see 580ffe00
+pcictl pci0 write -d 24 -f 0 0x6c 0x580ffe10
 ```
 
 After that reboot as usual. Platform will turn off for 3-5 seconds. Note that

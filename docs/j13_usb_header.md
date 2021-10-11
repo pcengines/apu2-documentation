@@ -4,9 +4,9 @@ J13 USB header enablement
 ## J13 USB header
 
 The J13 USB header found on apu3-6 boards is disabled by default in some BIOS
-versions. If you encounter problems with USB peripherals (e.g. watchdog module)
-connected to this header, you may use `sortbootorder` to enable the EHCI
-controller functionality.
+versions (this was last reported for version 4.12.0.4). If you encounter
+problems with USB peripherals (e.g. watchdog module) connected to this header,
+you may use `sortbootorder` to enable the EHCI controller functionality.
 
 ## How to enable
 

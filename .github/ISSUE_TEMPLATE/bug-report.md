@@ -16,6 +16,10 @@ assignees: ''
 <!--(The variant of APU2 you're using (e.g., `apu2e0`))-->
 
 
+**OS and OS Version**
+<!--(The OS and OS Version you're using (e.g., `Ubuntu 20.04 LTS`))-->
+
+
 **Affected component(s), peripheral(s) or functionality**
 <!--(The component(s), peripheral(s) or functionality of APU2 that is not working as expected.)-->
 

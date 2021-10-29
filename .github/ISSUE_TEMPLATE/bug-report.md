@@ -12,8 +12,8 @@ assignees: ''
 <!--(The version of PCEngines firmware you're using (e.g., `v4.14.0.4`))-->
 
 
-**APU2 variant**
-<!--(The variant of APU2 you're using (e.g., `apu2e0`))-->
+**APU variant**
+<!--(The variant of APU you're using (e.g., `apu2e0`))-->
 
 
 **OS and OS Version**

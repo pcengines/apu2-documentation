@@ -24,8 +24,9 @@ For the usage you may execute `cb-order -h`.
 Example command line usage:
 `cb-order coreboot.rom -b iPXE,SATA -o usben=off -o watchdog=300`
 
-This command will set the boot order to be 1st iPXE then 2nd SATA. Additionally
-it disables booting from USB and sets the watchdog to 300 seconds.
+This command moves iPXE and SATA boot options to the 1st and 2nd positions
+respectively displacing other options from those positions. Additionally it
+disables booting from USB and sets the watchdog to 300 seconds.
 
 To achieve the same result using GUI simply run `cb-order coreboot.rom` to open
 the GUI.

@@ -336,7 +336,7 @@ flashrom -p internal -w apuX_v4.YY.0.Z.rom --fmap -i COREBOOT
 
 Note you need at least flashrom v1.1 for it to work. Also you will preserve the
 coreboot configuration only when updating from v4.14.0.1 version or later on
-apu2/3/4/5/6 series. Apu1 does not yet support the persistent runtime
+apu2/3/4/5/6 series. Apu1 does not support the persistent runtime
 configuration yet.
 
 If you have a version of apu firmware older than v4.14.0.1 you have to use the

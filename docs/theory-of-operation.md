@@ -142,7 +142,7 @@ chip. To enter hidden menu type `shift + z` in payload menu.
 
 - **Enable/Disable UARTC/UARTD**
 
-	This feature lets user enable/disable superIO UARTx on GPIO header.  
+	This feature lets user enable/disable superIO UARTx on GPIO header.
 
 	Watch [Video](https://asciinema.org/a/241576) showing how to enable/disable
 	UARTC/UARTD.
@@ -206,3 +206,28 @@ chip. To enter hidden menu type `shift + z` in payload menu.
 
   Watch [video](https://asciinema.org/a/244774) showing how to enable/disable
   SHAx banks in TPM menu.
+
+- **Setting watchdog timeout**
+
+  To `Enable` watchdog, type `i` in payload menu. You will be prompted to
+  specify the timeout after which the platform should reset.
+
+  By default the timeout is set to 0 seconds (disabled state). To enable
+  watchdog, enter setup menu and toggle watchdog option.
+
+  Since v4.14.0.4 version, sortbootorder payload won't allow to set the watchdog
+  timeout below 60s.
+
+  > WARNING: do not set short timeouts! It may lead to a reset loop and brick
+  Your platform. Please take into consideration that platform boot time and OS
+  boot time also counts to the overall timeout time, so set at least few minutes
+  timeout to still be able to enter setup menu to disable the watchdog!
+
+  > The operating system has to support the watchdog, otherwise the platform
+  will constantly reboot. For Linux OSes the driver is sp5100_tco, however it
+  conflicts with i2c_piix4 leaving the watchdog driver unloaded completely.
+  One has to properly blacklist the i2c_piix4 driver in order to get the
+  watchdog working.
+
+  Watch [video](https://asciinema.org/a/464131) showing how to enable/disable
+  watchdog.

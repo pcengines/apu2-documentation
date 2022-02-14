@@ -215,6 +215,9 @@ chip. To enter hidden menu type `shift + z` in payload menu.
   By default the timeout is set to 0 seconds (disabled state). To enable
   watchdog, enter setup menu and toggle watchdog option.
 
+  Since v4.14.0.4 version sortbootorder payload won't allow to set the watchdog
+  timeout below 60s
+
   > WARNING: do not set short timeouts! It may lead to a reset loop and brick
   Your platform. Please take into consideration that platform boot time and OS
   boot time also counts to the overall timeout time, so set at least few minutes

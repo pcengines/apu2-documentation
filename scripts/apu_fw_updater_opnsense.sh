@@ -13,11 +13,11 @@
 
 # Params
 
-# Type of APU (apu1, apu2, apu3, apu4, apu5)
+# Type of APU (apu1, apu2, apu3, apu4, apu5, apu6)
 TYPE="apu2"
 
 # Version of firmware
-VERSION="4.12.0.5"
+VERSION="4.15.0.3"
 
 # Do not edit after this line
 SRC="https://3mdeb.com/open-source-firmware/pcengines/${TYPE}/"
@@ -31,11 +31,11 @@ echo "+-----------------------------------+"
 echo "| APU firmware updater for OPNsense |"
 echo "+-----------------------------------+"
 
-cd "/tmp"
+cd "/tmp" || exit
 
 log () {
   echo
-  echo "`date +"%Y-%m-%d %T"` | ${1}"
+  echo "$(date +"%Y-%m-%d %T") | ${1}"
 }
 
 log_sub () {
@@ -85,7 +85,7 @@ flash () {
   log "Flash firmware ..."
 
   if [ "${NUMBER}" -gt 1 ]; then
-    # APU2/3/4/5
+    # APU2/3/4/5/6
     flashrom -w "${FILE}" -p internal
   else
     # APU1

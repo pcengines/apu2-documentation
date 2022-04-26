@@ -9,6 +9,11 @@ modules and quirks necessary for their flawless operation.
 
 ## LTE modules
 
+> Note: By default, in apu3/4, the SIM card slots are "crossed", that is to say,
+> the left SIM slot is wired to the mSATA slot and the right SIM slot is wired
+> to the mPCIe2 slot. You can swap the SIM slots on the fly using GPIO 410 -
+> follow [the GPIO documentation](gpios.md) for detailed instructions.
+
 ### Quectel EP06
 
 ![Quectel EP06](https://www.quectel.com/UploadImage/Product/20171016143013431.png)

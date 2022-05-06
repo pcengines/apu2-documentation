@@ -39,6 +39,9 @@ PC Engines apu1/2/3/4/5 firmware and hardware. Structure of the repository:
 
 ## Useful documents
 
+- [Linux issues](docs/linux_issues.md) - document describes known issues with
+  Linux of different versions and how to work around them when it's possible.
+
 - [CPU Boost](docs/apu_CPU_boost.md) - document briefly describes what the Core
   Performance Boost is and how to verify it works in BIOS and operating system.
 

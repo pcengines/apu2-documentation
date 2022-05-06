@@ -41,7 +41,7 @@ was committed, but it's not enough to fix the issue.
 is supposed to make `gpio_keys_polled` work the same as `leds-gpio`, but it
 wasn't upstreamed because a more generic approach [was supposed to be
 proposed](https://lkml.kernel.org/lkml/9819838f-9e35-c504-61da-f8c3f9b7ac8e@metux.net/).
-Apparently, more generic approach didn't make it either living `pcengines-apuv2`
+Apparently, more generic approach didn't make it either leaving `pcengines-apuv2`
 broken to this day.
 
 ### Workaround

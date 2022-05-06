@@ -214,6 +214,28 @@ operating system.
 
 (1) Refer to quirks, it is known to not work stably on all apu2 board revisions
 
+### AW7915-NP1
+
+![AW7915-NP1](../images/mt7915e.jpg)
+
+The AW7915-NP1 is a MediaTek MT7915E based Wi-Fi 6 (802.11ax) card from AsiaRF.
+It features 4x4 MIMO and support for 160MHz channels, and a maximum theoretical
+bandwidth of 2400 Mb/s. In the apu2, the card can reach over 1Gb/s transfer
+speeds in ideal conditions.
+
+This module has been tested to work reliably in an apu2c4 board running OpenWRT
+21.02.02. No firmware tweaks are necessary for correct operation.
+
+The card gets hot under sustained operation, easily reaching over 130 degrees
+celsius if not cooled sufficiently. A heatsink is recommended, the card does
+not come with one.
+
+| Platform |  mPCIe1  |     mPCIe2      |  mSATA   |
+|:--------:|:--------:|:---------------:|:--------:|
+|   apu2   | &#10004; | &#10004;        | &#10006; |
+|   apu3   | &#10004; | &#10006;        | &#10006; |
+|   apu4   | &#10004; | &#10006;        | &#10006; |
+
 ## Ethernet controllers
 
 ### Dual Ethernet Controller Realtek RTL8111

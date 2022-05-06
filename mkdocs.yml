@@ -27,6 +27,7 @@ nav:
     - 'generating_coreboot_support_logs.md'
     - 'gpios.md'
     - 'ipxe_compile.md'
+    - 'docs/linux_issues.md'
     - 'microcode_patching.md'
     - 'mpcie_modules.md'
     - 'order_of_PCI_addresses.md'

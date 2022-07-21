@@ -9,10 +9,11 @@ Thanks to this information, we are also able to detect errors quickly.
 ## Setup testing enviroment
 
 Measuring power consumption is possible thanks to the connection of RTE with the
-[INA219](https://download.kamami.pl/p564714-ina219.pdf) sensor.RTE is a tool
-which helps debugging and testing devices.The INA219 is a current shunt and
-power monitor.Connect RTE I2C header (J9) with INA219 I2C header to read from 
-the sensor.
+[INA219](https://download.kamami.pl/p564714-ina219.pdf) sensor.RTE stands for
+Remote Testing Environment and it is a tool which helps debugging and testing
+devices. RTE could be replaced by another device with I2C header, but rest
+assured it works with RTE. The INA219 is a current shunt and power monitor.
+Connect RTE I2C header (J9) with INA219 I2C header to read from the sensor.
 
  RTE I2C header (J9)        | INA219 I2C header
 :--------------------------:|:---------------------------:
@@ -22,8 +23,10 @@ the sensor.
  4 (GND)                    | (GND)
 
 Then you have to cut one of the wires in the power cable going from the RTE to
-the device. If we cut the plus, the part from RTE is connected to Vin+, and the
-part from the device to Vin-. If we cut the minus, we have to do the opposite.
+the device. We should cut the plus so the part from RTE is should be connected
+to Vin+, and the part from the device to Vin-. 
+
+![Connections INA219-RTE](images/INA219-RTE.png)
 
 The values ​​from the sensor in the tests are normally read every 0.5s, but it is
 a modifiable value. From the sensor you can read information about voltage(V),

@@ -1,0 +1,67 @@
+# Power Consumption
+
+## Intro
+
+We decided to take a closer look at the occurrence of energy consumption on apu
+platforms. Measuring energy is valuable if we strive to improve firmware.
+Thanks to this information, we are also able to detect errors quickly.
+
+## Setup testing enviroment
+
+Measuring power consumption is possible thanks to the connection of RTE with the
+[INA219](https://download.kamami.pl/p564714-ina219.pdf) sensor.RTE is a tool
+which helps debugging and testing devices.The INA219 is a current shunt and
+power monitor.Connect RTE I2C header (J9) with INA219 I2C header to read from 
+the sensor.
+
+ RTE I2C header (J9)        | INA219 I2C header
+:--------------------------:|:---------------------------:
+ 1 (3V3)                    | (Vcc)
+ 2 (SCK)                    | (SCL)
+ 3 (SDA)                    | (SDA)
+ 4 (GND)                    | (GND)
+
+Then you have to cut one of the wires in the power cable going from the RTE to
+the device. If we cut the plus, the part from RTE is connected to Vin+, and the
+part from the device to Vin-. If we cut the minus, we have to do the opposite.
+
+The values ​​from the sensor in the tests are normally read every 0.5s, but it is
+a modifiable value. From the sensor you can read information about voltage(V),
+current(A) and power(W). We read the values with following commands:
+
+```bash
+cat /sys/class/hwmon/hwmon0/in1_input
+cat /sys/class/hwmon/hwmon0/curr1_input
+cat /sys/class/hwmon/hwmon0/power1_input
+```
+
+## Tests
+
+### apu stress-test cpu
+
+Test case is following:
+
+1. Power on RTE and power on apu3.
+2. Boot to Debian 10 (buster) with kernel 4.19 on apu3.
+3. Start measurements on RTE: constantly measure *bus voltage*, *current* and
+   *input power* in 0.5 seconds time intervals and save them to text file.
+4. After 10 seconds from starting measurements, invoke `sysbench` command on
+apu3.
+5. When `sysbench` finished, wait ~25 seconds and invoke command again.
+6. When `sysbench` command was invoked 10 times, finish entire test.
+
+## Presentation of the results
+
+The test results are presented as charts based on the values ​​obtained during the
+tests. Graphs or simple information on power consumption are available in the
+PC-ENGINES newsletter.
+
+## Future plans for tests
+
+In the future, we could focus on test development and measurement performed:
+
+* at the start of the device
+
+* during the memtest
+
+* when the platform is constantly restarted

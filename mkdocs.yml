@@ -47,6 +47,7 @@ nav:
     - 'voyage_image_building_alix.md'
     - 'voyage_linux_netinst.md'
     - 'voyage_linux_sd_card_install.md'
+    - 'power_consumption_testing.md'
     - 'debug':
         - 'debug/AGESA.md'
         - 'debug/alix3d2_issue.md'

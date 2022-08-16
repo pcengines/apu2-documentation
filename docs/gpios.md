@@ -219,6 +219,10 @@ exported**:
 > BIOS these pins are configured as output high. Be sure to configure them to
 > output first before using them.
 
+Here is a script for controlling these GPIOs, as well as for invoking a
+coldboot:
+* [GPIO control script](https://github.com/pcengines/APUCtl)
+
 ## Known issues
 
 1. Since coreboot release *v4.10.0.0* there is conflict with **apuled** driver

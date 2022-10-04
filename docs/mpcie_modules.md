@@ -66,6 +66,12 @@ the mainboard side, but they are not present on apu.
 ![HUAWEI ME909u](https://www.4gltemall.com/media/catalog/product/cache/1/image/650x650/9df78eab33525d08d6e5fb8d27136e95/h/u/huawei_me909u-521.jpg)
 
 This module works fairly well with all apu boards.
+But be aware that due to its [buggy firmware](https://forum.openwrt.org/t/cdc-ether-ethertype-unknown-0x0808-on-huawei-me909u-521/5509),
+[LTE may not work in some conditions](https://gitlab.freedesktop.org/mobile-broadband/ModemManager/-/issues/635#note_1576091)
+with the default `cdc_ether` driver selected by `usb_modeswitch`.
+You may have more success using the `qmi_wwan` driver
+(`echo Configuration=1 >/etc/usb_modeswitch.d/12d1:1573`)
+which implements a workaround in [qmi_wwan_rx_fixup()](https://github.com/torvalds/linux/blob/v5.19/drivers/net/usb/qmi_wwan.c#L542-L561).
 
 **Compatible slots:**
 

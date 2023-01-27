@@ -1,11 +1,62 @@
-Unattanded installation PFSense
+Unattended installation PFSense
 ===============================
+
+This document describes the process of preparing the automatic installer pFsense
+on a USB stick. The whole procedure was tested on Ubuntu with the kernel
+5.15.0-58-generic, the download and installation procedure of the kernel is also
+described below.
+
+Kernel installation
+-------------------
+
+The following set of commands should provide the successful installation of the
+kernel in the 5.15.0-58-generic version:
+
+```bash
+sudo apt install linux-headers-5.15.0-58-generic
+sudo apt install linux-source-5.15.0
+cd /usr/src/
+cd linux-source-5.15.0/
+sudo tar xjf  linux-source-5.15.0.tar.bz2 
+sudo cp ../linux-headers-5.15.0-58-generic/Module.symvers linux-source-5.15.0/
+cd linux-source-5.15.0/
+sudo cp /boot/config-5.15.0-58-generic .config
+sudo make olddefconfig
+```
+
+UFS module compilation
+-----------------------
+
+1. Edit the `.config` file by setting the value of `UFS_FS_WRITE` to `y`.
+
+1. The following set of commands provide for UFS module compilation:
+
+   ```bash
+   sudo make prepare
+   sudo make modules_prepare
+   sudo make M=scripts/mod -j8
+   sudo make M=fs/ufs modules -j8
+   sudo cp /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko   /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs_backup.ko 
+   sudo cp fs/ufs/ufs.ko /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko 
+   sudo depmod
+   sudo modprobe ufs
+   ```
+
+1. Mount the `FreeBSD_install` partition to properly configure the installer by
+   running the following command(`X` depending on how many drives are connected
+   to your computer):
+
+   ```bash
+   sudo mount -t ufs -o ufstype=ufs2 /dev/sdX5 /mnt
+   ```
 
 rc.local
 --------
 
-After booting from USB stick installer rc.local is executed. Changes have to be
-applied to this file to eliminate interactive dialog options.
+After booting from the USB stick installer `rc.local` is executed. Changes have
+to be applied to this file to eliminate interactive dialog options. After
+mounting parition edit the `rc.local` file located in the `etc` folder by using
+`nano` or `vim` editors.
 
 1. Add environment variable defining terminal type:
 
@@ -15,7 +66,7 @@ applied to this file to eliminate interactive dialog options.
     export TERM=vt100
     ```
 
-2. Comment out console type input:
+1. Comment out console type input:
 
     ```bash
     # Serial or other console
@@ -34,7 +85,7 @@ applied to this file to eliminate interactive dialog options.
     #TERM=${TERM:-vt100}
     ```
 
-3. Add reboot command after installerconfig finishes:
+1. Add reboot command after installerconfig finishes:
 
     ```bash
     if [ -f /etc/installerconfig ]; then
@@ -46,7 +97,7 @@ applied to this file to eliminate interactive dialog options.
 installerconfig
 ---------------
 
-**installerconfig** script is called if exists. If doesn't exist manual
+The `installerconfig` script is called if exists. If it doesn't exist manual
 installation is performed.
 
 ```bash
@@ -59,19 +110,17 @@ installation is performed.
 exit
 ```
 
-This file must be located in **/etc/** directory.
+This file must be located in the `etc` directory. The `etc/installerconfig`
+script will install pfSense and replace all configuration files that we want to
+change before the first boot.
 
-**/etc/installerconfig** script will install pfSense and replace all
-configuration files that we want to change before first boot.
-
-Examples
---------
-
-Example file, **installerconfig**, is located in **scripts/** directory.
+An example file is located
+[here](https://github.com/pcengines/apu2-documentation/blob/master/scripts/installerconfig).
+It should work without any corrections.
 
 Problems
 --------
 
-During extracting distribution files phase installation sometimes hangs up.
-I've waited for 15 minutes and nothing happend. My solution was to reset
+During extracting distribution files phase installation sometimes hangs up. I
+waited for 15 minutes and nothing happened. My solution was to reset the
 platform.

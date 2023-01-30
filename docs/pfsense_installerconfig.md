@@ -9,35 +9,60 @@ described below.
 Kernel installation
 -------------------
 
-The following set of commands should provide the successful installation of the
-kernel in the 5.15.0-58-generic version:
+1. Download the required packages by running the following command:
 
-```bash
-sudo apt install linux-headers-5.15.0-58-generic
-sudo apt install linux-source-5.15.0
-cd /usr/src/
-cd linux-source-5.15.0/
-sudo tar xjf  linux-source-5.15.0.tar.bz2 
-sudo cp ../linux-headers-5.15.0-58-generic/Module.symvers linux-source-5.15.0/
-cd linux-source-5.15.0/
-sudo cp /boot/config-5.15.0-58-generic .config
-sudo make olddefconfig
-```
+   ```bash
+   sudo apt install linux-headers-5.15.0-58-generic linux-source-5.15.0
+   ```
+
+1. Go to the indicated location and unzip the file named
+   `linux-source-5.15.0.tar.bz2` as shown below:
+
+   ```bash
+   cd /usr/src/linux-source-5.15.0/
+   sudo tar xjf linux-source-5.15.0.tar.bz2
+   ```
+
+1. After successfully unpacking, copy the files required for kernel installation
+   by running the following commands:
+
+   ```bash
+   sudo cp ../linux-headers-5.15.0-58-generic/Module.symvers linux-source-5.15.0/
+   cd linux-source-5.15.0/
+   sudo cp /boot/config-5.15.0-58-generic .config
+   ```
+
+1. Finally build and install the kernel by running the following command:
+
+   ```bash
+   sudo make olddefconfig
+   ```
 
 UFS module compilation
 -----------------------
 
 1. Edit the `.config` file by setting the value of `UFS_FS_WRITE` to `y`.
 
-1. The following set of commands provide for UFS module compilation:
+1. Prepare resources to compile the UFS module by running the following
+   commands:
 
    ```bash
    sudo make prepare
    sudo make modules_prepare
    sudo make M=scripts/mod -j8
    sudo make M=fs/ufs modules -j8
+   ```
+
+1. Copy the previously prepared files by running the following commands:
+
+   ```bash
    sudo cp /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko   /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs_backup.ko 
-   sudo cp fs/ufs/ufs.ko /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko 
+   sudo cp fs/ufs/ufs.ko /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko
+   ```
+
+1. Load the UFS module by running the following commands:
+
+   ```bash
    sudo depmod
    sudo modprobe ufs
    ```

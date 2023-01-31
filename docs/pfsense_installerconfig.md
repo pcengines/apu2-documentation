@@ -2,12 +2,24 @@ Unattended installation PFSense
 ===============================
 
 This document describes the process of preparing the automatic installer pFsense
-on a USB stick. The whole procedure was tested on Ubuntu with the kernel
-5.15.0-58-generic, the download and installation procedure of the kernel is also
-described below.
+on a USB stick. The whole procedure was tested on Ubuntu.
 
 Kernel installation
 -------------------
+
+1. Get info about kernel number by running the following command:
+
+   ```bash
+   uname -r 
+   ```
+
+   The output of the command above is needed for the next steps. Commands in the
+   next steps should be adjusted depending on this output. Example output, on
+   which the form of commands in the entire documentation is based:
+
+   ```bash
+   5.15.0-58-generic
+   ```
 
 1. Download the required packages by running the following command:
 
@@ -32,7 +44,7 @@ Kernel installation
    sudo cp /boot/config-5.15.0-58-generic .config
    ```
 
-1. Finally build and install the kernel by running the following command:
+1. Finally, build and install the kernel by running the following command:
 
    ```bash
    sudo make olddefconfig
@@ -52,7 +64,9 @@ UFS module compilation
    sudo make M=fs/ufs modules -j8
    ```
 
-1. Copy the previously prepared files by running the following commands:
+1. Copy the previously prepared files by running the following commands (To load
+   an unsigned kernel module it is required to disable Secure Boot, otherwise it
+   won't work):
 
    ```bash
    sudo cp /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko   /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs_backup.ko 
@@ -107,15 +121,6 @@ mounting parition edit the `rc.local` file located in the `etc` folder by using
     echo -n "Console type [vt100]: "
     #read TERM
     #TERM=${TERM:-vt100}
-    ```
-
-1. Add reboot command after installerconfig finishes:
-
-    ```bash
-    if [ -f /etc/installerconfig ]; then
-            bsdinstall script /etc/installerconfig
-            reboot
-    fi
     ```
 
 installerconfig

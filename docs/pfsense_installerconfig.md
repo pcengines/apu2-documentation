@@ -140,7 +140,6 @@ change before the first boot.
 
 An example file is located
 [here](https://github.com/pcengines/apu2-documentation/blob/master/scripts/installerconfig).
-It should work without any corrections.
 
 Problems
 --------

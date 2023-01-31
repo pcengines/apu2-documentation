@@ -1,11 +1,86 @@
-Unattanded installation PFSense
+Unattended installation PFSense
 ===============================
+
+This document describes the process of preparing the automatic installer pFsense
+on a USB stick. The whole procedure was tested on Ubuntu.
+
+Kernel installation
+-------------------
+
+1. Download the required packages by running the following command:
+
+   ```bash
+   sudo apt install linux-headers-$(uname -r) linux-source$(uname -r | cut -d- -f1)
+   ```
+
+1. Go to the indicated location and unzip the file named
+   `linux-source-$(uname -r | cut -d- -f1).tar.bz2` as shown below:
+
+   ```bash
+   cd /usr/src/linux-source-$(uname -r | cut -d- -f1)/
+   sudo tar xjf linux-source-$(uname -r | cut -d- -f1).tar.bz2
+   ```
+
+1. After successfully unpacking, copy the files required for kernel installation
+   by running the following commands:
+
+   ```bash
+   sudo cp ../linux-headers-$(uname -r)/Module.symvers linux-source-$(uname -r | cut -d- -f1)/
+   cd linux-source-$(uname -r | cut -d- -f1)/
+   sudo cp /boot/config-$(uname -r) .config
+   ```
+
+1. Finally, build and install the kernel by running the following command:
+
+   ```bash
+   sudo make olddefconfig
+   ```
+
+UFS module compilation
+-----------------------
+
+1. Edit the `.config` file by setting the value of `UFS_FS_WRITE` to `y`.
+1. Prepare resources to compile the UFS module by running the following
+   commands:
+
+   ```bash
+   sudo make prepare
+   sudo make modules_prepare
+   sudo make M=scripts/mod -j8
+   sudo make M=fs/ufs modules -j8
+   ```
+
+1. Copy the previously prepared files by running the following commands (To load
+   an unsigned kernel module it is required to disable Secure Boot, otherwise it
+   won't work):
+
+   ```bash
+   sudo cp /lib/modules/$(uname -r)/kernel/fs/ufs/ufs.ko   /lib/modules/$(uname -r)/kernel/fs/ufs/ufs_backup.ko 
+   sudo cp fs/ufs/ufs.ko /lib/modules/$(uname -r)/kernel/fs/ufs/ufs.ko
+   ```
+
+1. Load the UFS module by running the following commands:
+
+   ```bash
+   sudo depmod
+   sudo modprobe ufs
+   ```
+
+1. Mount the `FreeBSD_install` partition to properly configure the installer by
+   running the following command(`X` depending on how many drives are connected
+   to your computer):
+
+   ```bash
+   sudo mount -t ufs -o ufstype=ufs2 /dev/sdX5 /mnt
+   ```
 
 rc.local
 --------
 
-After booting from USB stick installer rc.local is executed. Changes have to be
-applied to this file to eliminate interactive dialog options.
+After booting from the USB stick installer `rc.local` is executed. Changes have
+to be applied to this file to eliminate interactive dialog options. After
+mounting parition edit the `rc.local` file located in the `etc` folder by using
+`nano` or `vim` editors.
 
 1. Add environment variable defining terminal type:
 
@@ -15,7 +90,7 @@ applied to this file to eliminate interactive dialog options.
     export TERM=vt100
     ```
 
-2. Comment out console type input:
+1. Comment out console type input:
 
     ```bash
     # Serial or other console
@@ -34,19 +109,10 @@ applied to this file to eliminate interactive dialog options.
     #TERM=${TERM:-vt100}
     ```
 
-3. Add reboot command after installerconfig finishes:
-
-    ```bash
-    if [ -f /etc/installerconfig ]; then
-            bsdinstall script /etc/installerconfig
-            reboot
-    fi
-    ```
-
 installerconfig
 ---------------
 
-**installerconfig** script is called if exists. If doesn't exist manual
+The `installerconfig` script is called if exists. If it doesn't exist manual
 installation is performed.
 
 ```bash
@@ -59,19 +125,16 @@ installation is performed.
 exit
 ```
 
-This file must be located in **/etc/** directory.
+This file must be located in the `etc` directory. The `etc/installerconfig`
+script will install pfSense and replace all configuration files that we want to
+change before the first boot.
 
-**/etc/installerconfig** script will install pfSense and replace all
-configuration files that we want to change before first boot.
-
-Examples
---------
-
-Example file, **installerconfig**, is located in **scripts/** directory.
+An example file is located
+[here](https://github.com/pcengines/apu2-documentation/blob/master/scripts/installerconfig).
 
 Problems
 --------
 
-During extracting distribution files phase installation sometimes hangs up.
-I've waited for 15 minutes and nothing happend. My solution was to reset
+During extracting distribution files phase installation sometimes hangs up. I
+waited for 15 minutes and nothing happened. My solution was to reset the
 platform.

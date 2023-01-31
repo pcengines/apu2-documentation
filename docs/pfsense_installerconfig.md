@@ -42,7 +42,6 @@ UFS module compilation
 -----------------------
 
 1. Edit the `.config` file by setting the value of `UFS_FS_WRITE` to `y`.
-
 1. Prepare resources to compile the UFS module by running the following
    commands:
 

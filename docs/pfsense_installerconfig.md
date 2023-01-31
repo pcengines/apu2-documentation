@@ -7,41 +7,27 @@ on a USB stick. The whole procedure was tested on Ubuntu.
 Kernel installation
 -------------------
 
-1. Get info about kernel number by running the following command:
-
-   ```bash
-   uname -r 
-   ```
-
-   The output of the command above is needed for the next steps. Commands in the
-   next steps should be adjusted depending on this output. Example output, on
-   which the form of commands in the entire documentation is based:
-
-   ```bash
-   5.15.0-58-generic
-   ```
-
 1. Download the required packages by running the following command:
 
    ```bash
-   sudo apt install linux-headers-5.15.0-58-generic linux-source-5.15.0
+   sudo apt install linux-headers-$(uname -r) linux-source$(uname -r | cut -d- -f1)
    ```
 
 1. Go to the indicated location and unzip the file named
-   `linux-source-5.15.0.tar.bz2` as shown below:
+   `linux-source-$(uname -r | cut -d- -f1).tar.bz2` as shown below:
 
    ```bash
-   cd /usr/src/linux-source-5.15.0/
-   sudo tar xjf linux-source-5.15.0.tar.bz2
+   cd /usr/src/linux-source-$(uname -r | cut -d- -f1)/
+   sudo tar xjf linux-source-$(uname -r | cut -d- -f1).tar.bz2
    ```
 
 1. After successfully unpacking, copy the files required for kernel installation
    by running the following commands:
 
    ```bash
-   sudo cp ../linux-headers-5.15.0-58-generic/Module.symvers linux-source-5.15.0/
-   cd linux-source-5.15.0/
-   sudo cp /boot/config-5.15.0-58-generic .config
+   sudo cp ../linux-headers-$(uname -r)/Module.symvers linux-source-$(uname -r | cut -d- -f1)/
+   cd linux-source-$(uname -r | cut -d- -f1)/
+   sudo cp /boot/config-$(uname -r) .config
    ```
 
 1. Finally, build and install the kernel by running the following command:
@@ -69,8 +55,8 @@ UFS module compilation
    won't work):
 
    ```bash
-   sudo cp /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko   /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs_backup.ko 
-   sudo cp fs/ufs/ufs.ko /lib/modules/5.15.0-58-generic/kernel/fs/ufs/ufs.ko
+   sudo cp /lib/modules/$(uname -r)/kernel/fs/ufs/ufs.ko   /lib/modules/$(uname -r)/kernel/fs/ufs/ufs_backup.ko 
+   sudo cp fs/ufs/ufs.ko /lib/modules/$(uname -r)/kernel/fs/ufs/ufs.ko
    ```
 
 1. Load the UFS module by running the following commands:

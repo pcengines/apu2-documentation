@@ -117,7 +117,7 @@ with interrupts. Related issues:
 
 - [coreboot #206](https://github.com/pcengines/coreboot/issues/206)
 - [coreboot #285](https://github.com/pcengines/coreboot/issues/285)
-- [coreboot #323](https://github.com/pcengines/coreboot/issues/323) 
+- [coreboot #323](https://github.com/pcengines/coreboot/issues/323)
 
 **Compatible slots:**
 
@@ -222,7 +222,7 @@ operating system.
 
 ### AW7915-NP1
 
-![AW7915-NP1](../images/mt7915e.jpg)
+![AW7915-NP1](images/mt7915e.jpg)
 
 The AW7915-NP1 is a MediaTek MT7915E based Wi-Fi 6 (802.11ax) card from AsiaRF.
 It features 4x4 MIMO and support for 160MHz channels, and a maximum theoretical
@@ -276,7 +276,7 @@ can be done, for example in Debian OS, by performing those steps:
     lines:
     ```
     deb http://ftp.pl.debian.org/debian stretch main non-free
-    deb-src  http://ftp.pl.debian.org/debian stretch main non-free   
+    deb-src  http://ftp.pl.debian.org/debian stretch main non-free
     ```
     - Update apt-get:
     ```
@@ -302,11 +302,11 @@ Due to apu boards construction, it is possible to test that module only under
 apu2 mPCIe2 slot. Capacitors placed near the mPCIe1 slot prevent connecting the
 SATA cables to the module. Therefore, module was tested only in mPCIe2 slot.
 After multiple tests performed, it turned out that ASM1061 module is not
-supported by PC Engines apu2 platform.  
+supported by PC Engines apu2 platform.
 
 **Tests results**
 
-Carried out tests and their results are presented in [debug documentation](/debug/mpcie2.md).
+Carried out tests and their results are presented in [debug documentation](debug/mpcie2.md).
 Detection problem is described more precisely there. Also, possible reasons
 of ASM1061 behavior are presented. Anyway, in every case and configuration
 that module doesn't work properly.

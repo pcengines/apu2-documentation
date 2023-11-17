@@ -10,7 +10,7 @@ Linux 0.10.0 and Debian jessie.
 
 HW used: APU2 with TPM LPC addon
 
-1. Install 4.13.0-rc6 kernel - [config](4_13_rc6_tpm_config)
+1. Install 4.13.0-rc6 kernel - [config](https://github.com/pcengines/apu2-documentation/blob/master/docs/research/4_13_rc6_tpm_config)
 2. Enable tpm2 module:
 
     ```

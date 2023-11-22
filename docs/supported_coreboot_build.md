@@ -11,7 +11,7 @@ Intro
 Coreboot ROM building process
 -----------------------------
 
-1. [Build environment container](https://github.com/pcengines/apu2-documentation/blob/master/docs/building_env.md).
+1. [Build environment container](https://github.com/pcengines/apu2-documentation/blob/864294e6c2219d70f174272f2e1b5f99b8b7b1db/docs/building_env.md).
 
 2. Clone coreboot repository:
     ```

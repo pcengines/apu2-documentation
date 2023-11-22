@@ -10,7 +10,7 @@ This document is related to changes submitted to [mainline coreboot](https://rev
 * patches under redesign in upstream
 * planned firmware release to include patches v4.8.0.3
 * tested on Xen 4.8.3 and Debian stretch with Linux 4.14.50
-* `xl dmesg` dump with apic and iommu verbose [here](logs/iommu_enabled_xl_dmesg.log)
+* `xl dmesg` dump with apic and iommu verbose [here](https://github.com/pcengines/apu2-documentation/blob/master/docs/logs/iommu_enabled_xl_dmesg.log)
 * `CPUX: No irq handler for vector e7` log is still visible, but doesn't affect
 boot process. We look for solution for that log [here](https://github.com/pcengines/coreboot/pull/186)
 * platform survived 100x reboots to Xen without issue
@@ -70,7 +70,7 @@ information about groups in AMD IOMMU spec.
 ```
 
 # How to check features with Xen
-Please [read this blog post](TBD)
+Please [read this blog post](https://www.brendangregg.com/blog/2014-05-09/xen-feature-detection.html)
 
 # How to test IOMMU features
 

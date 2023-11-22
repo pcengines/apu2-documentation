@@ -472,8 +472,10 @@ reboot test immediately after failed cold boot (only one stick was detected).
 
 Full boot logs:
 
-* [tiano.log](../log/tiano.log) - both sticks detected
-* [tiano2.log](../log/tiano2.log) - one stick detected
+* [tiano.log](https://github.com/pcengines/apu2-documentation/blob/master/docs/logs/tiano.log) -
+both sticks detected
+* [tiano2.log](https://github.com/pcengines/apu2-documentation/blob/master/docs/logs/tiano2.log) -
+one stick detected
 
 The stick that was not detected for some reason is still visible as a boot
 option in the second log, but boot order was changed. Note that there are more

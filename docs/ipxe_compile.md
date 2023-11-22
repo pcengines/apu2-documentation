@@ -5,8 +5,10 @@ iPXE - compilation, configuration and including in firmware
 
 ## Compilation
 
-1. Prepare [build environment](building_env.md), if you haven't done so yet
-2. [Build firmware](building_firmware.md),  if you haven't done so yet
+1. Prepare [build environment](https://github.com/pcengines/apu2-documentation/blob/864294e6c2219d70f174272f2e1b5f99b8b7b1db/docs/building_env.md),
+if you haven't done so yet
+2. [Build firmware](https://github.com/pcengines/apu2-documentation/blob/864294e6c2219d70f174272f2e1b5f99b8b7b1db/docs/building_firmware.md),
+if you haven't done so yet
 3. Clone iPXE repository:
 
     ```
@@ -29,7 +31,7 @@ iPXE - compilation, configuration and including in firmware
     * download proto: TFTP, HTTP, HTTPS, FTP, SLAM, NFS
     * image: NBI, ELF, MULTIBOOT, PXE, SCRIPT, BZIMAGE, COMBOOT, SDI, PNM, PNG
 
-    For more details please check [general.h](../ipxe/general.h).
+    For more details please check [general.h](https://github.com/pcengines/apu2-documentation/blob/master/ipxe/general.h).
 
     ```
     make bin/8086157b.rom EMBED=./shell.ipxe

@@ -119,7 +119,7 @@ extracted kernel files are placed.
 docker run --rm -v ${PWD}:/workdir -t -i pc-engines/apu2 bash
 ```
 
-If you don't have `pc-engines/apu2` environment built follow [this instruction](./building_env.md).
+If you don't have `pc-engines/apu2` environment built follow [this instruction](https://github.com/pcengines/apu2-documentation/blob/864294e6c2219d70f174272f2e1b5f99b8b7b1db/docs/building_env.md).
 
 6. Read old config file:
 

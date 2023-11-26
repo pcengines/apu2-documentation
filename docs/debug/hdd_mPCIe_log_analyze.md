@@ -286,7 +286,7 @@ mPCIe2 case you can not fully load into OS: it reboots after: `tsc unst`
   executing in this case.
 
   This is done in file
-  [seabios/src/hw/ahci.c](https://github.com/pcengines/seabios/blob/apu2-support/src/hw/ahci.c),
+  [seabios/src/hw/ahci.c](https://github.com/pcengines/seabios/blob/apu_support/src/hw/ahci.c),
   function `ahci_port_setup` that starts with line 421.
 
   ```

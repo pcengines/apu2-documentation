@@ -130,7 +130,7 @@ Flashing procedure
 
 	Type `root` as password to finish logging process.
 
-	> Steps shown above can be automated using Robot Framework and [this test](https://github.com/pcengines/apu-test-suite/pull/2/files).
+	> Steps shown above can be automated using Robot Framework.
 
 8. Now you can start flashing process. To flash firmware with `flashrom` usage
 	type:

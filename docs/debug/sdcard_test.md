@@ -26,8 +26,7 @@
 ### Diff analyze
 
 
-1. [GOOD-not-inserted.cap](https://github.com/pcengines/apu2-documentation/blob/master/docs/debug/logs/GOOD-not-inserted.cap)
-      vs [BAD-not-inserted.cap](https://github.com/pcengines/apu2-documentation/blob/master/docs/debug/logs/BAD-not-inserted.cap)
+1. `GOOD-not-inserted.cap` vs `BAD-not-inserted.cap`
 
       No differences other than timing differences such as:
 

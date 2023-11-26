@@ -1,6 +1,6 @@
 # Pin mapping
 
-![TPM1a](/docs/TPM1a.png)
+![TPM1a](TPM1a.png)
 
 APU3/4 | TPM1a
 -----|-----

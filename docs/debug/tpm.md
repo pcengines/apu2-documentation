@@ -52,7 +52,7 @@ The first condition fails and code falls down to TPM 1.2.
 
 ### Fix
 
-According to Infineon [datasheet](https://www.infineon.com/dgdl/Infineon-TPM%20SLB%209665-DS-v10_15-EN.pdf?fileId=5546d4625185e0e201518b83d9273d87),
+According to Infineon [datasheet](https://www.scribd.com/document/390073324/Infineon-TPM-SLB-9665-DS-v10-15-EN-1-pdf),
 the CHIP complies to
 [TPM Main Specification, Family "2.0", Level 00, Revision 01.16](https://trustedcomputinggroup.org/resource/tpm-library-specification/).
 However I could nto find there any information about hardware registers.

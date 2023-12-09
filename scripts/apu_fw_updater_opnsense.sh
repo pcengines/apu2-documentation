@@ -86,7 +86,7 @@ flash () {
 
   if [ "${NUMBER}" -gt 1 ]; then
     # APU2/3/4/5/6
-    flashrom -w "${FILE}" -p internal
+    flashrom -w "${FILE}" -p internal -c "W25Q64BV/W25Q64CV/W25Q64FV"
   else
     # APU1
     flashrom -w "${FILE}" -p internal -c "MX25L1605A/MX25L1606E/MX25L1608E"

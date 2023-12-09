@@ -20,7 +20,7 @@ TYPE="apu2"
 VERSION="4.15.0.3"
 
 # Do not edit after this line
-SRC="https://3mdeb.com/open-source-firmware/pcengines/${TYPE}/"
+SRC="https://dl.3mdeb.com/open-source-firmware/pcengines/${TYPE}/"
 PREFIX="${TYPE}_v${VERSION}"
 FILE="${PREFIX}.rom"
 CHECKSUM="${PREFIX}.SHA256"

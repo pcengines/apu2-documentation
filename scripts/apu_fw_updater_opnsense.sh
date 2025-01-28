@@ -17,10 +17,10 @@
 TYPE="apu2"
 
 # Version of firmware
-VERSION="4.15.0.3"
+VERSION="4.19.0.1"
 
 # Do not edit after this line
-SRC="https://3mdeb.com/open-source-firmware/pcengines/${TYPE}/"
+SRC="https://dl.3mdeb.com/open-source-firmware/pcengines/${TYPE}/"
 PREFIX="${TYPE}_v${VERSION}"
 FILE="${PREFIX}.rom"
 CHECKSUM="${PREFIX}.SHA256"
@@ -61,10 +61,10 @@ download () {
   log "Downloading files ..."
 
   log_sub "- ${FILE}"
-  curl -sS "${SRC}${FILE}" -o "${FILE}"
+  curl -sSL "${SRC}${FILE}" -o "${FILE}"
 
   log_sub "- ${CHECKSUM}"
-  curl -sS "${SRC}${CHECKSUM}" -o "${CHECKSUM}"
+  curl -sSL "${SRC}${CHECKSUM}" -o "${CHECKSUM}"
 
   verify
 

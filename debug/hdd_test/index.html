@@ -1,0 +1,2042 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/debug/hdd_test/">
+      
+      
+        <link rel="prev" href="../hdd_mPCIe_log_analyze/">
+      
+      
+        <link rel="next" href="../iommu/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Hdd test - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hdd test
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" >
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Hdd test</h1>
+
+<p>Test item: mPCIe -&gt; SATA converter <code>ASM1061</code>
+hdd: Seagate Laptop SSHD 1000GB 8GB NAND flash</p>
+<ol>
+<li>
+<p>mPCIe1 without resistor</p>
+<blockquote>
+<p>Note that CLKREQ has been already turned off for mPCIe1 when these test were
+proceeded.</p>
+</blockquote>
+<ul>
+<li>Cold boot: it takes 60-75 sec after power-on until boot menu appears. There
+  is no HDD entry in boot menu.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff58000 (detail=0xdff59b40)
+/dff58000\ Start thread
+|dff58000| AHCI/0: probing
+|dff58000| AHCI/0: link up
+|dff58000| AHCI/0: send cmd ...
+|dff58000| WARNING - Timeout at ahci_command:154!
+|dff58000| AHCI/0: send cmd ...
+|dff58000| WARNING - Timeout at ahci_command:154!
+|dff58000| phys_free dff59c00 (detail=0xdff59bd0)
+|dff58000| phys_free dff59a00 (detail=0xdff59ba0)
+|dff58000| phys_free dff59900 (detail=0xdff59b70)
+|dff58000| phys_free dff61050 (detail=0xdff61020)
+\dff58000/ End thread
+phys_free dff58000 (detail=0xdff59b40)
+</code></pre></div>
+<ul>
+<li>
+<p>After OS boot: HDD is visible and usable under Debian</p>
+</li>
+<li>
+<p>After reboot: boot menu appears as quickly as usual. HDD entry appears in
+  boot menu:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>1. ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+2. AHCI/0: ST1000LM014-SSHD-8GB ATA-9 Hard-Disk (931 GiBytes)
+3. Payload [memtest]
+4. Payload [setup]
+</code></pre></div>
+</li>
+<li>
+<p>mPCIe1 with resistor</p>
+<ul>
+<li>Cold boot: it takes 60-75 sec after power-on until boot menu appears. There
+  is no HDD entry in boot menu.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff58000 (detail=0xdff59b40)
+/dff58000\ Start thread
+|dff58000| AHCI/0: probing
+|dff58000| AHCI/0: link up
+|dff58000| AHCI/0: send cmd ...
+|dff58000| WARNING - Timeout at ahci_command:154!
+|dff58000| AHCI/0: send cmd ...
+|dff58000| WARNING - Timeout at ahci_command:154!
+|dff58000| phys_free dff59c00 (detail=0xdff59bd0)
+|dff58000| phys_free dff59a00 (detail=0xdff59ba0)
+|dff58000| phys_free dff59900 (detail=0xdff59b70)
+|dff58000| phys_free dff61050 (detail=0xdff61020)
+\dff58000/ End thread
+phys_free dff58000 (detail=0xdff59b40)
+All threads complete.
+</code></pre></div>
+<ul>
+<li>
+<p>After OS boot: HDD is visible and usable under Debian</p>
+</li>
+<li>
+<p>After reboot: boot menu appears as quickly as usual. HDD entry appears in
+  boot menu:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>1. ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+2. AHCI/0: ST1000LM014-SSHD-8GB ATA-9 Hard-Disk (931 GiBytes)
+3. Payload [memtest]
+4. Payload [setup]
+</code></pre></div>
+<p>mPCIe1 behaves the same for both mPCIe -&gt; SATA converterts</p>
+</li>
+<li>
+<p>mPCIe2 without resistor</p>
+<ul>
+<li>HDD not detected neither in bootmenu nor in OS</li>
+</ul>
+</li>
+<li>
+<p>mPCIe2 with resistor</p>
+<ul>
+<li>
+<p>HDD not detected in bootmenu</p>
+</li>
+<li>
+<p>After cold boot there is boot menu entry, but cannot boot into OS from
+  mSATA or USB. When loading into OS it reboots after:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>[   12.306297] Clocksource tsc unst
+</code></pre></div>
+<ul>
+<li>then infinite coreboot loops:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff58000 (detail=0xdff59b40)
+/dff58000\ Start thread
+|dff58000| AHCI/0: probing
+|dff58000| AHCI/0: link up
+|dff58000| AHCI/0: send cmd ...
+|dff5d000| send_cmd : read error (status=51 err=04)
+|dff5c000| set_address 0xdff61480
+|dff5e000| ehci_alloc_async_pipe 0xdff61590 0
+|dff5e000| phys_alloc zone=0xdff6df10 size=92 align=80 ret=dff59880 (detail=0xdff59b10)
+|dff5e000| ehci_send_pipe qh=0xdff59880 dir=0 data=0x00000000 size=0
+phys_alloc zone=0xdff6df10 size=68 align=10 ret=dff59830 (detail=0xdff59800)
+phys_alloc zone=0xdff6df10 size=1024 align=400 ret=dff59400 (detail=0xdff593d0)
+phys_alloc zone=0xdff6df10 size=256 align=100 ret=dff59200 (detail=0xdff593a0)
+phys_alloc zone=0xdff6df10 size=256 align=100 ret=dff59100 (detail=0xdff59370)
+phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff57000 (detail=0xdff59340)
+/dff57000\ Start thread
+|dff57000| AHCI/1: probing
+|dff58000| AHCI/0: ... intbits 0x40000001, status 0x51 ...
+|dff58000| AHCI/0: ... finished, status 0x51, ERROR 0x4
+|dff58000| AHCI/0: send cmd ...
+|dff5d000| phys_alloc zone=0xdff6df18 size=44 align=10 ret=f0800 (detail=0xdff59310)
+|dff5d000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff590b0 (detail=0xdff59080)
+|dff5d000| ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+|dff5d000| Searching bootorder for: /pci@i0cf8/*@11/drive@0/disk@0
+|dff5d000| phys_alloc zone=0xdff6df10 size=24 align=10 ret=dff61000 (detail=0xdff59050)
+|dff5d000| Registering bootable: ata0-0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes) (type:2 prio:6 data:f0800)
+|dff5d000| ata_detect resetresult=0000
+|dff5d000| powerup iobase=5010 st=50
+|dff5d000| powerup iobase=5010 st=0
+|dff5d000| ata_detect ata0-1: sc=55 sn=aa dh=b0
+|dff5d000| send_cmd : DRQ not set (status 00)
+\dff5d000/ End thread
+phys_free dff5d000 (detail=0xdff612b0)
+|dff5c000| ehci_alloc_async_pipe 0xdff61480 0
+|dff5c000| phys_alloc zone=0xdff6df10 size=92 align=80 ret=dff5df80 (detail=0xdff612b0)
+|dff5c000| ehci_send_pipe qh=0xdff5df80 dir=0 data=0x00000000 size=0
+phys_alloc zone=0xdff6df10 size=4096 align=1000 ret=dff56000 (detail=0xdff5df50)
+/dff56000\ Start thread
+|dff56000| Searching bootorder for: /pci@i0cf8/*@14,7
+\dff56000/ End thread
+phys_free dff56000 (detail=0xdff5df50)
+|dff57000| AHCI/1: link down
+|dff58000| AHCI/0: ... intbits 0xffffffff, status 0x58 ...
+|dff58000| AHCI/0: ... finished, status 0x58, OK
+|dff58000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5df30 (detail=0xdff5df00)
+|dff58000| Searching bootorder for: /pci@i0cf8/pci-bridge@2,1/*@0/drive@0/disk@0
+|dff58000| AHCI/0: supported modes: udma 6, multi-dma 2, pio 4
+|dff58000| AHCI/0: Set transfer mode to UDMA-6
+|dff58000| AHCI/0: send cmd ...
+
+
+coreboot-9cac328-dirty-4.0.1 Tue Oct  4 12:12:31 UTC 2016 starting...
+14-25-48Mhz Clock settings
+FCH_MISC_REG28 is 0x00400012
+FCH_MISC_REG40 is 0x000c4040
+BSP Family_Model: 00730f01
+cpu_init_detectedx = 00000000
+agesawrapper_amdinitreset() entry
+
+Fch_Oem_config in INIT RESET
+</code></pre></div>
+</li>
+<li>
+<p>After setting CLK3 (GFXCLK) to be always on (just like it was done for
+   mPCIe1 and CLK3 before):</p>
+<ul>
+<li>
+<p>mPCIe2 without resistor behaves the same as mPCIe2 with resistor before this
+  change (coreboot loop)</p>
+</li>
+<li>
+<p>mPCIe2 with resistor behaves the same after change</p>
+</li>
+</ul>
+<p>so: turning CLK to be always on (to ignore CLK_IRQ) causes mPCIe to treat
+card without resistor as the one with resistor</p>
+</li>
+<li>
+<p>So there are two cases:</p>
+<ul>
+<li>
+<p>long coldboot (AHCI timeout in SeaBIOS) and no bootmenu entry for mPCIe1
+  (but after reboot it's OK)</p>
+</li>
+<li>
+<p>coreboot loop for mPCIe2</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Connect HDD to SATA (J7)</p>
+<ul>
+<li>regular boot, bootmenu entry appears after cold or warmboot</li>
+<li>it is handled by IDE (ata.c) not AHCI (ahci.c) - when connected through
+  mPCIe converter it was handled by AHCI</li>
+</ul>
+</li>
+</ol>
+<p>Long boot log:</p>
+<div class="highlight"><pre><span></span><code>[2016-10-22 16:04:16] /dff57000\ Start thread
+[2016-10-22 16:04:16] |dff57000| AHCI/1: probing
+[2016-10-22 16:04:16] |dff57000| AHCI/1: link up
+[2016-10-22 16:04:16] |dff57000| AHCI/1: send cmd ...
+[2016-10-22 16:04:48] |dff57000| WARNING - Timeout at ahci_command:154!
+[2016-10-22 16:04:48] |dff57000| AHCI/1: send cmd ...
+[2016-10-22 16:05:20] |dff57000| WARNING - Timeout at ahci_command:154!
+[2016-10-22 16:05:20] |dff57000| phys_free dff5a400 (detail=0xdff5a3d0)
+[2016-10-22 16:05:20] |dff57000| phys_free dff5a200 (detail=0xdff5a3a0)
+[2016-10-22 16:05:20] |dff57000| phys_free dff5a100 (detail=0xdff5a370)
+[2016-10-22 16:05:20] |dff57000| phys_free dff5ac50 (detail=0xdff5ac20)
+[2016-10-22 16:05:20] \dff57000/ End thread
+[2016-10-22 16:05:20] phys_free dff57000 (detail=0xdff5a340)
+</code></pre></div>
+<p>boot loop, reboots there:</p>
+<div class="highlight"><pre><span></span><code>[2016-10-22 15:57:55] /dff57000\ Start thread
+[2016-10-22 15:57:55] |dff57000| AHCI/1: probing
+[2016-10-22 15:57:55] |dff57000| AHCI/1: link up
+[2016-10-22 15:57:55] |dff57000| AHCI/1: send cmd ...
+[2016-10-22 15:57:56] |dff57000| AHCI/1: ... intbits 0x40000001, status 0x51 ...
+[2016-10-22 15:57:56] |dff57000| AHCI/1: ... finished, status 0x51, ERROR 0x4
+[2016-10-22 15:57:56] |dff57000| AHCI/1: send cmd ...
+[2016-10-22 15:57:56] |dff57000| AHCI/1: ... intbits 0xffffffff, status 0x58 ...
+[2016-10-22 15:57:56] |dff57000| AHCI/1: ... finished, status 0x58, OK
+[2016-10-22 15:57:56] |dff57000| phys_alloc zone=0xdff6df10 size=80 align=10 ret=dff5ae60 (detail=0xdff5ae30)
+[2016-10-22 15:57:56] |dff57000| Searching bootorder for: /pci@i0cf8/pci-bridge@2,1/*@0/drive@1/disk@0
+[2016-10-22 15:57:56] |dff57000| AHCI/1: supported modes: udma 6, multi-dma 2, pio 4
+[2016-10-22 15:57:56] |dff57000| AHCI/1: Set transfer mode to UDMA-6
+[2016-10-22 15:57:56] |dff57000| AHCI/1: send cmd ...
+[2016-10-22 15:57:56] |dff57000| AHCI/1: ... intbits 0xffffffff, status 0x58 ...
+[2016-10-22 15:57:56] |dff57000| AHCI/1: ... finished, status 0x58, OK
+
+// REBOOTS HERE
+
+[2016-10-22 15:58:03] coreboot-44ac0ed-dirty-4.0.1 sat oct 22 13:52:29 utc 2016 starting...
+[2016-10-22 15:58:03] 14-25-48mhz clock settings
+[2016-10-22 15:58:03] fch_misc_reg28 is 0x00400012
+[2016-10-22 15:58:03] fch_misc_reg40 is 0x000c4040
+[2016-10-22 15:58:03] bsp family_model: 00730f01
+[2016-10-22 15:58:03] cpu_init_detectedx = 00000000
+[2016-10-22 15:58:03] agesawrapper_amdinitreset() entry
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

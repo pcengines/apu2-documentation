@@ -1,0 +1,2092 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/voyage_image_building_alix/">
+      
+      
+        <link rel="prev" href="../tpm_pin_mapping/">
+      
+      
+        <link rel="next" href="../voyage_linux_netinst/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Building Voyage Linux image for PC Engines ALIX platforms - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-voyage-linux-image-for-pc-engines-alix-platforms" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building Voyage Linux image for PC Engines ALIX platforms
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flashing-cf-card-with-voyage-linux-image-from-httppcenginesch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flashing CF card with Voyage Linux image from http://pcengines.ch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cbmem-and-flashrom-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      cbmem and flashrom installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changing-serial-console-baudrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changing serial console baudrate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voyage-linux-kernel-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voyage Linux kernel modification
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" >
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" >
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flashing-cf-card-with-voyage-linux-image-from-httppcenginesch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flashing CF card with Voyage Linux image from http://pcengines.ch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cbmem-and-flashrom-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      cbmem and flashrom installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changing-serial-console-baudrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changing serial console baudrate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voyage-linux-kernel-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voyage Linux kernel modification
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="building-voyage-linux-image-for-pc-engines-alix-platforms">Building Voyage Linux image for PC Engines ALIX platforms</h1>
+<h2 id="intro">Intro</h2>
+<ul>
+<li>Example DIRECTORY_TO_CF_CARD_DEVICE used in following instructions: <code>/dev/sdc</code></li>
+<li>Voyage Linux <a href="http://pcengines.ch/file/voyage-0.9.2.img.zip">image</a> 
+downloaded from <code>http://pcengines.ch</code> website has no <code>flashrom</code> and <code>cbmem</code> 
+installed</li>
+<li>Voyage Linux kernel of <a href="http://pcengines.ch/file/voyage-0.9.2.img.zip">image</a> 
+downloaded from <code>http://pcengines.ch</code> website has <code>CONFIG_CPU_FREQ</code> option not 
+set, which could be required for <code>coreboot 4.7.x</code></li>
+<li>Linux Voyage default login/password: <code>root/voyage</code></li>
+<li>Linux Voyage default serial console baudrate: <code>38400</code></li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Compact Flash with a minimum of 1 GB of memory</li>
+<li>Compact Flash card reader</li>
+</ul>
+<h2 id="flashing-cf-card-with-voyage-linux-image-from-httppcenginesch">Flashing CF card with Voyage Linux image from <code>http://pcengines.ch</code></h2>
+<ol>
+<li>
+<p>Download <a href="http://pcengines.ch/file/voyage-0.9.2.img.zip">Voyage Linux image for Alix platforms</a>.</p>
+</li>
+<li>
+<p>Unmount all mounted in OS partitions of used CF card:</p>
+</li>
+</ol>
+<p><div class="highlight"><pre><span></span><code>sudo umount &lt;DIRECTORY_TO_CF_CARD_DEVICE&gt;*
+</code></pre></div>
+Eg.:
+<div class="highlight"><pre><span></span><code>sudo umount /dev/sdc*
+</code></pre></div></p>
+<ol>
+<li>Unzip downloaded file and Flash your CF flash with unzipped image:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>unzip -p voyage-0.9.2.img | pv | sudo dd of=&lt;DIRECTORY_TO_CF_CARD_DEVICE&gt; bs=16M
+</code></pre></div>
+<p>Eg.:
+<div class="highlight"><pre><span></span><code>unzip -p voyage-0.9.2.img | pv | sudo dd of=/dev/sdc bs=16M
+</code></pre></div></p>
+<p>After succesful CF card flashing information similar to shown below may appear:
+<div class="highlight"><pre><span></span><code>60+1 records in
+60+1 records out
+1014644736 bytes (1.0 GB, 968 MiB) copied, 32.4125 s, 31.3 MB/s
+</code></pre></div></p>
+<p>But you still may check that data copying process has been finished. To check 
+that type in a new terminal or terminal tab:</p>
+<div class="highlight"><pre><span></span><code>watch grep -e Dirty: -e Writeback: /proc/meminfo
+</code></pre></div>
+<p>Then type in the first terminal command which cause cache dropping to device:
+<div class="highlight"><pre><span></span><code>sync
+</code></pre></div>
+and wait until <code>sync</code> process end. After that <code>Dirty</code> and <code>Writeback</code> values
+should be near the <code>0</code> value. Now you can safety remove your CF card.</p>
+<blockquote>
+<p>It's important to not interrupt the flashing process.</p>
+</blockquote>
+<p>After successful performing steps shown above, Voyage Linux image may be 
+installed on your CF card.</p>
+<h2 id="cbmem-and-flashrom-installation"><code>cbmem</code> and <code>flashrom</code> installation</h2>
+<p>Boot to your OS and follow steps contained in the following instructions:</p>
+<p><a href="../cbmem_building/"><code>cbmem</code> installation</a></p>
+<p><a href="../flashrom_building/"><code>flashrom</code> installation</a></p>
+<h2 id="changing-serial-console-baudrate">Changing serial console baudrate</h2>
+<p>To change serial console baudrate to custom value follow steps 
+contained in <a href="../os_boot_serial_console/">this instruction</a>.</p>
+<h2 id="voyage-linux-kernel-modification">Voyage Linux kernel modification</h2>
+<p>There is possibility to change kernel configuration without building new Voyage 
+Linux image. To do that you can use debian packages. </p>
+<ol>
+<li>Check your kernel version on the target device after booting to OS:</li>
+</ol>
+<p><div class="highlight"><pre><span></span><code>uname -r
+</code></pre></div>
+Example output
+<div class="highlight"><pre><span></span><code>3.14.12-voyage
+</code></pre></div>
+That means that kernel version is <code>3.14.12</code>.</p>
+<ol>
+<li>
+<p>Find and download the same version of kernel from (https://www.kernel.org/).
+Eg. for <code>3.14.12</code> is could be <code>3.14.X</code> version when <code>X &gt;= 12</code>.
+Then extract the downloaded archive with kernel files.</p>
+</li>
+<li>
+<p>Transfer config file from target device <code>/boot</code> directory to your PC. It 
+should be named similar to <code>config-3.14.12-voyage</code>.</p>
+</li>
+<li>
+<p>Rename config file to <code>.config</code> and place in the directory where 
+extracted kernel files are placed.</p>
+</li>
+<li>
+<p>Run docker container:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>docker run --rm -v ${PWD}:/workdir -t -i pc-engines/apu2 bash
+</code></pre></div>
+<p>If you don't have <code>pc-engines/apu2</code> environment built follow <a href="https://github.com/pcengines/apu2-documentation/blob/864294e6c2219d70f174272f2e1b5f99b8b7b1db/docs/building_env.md">this instruction</a>.</p>
+<ol>
+<li>Read old config file:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make oldconfig
+</code></pre></div>
+<p>You can be asked there for some kernel setting. Set them as you need. </p>
+<ol>
+<li>Run configuration menu and enable desired kernel elements:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make menuconfig
+</code></pre></div>
+<ol>
+<li>Build kernel:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make CPUS=$(nproc)
+</code></pre></div>
+<ol>
+<li>Build debian packages:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make deb-pkg CPUS=$(nproc)
+</code></pre></div>
+<p>Created packages should be in the directory one level above.</p>
+<ol>
+<li>
+<p>Find package with <code>image</code> in name 
+(eg. <code>linux-image-3.10.107_3.10.107-2_i386.deb</code>) and send it to the target 
+device.</p>
+</li>
+<li>
+<p>Install packages on the target device:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>dpkg -i &lt;name of image package&gt;
+</code></pre></div>
+<p>Eg.
+<div class="highlight"><pre><span></span><code>dpkg -i linux-image-3.10.107_3.10.107-2_i386.deb
+</code></pre></div></p>
+<p>That process changes grub configuration. It adds new positions on grub menu 
+list. Often serial console redirection is disabled. To change this follow
+<a href="../os_boot_serial_console/">this instruction</a>.</p>
+<ol>
+<li>After <code>reboot</code> system with updated kernel will be on the Grub menu list.
+It will have kernel version contained within the name.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

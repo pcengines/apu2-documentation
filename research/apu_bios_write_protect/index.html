@@ -1,0 +1,2168 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/research/apu_bios_write_protect/">
+      
+      
+        <link rel="prev" href="../../debug/warmboot_reset/">
+      
+      
+        <link rel="next" href="../early-cbmem-implementation/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>BIOS write protect - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bios-write-protect" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              BIOS write protect
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" >
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rationale
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documents-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documents used
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documents used">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bkdg-no1" class="md-nav__link">
+    <span class="md-ellipsis">
+      BKDG no.1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bkdg-no2" class="md-nav__link">
+    <span class="md-ellipsis">
+      BKDG no.2
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-investigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial investigation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flash-writes-blocking-using-register-definitions-in-bkdg-no1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flash writes blocking using register definitions in BKDG no.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flash-writes-blocking-using-register-definitions-in-bkdg-no2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flash writes blocking using register definitions in BKDG no.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rationale
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documents-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documents used
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documents used">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bkdg-no1" class="md-nav__link">
+    <span class="md-ellipsis">
+      BKDG no.1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bkdg-no2" class="md-nav__link">
+    <span class="md-ellipsis">
+      BKDG no.2
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-investigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial investigation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flash-writes-blocking-using-register-definitions-in-bkdg-no1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flash writes blocking using register definitions in BKDG no.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flash-writes-blocking-using-register-definitions-in-bkdg-no2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flash writes blocking using register definitions in BKDG no.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="bios-write-protect">BIOS write protect</h1>
+<h2 id="rationale">Rationale</h2>
+<p>Enabling of the SPI flash locking on APU2/3 boards could prove to be useful,
+in order to prevent BIOS updates and/or malicious binary injection to the
+BIOS flash memory during system runtime and/or remotely.</p>
+<h2 id="documents-used">Documents used</h2>
+<h3 id="bkdg-no1">BKDG no.1</h3>
+<ul>
+<li><a href="http://support.amd.com/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf">BKDG for family 16h model 30h processor</a></li>
+</ul>
+<h3 id="bkdg-no2">BKDG no.2</h3>
+<ul>
+<li><a href="http://support.amd.com/TechDocs/48751_16h_bkdg.pdf">BKDG for family 16h models 00h-0Fh processors</a></li>
+</ul>
+<h2 id="initial-investigation">Initial investigation</h2>
+<p>At first, <a href="#bkdg-no1">BKDG</a> for processor family 16h model 30h, as stated in
+<code>/proc/cpuinfo</code> of used Linux distribution, was used as a reference:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/proc/cpuinfo
+...
+
+processor<span class="w">       </span>:<span class="w"> </span><span class="m">3</span>
+vendor_id<span class="w">       </span>:<span class="w"> </span>AuthenticAMD
+cpu<span class="w"> </span>family<span class="w">      </span>:<span class="w"> </span><span class="m">22</span>
+model<span class="w">           </span>:<span class="w"> </span><span class="m">48</span>
+model<span class="w"> </span>name<span class="w">      </span>:<span class="w"> </span>AMD<span class="w"> </span>GX-412TC<span class="w"> </span>SOC
+...
+</code></pre></div>
+<p>There is a possibility to block the writes (and reads) to flash using the
+registers described in paragraph <strong>3.26.9.2 SPIx1D Alt_SPI_CS</strong>
+(<code>SpiProtectEn0</code>, <code>SpiProtectLock</code>). Definition of address ranges,
+that are to be blocked, is described in paragraph
+<strong>3.26.9.1 D14F3x[5C,58,54,50] ROM Protect 3, 2, 1, 0</strong></p>
+<p>SPI WP# is on the J2 header (page 12 on the <a href="http://www.pcengines.ch/schema/apu2c.pdf">board schematics</a>).
+This signal is connected to the dedicated SPI WP# pin of the APU chip and can't
+be controlled like a GPIO.</p>
+<p>First test was done checking the behavior of the SPI WP# pin, when shorted to
+ground. No change was noticed. Flashing was still possible using <code>flashrom</code>
+application on Voyage Linux distribution.</p>
+<h2 id="flash-writes-blocking-using-register-definitions-in-bkdg-no1">Flash writes blocking using register definitions in BKDG no.1</h2>
+<p>PCI config registers for device 14h function 3h (offset 50h) was set according
+to <a href="#bkdg-no1">BKDG no.1</a>.</p>
+<ul>
+<li><code>RomBase</code> was set to 0 (as for the start of the flash addressing),</li>
+<li><code>WriteProtect</code> was set to 1,</li>
+<li><code>ReadProtect</code> was set to 0,</li>
+<li><code>RangeUnit</code> was set to 1 (64kB unit size),</li>
+<li><code>Range</code> was set to <code>0x80</code> (8MB flash locked)</li>
+</ul>
+<p>SPI device memory mapped register (<code>BAR</code> for this device is set using PCI config
+register <code>0xA0</code> of the device 14h, function 3h), offset <code>0x1D</code> was set:</p>
+<ul>
+<li><code>SpiProtectEn0</code> to 1,</li>
+<li><code>SpiProtectLock</code> to 1.</li>
+</ul>
+<p><code>lspci</code> output:</p>
+<div class="highlight"><pre><span></span><code>$ lspci -s 14.3 -xxx
+00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge (rev 11)
+00: 22 10 0e 78 0f 00 20 02 11 00 01 06 00 00 80 00
+10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+20: 00 00 00 00 00 00 00 00 00 00 00 00 22 10 0e 78
+30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+40: 04 00 00 00 d5 ff 03 ff 07 ff 20 03 00 00 00 00
+50: 80 05 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+60: 00 00 00 00 00 0e f8 03 0e 00 0f 00 00 ff ff ff
+70: 67 45 23 00 0c 00 00 00 90 00 00 00 05 0b 00 00
+80: 08 00 03 a8 00 00 00 00 00 00 00 00 00 00 00 00
+90: e8 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 02 00 c1 fe 2f 01 00 00 00 00 00 00 00 00 00 00
+b0: 00 00 00 00 00 00 00 00 04 00 e9 3d 00 00 00 00
+c0: 00 00 00 00 00 00 00 00 00 00 00 80 47 10 82 ff
+d0: 86 ff ff 08 42 00 00 00 00 00 00 00 00 00 00 00
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</code></pre></div>
+<p>Using <code>flashrom</code> utility, flash was still somewhat writeable, but returned
+errors during verification process.</p>
+<div class="highlight"><pre><span></span><code>$ flashrom -w coreboot.rom -p internal:boardmismatch=force
+flashrom v0.9.9-r1954 on Linux 3.16.7-ckt9-voyage (x86_64)
+flashrom is free software, get the source code at https://flashrom.org
+
+Calibrating delay loop... delay loop is unreliable, trying to continue OK.
+coreboot table found at 0xdffae000.
+Found chipset &quot;AMD FCH&quot;.
+Enabling flash write... OK.
+Found Winbond flash chip &quot;W25Q64.V&quot; (8192 kB, SPI) mapped at physical address 0x00000000ff800000.
+Reading old flash chip contents... done.
+Erasing and writing flash chip... Reading current flash chip contents... FAILED at 0x00060000! Expected=0xff, Found=0x55, failed byte count from 0x00060000-0x00060fff: 0xfdf
+ERASE FAILED!
+done. Looking for another erase function.
+Erase/write done.
+Verifying flash... FAILED at 0x00060000! Expected=0x55, Found=0xff, failed byte count from 0x00000000-0x007fffff: 0x14500
+Your flash chip is in an unknown state.
+Get help on IRC at chat.freenode.net (channel #flashrom) or
+mail flashrom@flashrom.org with the subject &quot;FAILED: &lt;your board name&gt;&quot;!
+-------------------------------------------------------------------------------
+DO NOT REBOOT OR POWEROFF!
+</code></pre></div>
+<p>Platform was <em>not booting</em> anymore.</p>
+<h2 id="flash-writes-blocking-using-register-definitions-in-bkdg-no2">Flash writes blocking using register definitions in BKDG no.2</h2>
+<p>In <a href="#bkdg-no2">BKDG no.2</a> definition of the PCI config registers for device 14h
+function 3h is different
+(paragraph <strong>3.25.9.1 D14F3x[5C,58,54,50] ROM Protect 3, 2, 1, 0</strong>).</p>
+<p>According to the document above, registers were set like this:</p>
+<p>Offset <code>0x50</code>:</p>
+<ul>
+<li><code>RomBase</code> was set to <code>0</code> (as for the start of the flash addressing),</li>
+<li><code>RomOffset</code> was set to <code>1ff</code> (512kB),</li>
+<li><code>ReadProtect</code> was set to <code>1</code>,</li>
+<li><code>WriteProtect</code> was set to <code>1</code>.</li>
+</ul>
+<p>Offset <code>0x54</code>:</p>
+<ul>
+<li><code>RomBase</code> was set to <code>0x005ff800</code> (as for the AGESA fw offset in flash),</li>
+<li><code>RomOffset</code> was set to <code>1ff</code> (512kB),</li>
+<li><code>ReadProtect</code> was set to <code>1</code>,</li>
+<li><code>WriteProtect</code> was set to <code>1</code>.</li>
+</ul>
+<p>SPI device memory mapped register, offset <code>0x1D</code> was set as in the test before.</p>
+<p><code>lspci</code> output:</p>
+<div class="highlight"><pre><span></span><code>$ lspci -s 14.3 -xxx
+00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge (rev 11)
+00: 22 10 0e 78 0f 00 20 02 11 00 01 06 00 00 80 00
+10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+20: 00 00 00 00 00 00 00 00 00 00 00 00 22 10 0e 78
+30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+40: 04 00 00 00 d5 ff 03 ff 07 ff 20 03 00 00 00 00
+50: ff 07 00 00 ff ff 5f 00 00 00 00 00 00 00 00 00
+60: 00 00 00 00 00 0e f8 03 0e 00 0f 00 00 ff ff ff
+70: 67 45 23 00 0c 00 00 00 90 00 00 00 05 0a 00 00
+80: 08 00 03 a8 00 00 00 00 00 00 00 00 00 00 00 00
+90: e8 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 02 00 c1 fe 2f 01 00 00 00 00 00 00 00 00 00 00
+b0: 00 00 00 00 00 00 00 00 04 00 e9 3d 00 00 00 00
+c0: 00 00 00 00 00 00 00 00 00 00 00 80 47 10 82 ff
+d0: 86 ff ff 08 42 00 00 00 00 00 00 00 00 00 00 00
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</code></pre></div>
+<p>Using <code>flashrom</code> utility flashing the vital areas is not possible.</p>
+<div class="highlight"><pre><span></span><code>$ flashrom -w coreboot.rom -p internal:boardmismatch=force
+flashrom v0.9.9-r1954 on Linux 3.16.7-ckt9-voyage (x86_64)
+flashrom is free software, get the source code at https://flashrom.org
+
+Calibrating delay loop... OK.
+coreboot table found at 0xdffae000.
+Found chipset &quot;AMD FCH&quot;.
+Enabling flash write... OK.
+Disabling read write protection of flash addresses from 0x00000000 to 0x0007ffff failed.
+Disabling read write protection of flash addresses from 0x005ff800 to 0x0067f7ff failed.
+Found Winbond flash chip &quot;W25Q64.V&quot; (8192 kB, SPI) mapped at physical address 0x00000000ff800000.
+Reading old flash chip contents... done.
+Erasing and writing flash chip... Erase/write done.
+Verifying flash... FAILED at 0x00000000! Expected=0x4c, Found=0xff, failed byte count from 0x00000000-0x007fffff: 0x167107
+Your flash chip is in an unknown state.
+Get help on IRC at chat.freenode.net (channel #flashrom) or
+mail flashrom@flashrom.org with the subject &quot;FAILED: &lt;your board name&gt;&quot;!
+-------------------------------------------------------------------------------
+DO NOT REBOOT OR POWEROFF!
+</code></pre></div>
+<p>Despite the warning, board was still bootable and contained old firmware.</p>
+<h2 id="conclusions">Conclusions</h2>
+<p><a href="#bkdg-no1">BKDG</a> for processor family/model used in APU2/3 platform is not
+correct. One has to use the <a href="#bkdg-no2">BKDG</a> for older processor family/models.</p>
+<p>Blocking the flash writes/reads on APU2/3 boards is certainly possible, but
+according to research done, it's not possible to lock the full 8MB of flash
+memory (only 2MB at most using all 4 blockable regions).
+Unfortunately choosing the vital areas of flash to be blocked, is also
+very difficult as coreboot creates layout in a dynamic way, so it could
+vary between versions (e.g. legacy vs mainline).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

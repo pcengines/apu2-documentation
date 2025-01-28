@@ -1,0 +1,74 @@
+diff --git a/Common/Crypt/Linux/Crypt.c b/Common/Crypt/Linux/Crypt.c
+index f034afb1dc11..fcc88a9f5694 100755
+--- a/Common/Crypt/Linux/Crypt.c
++++ b/Common/Crypt/Linux/Crypt.c
+@@ -50,10 +50,10 @@ Crypt_HMAC(
+ {
+ 	unsigned int unReturnValue = RC_E_FAIL;
+ 
++	HMAC_CTX *sContext = HMAC_CTX_new();
+ 	do
+ 	{
+ 		unsigned int unHmacLength = SHA1_DIGEST_SIZE;
+-		HMAC_CTX sContext = {0};
+ 		memset(PrgbHMAC, 0, SHA1_DIGEST_SIZE);
+ 
+ 		// Check parameters
+@@ -64,15 +64,16 @@ Crypt_HMAC(
+ 		}
+ 
+ 		// Calculate HMAC
+-		HMAC_CTX_init(&sContext);
+-		HMAC_Init_ex(&sContext, PrgbKey, SHA1_DIGEST_SIZE, EVP_sha1(), NULL);
+-		HMAC_Update(&sContext, PrgbInputMessage, PusInputMessageSize);
+-		HMAC_Final(&sContext, PrgbHMAC, &unHmacLength);
+-		HMAC_CTX_cleanup(&sContext);
++		HMAC_CTX_reset(sContext);
++		HMAC_Init_ex(sContext, PrgbKey, SHA1_DIGEST_SIZE, EVP_sha1(), NULL);
++		HMAC_Update(sContext, PrgbInputMessage, PusInputMessageSize);
++		HMAC_Final(sContext, PrgbHMAC, &unHmacLength);
+ 		unReturnValue = RC_SUCCESS;
+ 	}
+ 	WHILE_FALSE_END;
+ 
++	HMAC_CTX_free(sContext);
++
+ 	return unReturnValue;
+ }
+ 
+@@ -351,7 +352,6 @@ Crypt_EncryptRSA(
+ 			unReturnValue = RC_E_FAIL;
+ 			break;
+ 		}
+-		pRSAPubKey->n = pbnPublicModulus;
+ 
+ 		pbnExponent = BN_bin2bn((const BYTE*)PrgbPublicExponent, PunPublicExponentSize, pbnExponent);
+ 		if (NULL == pbnExponent)
+@@ -359,8 +359,7 @@ Crypt_EncryptRSA(
+ 			unReturnValue = RC_E_FAIL;
+ 			break;
+ 		}
+-		pRSAPubKey->e = pbnExponent;
+-		pRSAPubKey->d = NULL;
++		RSA_set0_key(pRSAPubKey, pbnPublicModulus, pbnExponent, NULL);
+ 
+ 		// Add padding to the decrypted data
+ 		if (CRYPT_ES_RSAESOAEP_SHA1_MGF1 == PusEncryptionScheme)
+@@ -469,7 +468,6 @@ Crypt_VerifySignature(
+ 			unReturnValue = RC_E_FAIL;
+ 			break;
+ 		}
+-		pRSAPubKey->n = pbnModulus;
+ 
+ 		pbnExponent = BN_bin2bn(RSA_PUB_EXPONENT_KEY_ID_0, sizeof(RSA_PUB_EXPONENT_KEY_ID_0), pbnExponent);
+ 		if (NULL == pbnExponent)
+@@ -477,8 +475,7 @@ Crypt_VerifySignature(
+ 			unReturnValue = RC_E_FAIL;
+ 			break;
+ 		}
+-		pRSAPubKey->e = pbnExponent;
+-		pRSAPubKey->d = NULL;
++		RSA_set0_key(pRSAPubKey, pbnModulus, pbnExponent, NULL);
+ 
+ 		{
+ 			BYTE prgbDecryptedDigest[sizeof(RSA_PUB_MODULUS_KEY_ID_0)] = {0};

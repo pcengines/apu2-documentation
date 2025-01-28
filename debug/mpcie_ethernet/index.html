@@ -1,0 +1,2902 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/debug/mpcie_ethernet/">
+      
+      
+        <link rel="prev" href="../iommu/">
+      
+      
+        <link rel="next" href="../mpcie1_mpcie2_ethernet_card/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Mpcie ethernet - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mpcie ethernet
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mpcie-slot-1-slot" class="md-nav__link">
+    <span class="md-ellipsis">
+      mPCIe slot 1 slot
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mPCIe slot 1 slot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#establishing-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Establishing connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-multiple-interfaces-at-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating multiple interfaces at once
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mpcie-slot-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      mPCIe slot 2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mPCIe slot 2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device-identification_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device identification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mpcie-slot-2-with-clock-always-enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      mPCIe slot 2 with clock always enabled
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mPCIe slot 2 with clock always enabled">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device-identification_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#establishing-connection_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Establishing connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-multiple-interfaces-at-once_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating multiple interfaces at once
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" >
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intro
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mpcie-slot-1-slot" class="md-nav__link">
+    <span class="md-ellipsis">
+      mPCIe slot 1 slot
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mPCIe slot 1 slot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#establishing-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Establishing connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-multiple-interfaces-at-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating multiple interfaces at once
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mpcie-slot-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      mPCIe slot 2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mPCIe slot 2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device-identification_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device identification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mpcie-slot-2-with-clock-always-enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      mPCIe slot 2 with clock always enabled
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mPCIe slot 2 with clock always enabled">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device-identification_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#establishing-connection_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Establishing connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-multiple-interfaces-at-once_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating multiple interfaces at once
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Mpcie ethernet</h1>
+
+<h3 id="intro">Intro</h3>
+<p>Device under test is mPCIe extension card with double Ethernet interfaces
+exposed. Their MAC addresses are:</p>
+<div class="highlight"><pre><span></span><code>00:e0:4c:68:05:c8
+00:e0:4c:68:05:c9
+</code></pre></div>
+<ul>
+<li>
+<p>Platform is APU2C4</p>
+</li>
+<li>
+<p>Firmware is
+  <a href="https://github.com/pcengines/coreboot/tree/v4.5.8">coreboot v4.5.8</a>
+  from PC engines fork.</p>
+</li>
+<li>
+<p>Operating system is Voyage Linux. <code>uname -a</code> output:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>Linux voyage 3.16.7-ckt9-voyage #1 SMP Wed Apr 22 23:04:57 HKT 2015 x86_64 GNU/Linux
+</code></pre></div>
+<h3 id="mpcie-slot-1-slot">mPCIe slot 1 slot</h3>
+<h4 id="device-identification">Device identification</h4>
+<p>Ethernet interfaces from extension card are correctly detected:</p>
+<div class="highlight"><pre><span></span><code>ip a
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc pfifo_fast state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c8 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.10/24 brd 10.0.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::2e0:4cff:fe68:5c8/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth1: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc pfifo_fast state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c9 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.120/24 brd 192.168.0.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::2e0:4cff:fe68:5c9/64 scope link
+       valid_lft forever preferred_lft forever
+4: eth2: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bc brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::20d:b9ff:fe43:3fbc/64 scope link
+       valid_lft forever preferred_lft forever
+5: eth3: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bd brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.108/24 brd 192.168.0.255 scope global eth3
+       valid_lft forever preferred_lft forever
+    inet6 fe80::20d:b9ff:fe43:3fbd/64 scope link
+       valid_lft forever preferred_lft forever
+6: eth4: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0d:b9:43:3f:be brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.112/24 brd 192.168.0.255 scope global eth4
+       valid_lft forever preferred_lft forever
+    inet6 fe80::20d:b9ff:fe43:3fbe/64 scope link
+       valid_lft forever preferred_lft forever
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>lspci
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1566
+00:02.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 156b
+00:02.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.4 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.5 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:08.0 Encryption controller: Advanced Micro Devices, Inc. [AMD] Device 1537
+00:10.0 USB controller: Advanced Micro Devices, Inc. [AMD] FCH USB XHCI Controller (rev 11)
+00:11.0 SATA controller: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [IDE mode] (rev 39)
+00:13.0 USB controller: Advanced Micro Devices, Inc. [AMD] FCH USB EHCI Controller (rev 39)
+00:14.0 SMBus: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller (rev 42)
+00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge (rev 11)
+00:14.7 SD Host controller: Advanced Micro Devices, Inc. [AMD] FCH SD Flash Controller (rev 01)
+00:18.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1580
+00:18.1 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1581
+00:18.2 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1582
+00:18.3 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1583
+00:18.4 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1584
+00:18.5 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1585
+01:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+02:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+03:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+04:00.0 PCI bridge: ASMedia Technology Inc. Device 1182
+05:03.0 PCI bridge: ASMedia Technology Inc. Device 1182
+05:07.0 PCI bridge: ASMedia Technology Inc. Device 1182
+06:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ether)
+07:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411
+</code></pre></div>
+<p>Our extension card controllers are detected as follows:</p>
+<div class="highlight"><pre><span></span><code>lspci -v -s 06:00.00
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>06:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 06)
+        Subsystem: Realtek Semiconductor Co., Ltd. Device 0123
+        Flags: bus master, fast devsel, latency 0, IRQ 75
+        I/O ports at 1000 [size=256]
+        Memory at f7800000 (64-bit, non-prefetchable) [size=4K]
+        Memory at f7600000 (64-bit, prefetchable) [size=16K]
+        Capabilities: [40] Power Management version 3
+        Capabilities: [50] MSI: Enable+ Count=1/1 Maskable- 64bit+
+        Capabilities: [70] Express Endpoint, MSI 01
+        Capabilities: [b0] MSI-X: Enable- Count=4 Masked-
+        Capabilities: [d0] Vital Product Data
+        Capabilities: [100] Advanced Error Reporting
+        Capabilities: [140] Virtual Channel
+        Capabilities: [160] Device Serial Number 01-00-00-00-68-4c-e0-00
+        Kernel driver in use: r8169
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>lspci -v -s 07:00.00
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>07:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 06)
+        Subsystem: Realtek Semiconductor Co., Ltd. Device 0123
+        Flags: bus master, fast devsel, latency 0, IRQ 76
+        I/O ports at 2000 [size=256]
+        Memory at f7900000 (64-bit, non-prefetchable) [size=4K]
+        Memory at f7700000 (64-bit, prefetchable) [size=16K]
+        Capabilities: [40] Power Management version 3
+        Capabilities: [50] MSI: Enable+ Count=1/1 Maskable- 64bit+
+        Capabilities: [70] Express Endpoint, MSI 01
+        Capabilities: [b0] MSI-X: Enable- Count=4 Masked-
+        Capabilities: [d0] Vital Product Data
+        Capabilities: [100] Advanced Error Reporting
+        Capabilities: [140] Virtual Channel
+        Capabilities: [160] Device Serial Number 01-00-00-00-68-4c-e0-00
+        Kernel driver in use: r8169
+</code></pre></div>
+<h4 id="establishing-connection">Establishing connection</h4>
+<p>For the purpose of following test, automatic connection initialization was
+disabled by erasing <code>/etc/network/interfaces</code> file content. No network manager
+was present as well.</p>
+<p>Available Ethernet interfaces list:</p>
+<div class="highlight"><pre><span></span><code>2: eth0: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c8 brd ff:ff:ff:ff:ff:ff
+3: eth1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c9 brd ff:ff:ff:ff:ff:ff
+4: eth2: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bc brd ff:ff:ff:ff:ff:ff
+5: eth3: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bd brd ff:ff:ff:ff:ff:ff
+6: eth4: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:be brd ff:ff:ff:ff:ff:ff
+</code></pre></div>
+<ul>
+<li>First interface (00:e0:4c:68:05:c9 MAC address) from extension card:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>ifconfig eth1 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  105.204628] r8169 0000:07:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[  105.313609] r8169 0000:07:00.0 eth1: link down
+[  105.318155] r8169 0000:07:00.0 eth1: link down
+[  105.318482] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+[  107.209683] r8169 0000:07:00.0 eth1: link up
+[  107.214014] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth1
+ifconfig eth1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth1      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c9
+          inet addr:192.168.0.120  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:22 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:19 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:2945 (2.8 KiB)  TX bytes:2060 (2.0 KiB)
+</code></pre></div>
+<p>Pinging some internal or external addresses from APU2 works:</p>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.374 ms
+64 bytes from 192.168.0.1: icmp_seq=2 ttl=64 time=0.266
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping google.pl
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING google.pl (172.217.20.195) 56(84) bytes of data.
+64 bytes from waw02s08-in-f195.1e100.net (172.217.20.195): icmp_seq=1 ttl=57 time=6.52 ms
+64 bytes from waw02s08-in-f195.1e100.net (172.217.20.195): icmp_seq=2 ttl=57 time=6.48 ms
+</code></pre></div>
+<p>Pinging <code>eth1</code> interface address from different PC works as well:</p>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.120
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.120 (192.168.0.120) 56(84) bytes of data.
+64 bytes from 192.168.0.120: icmp_seq=1 ttl=64 time=0.592 ms
+64 bytes from 192.168.0.120: icmp_seq=2 ttl=64 time=0.482 ms
+</code></pre></div>
+<ul>
+<li>Second interface (00:e0:4c:68:05:c8 MAC address) from extension card:</li>
+</ul>
+<blockquote>
+<p>Reboot was executed first.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>ifconfig eth0 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  218.000514] r8169 0000:06:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[  218.118256] r8169 0000:06:00.0 eth0: link down
+[  218.122760] r8169 0000:06:00.0 eth0: link down
+[  218.127347] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[  220.014881] r8169 0000:06:00.0 eth0: link up
+[  220.019250] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient  eth0
+ifconfig eth0
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth0      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c8
+          inet addr:192.168.0.123  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:3 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1240 (1.2 KiB)  TX bytes:1262 (1.2 KiB)
+</code></pre></div>
+<p>Pinging some internal or external addresses from APU2 works:</p>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.391 ms
+64 bytes from 192.168.0.1: icmp_seq=2 ttl=64 time=0.233 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping google.pl
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING google.pl (172.217.20.195) 56(84) bytes of data.
+64 bytes from waw02s08-in-f3.1e100.net (172.217.20.195): icmp_seq=1 ttl=57 time=6.59 ms
+64 bytes from waw02s08-in-f3.1e100.net (172.217.20.195): icmp_seq=2 ttl=57 time=6.44 ms
+</code></pre></div>
+<p>Pinging <code>eth0</code> interface address from different PC works as well:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.123 (192.168.0.123) 56(84) bytes of data.
+64 bytes from 192.168.0.120: icmp_seq=1 ttl=64 time=0.592 ms
+64 bytes from 192.168.0.120: icmp_seq=2 ttl=64 time=0.482 ms
+</code></pre></div>
+<h4 id="operating-multiple-interfaces-at-once">Operating multiple interfaces at once</h4>
+<p>Following interfaces have been connected using separate Ethernet cables:</p>
+<ul>
+<li>
+<p>both interfaces from mPCIe extension card</p>
+</li>
+<li>
+<p>two out of three interfaces from APU2 board</p>
+</li>
+<li>
+<p>Interfaces configuration</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>ifconfig eth0 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  400.659117] r8169 0000:06:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[  400.762913] r8169 0000:06:00.0 eth0: link down
+[  400.767438] r8169 0000:06:00.0 eth0: link down
+[  400.772017] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[  402.677778] r8169 0000:06:00.0 eth0: link up
+[  402.682146] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth0
+ifconfig eth0
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth0      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c8
+          inet addr:192.168.0.132  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:7 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1480 (1.4 KiB)  TX bytes:1332 (1.3 KiB)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ifconfig eth1 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  449.690659] r8169 0000:07:00.0 eth1: link down
+[  449.690686] r8169 0000:07:00.0 eth1: link down
+[  449.699870] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+[  451.626151] r8169 0000:07:00.0 eth1: link up
+[  451.630502] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth1
+ifconfig eth1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth1      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c9
+          inet addr:192.168.0.133  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1300 (1.2 KiB)  TX bytes:1262 (1.2 KiB)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ifconfig eth2 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  484.573775] IPv6: ADDRCONF(NETDEV_UP): eth2: link is not ready
+[  487.225321] igb 0000:01:00.0 eth2: igb: eth2 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[  487.234971] IPv6: ADDRCONF(NETDEV_CHANGE): eth2: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth2
+ifconfig eth2
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth2      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:bc
+          inet addr:192.168.0.134  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbc/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:11 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1720 (1.6 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7a00000-f7a1ffff
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ifconfig eth4 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  528.424071] IPv6: ADDRCONF(NETDEV_UP): eth4: link is not ready
+[  531.111624] igb 0000:03:00.0 eth4: igb: eth4 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[  531.121238] IPv6: ADDRCONF(NETDEV_CHANGE): eth4: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth4
+ifconfig eth4
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth4      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:be
+          inet addr:192.168.0.135  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbe/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:19 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:2200 (2.1 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7c00000-f7c1ffff
+</code></pre></div>
+<ol>
+<li>Each of them can be separately reached from network</li>
+</ol>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.132
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.132 (192.168.0.132) 56(84) bytes of data.
+64 bytes from 192.168.0.132: icmp_seq=2 ttl=64 time=410 ms
+64 bytes from 192.168.0.132: icmp_seq=3 ttl=64 time=551 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.133
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.133 (192.168.0.133) 56(84) bytes of data.
+64 bytes from 192.168.0.133: icmp_seq=1 ttl=64 time=4.31 ms
+64 bytes from 192.168.0.133: icmp_seq=2 ttl=64 time=1.49 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.134
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.134 (192.168.0.134) 56(84) bytes of data.
+64 bytes from 192.168.0.134: icmp_seq=1 ttl=64 time=3.02 ms
+64 bytes from 192.168.0.134: icmp_seq=2 ttl=64 time=1.71 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.135
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.135 (192.168.0.135) 56(84) bytes of data.
+64 bytes from 192.168.0.135: icmp_seq=1 ttl=64 time=2.80 ms
+64 bytes from 192.168.0.135: icmp_seq=2 ttl=64 time=1.71 ms
+</code></pre></div>
+<h3 id="mpcie-slot-2">mPCIe slot 2</h3>
+<h4 id="device-identification_1">Device identification</h4>
+<p>Ethernet interfaces from extension card are not detected:</p>
+<div class="highlight"><pre><span></span><code>lspci
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1566
+00:02.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 156b
+00:02.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.4 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:08.0 Encryption controller: Advanced Micro Devices, Inc. [AMD] Device 1537
+00:10.0 USB controller: Advanced Micro Devices, Inc. [AMD] FCH USB XHCI Controller (rev 11)
+00:11.0 SATA controller: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [IDE mode] (rev 39)
+00:13.0 USB controller: Advanced Micro Devices, Inc. [AMD] FCH USB EHCI Controller (rev 39)
+00:14.0 SMBus: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller (rev 42)
+00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge (rev 11)
+00:14.7 SD Host controller: Advanced Micro Devices, Inc. [AMD] FCH SD Flash Controller (rev 01)
+00:18.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1580
+00:18.1 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1581
+00:18.2 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1582
+00:18.3 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1583
+00:18.4 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1584
+00:18.5 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1585
+01:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+02:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+03:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ip a
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bc brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.135/24 brd 192.168.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::20d:b9ff:fe43:3fbc/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth1: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bd brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.108/24 brd 192.168.0.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::20d:b9ff:fe43:3fbd/64 scope link
+       valid_lft forever preferred_lft forever
+4: eth2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0d:b9:43:3f:be brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.112/24 brd 192.168.0.255 scope global eth2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::20d:b9ff:fe43:3fbe/64 scope link
+       valid_lft forever preferred_lft forever
+</code></pre></div>
+<h3 id="mpcie-slot-2-with-clock-always-enabled">mPCIe slot 2 with clock always enabled</h3>
+<p>This is different from the previous one with the following change in source
+code:</p>
+<div class="highlight"><pre><span></span><code>diff --git a/src/mainboard/pcengines/apu2/romstage.c b/src/mainboard/pcengines/apu2/romstage.c
+index a1c73d1e3424..f018ac5742ce 100644
+--- a/src/mainboard/pcengines/apu2/romstage.c
++++ b/src/mainboard/pcengines/apu2/romstage.c
+@@ -99,7 +99,9 @@ void cache_as_ram_main(unsigned long bist, unsigned long cpu_init_detectedx)
+                data = *((u32 *)(ACPI_MMIO_BASE + MISC_BASE+FCH_MISC_REG04));
+
+                data &amp;= 0xFFFFFF0F;
+-               data |= 0xA &lt;&lt; (1 * 4); // CLKREQ GFX to GFXCLK
++               // make GFXCLK to ignore CLKREQ# input
++               // force it to be always on
++               data |= 0xF &lt;&lt; (1 * 4); // CLKREQ GFX to GFXCLK
+</code></pre></div>
+<h4 id="device-identification_2">Device identification</h4>
+<div class="highlight"><pre><span></span><code>ip a
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bc brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.10/24 brd 10.0.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+3: eth1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bd brd ff:ff:ff:ff:ff:ff
+4: eth2: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:be brd ff:ff:ff:ff:ff:ff
+5: eth3: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c8 brd ff:ff:ff:ff:ff:ff
+6: eth4: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c9 brd ff:ff:ff:ff:ff:ff
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>lspci
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1566
+00:02.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 156b
+00:02.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:02.4 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1
+00:08.0 Encryption controller: Advanced Micro Devices, Inc. [AMD] Device 1537
+00:10.0 USB controller: Advanced Micro Devices, Inc. [AMD] FCH USB XHCI Controller (rev 11)
+00:11.0 SATA controller: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [IDE mode] (rev 39)
+00:13.0 USB controller: Advanced Micro Devices, Inc. [AMD] FCH USB EHCI Controller (rev 39)
+00:14.0 SMBus: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller (rev 42)
+00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge (rev 11)
+00:14.7 SD Host controller: Advanced Micro Devices, Inc. [AMD] FCH SD Flash Controller (rev 01)
+00:18.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1580
+00:18.1 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1581
+00:18.2 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1582
+00:18.3 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1583
+00:18.4 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1584
+00:18.5 Host bridge: Advanced Micro Devices, Inc. [AMD] Device 1585
+01:00.0 PCI bridge: ASMedia Technology Inc. Device 1182
+02:03.0 PCI bridge: ASMedia Technology Inc. Device 1182
+02:07.0 PCI bridge: ASMedia Technology Inc. Device 1182
+03:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ether)
+04:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ether)
+05:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+06:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+07:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+</code></pre></div>
+<p>Our extension card controllers are detected as follows:</p>
+<div class="highlight"><pre><span></span><code>lspci -v -s 03:00.00
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>03:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411
+PCI Express Gigabit Ethernet Controller (rev 06)
+        Subsystem: Realtek Semiconductor Co., Ltd. Device 0123
+        Flags: bus master, fast devsel, latency 0, IRQ 76
+        I/O ports at 1000 [size=256]
+        Memory at f7800000 (64-bit, non-prefetchable) [size=4K]
+        Memory at f7600000 (64-bit, prefetchable) [size=16K]
+        Capabilities: [40] Power Management version 3
+        Capabilities: [50] MSI: Enable+ Count=1/1 Maskable- 64bit+
+        Capabilities: [70] Express Endpoint, MSI 01
+        Capabilities: [b0] MSI-X: Enable- Count=4 Masked-
+        Capabilities: [d0] Vital Product Data
+        Capabilities: [100] Advanced Error Reporting
+        Capabilities: [140] Virtual Channel
+        Capabilities: [160] Device Serial Number 01-00-00-00-68-4c-e0-00
+        Kernel driver in use: r8169
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>lspci -v -s 04:00.00
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>04:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411
+PCI Express Gigabit Ethernet Controller (rev 06)
+        Subsystem: Realtek Semiconductor Co., Ltd. Device 0123
+        Flags: bus master, fast devsel, latency 0, IRQ 77
+        I/O ports at 2000 [size=256]
+        Memory at f7900000 (64-bit, non-prefetchable) [size=4K]
+        Memory at f7700000 (64-bit, prefetchable) [size=16K]
+        Capabilities: [40] Power Management version 3
+        Capabilities: [50] MSI: Enable+ Count=1/1 Maskable- 64bit+
+        Capabilities: [70] Express Endpoint, MSI 01
+        Capabilities: [b0] MSI-X: Enable- Count=4 Masked-
+        Capabilities: [d0] Vital Product Data
+        Capabilities: [100] Advanced Error Reporting
+        Capabilities: [140] Virtual Channel
+        Capabilities: [160] Device Serial Number 01-00-00-00-68-4c-e0-00
+        Kernel driver in use: r8169
+</code></pre></div>
+<h4 id="establishing-connection_1">Establishing connection</h4>
+<p>For the purpose of following test, automatic connection initialization was
+disabled by erasing <code>/etc/network/interfaces</code> file content. No network manager
+was present as well.</p>
+<p>Available Ethernet interfaces list:</p>
+<div class="highlight"><pre><span></span><code>2: eth0: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c8 brd ff:ff:ff:ff:ff:ff
+3: eth1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:e0:4c:68:05:c9 brd ff:ff:ff:ff:ff:ff
+4: eth2: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bc brd ff:ff:ff:ff:ff:ff
+5: eth3: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:bd brd ff:ff:ff:ff:ff:ff
+6: eth4: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0d:b9:43:3f:be brd ff:ff:ff:ff:ff:ff
+</code></pre></div>
+<ul>
+<li>First interface (00:e0:4c:68:05:c9 MAC address) from extension card:</li>
+</ul>
+<blockquote>
+<p>Reboot was executed first.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>ifconfig eth1 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  702.047648] r8169 0000:04:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[  702.161935] r8169 0000:04:00.0 eth1: link down
+[  702.166586] r8169 0000:04:00.0 eth1: link down
+[  702.166817] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+[  704.076523] r8169 0000:04:00.0 eth1: link up
+[  704.080905] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth1
+ifconfig eth1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth1      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c9
+          inet addr:192.168.0.120  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1300 (1.2 KiB)  TX bytes:1332 (1.3 KiB)
+</code></pre></div>
+<p>Pinging some internal or external adresses from APU2 works:</p>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.371 ms
+64 bytes from 192.168.0.1: icmp_seq=2 ttl=64 time=0.313 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping google.pl
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING google.pl (172.217.20.195) 56(84) bytes of data.
+64 bytes from waw02s08-in-f195.1e100.net (172.217.20.195): icmp_seq=1 ttl=57 time=6.54 ms
+64 bytes from waw02s08-in-f195.1e100.net (172.217.20.195): icmp_seq=2 ttl=57 time=6.46 ms
+</code></pre></div>
+<p>Pinging <code>eth1</code> interface address from different PC works well:</p>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.120
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.120 (192.168.0.120) 56(84) bytes of data.
+64 bytes from 192.168.0.120: icmp_seq=1 ttl=64 time=0.755 ms
+64 bytes from 192.168.0.120: icmp_seq=2 ttl=64 time=0.306 ms
+</code></pre></div>
+<ul>
+<li>Second interface (00:e0:4c:68:05:c8 MAC address) from extension card:</li>
+</ul>
+<blockquote>
+<p>Reboot was executed first.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>ifconfig eth0 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[   63.775838] r8169 0000:03:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[   63.880564] r8169 0000:03:00.0 eth0: link down
+[   63.885105] r8169 0000:03:00.0 eth0: link down
+[   63.885192] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[   65.798066] r8169 0000:03:00.0 eth0: link up
+[   65.802396] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient  eth0
+ifconfig eth0
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth0      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c8
+          inet addr:192.168.0.123  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1300 (1.2 KiB)  TX bytes:1332 (1.3 KiB)
+</code></pre></div>
+<p>Pinging some internal or external adresses from APU2 works:</p>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.750 ms
+64 bytes from 192.168.0.1: icmp_seq=2 ttl=64 time=0.266 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping google.pl
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING google.pl (172.217.20.195) 56(84) bytes of data.
+64 bytes from waw02s08-in-f195.1e100.net (172.217.20.195): icmp_seq=1 ttl=57 time=6.87 ms
+64 bytes from waw02s08-in-f195.1e100.net (172.217.20.195): icmp_seq=2 ttl=57 time=6.75 ms
+</code></pre></div>
+<p>Pinging <code>eth0</code> interface address from different PC works well:</p>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.123
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.123 (192.168.0.123) 56(84) bytes of data.
+64 bytes from 192.168.0.123: icmp_seq=1 ttl=64 time=0.800 ms
+64 bytes from 192.168.0.123: icmp_seq=2 ttl=64 time=0.313 ms
+</code></pre></div>
+<h4 id="operating-multiple-interfaces-at-once_1">Operating multiple interfaces at once</h4>
+<p>Following interfaces have been connected using separate Ethernet cables:</p>
+<ul>
+<li>
+<p>both interfaces from mPCIe extension card</p>
+</li>
+<li>
+<p>two out of three interfaces from APU2 board</p>
+</li>
+<li>
+<p>Interfaces configuration</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>ifconfig eth0 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  158.770166] r8169 0000:03:00.0: firmware: direct-loading firmware rtl_nic/rtl8168e-3.fw
+[  158.877942] r8169 0000:03:00.0 eth0: link down
+[  158.882483] r8169 0000:03:00.0 eth0: link down
+[  158.882576] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[  160.847493] r8169 0000:03:00.0 eth0: link up
+[  160.851821] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth0
+ifconfig eth0
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth0      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c8
+          inet addr:192.168.0.132  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:9 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1600 (1.5 KiB)  TX bytes:1262 (1.2 KiB)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ifconfig eth1 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  185.188050] r8169 0000:04:00.0 eth1: link down
+[  185.188107] r8169 0000:04:00.0 eth1: link down
+[  185.197387] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+root@voyage:~# dh[  187.135453] r8169 0000:04:00.0 eth1: link up
+[  187.139809] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>client eth1
+ifconfig eth1
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth1      Link encap:Ethernet  HWaddr 00:e0:4c:68:05:c9
+          inet addr:192.168.0.133  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::2e0:4cff:fe68:5c9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:7 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1480 (1.4 KiB)  TX bytes:1262 (1.2 KiB)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ifconfig eth2 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[  602.484926] IPv6: ADDRCONF(NETDEV_UP): eth2: link is not ready
+[  605.172947] igb 0000:05:00.0 eth2: igb: eth2 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[  605.182617] IPv6: ADDRCONF(NETDEV_CHANGE): eth2: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ifconfig eth2
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>eth2      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:bc
+          inet addr:192.168.0.134  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbc/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:66 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:5675 (5.5 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7a00000-f7a1ffff
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ifconfig eth4 up
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>[ 1038.772097] IPv6: ADDRCONF(NETDEV_UP): eth4: link is not ready
+[ 1041.441250] igb 0000:07:00.0 eth4: igb: eth4 NIC Link is Up 100 Mbps Full Duplex, FlowX
+[ 1041.450845] IPv6: ADDRCONF(NETDEV_CHANGE): eth4: link becomes ready
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>dhclient eth4
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>root@voyage:~# ifconfig eth4
+eth4      Link encap:Ethernet  HWaddr 00:0d:b9:43:3f:be
+          inet addr:192.168.0.135  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:b9ff:fe43:3fbe/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:13 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1931 (1.8 KiB)  TX bytes:1332 (1.3 KiB)
+          Memory:f7c00000-f7c1ffff
+</code></pre></div>
+<ol>
+<li>Each of them can be individually reached from network</li>
+</ol>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.132
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.132 (192.168.0.132) 56(84) bytes of data.
+64 bytes from 192.168.0.132: icmp_seq=1 ttl=64 time=26.2 ms
+64 bytes from 192.168.0.132: icmp_seq=2 ttl=64 time=1.96 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.133
+</code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.133 (192.168.0.133) 56(84) bytes of data.
+64 bytes from 192.168.0.133: icmp_seq=1 ttl=64 time=1.35 ms
+64 bytes from 192.168.0.133: icmp_seq=2 ttl=64 time=1.97 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.134
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.134 (192.168.0.134) 56(84) bytes of data.
+64 bytes from 192.168.0.134: icmp_seq=1 ttl=64 time=1.42 ms
+64 bytes from 192.168.0.134: icmp_seq=2 ttl=64 time=1.49 ms
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ping 192.168.0.135
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>PING 192.168.0.135 (192.168.0.135) 56(84) bytes of data.
+64 bytes from 192.168.0.135: icmp_seq=1 ttl=64 time=1.81 ms
+64 bytes from 192.168.0.135: icmp_seq=2 ttl=64 time=1.38 ms
+</code></pre></div>
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+<li>
+<p>Ethernet interfaces from extension card inserted into mPCIe slot 1 operate
+  properly in terms of device enumeration and DHCP lease.</p>
+</li>
+<li>
+<p>Ethernet interfaces from extension card inserted into mPCIe slot 2 do not
+  operate properly. They are not enumerated by kernel.</p>
+</li>
+<li>
+<p>After forcing mPCIe clock to be always on, Ethernet interfaces from extension
+  card inserted into mPCIe 2 slot operate in the same fashion as when inserted
+  into mPCIe slot 1 (when it comes to device enumeration and DHCP lease, at
+  least). Note that
+  <a href="https://github.com/pcengines/coreboot/blob/v4.5.8/src/mainboard/pcengines/apu2/romstage.c#L95">corresponding change</a>
+  exists for mPCIe slot 1.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

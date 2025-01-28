@@ -1,0 +1,2124 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/runtime-configuration/">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Runtime configuration - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#runtime-configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Runtime configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" >
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" >
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#offline-runtime-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Offline runtime configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-runtime-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistent runtime configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="runtime-configuration">Runtime configuration</h1>
+<p>The apu platforms firmware contain an application called sortbootorder which
+serves as a BIOS setup application. It allows to modify behavior of the
+coreboot firmware and enable or disable features/peripherals.</p>
+<p>For more information about the usage of sortbootorder application refer to
+sortbootorder <a href="https://github.com/pcengines/sortbootorder/blob/master/README.md">README</a>.</p>
+<h2 id="offline-runtime-configuration">Offline runtime configuration</h2>
+<p>An application to modify the runtime configuration of apu platforms has been
+developed. The source code is available at <a href="https://github.com/pcengines/cb-order">PC Engines GitHub repository</a>.</p>
+<p>This application allows modifications of runtime configuration options on a
+coreboot binary without the need of rebooting the platform and entering setup
+menu via BIOS (which requires serial console). The application offers either a
+user-friendly GUI or command line interface for scripting and automation.
+Please refer to the <a href="https://github.com/pcengines/cb-order/blob/master/README.md">application's README</a>
+for the building process and dependencies.</p>
+<p>For the usage you may execute <code>cb-order -h</code>.</p>
+<p>Example command line usage:
+<code>cb-order coreboot.rom -b iPXE,SATA -o usben=off -o watchdog=300</code></p>
+<p>This command moves iPXE and SATA boot options to the 1st and 2nd positions
+respectively displacing other options from those positions. Additionally it
+disables booting from USB and sets the watchdog to 300 seconds.</p>
+<p>To achieve the same result using GUI simply run <code>cb-order coreboot.rom</code> to open
+the GUI.</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: apu4_v4.15.0.1.rom ───────────────────────────────┐
+│                                                                              │
+│ (B)  Edit boot order                                                         │
+│ (O)  Edit options                                                            │
+│ (S)  Save &amp; Exit                                                             │
+│ (X)  Exit                                                                    │
+│                                                                              │
+│ Down/j, Up/k         move cursor                                             │
+│ Home/g, End          move cursor                                             │
+│ Enter/Right/l/(key)  run current item                                        │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>The first submenu (<code>Shift+B</code>) allows to change the boot order of the devices in
+SeaBIOS:</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: boot order ───────────────────────────────────────┐
+│                                                                              │
+│ (A)  USB                                                                     │
+│ (B)  SDCARD                                                                  │
+│ (C)  mSATA                                                                   │
+│ (D)  SATA                                                                    │
+│ (E)  mPCIe1 SATA1 and SATA2                                                  │
+│ (F)  iPXE                                                                    │
+│                                                                              │
+│ Down/j, Up/k        move cursor                                              │
+│ Home/g, End         move cursor                                              │
+│ PgDown/Ctrl+N       move record down                                         │
+│ PgUp/Ctrl+P         move record up                                           │
+│ (key)               move record to current position                          │
+│ Backspace/Left/q/h  leave                                                    │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>To change the boot order to iPXE then SATA, first navigate to the <code>(A) USB</code> then
+press the <code>Shift + F</code> key to move the iPXE to the first priority:</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: boot order ───────────────────────────────────────┐
+│                                                                              │
+│ (A)  iPXE                                                                    │
+│ (B)  USB                                                                     │
+│ (C)  SDCARD                                                                  │
+│ (D)  mSATA                                                                   │
+│ (E)  SATA                                                                    │
+│ (F)  mPCIe1 SATA1 and SATA2                                                  │
+│                                                                              │
+│ Down/j, Up/k        move cursor                                              │
+│ Home/g, End         move cursor                                              │
+│ PgDown/Ctrl+N       move record down                                         │
+│ PgUp/Ctrl+P         move record up                                           │
+│ (key)               move record to current position                          │
+│ Backspace/Left/q/h  leave                                                    │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>Then move to the second position, i.e. <code>(B) USB</code> and press <code>Shift + E</code> to move
+SATA to the second priority:</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: boot order ───────────────────────────────────────┐
+│                                                                              │
+│ (A)  iPXE                                                                    │
+│ (B)  SATA                                                                    │
+│ (C)  USB                                                                     │
+│ (D)  SDCARD                                                                  │
+│ (E)  mSATA                                                                   │
+│ (F)  mPCIe1 SATA1 and SATA2                                                  │
+│                                                                              │
+│ Down/j, Up/k        move cursor                                              │
+│ Home/g, End         move cursor                                              │
+│ PgDown/Ctrl+N       move record down                                         │
+│ PgUp/Ctrl+P         move record up                                           │
+│ (key)               move record to current position                          │
+│ Backspace/Left/q/h  leave                                                    │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>Now that the boot order is set press one of the Backspace/Left/q/h to go back
+to main menu. Then press <code>Shift + O</code> to open the runtime configuration options
+submenu:</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: options ──────────────────────────────────────────┐
+│                                                                              │
+│ (L)  [boosten     =     on]  Core Performance Boost                          │
+│ (K)  [com2en      =    off]  Redirect console output to COM2                 │
+│ (H)  [ehcien      =     on]  EHCI0 controller                                │
+│ (V)  [iommu       =    off]  IOMMU                                           │
+│ (M)  [mpcie2_clk  =    off]  Force mPCIe2 slot CLK (GPP3 PCIe)               │
+│ (Y)  [pciepm      =    off]  PCIe power management features                  │
+│ (G)  [pciereverse =    off]  Reverse order of PCI addresses                  │
+│ (N)  [pxen        =    off]  Network (PXE boot)                              │
+│ (T)  [scon        =     on]  Serial console                                  │
+│ (J)  [sd3mode     =    off]  SD 3.0 mode                                     │
+│ (O)  [uartc       =   UART]  UART C / GPIO[0..7]                             │
+│ (P)  [uartd       =   UART]  UART D / GPIO[10..17]                           │
+│ (U)  [usben       =     on]  USB boot                                        │
+│ (I)  [watchdog    =      0]  Watchdog                                        │
+│                                                                              │
+│ Down/j, Up/k               move cursor                                       │
+│ Home/g, End                move cursor                                       │
+│ Space/Enter/Right/l/(key)  toggle/set option                                 │
+│ Backspace/Left/q/h         leave                                             │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>Now let's use an alternative method of navigation with arrows and Space/Enter
+keys. Use arrows to move to <code>usben</code> option and press Enter or Space to disable
+it:</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: options ──────────────────────────────────────────┐
+│                                                                              │
+│ (L)  [boosten     =     on]  Core Performance Boost                          │
+│ (K)  [com2en      =    off]  Redirect console output to COM2                 │
+│ (H)  [ehcien      =     on]  EHCI0 controller                                │
+│ (V)  [iommu       =    off]  IOMMU                                           │
+│ (M)  [mpcie2_clk  =    off]  Force mPCIe2 slot CLK (GPP3 PCIe)               │
+│ (Y)  [pciepm      =    off]  PCIe power management features                  │
+│ (G)  [pciereverse =    off]  Reverse order of PCI addresses                  │
+│ (N)  [pxen        =    off]  Network (PXE boot)                              │
+│ (T)  [scon        =     on]  Serial console                                  │
+│ (J)  [sd3mode     =    off]  SD 3.0 mode                                     │
+│ (O)  [uartc       =   UART]  UART C / GPIO[0..7]                             │
+│ (P)  [uartd       =   UART]  UART D / GPIO[10..17]                           │
+│ (U)  [usben       =    off]  USB boot                                        │
+│ (I)  [watchdog    =      0]  Watchdog                                        │
+│                                                                              │
+│ Down/j, Up/k               move cursor                                       │
+│ Home/g, End                move cursor                                       │
+│ Space/Enter/Right/l/(key)  toggle/set option                                 │
+│ Backspace/Left/q/h         leave                                             │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>Now to set the watchdog navigate down to watchdog option and press Space or Enter.
+A new window will appear with a prompt to enter the number of seconds:</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: options :: Watchdog ──────────────────────────────┐
+│                                                                              │
+│ New value:                                                                   │
+│                                                                              │
+│ Range: [0; 65535]                                                            │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>Type 300 and press enter to submit the value. The application should go back to
+options submenu with the updated watchdog timeout:</p>
+<div class="highlight"><pre><span></span><code>┌─ coreboot configuration :: options ──────────────────────────────────────────┐
+│                                                                              │
+│ (L)  [boosten     =     on]  Core Performance Boost                          │
+│ (K)  [com2en      =    off]  Redirect console output to COM2                 │
+│ (H)  [ehcien      =     on]  EHCI0 controller                                │
+│ (V)  [iommu       =    off]  IOMMU                                           │
+│ (M)  [mpcie2_clk  =    off]  Force mPCIe2 slot CLK (GPP3 PCIe)               │
+│ (Y)  [pciepm      =    off]  PCIe power management features                  │
+│ (G)  [pciereverse =    off]  Reverse order of PCI addresses                  │
+│ (N)  [pxen        =    off]  Network (PXE boot)                              │
+│ (T)  [scon        =     on]  Serial console                                  │
+│ (J)  [sd3mode     =    off]  SD 3.0 mode                                     │
+│ (O)  [uartc       =   UART]  UART C / GPIO[0..7]                             │
+│ (P)  [uartd       =   UART]  UART D / GPIO[10..17]                           │
+│ (U)  [usben       =    off]  USB boot                                        │
+│ (I)  [watchdog    =    300]  Watchdog                                        │
+│                                                                              │
+│ Down/j, Up/k               move cursor                                       │
+│ Home/g, End                move cursor                                       │
+│ Space/Enter/Right/l/(key)  toggle/set option                                 │
+│ Backspace/Left/q/h         leave                                             │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>We are done now with all our modifications. Press one of the Backspace/Left/q/h
+to go back to main menu. Then press <code>Shift + S</code> to save changes to the binary
+and the application will exit. Now you can flash the firmware update on your
+platform like described <a href="../firmware_flashing/#corebootrom-flashing">here</a>.</p>
+<h2 id="persistent-runtime-configuration">Persistent runtime configuration</h2>
+<p>Since the v4.14.0.1 release the runtime configuration options have been
+separated from coreboot code in different flashmap region. Flashmap is a
+description of firmware layout supported by coreboot. In order to avoid the
+loss of the customized options one has to use the following firmware update
+procedure which writes the coreboot code only to the flash:</p>
+<div class="highlight"><pre><span></span><code>flashrom -p internal -w apuX_v4.YY.0.Z.rom --fmap -i COREBOOT
+</code></pre></div>
+<p>Note you need at least flashrom v1.1 for it to work. Also you will preserve the
+coreboot configuration only when updating from v4.14.0.1 version or later on
+apu2/3/4/5/6 series. Apu1 does not support the persistent runtime
+configuration yet.</p>
+<p>If you have a version of apu firmware older than v4.14.0.1 you have to use the
+cb-order application to set the runtime configuration options to desired values
+before applying the firmware update, otherwise you will lose your current
+settings. Then proceed with flashing the firmware as below:</p>
+<div class="highlight"><pre><span></span><code>flashrom -p internal -w apuX_v4.YY.0.Z.rom 
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

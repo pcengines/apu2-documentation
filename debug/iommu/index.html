@@ -1,0 +1,2060 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/debug/iommu/">
+      
+      
+        <link rel="prev" href="../hdd_test/">
+      
+      
+        <link rel="next" href="../mpcie_ethernet/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>AMD I/O Virtualization Technology (IOMMU) - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#amd-io-virtualization-technology-iommu" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AMD I/O Virtualization Technology (IOMMU)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" >
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="amd-io-virtualization-technology-iommu">AMD I/O Virtualization Technology (IOMMU)</h1>
+<p>This document is related to changes submitted to <a href="https://review.coreboot.org/#/c/coreboot/+/26116/">mainline coreboot</a>.</p>
+<h1 id="status">Status</h1>
+<h1 id="24072018">24/07/2018</h1>
+<ul>
+<li>patches under redesign in upstream</li>
+<li>planned firmware release to include patches v4.8.0.3</li>
+<li>tested on Xen 4.8.3 and Debian stretch with Linux 4.14.50</li>
+<li><code>xl dmesg</code> dump with apic and iommu verbose <a href="https://github.com/pcengines/apu2-documentation/blob/master/docs/logs/iommu_enabled_xl_dmesg.log">here</a></li>
+<li><code>CPUX: No irq handler for vector e7</code> log is still visible, but doesn't affect
+boot process. We look for solution for that log <a href="https://github.com/pcengines/coreboot/pull/186">here</a></li>
+<li>platform survived 100x reboots to Xen without issue</li>
+<li>IOMMU groups are probably not assigned correctly to devices e.g. all NICs are in
+  one group - <a href="#iommu-groups">tl;dr: IOMMU groups</a></li>
+<li>after booting Debian (Linux 4.14.50) as dom0 I'm getting:
+<div class="highlight"><pre><span></span><code>[    0.827436] AMD IOMMUv2 functionality not available on this system
+</code></pre></div></li>
+<li><code>xl pci-assignable-list</code> hangs? - machine is responsive e.g Ctrl-C works</li>
+<li>Assigning device also hangs? - machine is responsive e.g Ctrl-C works</li>
+</ul>
+<div class="highlight"><pre><span></span><code>root@apu2:~# xl pci-assignable-add 00:10.0
+[  447.867457] xhci_hcd 0000:00:10.0: remove, state 1
+[  447.867520] usb usb3: USB disconnect, device number 1
+[  447.867538] usb 3-1: USB disconnect, device number 2
+[  447.868530] usb 3-2: USB disconnect, device number 3
+[  447.870692] xhci_hcd 0000:00:10.0: USB bus 3 deregistered
+[  447.870752] xhci_hcd 0000:00:10.0: remove, state 4
+[  447.870805] usb usb2: USB disconnect, device number 1
+[  447.989825] xhci_hcd 0000:00:10.0: USB bus 2 deregistered
+</code></pre></div>
+<h2 id="questions">Questions</h2>
+<ul>
+<li>why in dom0 I can't see IOMMU groups? Is this related to xen vs kvm? -
+comparison of <code>lsmod</code> indicate that when no Xen KVM modules take over and
+groups assignment is probably related with KVM drivers since there is no
+information about groups in AMD IOMMU spec.</li>
+<li>are we sure that IVRS contain correct entries for bridges?</li>
+</ul>
+<h1 id="06052018">06/05/2018</h1>
+<ul>
+<li>patches submitted upstream</li>
+<li>patches included in v4.6.9 of PC Engines firmware release</li>
+<li>tested on Xen 4.8 with Linux 4.14.33:
+<div class="highlight"><pre><span></span><code>(XEN) AMD-Vi: Disabled HAP memory map sharing with IOMMU
+(XEN) AMD-Vi: IOMMU Extended Features:
+(XEN)  - Peripheral Page Service Request
+(XEN)  - Guest Translation
+(XEN)  - Invalidate All Command
+(XEN)  - Guest APIC supported
+(XEN)  - Performance Counters
+(XEN) AMD-Vi: IOMMU 0 Enabled.
+</code></pre></div></li>
+</ul>
+<p><strong>NOTE</strong>: feature currently is not stable and hangs on Xen kernel 29/100 boots.:</p>
+<div class="highlight"><pre><span></span><code>(XEN) CPU1: No irq handler for vector e7 (IRQ -2147483648)
+(XEN) CPU2: No irq handler for vector e7 (IRQ -2147483648)
+&lt;hang&gt;
+</code></pre></div>
+<h1 id="how-to-check-features-with-xen">How to check features with Xen</h1>
+<p>Please <a href="https://www.brendangregg.com/blog/2014-05-09/xen-feature-detection.html">read this blog post</a></p>
+<h1 id="how-to-test-iommu-features">How to test IOMMU features</h1>
+<h2 id="pce-pass-through">PCE pass-through</h2>
+<p>TBD</p>
+<h2 id="debugging">Debugging</h2>
+<p>Unfortunately previous work was not stable and according to comments from
+Kyosti correct implementation should rely not on AGESA returned values, but on
+custom IVRS generated in coreboot - this is approach that Timothy took
+developing initial support.</p>
+<p>Dump of IVRS from AGESA and custom made in above mentioned implemntation:</p>
+<div class="highlight"><pre><span></span><code>Dump AGESA IVRS:
+ivrs_agesa-&gt;header.signature: IVRSx
+ivrs_agesa-&gt;header.length: 0x78
+ivrs_agesa-&gt;header.revision: 0x2
+ivrs_agesa-&gt;header.checksum: 0x9a
+ivrs_agesa-&gt;header.oem_id: AMD   AGESA
+ivrs_agesa-&gt;header.oem_table_id: AGESA
+ivrs_agesa-&gt;header.oem_revision: 0x1
+ivrs_agesa-&gt;header.asl_compiler_id: AMD
+ivrs_agesa-&gt;header.asl_compiler_revision: 0x0
+ivrs_agesa-&gt;iv_info: 0x203040
+ivrs_agesa-&gt;ivhd.type: 0x10
+/* In flags only HtTuneEn is disabled other enabled */
+ivrs_agesa-&gt;ivhd.flags: 0xfe
+ivrs_agesa-&gt;ivhd.length: 0x48
+ivrs_agesa-&gt;ivhd.device_id: 0x2
+ivrs_agesa-&gt;ivhd.capability_offset: 0x40
+ivrs_agesa-&gt;ivhd.iommu_base_low: 0xf7f00000
+ivrs_agesa-&gt;ivhd.iommu_base_high: 0x0
+ivrs_agesa-&gt;ivhd.pci_segment_group: 0x0
+ivrs_agesa-&gt;ivhd.iommu_info: 0x1300
+/* According to datasheet, if IVinfo[EFRSup] = 0, then IOMMU Feature Info is
+ * reserved. So despite AGESA set IOMMU Feature Info it should be ignored.
+ * GTSup - Guest Translation supported: enabled
+ * IASup - INALIDATE_IOMMU_ALL supported: enabled
+ * PASmax - maxiumum PASID vaule supported: 0b01000 -&gt; 8
+ * PNCounters - number of performance counters: 0b010 -&gt; 2
+ * PNBanks - number of performance counter banks: 0b0000010 -&gt; 2
+ */
+ivrs_agesa-&gt;ivhd.iommu_feature_info: 0x48824
+
+Dump custom IVRS:
+ivrs-&gt;header.signature: IVRS
+ivrs-&gt;header.length: 0x100
+ivrs-&gt;header.revision: 0x1
+ivrs-&gt;header.checksum: 0xbb
+ivrs-&gt;header.oem_id: CORE  COREBOOT
+ivrs-&gt;header.oem_table_id: COREBOOT
+ivrs-&gt;header.oem_revision: 0x0
+ivrs-&gt;header.asl_compiler_id: CORE
+ivrs-&gt;header.asl_compiler_revision: 0x0
+ivrs-&gt;iv_info: 0x203040
+ivrs-&gt;ivhd.type: 0x10
+/* In flags HtTuneEn, Coherent, PreFSup and PPRSup are disabled other enabled */
+ivrs-&gt;ivhd.flags: 0x1e
+ivrs-&gt;ivhd.length: 0xd0
+ivrs-&gt;ivhd.device_id: 0x2
+ivrs-&gt;ivhd.capability_offset: 0x40
+/ * why we have so different base address? */
+ivrs-&gt;ivhd.iommu_base_low: 0xfeb00000
+ivrs-&gt;ivhd.iommu_base_high: 0x0
+ivrs-&gt;ivhd.pci_segment_group: 0x0
+ivrs-&gt;ivhd.iommu_info: 0x1300
+/* Everything disabled */
+ivrs-&gt;ivhd.iommu_feature_info: 0x0
+</code></pre></div>
+<h1 id="booting-without-iommu-patches">Booting without IOMMU patches</h1>
+<p><code>/proc/iomem</code> doesn't show any region assigned to <code>amd_iommu</code> as it is with
+patches applied. This means we don't have other information about IOMMU base
+address instead of this returned by AGESA. We can assign manual address as it
+was done in initial patch, but this makes Linux kernel not bootable.</p>
+<h1 id="try-minimal-changes-only-iommu-bese-address">Try minimal changes - only IOMMU bese address</h1>
+<p>Minimal change which, just use IOMMU base low and high returned by AGESA also
+not work correctly. Kernel crashing with following log:</p>
+<div class="highlight"><pre><span></span><code>[    1.064229] AMD-Vi: IOMMU performance counters supported
+[    1.069579] BUG: unable to handle kernel paging request at ffffaffc4065c000
+[    1.073554] IP: iommu_go_to_state+0xf8a/0x1260
+[    1.073554] PGD 12a11f067 P4D 12a11f067 PUD 12a120067 PMD 129b69067 PTE 0
+[    1.073554] Oops: 0000 [#1] SMP NOPTI
+[    1.073554] Modules linked in:
+[    1.073554] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 4.14.50 #13
+[    1.073554] Hardware name: PC Engines apu2/apu2, BIOS 4.8-1174-gf12b3046f0-d2
+[    1.073554] task: ffff8d5d69b9f040 task.stack: ffffaffc40648000
+[    1.073554] RIP: 0010:iommu_go_to_state+0xf8a/0x1260
+[    1.073554] RSP: 0018:ffffaffc4064be28 EFLAGS: 00010282
+[    1.073554] RAX: ffffaffc40658000 RBX: ffff8d5d69bae000 RCX: ffffffff99e57b88
+[    1.073554] RDX: 0000000000000000 RSI: 0000000000000092 RDI: 0000000000000246
+[    1.073554] RBP: 0000000000000040 R08: 0000000000000001 R09: 0000000000000170
+[    1.073554] R10: 0000000000000000 R11: ffffffff9a435e2d R12: 0000000000000000
+[    1.073554] R13: ffffffff9a29a830 R14: 0000000000000000 R15: 0000000000000000
+[    1.073554] FS:  0000000000000000(0000) GS:ffff8d5d6ec80000(0000) knlGS:00000
+[    1.073554] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    1.073554] CR2: ffffaffc4065c000 CR3: 000000010fa0a000 CR4: 00000000000406e0
+[    1.073554] Call Trace:
+[    1.073554]  ? set_debug_rodata+0x11/0x11
+[    1.073554]  amd_iommu_init+0x11/0x89
+[    1.073554]  pci_iommu_init+0x16/0x3f
+[    1.073554]  ? e820__memblock_setup+0x60/0x60
+[    1.073554]  do_one_initcall+0x51/0x190
+[    1.073554]  ? set_debug_rodata+0x11/0x11
+[    1.073554]  kernel_init_freeable+0x16b/0x1ec
+[    1.073554]  ? rest_init+0xb0/0xb0
+[    1.073554]  kernel_init+0xa/0xf7
+[    1.073554]  ret_from_fork+0x22/0x40
+[    1.073554] Code: d2 31 f6 48 89 df e8 d8 15 02 ff 85 c0 75 d1 48 8b 44 24 2
+[    1.073554] RIP: iommu_go_to_state+0xf8a/0x1260 RSP: ffffaffc4064be28
+[    1.073554] CR2: ffffaffc4065c000
+[    1.073554] ---[ end trace 44588f98aa7c7c0b ]---
+[    1.255973] Kernel panic - not syncing: Attempted to kill init! exitcode=0x09
+[    1.255973]
+[    1.259934] ---[ end Kernel panic - not syncing: Attempted to kill init! exi9
+</code></pre></div>
+<p>If this is related to performance countres good idea could be to copy its
+configuration from AGESA.</p>
+<h1 id="try-whole-ivhd-from-agesa-and-device-entries-from-initial-commit">Try whole IVHD from AGESA and device entries from initial commit</h1>
+<p>This version leads to hang after couple reboots. It was not tested but we
+suspect similar effect to mentioned above in <a href="#status">Status for 06/05/2018</a>.</p>
+<h1 id="performance-counters-from-agesa">Performance counters from AGESA</h1>
+<p>This seems to work, platform survived 100x reboots to Xen without even one
+issue.</p>
+<h1 id="iommu-groups">IOMMU groups</h1>
+<p>It happened that in firmware based on <a href="https://review.coreboot.org/#/c/coreboot/+/27602/8">v8</a> IOMMU groups in Linux
+4.14.50 seem to be assigned incorrectly. According to <a href="https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Ensuring_that_the_groups_are_valid">Arch Wiki</a>
+groups is smallest unit in which devices can be assigned to guests.</p>
+<p>I'm not sure if this expected, but in Xen 4.8 with the same kernel driver is
+not loaded and there are no IOMMU groups present. <code>dmesg</code> complain:</p>
+<div class="highlight"><pre><span></span><code>[    0.827423] AMD IOMMUv2 driver by Joerg Roedel &lt;jroedel@suse.de&gt;
+[    0.827436] AMD IOMMUv2 functionality not available on this system
+</code></pre></div>
+<p>Difference between kernels is parameter provided on boot <code>amd_iommu_dump=1</code>
+which is present in plain 4.14.50 without Xen.</p>
+<p>Ideally we
+would like to have each device in other group. What we see right now is:</p>
+<div class="highlight"><pre><span></span><code>IOMMU Group 0 00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:1566]
+IOMMU Group 1 00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:156b]
+IOMMU Group 1 00:02.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1 [1022:1439]
+IOMMU Group 1 00:02.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1 [1022:1439]
+IOMMU Group 1 00:02.4 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Family 16h Processor Functions 5:1 [1022:1439]
+IOMMU Group 1 01:00.0 Ethernet controller [0200]: Intel Corporation I210 Gigabit Network Connection [8086:157b] (rev 03)
+IOMMU Group 1 02:00.0 Ethernet controller [0200]: Intel Corporation I210 Gigabit Network Connection [8086:157b] (rev 03)
+IOMMU Group 1 03:00.0 Ethernet controller [0200]: Intel Corporation I210 Gigabit Network Connection [8086:157b] (rev 03)
+IOMMU Group 2 00:08.0 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Device [1022:1537]
+IOMMU Group 3 00:10.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] FCH USB XHCI Controller [1022:7814] (rev 11)
+IOMMU Group 4 00:11.0 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [IDE mode] [1022:7800] (rev 39)
+IOMMU Group 5 00:13.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] FCH USB EHCI Controller [1022:7808] (rev 39)
+IOMMU Group 6 00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:780b] (rev 42)
+IOMMU Group 6 00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:780e] (rev 11)
+IOMMU Group 6 00:14.7 SD Host controller [0805]: Advanced Micro Devices, Inc. [AMD] FCH SD Flash Controller [1022:7813] (rev 01)
+IOMMU Group 7 00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:1580]
+IOMMU Group 7 00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:1581]
+IOMMU Group 7 00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:1582]
+IOMMU Group 7 00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:1583]
+IOMMU Group 7 00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:1584]
+IOMMU Group 7 00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Device [1022:1585]
+</code></pre></div>
+<p>What bad here is that NICs are all in group 1. When we compared logs from
+community it happen that some users with older patches had correct assignement,
+for example <a href="https://www.dropbox.com/s/nvme1ut0v65ou6r/dmesg_iommu_20171028.txt?dl=0">here</a>:</p>
+<div class="highlight"><pre><span></span><code>[    2.047787] iommu: Adding device 0000:00:00.0 to group 0
+[    2.053502] iommu: Adding device 0000:00:02.0 to group 1
+[    2.059190] iommu: Adding device 0000:00:02.2 to group 2
+[    2.064797] iommu: Adding device 0000:00:02.3 to group 3
+[    2.070442] iommu: Adding device 0000:00:02.4 to group 4
+[    2.076098] iommu: Adding device 0000:00:02.5 to group 5
+[    2.081747] iommu: Adding device 0000:00:08.0 to group 6
+[    2.087380] iommu: Adding device 0000:00:10.0 to group 7
+[    2.093009] iommu: Adding device 0000:00:11.0 to group 8
+[    2.098683] iommu: Adding device 0000:00:13.0 to group 9
+[    2.104399] iommu: Adding device 0000:00:14.0 to group 10
+[    2.109893] iommu: Adding device 0000:00:14.3 to group 10
+[    2.115385] iommu: Adding device 0000:00:14.7 to group 10
+[    2.121174] iommu: Adding device 0000:00:18.0 to group 11
+[    2.126668] iommu: Adding device 0000:00:18.1 to group 11
+[    2.132163] iommu: Adding device 0000:00:18.2 to group 11
+[    2.137652] iommu: Adding device 0000:00:18.3 to group 11
+[    2.143126] iommu: Adding device 0000:00:18.4 to group 11
+[    2.148629] iommu: Adding device 0000:00:18.5 to group 11
+[    2.154441] iommu: Adding device 0000:01:00.0 to group 12
+[    2.160283] iommu: Adding device 0000:02:00.0 to group 13
+[    2.166062] iommu: Adding device 0000:03:00.0 to group 14
+[    2.171770] iommu: Adding device 0000:04:00.0 to group 15
+</code></pre></div>
+<p>There are many great resources to learn about IOMMU groups:</p>
+<ul>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-iommu-deep-dive">A Deep-dive into IOMMU Groups</a></li>
+<li><a href="https://heiko-sieger.info/iommu-groups-what-you-need-to-consider/">IOMMU Groups  What You Need to Consider</a></li>
+</ul>
+<h2 id="playing-with-xl-pci-assignable-">Playing with xl pci-assignable-*</h2>
+<p>All commands from this family hangs, trying to enable pass-through using sysfs
+seem to finish without problems. Didn't tested that yet.</p>
+<h1 id="todo">TODO:</h1>
+<ul>
+<li>compare device entries</li>
+<li>enable EFRSup</li>
+<li>try various sets of features and capabilities</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

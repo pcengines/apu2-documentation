@@ -1,0 +1,2368 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/research/USB_compliance_test/">
+      
+      
+        <link rel="prev" href="../tpm2-triage/">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>USB compliance tests - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#usb-compliance-tests" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              USB compliance tests
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" >
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related documents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-abbreviations" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of abbreviations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="List of abbreviations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-standards-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB Standards comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-detection-process-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device detection process debugging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device detection process debugging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-30-device-enumeration-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 3.0 device enumeration process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#link-training-and-status-state-machine-ltssm-in-usb-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      Link Training and Status State Machine (LTSSM) in USB 3.0
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compliance tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-30-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 3.0 testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="USB 3.0 testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electrical-compliance-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical compliance tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#link-layer-compliance-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Link layer compliance tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional conclusions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional conclusions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-30-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 3.0 analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-20-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 2.0 analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rxdetect-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      RxDetect state
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related documents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-abbreviations" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of abbreviations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="List of abbreviations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-standards-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB Standards comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-detection-process-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device detection process debugging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device detection process debugging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-30-device-enumeration-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 3.0 device enumeration process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#link-training-and-status-state-machine-ltssm-in-usb-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      Link Training and Status State Machine (LTSSM) in USB 3.0
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compliance tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-30-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 3.0 testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="USB 3.0 testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electrical-compliance-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical compliance tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#link-layer-compliance-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Link layer compliance tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional conclusions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional conclusions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-30-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 3.0 analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-20-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB 2.0 analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rxdetect-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      RxDetect state
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="usb-compliance-tests">USB compliance tests</h1>
+<p>This document contains research about USB tests compliance which allow to
+analyze USB device detection process. Mostly it references to USB 3.0.</p>
+<h2 id="related-documents">Related documents</h2>
+<ul>
+<li><a href="https://www.usb.org/document-library/usb-32-specification-released-september-22-2017-and-ecns">Universal Serial Bus 3.0 Specification</a></li>
+<li><a href="https://www.usb.org/sites/default/files/SuperSpeedPHYComplianceTest_Spec1_0a.pdf">USB 3.0 Electrical Compliance Test Specification</a></li>
+<li><a href="https://www.usb.org/sites/default/files/USB_3_1_Link_Layer_Test_Specification_2018_01_02.pdf">USB 3.1 Link Layer Test Specification</a></li>
+<li><a href="https://www.usb.org/sites/default/files/documents/superspeedtesttopologies.pdf">USB 3.0 Electrical Test Fixture Topologies</a></li>
+<li><a href="https://www.usb.org/document-library/usb-20-specification">Universal Serial Bus 2.0 Specification</a></li>
+<li><a href="https://www.usb.org/document-library/usb-20-electrical-compliance-test-specification-version-107">USB 2.0 Electrical Compliance Tests Specification</a></li>
+<li><a href="https://www.intel.com/content/dam/www/public/us/en/documents/technical-specifications/extensible-host-controler-interface-usb-xhci.pdf">eXtensible Host Controller Interface for Universal Serial Bus</a></li>
+</ul>
+<h2 id="list-of-abbreviations">List of abbreviations</h2>
+<ul>
+<li><code>HS</code> - High Speed USB (USB 2.0)</li>
+<li><code>SS</code> - Super Speed USB (USB 3.0)</li>
+<li><code>LFPS</code> - Low Frequency Periodic Signaling</li>
+<li><code>LTSSM</code> - Link Training and Status State Machine</li>
+</ul>
+<h3 id="usb-standards-comparison">USB Standards comparison</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: center;">Power</th>
+<th style="text-align: center;">Speed</th>
+<th style="text-align: center;">PHY Layer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USB 1.1 Low Speed</td>
+<td style="text-align: center;">5V @500mA</td>
+<td style="text-align: center;">1,5 Mbps</td>
+<td style="text-align: center;">VCC, GND, D+, D-</td>
+</tr>
+<tr>
+<td>USB 1.1 Full Speed</td>
+<td style="text-align: center;">5V @500mA</td>
+<td style="text-align: center;">12 Mbps</td>
+<td style="text-align: center;">VCC, GND, D+, D-</td>
+</tr>
+<tr>
+<td>USB 2.0 High Speed</td>
+<td style="text-align: center;">5V @500mA</td>
+<td style="text-align: center;">480 Mbps</td>
+<td style="text-align: center;">VCC, GND, D+, D-</td>
+</tr>
+<tr>
+<td>USB 3.0 SuperSpeed</td>
+<td style="text-align: center;">5V @900mA</td>
+<td style="text-align: center;">5 Gbps</td>
+<td style="text-align: center;">VCC, GND, D+, D-, Rx+, Rx-, Tx+, Tx-</td>
+</tr>
+<tr>
+<td>USB 3.1 SuperSpeed+</td>
+<td style="text-align: center;">5V @900mA</td>
+<td style="text-align: center;">10 Gbps</td>
+<td style="text-align: center;">VCC, GND, D+, D-, Rx+, Rx-, Tx+, Tx-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="device-detection-process-debugging">Device detection process debugging</h2>
+<h4 id="usb-30-device-enumeration-process">USB 3.0 device enumeration process</h4>
+<p>USB enumeration process lets a host determine if USB device was plugged into USB
+port and what kind of device is that. Enumeration process could be divided into
+multiple stages proceeded after previous one if there were no errors:</p>
+<ol>
+<li>RxDetect mode (<em>USB 3.0 Specification Section 6.11</em>)</li>
+<li>Polling LFPS (<em>USB 3.0 Specification Section 6.9.2</em>)</li>
+<li>TSEQ Ordered Sets (<em>USB 3.0 Specification Section 6.4.1.1.3 and Table 6-3</em>)</li>
+<li>TS1 Ordered Sets (<em>USB 3.0 Specification Section 6.4.1.1.3 and Table 6-4</em>)</li>
+<li>TS2 Ordered Sets (<em>USB 3.0 Specification Section 6.4.1.1.3 and Table 6-5</em>)</li>
+<li>Logical idle (sending idle data)</li>
+<li>Exit Initialization to U0 state</li>
+</ol>
+<blockquote>
+<p>NOTE: Link Initialization and Training (stages 3,4,5) could be different
+  depending on USB 3.0 (Gen 1) or USB 3.1 (Gen 2) devices. More details are
+  available in USB 3.0 Specification Section 6.4.</p>
+</blockquote>
+<p>After last stage device should be recognized by host and communication between
+them is opened. To test device detection in system it should be checked if all
+above stages are performed correctly. Hence electrical compliance tests and link
+layer tests should be performed to compare data, timing and electrical values
+with Specification requirements (tables with reference values are available in
+Specification under mentioned above sections which corresponds to specific
+stage).</p>
+<h4 id="link-training-and-status-state-machine-ltssm-in-usb-30">Link Training and Status State Machine (LTSSM) in USB 3.0</h4>
+<p>Link Training and Status State Machine (LTSSM) is a state machine consists of 12
+link states. It is described in <em>USB 3.0 Specification Section 7.5</em>. LTSSM
+diagram is presented in figure 7.14. During USB device detection process LTSSM
+changes stages according to diagram flow. To test if device detection process is
+done correctly state machine analyze should be done.</p>
+<h2 id="compliance-tests">Compliance tests</h2>
+<h3 id="usb-30-testing">USB 3.0 testing</h3>
+<h4 id="electrical-compliance-tests">Electrical compliance tests</h4>
+<p>Electrical compliance tests verify that electrical signals sent between host and
+device meet USB 3.0 requirements which are described in USB 3.0 Specification
+Document. To correctly capture these data high-class oscilloscope is required
+(with minimum 13 GHz bandwidth) with high-class cables and probes. Also Test
+Fixtures are needed to separate signals from USB data lines and dedicated
+software installed on oscilloscope.</p>
+<p>Proposed tool kit:
+- Teledyne LeCroy SDA 813Zi-A Oscilloscope
+- QualiPHY Software
+- SigTest software v.3.2.1
+- TF-USB3 Test Fixture
+- SMA cables
+- PeRT3 Phoenix System (for Receiver tests)</p>
+<blockquote>
+<p>All tools are listed in <a href="http://cdn.teledynelecroy.com/files/manuals/qphy-usb3.1-tx-operators-manual.pdf">QPHY-USB3.2-TX-RX Manual</a>
+in section Introduction/Required Equipment. That document contains also guide
+how to perform electrical tests with QualiPHY Software.</p>
+</blockquote>
+<p>From <a href="http://cdn.teledynelecroy.com/files/manuals/qphy-usb3.1-tx-operators-manual.pdf">QPHY-USB3.2-TX-RX Manual</a>
+those tests should be carried out:
+- in section <em>USB 3.1/3.2 Transmitter Testing</em>:
+  - TD 1.1 Low Frequency Periodic Signaling Test
+  - TD 1.6 Spread Spectrum Test
+- in section <em>USB 3.1/3.2 Transmitter Testing</em>:
+  - TD 1.2 Low Frequency Periodic Signaling Test
+  - TD 1.8 and 1.9 Receiver Jitter Tolerance Tests</p>
+<blockquote>
+<p>Electrical compliance tests tool kit is rather expensive and those tests don't
+guaranty that stick detection problem will be resolved. My advice is to first
+carry out link layer tests because they can give more information and benefits
+about problem.</p>
+</blockquote>
+<p>Proposed tests are compatible with USB-IF official Electrical Compliance Tests
+Program. All tests are listed in <a href="https://www.usb.org/sites/default/files/SuperSpeedPHYComplianceTest_Spec1_0a.pdf">Electrical Compliance Test Specification SuperSpeed Universal Serial Bus</a>.</p>
+<h4 id="link-layer-compliance-tests">Link layer compliance tests</h4>
+<p>Link layer compliance tests can be performed with USB Analyzers. USB Analyzers
+capture USB traffic and with dedicated software it is possible to find and
+resolve problems caused by errors in link layer during enumeration process, i.e.
+data packets missing, states are not proceed in exact way, errors between
+process stages etc.</p>
+<p>Examples of USB 3.0 Analyzers with dedicated software:
+- Beagle USB 5000 v2 SuperSpeed Protocol Analyzer | Data Center Software
+- Ellisys Explorer 280 | Analyzer Software
+- Teledyne LeCroy Advisor T3 | USB Protocol Suite
+- Teledyne LeCroy Voyager M3 | USB Protocol Suite</p>
+<blockquote>
+<p>NOTE: From mentioned above analyzers only Beagle USB 5000's software is
+supported on Linux. Another ones are supported only in Windows.</p>
+</blockquote>
+<p>Should be considered to carry out tests:
+- analyze LFPS at communication initialization
+- analyze Training Sequences TSEQ, TS1, TS2 Ordered Sets
+- analyze State Machine (check if states proceed according to Specification)
+- checking if USB Port/Device ends in U0 mode
+- checking packets between host and recognized device</p>
+<blockquote>
+<p>USB-IF has its own Link Layer Compliance Tests program. However, to carry out
+those tests it is required to use their hardware and software tools. In my
+opinion, good enough alternative is to use one of mentioned above devices,
+because they have features which are sufficient to resolve stick detection
+problems.</p>
+</blockquote>
+<p>If mentioned above analyses aren't sufficient, tests from sections 7.5.1 to
+7.5.5 from <a href="https://www.usb.org/sites/default/files/USB_3_1_Link_Layer_Test_Specification_2018_01_02.pdf">USB 3.1 Link Layer Test Specification</a>
+can be performed.</p>
+<h2 id="additional-conclusions">Additional conclusions</h2>
+<h4 id="usb-30-analyze">USB 3.0 analyze</h4>
+<p>Mentioned above equipment is necessary to carry out electrical and link layer
+tests. Due to its high price it's rather impossible to perform such tests now.
+So far I couldn't find any alternate solutions which will meet the requirements
+and will be low-price devices. It results from the fact, that to test USB 3.0
+protocol, high frequency devices are needed and such devices are rather
+expensive. Most of available instruments are suitable only for USB 2.0 testing.</p>
+<h4 id="usb-20-analyze">USB 2.0 analyze</h4>
+<p>USB 2.0 Analyzer's principles of operation is exactly the same as USB 3.0
+Analyzer and it is described above in that document.</p>
+<p>Proposed USB 2.0 Analyzers with dedicated software:
+- OpenVizsla | Wireshark
+- Beagle USB 480 | Data Center Software</p>
+<p>Both analyzers are perfectly good to capture and investigate USB data. However,
+OpenVizsla is an open-source solution which can easily handle with USB analysis
+within low price. In combination with Wireshark (or any other program which can
+descramble USB data) it doesn't stand out from any other available solutions. On
+the other hand, Beagle's software has feature which analyze state machine and
+show current state in LTSSM.</p>
+<blockquote>
+<p>Those devices can't be extended to analyze USB 3.0/3.1 transmission.</p>
+</blockquote>
+<h4 id="rxdetect-state">RxDetect state</h4>
+<p>Detailed description of <code>RxDetect</code> machine state (with substates) is available
+in Section 7.5.3 in USB 3.0 Specification.</p>
+<p>Initially USB ports are in <code>SS.Disabled</code> state (SuperSpeed connection is cut
+off). <code>RxDetect</code> state (in fact <code>RxDetect.Reset</code>) is reached after Power On
+Reset or Directed Warm Reset.</p>
+<p>Let's look how machine substate sequence looks like depending on scenarios:</p>
+<ul>
+<li>RxDetect.Reset</li>
+</ul>
+<p>If it was reached by power on reset it transit directly to <code>RxDetect.Active</code>.</p>
+<p>If it was reached by warm reset it transmits LFPS sequence (warm reset
+  sequence) and goes to <code>RxDetect.Active</code>.</p>
+<ul>
+<li>RxDetect.Active</li>
+</ul>
+<p>In this state receiver termination (detecting termination at line) is
+  performed. If it is detected (USB 3.0 device is at the end) then
+  <code>Polling.LFPS</code> state is reached. If it is not detected then <code>RxDetect.Quiet</code>
+  state is reached and after 12ms it gets back to <code>RxDetect.Active</code> state and
+  try procedure again. It can move to <code>RxDetect.Quiet</code> state only 8 times in a
+  row. Next time if no termination is detected it goes to <code>SS.Disabled</code>.</p>
+<ul>
+<li>RxDetect.Quiet</li>
+</ul>
+<p>Wait 12 ms timeout and go to <code>RxDetect.Active</code> state.</p>
+<p>Maybe the problem with USB 3.0 stick detection is caused by not detecting Rx
+termination for 8 times in a row. Host will not get back to detecting USB 3.x
+device no more and will start procedure of detecting USB 2.0 device.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2391 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/debug/usb-debugging/">
+      
+      
+        <link rel="prev" href="../tpm/">
+      
+      
+        <link rel="next" href="../usb-sticks/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>apu2 USB xHCi debugging - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#apu2-usb-xhci-debugging" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              apu2 USB xHCi debugging
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#seabios-debug-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      SeaBIOS debug output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usb-protocol-30-vs-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB protocol 3.0 vs 3.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apu4-and-xhci-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      apu4 and xHCI problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-uefi-tianocore-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing UEFI (Tianocore) stack
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" >
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#seabios-debug-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      SeaBIOS debug output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usb-protocol-30-vs-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      USB protocol 3.0 vs 3.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apu4-and-xhci-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      apu4 and xHCI problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-uefi-tianocore-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing UEFI (Tianocore) stack
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="apu2-usb-xhci-debugging">apu2 USB xHCi debugging</h1>
+<h2 id="seabios-debug-output">SeaBIOS debug output</h2>
+<p>The first step was to analyze verbose output on SeaBIOS. The minimal necessary
+debug level is 5 to get the xHCI verbosity.</p>
+<p>The first thing which can be noticed is:</p>
+<div class="highlight"><pre><span></span><code>|cff49000| xhci_process_events port #2: 0x00021203, powered, enabled, pls 0, speed 4 [Super]
+|cff49000| WARNING - Timeout at xhci_event_wait:743!
+|cff49000| xhci_alloc_pipe: address device: failed (cc -1)
+|cff49000| xhci_cmd_disable_slot: slotid 1
+|cff49000| xhci_trb_queue: ring 0xcff9ed00 [nidx 3, len 0]
+|cff49000| xhci_doorbell: slotid 0, epid 0
+|cff49000| WARNING - Timeout at xhci_event_wait:743!
+|cff49000| xhci_alloc_pipe: disable failed (cc -1)
+</code></pre></div>
+<p>According to xHCI specification, the proper initialization procedure is as
+follows:</p>
+<ol>
+<li>Reset the device on the hub</li>
+<li>Perform enable slot</li>
+<li>Send adress device command</li>
+<li>Configure the device</li>
+</ol>
+<p>As seen above in the log, adress command fails with timeout. After adjusting
+the timeouts to get rid of these problems:</p>
+<div class="highlight"><pre><span></span><code>|cff47000| XHCI port #2: 0x00001203, powered, enabled, pls 0, speed 4 [Super]
+|cff47000| set_address 0xcff9efb0
+|cff47000| xhci_alloc_pipe: usbdev 0xcff4dc60, ring 0xcff9e200, slotid 0, epid 1
+|cff47000| xhci_cmd_enable_slot:
+|cff47000| xhci_trb_queue: ring 0xcff9ed00 [nidx 7, len 0]
+|cff47000| xhci_doorbell: slotid 0, epid 0
+|cff47000| xhci_process_events: ring 0xcff9ed00 [trb 0xcff9ed60, evt 0xcff9ee00, type 33, eidx 7, cc 1]
+|cff47000| xhci_alloc_pipe: enable slot: got slotid 2
+|cff47000| xhci_cmd_address_device: slotid 2
+|cff47000| xhci_trb_queue: ring 0xcff9ed00 [nidx 8, len 0]
+|cff47000| xhci_doorbell: slotid 0, epid 0
+|cff47000| xhci_process_events: ring 0xcff9ed00 [trb 0xcff9ed70, evt 0xcff9ee00, type 33, eidx 8, cc 4]
+|cff47000| xhci_alloc_pipe: address device: failed (cc 4)
+|cff47000| xhci_cmd_disable_slot: slotid 2
+|cff47000| xhci_trb_queue: ring 0xcff9ed00 [nidx 9, len 0]
+|cff47000| xhci_doorbell: slotid 0, epid 0
+|cff47000| xhci_process_events: ring 0xcff9ed00 [trb 0xcff9ed80, evt 0xcff9ee00, type 33, eidx 9, cc 1]
+</code></pre></div>
+<p>This time the address command returned status 4 which stands for Transaction
+Error.</p>
+<p>xHCI <a href="https://www.intel.com/content/dam/www/public/us/en/documents/technical-specifications/extensible-host-controler-interface-usb-xhci.pdf">specification</a> says:</p>
+<div class="highlight"><pre><span></span><code>If the SET_ADDRESS request was unsuccessful, system software may issue a
+Disable Slot Command for the slot or reset the device and attempt the Address
+Device Command again. An unsuccessful Address Device Command shall leave
+the Device Slot in the Default state.
+
+A USB Transaction Error Completion Code for an Address Device Command may
+be due to a Stall response from a device. Software should issue a Disable Slot
+Command for the Device Slot then an Enable Slot Command to recover from this
+error.
+</code></pre></div>
+<p>Tried both approaches without success. The result is the same, device
+respond with Transaction Error (<code>cc 4</code>).</p>
+<h2 id="usb-protocol-30-vs-31">USB protocol 3.0 vs 3.1</h2>
+<p>I have accidentally discovered that some sticks are properly detected regardless
+of the warmboot or coldboot. I started wondering what is the difference between
+them (price, quality?). So I had two different sticks:</p>
+<div class="highlight"><pre><span></span><code>Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               3.10
+  bDeviceClass            0 (Defined at Interface level)
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0         9
+  idVendor           0x0951 Kingston Technology
+  idProduct          0x1666
+  bcdDevice            0.01
+  iManufacturer           1 Kingston
+  iProduct                2 DataTraveler 3.0
+  iSerial                 3 60A44C4252A8F17059930048
+  bNumConfigurations      1
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               3.00
+  bDeviceClass            0 (Defined at Interface level)
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0         9
+  idVendor           0x054c Sony Corp.
+  idProduct          0x09c2
+  bcdDevice            1.10
+  iManufacturer           1 Sony
+  iProduct                2 Storage Media
+  iSerial                 3 5C0710618C3915CF56
+  bNumConfigurations      1
+</code></pre></div>
+<p>The one that had problem with detection in SeaBIOS is Kingston which supports
+USB 3.1 protocol. On the contrary the Sony stick was always detected and
+supports USB 3.0 protocol.</p>
+<p>Although USB 3.1 should be back-compatible with USB 3.0, I have dug a little bit
+into the changes between 3.0 and 3.1 and found that:</p>
+<div class="highlight"><pre><span></span><code>USB 3.1 brings changes in every layer for both the host and device, including
+hubs that are in-between. But one of the ideas in USB 3.1 is to not require
+changes to the software, so a hardware-based, enhanced SuperSpeed device
+notification mechanism was introduced so that devices can communicate with hosts
+at a lower layer and report that they are operating at this higher rate. New
+SuperSpeedPlus host controllers must utilize this extra bandwidth without
+requiring changes to the existing host drivers.
+
+The higher frequency involved with the 10 Gbps data rate means that there is a
+good chance that system designers will need to include repeaters. If the host or
+device loss is greater than 7dB at 5GHz, a repeater may be necessary on both the
+host and the device to travel across the cable.
+
+SuperSpeed posed a problem because a single bit error could cause the link to go
+into recovery in two cases: with skip ordered sets or with start link commands.
+This caused an error rate of up to 5.7^-15.
+
+USB 3.1 introduces a new start-up speed negotiation protocol. The goal of this
+protocol is to get the link up to the highest rate supported by both devices.
+The way this works is that it uses the low frequency periodic signal (LFPS) that
+was introduced in USB 3.0 and it changes it slightly to turn into a pulse width
+modulation message, called the LFPS-Based PWM Messaging (LBPM).
+</code></pre></div>
+<p>That made me a hint, what if USB 3.1 memsticks respond in a slightly different
+way causing SeaBIOS to fail to initialize them?</p>
+<p>Another test I did was coldboot tests. I have noticed that USB 3.1 stick was
+detected properly after coldbooting the platform in 1 minute interval. That
+leads to a conclusion that some capacitance or even impedance is making the
+device respone stall (as xHCI spec says). Comparing the temperture of stick
+connectors I also noticed that 3.1 stick emits much more heat than 3.0 stick.
+This can have significant impact on the electrical characteristics of the hub.</p>
+<p>Another thing that is worth mentioning is that SeaBIOS recognizes only two types
+of USB protocol on xHCI, 3.0 and 2.0:</p>
+<div class="highlight"><pre><span></span><code>XHCI init on dev 00:10.0: regs @ 0xf7f22000, 4 ports, 32 slots, 32 byte contexts
+XHCI    extcap 0x1 @ 0xf7f22500
+XHCI    protocol USB  3.00, 2 ports (offset 1), def 0
+XHCI    protocol USB  2.00, 2 ports (offset 3), def 10
+XHCI    extcap 0xa @ 0xf7f22540
+</code></pre></div>
+<p>Unfortunately these aspects need much more investigation with many more
+different USB sticks 3.0 and 3.1.</p>
+<p>Another problem is I have no idea why the Transaction Error code is received (no
+possibility to look at the lwo level signals on the USB lines). What does xHCI
+spec mean by stall? To answer that question, maybe much more specialized
+hardware and tools would be required.</p>
+<h2 id="test-results">Test results</h2>
+<p>I have run a RF test on the USB 3.0 stick and it survived 50 coldboots.
+The interval between relay switching was 5 seconds on coldboots. It could not
+pass the warmboot test, although it survived only 7 cycles (still better than
+0 cycles in case of USB 3.1).</p>
+<p>The same test on the USB3.1 stick did not pass the 50 warmboots. I achieved
+a pass on coldboots when I was waiting between relay switches for 30 seconds.
+That leads to conclusion that the platform needs to "cool down" before it will
+attempt to initialize USB 3.1 stick (maybe some capacitance discharging or
+wire impedance fall because of the temperature fall).</p>
+<h2 id="apu4-and-xhci-problems">apu4 and xHCI problems</h2>
+<p>apu4 boards seem to have problems with detecting two USB 3.x sticks
+simultaneously. To ensure repeatable results, identical sticks with identical
+content were used in the tests:</p>
+<div class="highlight"><pre><span></span><code>Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               3.00
+  bDeviceClass            0 (Defined at Interface level)
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0         9
+  idVendor           0x0951 Kingston Technology
+  idProduct          0x1666
+  bcdDevice            1.10
+  iManufacturer           1 Kingston
+  iProduct                2 DataTraveler 3.0
+  iSerial                 3 0015F284C2ADB04189554426
+  bNumConfigurations      1
+</code></pre></div>
+<p>In the first place it is worth mentioning that xHCI initialisation is done in
+coreboot by setting just one boolean variable to TRUE. AGESA handles out the
+rest (xHCI fimrware loading, setting port routing, power management etc.) as
+specified in BKDG. Used xHCI firmware is the newest available.</p>
+<p>Interfacing with with USB devices is done in SeaBIOS via dedicated xHCI PCI
+registers and xHCI memory mapped IO configuration registers, so there is no
+mistake in the implementation (however not all registers are documented in BKDG,
+we had to assume some register content according to Intel e8000 SoC datasheet
+which described every register and every bit, example: BKDG describes only 1 bit
+in port status and control register, rest is "reserved").</p>
+<p>After deep investigation with verbose debug output in SeaBIOS we have discovered
+that one port is not functioning properly (bottom one). It turned out that after
+a hub reset, when SeaBIOS is polling <code>USB Port Status and Control</code> register for
+<code>Current Connect Status</code> bit (device detection procedure), this bit is not being
+asserted even if polling time is significantly increased (this bit is updated by
+hardware). If this bit is not asserted, USB 3.0 protocol can not kick in. Given
+that we suspect an electrical issue on the Super Speed TX and RX lines which are
+used in the device detection procedure. USB2.0 sticks does not have such
+problems because they do not use Super Speed TX and RX lines.</p>
+<p>When the device is detected the USB protocol kicks in and USB stick is
+configured properly (although a KINGSTON USB3.1 stick gives weird responses
+during adress command which were described earlier in this document).</p>
+<p>SeaBIOS has also implemented a delay called <code>XHCI_TIME_POST_POWER</code> defined as
+100ms. After host controller reset, platform waits 100ms for power stabilization
+on USB hub. Unfortunately increasing the delay to 200 or 250 seconds does not
+make any difference in device detection.</p>
+<p>We did some improvements in the terms of timings again, increased slightly the
+detection maximum time etc. As a result we were able to improve the detection
+rate slightly and even make two ports work on the apu4b Serial Number:
+WN1226344_1749. But still the other two apu4a boards we had available do not
+detect USB stick in bottom port (<code>Current Connect Status</code> bit not asserted).</p>
+<p>We have carried out some test on the debug binary to show the statistics of
+detection and <code>Current Connect Status</code> bit assertion. The problem exists only on
+apu4 boards, so to compare the results, apu2 board was used too:</p>
+<table>
+<thead>
+<tr>
+<th>port\board</th>
+<th>apu2c</th>
+<th>apu4a</th>
+<th>apu4b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>top</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>100%</td>
+<td>0%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<p>apu4a Serial Number: WN1142380_1708
+apu4b Serial Number: WN1226344_1749
+apu2c Serial Number: WN1101743_1629</p>
+<p>Both boards used the same coreboot base v4.6.8 and the same SeaBIOS version.
+The table shows the rate of <code>Current Connect Status</code> bit assertion in
+corresponding hub ports. The table clearly shows the "toxic" port, but it is not
+affecting the neighbouring port.</p>
+<p>What is interesting, on the apu4a board when cross-swapped the sticks, the top
+port started to be "toxic". It turned out that one stick is not detected on any
+port on that particular apu4a board (however it is detected on apu4b and apu2c
+tested boards). Despite identical manufacturer, product id and content the
+sticks behave in different way on this particular board. To confirm it, a not
+working stick was exchanged with following stick:</p>
+<div class="highlight"><pre><span></span><code>Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               3.00
+  bDeviceClass            0 (Defined at Interface level)
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0         9
+  idVendor           0x090c Silicon Motion, Inc. - Taiwan (formerly Feiya Technology Corp.)
+  idProduct          0x1000 Flash Drive
+  bcdDevice           11.00
+  iManufacturer           1 Intenso
+  iProduct                2 Intenso Premium Line
+  iSerial                 3 0130000000021889
+</code></pre></div>
+<p>Now both ports detected USB3.0 sticks:</p>
+<div class="highlight"><pre><span></span><code>Select boot device:
+
+1. USB MSC Drive Kingston DataTraveler 3.0 PMAP
+2. USB MSC Drive Intenso Premium Line 1100
+3. AHCI/0: SATA SSD ATA-10 Hard-Disk (15272 MiBytes)
+4. Payload [memtest]
+5. Payload [setup]
+</code></pre></div>
+<p>Taking all results above into consideration, we suspect an eletrical problems on
+the USB3.0 lines or on the physical connection. After looking onto not-working
+USB3.0 stick I noticed that SSTX+ line was a little bit curved downside, which
+could possibly prevent the stick from proper detection. After manual lifting the
+SSTX+ pin upside the stick was suddenly detected properly. Proper detection has
+been confirmed with automated validation test with apu4_v4.6.8 image:</p>
+<table>
+<thead>
+<tr>
+<th>port\board</th>
+<th>apu4a 1</th>
+<th>apu4a 2</th>
+<th>apu4b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>top</td>
+<td>cold:54%, warm:OK, reset:OK</td>
+<td>cold:OK, warm:OK, reset:OK</td>
+<td>cold:OK, warm:OK, reset:OK</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>cold:OK, warm:OK, reset:OK</td>
+<td>cold:OK, warm:OK, reset:68%</td>
+<td>cold:OK, warm:OK, reset:OK</td>
+</tr>
+</tbody>
+</table>
+<p>Test conditions:
+- 2x same USB3.0 sticks <code>Kingston DataTraveler 3.0</code>
+- 50x coldboot, warmboot, reset cycles
+- two USB entries should appear in boot menu
+- apu4a 1 Serial Number: WN1142380_1708
+- apu4a 2 Serial Number: WN1142383_1708
+- apu4b Serial Number: WN1226344_1749</p>
+<p>apu4a 1 has a 46% detection rate of two sticks after coldboot(1 stick sometimes
+do not appear in boot menu).
+apu4a 2 has a 68% detection rate of two sticks after shorting reset pin (1 stick
+sometimes do not appear in boot menu).</p>
+<p>Taking all results above into consideration, we still suspect an eletrical
+problem on the USB3.0 lines. The eletrical level detection according to USB3.x
+spec is as follows:</p>
+<div class="highlight"><pre><span></span><code>The Rx detection operates on the principle of the RC time constant of the
+circuit. This time constant changes based on the presence of the receiver
+termination.
+
+1. A Transmitter must start at a stable voltage prior to the detect common mode
+shift.
+2. A Transmitter changes the common mode voltage on Txp and Txn consistent with
+detection of Receiver high impedance which is bounded by parameter
+Z_RX-HIGH-IMP-DC-POS listed in Table 6-13.
+3. A Receiver is detected based on the rate that the lines change to the new
+voltage:
+
+- The Receiver is not present if the voltage at the Transmitter charges at a
+rate dictated only by the Transmitter impedance and the capacitance of the
+interconnect and series capacitor.
+
+- The Receiver is present if the voltage at the Transmitter charges at a rate
+dictated by the Transmitter impedance, the series capacitor, the interconnect
+capacitance, and the Receiver termination.
+</code></pre></div>
+<p>So basically if impedance of the USB3.x lines does not change due to stick
+presence, the charge time will remain the same, causing hardware be unable to
+detect device. Eletrical engineer should investigate the USB3.0 lines and check
+them on apu4 board (the not-working scenario) and other working board like apu2
+in order to exclude the possibility of wrong board layout, wiring etc. Without
+a report we can not possibly make any step further.</p>
+<h2 id="testing-uefi-tianocore-stack">Testing UEFI (Tianocore) stack</h2>
+<p>Similar tests were performed with debug <code>tianocore</code> payload. First of all, USB
+sticks rarely were detected as SuperSpeed (3.0) devices, usually only in a few
+boots after platform was turned off for some time.</p>
+<p>This is log from first boot:</p>
+<div class="highlight"><pre><span></span><code>XhcClearRootHubPortFeature: status Success
+UsbEnumeratePort: port 1 state - 803, change - 01 on CF71FD18
+UsbEnumeratePort: Device Connect/Disconnect Normally
+UsbEnumeratePort: new device connected at port 1
+XhcUsbPortReset!
+XhcSetRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+Enable Slot Successfully, The Slot ID = 0x2
+    Address 2 assigned successfully
+UsbEnumerateNewDev: hub port 1 is reset
+UsbEnumerateNewDev: PortStatus - 803 PortChangeStatus - 0
+UsbEnumerateNewDev: device is of 3 speed
+UsbEnumerateNewDev: device uses translator (0, 0)
+UsbEnumerateNewDev: device is now ADDRESSED at 2
+UsbEnumerateNewDev: max packet size for EP 0 is 512
+Evaluate context
+UsbBuildDescTable: device has 1 configures
+UsbGetOneConfig: total length is 44
+UsbParseConfigDesc: config 1 has 1 interfaces
+UsbParseInterfaceDesc: interface 0(setting 0) has 2 endpoints
+Endpoint[81]: Created BULK ring [CF729200~CF72A200)
+Endpoint[2]: Created BULK ring [CF72A200~CF72B200)
+Configure Endpoint
+UsbEnumerateNewDev: device 2 is now in CONFIGED state
+UsbSelectConfig: config 1 selected for device 2
+UsbSelectSetting: setting 0 selected for interface 0
+</code></pre></div>
+<p>This is from another boot:</p>
+<div class="highlight"><pre><span></span><code>XhcClearRootHubPortFeature: status Success
+UsbEnumeratePort: port 3 state - 01, change - 01 on CF71FD18
+UsbEnumeratePort: Device Connect/Disconnect Normally
+UsbEnumeratePort: new device connected at port 3
+XhcUsbPortReset!
+XhcSetRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+XhcClearRootHubPortFeature: status Success
+Enable Slot Successfully, The Slot ID = 0x2
+    Address 2 assigned successfully
+UsbEnumerateNewDev: hub port 3 is reset
+UsbEnumerateNewDev: device is of 2 speed
+UsbEnumerateNewDev: device uses translator (0, 0)
+UsbEnumerateNewDev: device is now ADDRESSED at 2
+UsbEnumerateNewDev: max packet size for EP 0 is 64
+Evaluate context
+UsbBuildDescTable: device has 1 configures
+UsbGetOneConfig: total length is 32
+UsbParseConfigDesc: config 1 has 1 interfaces
+UsbParseInterfaceDesc: interface 0(setting 0) has 2 endpoints
+Endpoint[81]: Created BULK ring [CF729200~CF72A200)
+Endpoint[2]: Created BULK ring [CF72A200~CF72B200)
+Configure Endpoint
+UsbEnumerateNewDev: device 2 is now in CONFIGED state
+UsbSelectConfig: config 1 selected for device 2
+UsbSelectSetting: setting 0 selected for interface 0
+</code></pre></div>
+<p>These are taken from the same platform and stick, nothing was changed between
+them, but device speed is different. This could point to hardware problem,
+either thermal issue or some parasite capacitance. When a stick isn't recognized
+as a SuperSpeed one, it is initialized as HighSpeed device usually, but not
+always. <code>lsusb</code> started from Debian seems to match the speed detected by UEFI,
+but not much tests from Linux were done. For some reason hot-plug was not
+working, it is unclear if this issue is connected.</p>
+<p>Total detection rate is about 80% for cold boot (success means that both sticks
+were detected). It gets lower for longer tests, down to 70% for 1000 iterations.
+Warm boot and reset results are better, but it is possible that these depend on
+initial cold boot result. Most runs for warm boot and reboot showed 100% success
+rate, while for a few this rate was significantly lower (about 40-50%),
+intermediate values were not observed.</p>
+<p>In very rare cases firmware hang during boot process. This is an example of such
+a hang:</p>
+<div class="highlight"><pre><span></span><code>(...)
+UsbSelectSetting: setting 0 selected for interface 0
+InstallProtocolInterface: 09576E91-6D3F-11D2-8E39-00A0C969723B CF71F598
+InstallProtocolInterface: 2B2F68D6-0CD2-44CF-8E8B-BBA20B1B5B75 CF71EEC0
+UsbConnectDriver: TPL before connect is 8, CF71F398
+Stop Slot = 1,Dci = 3
+XhcStopEndpoint: Slot = 0x1, Dci = 0x3
+XhcSetTrDequeuePointer: Slot = 0x1, Dci = 0x3, Urb = 0xCF71DD98
+XhcBulkTransfer: error - Time out, transfer - 40
+UsbBotDataTransfer: (Time out)
+Stop Slot = 1,Dci = 3
+XhcStopEndpoint: Slot = 0x1, Dci = 0x3
+XhcSetTrDequeuePointer: Slot = 0x1, Dci = 0x3, Urb = 0xCF71DD98
+XhcBulkTransfer: error - Time out, transfer - 40
+Stop Slot = 1,Dci = 3
+XhcStopEndpoint: Slot = 0x1, Dci = 0x3
+XhcSetTrDequeuePointer: Slot = 0x1, Dci = 0x3, Urb = 0xCF71DD98
+XhcBulkTransfer: error - Time out, transfer - 40
+</code></pre></div>
+<p>Last lines are repeated every 60 seconds or so. This particular log is from
+reboot test immediately after failed cold boot (only one stick was detected).</p>
+<p>Full boot logs:</p>
+<ul>
+<li><a href="https://github.com/pcengines/apu2-documentation/blob/master/docs/logs/tiano.log">tiano.log</a> -
+both sticks detected</li>
+<li><a href="https://github.com/pcengines/apu2-documentation/blob/master/docs/logs/tiano2.log">tiano2.log</a> -
+one stick detected</li>
+</ul>
+<p>The stick that was not detected for some reason is still visible as a boot
+option in the second log, but boot order was changed. Note that there are more
+USB devices connected to mPCIe connectors, they are also visible in log files,
+along with <code>Device Error</code>:</p>
+<div class="highlight"><pre><span></span><code>UsbBuildDescTable: device has 1 configures
+UsbGetOneConfig: total length is 25
+UsbParseConfigDesc: config 1 has 1 interfaces
+UsbParseInterfaceDesc: interface 0(setting 0) has 1 endpoints
+EhcExecTransfer: transfer failed with 2
+EhcControlTransfer: error - Device Error, transfer - 2
+UsbBuildDescTable: get language ID table Unsupported
+UsbEnumerateNewDev: device 1 is now in CONFIGED state
+UsbSelectConfig: config 1 selected for device 1
+UsbSelectSetting: setting 0 selected for interface 0
+</code></pre></div>
+<p>Turning off all EHCI controllers doesn't affect USB stick detection rate.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

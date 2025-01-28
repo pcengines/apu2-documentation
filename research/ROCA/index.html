@@ -1,0 +1,2234 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/research/ROCA/">
+      
+      
+        <link rel="prev" href="../power-consumption-tests/">
+      
+      
+        <link rel="next" href="../RPI_SPI_flasher/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>ROCA TPM vulnerability verification and status - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#roca-tpm-vulnerability-verification-and-status" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ROCA TPM vulnerability verification and status
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" >
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/cpu_frequency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debug/warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-rsa-key-pairs-with-tpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating RSA key pairs with TPM
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating RSA key pairs with TPM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extracting-keys-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extracting keys hashes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-for-roca-vulnerability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing for ROCA vulnerability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing for ROCA vulnerability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-tpm-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating TPM firmware
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating TPM firmware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-tpm-firmware-automatic-version-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating TPM firmware - automatic version detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results-from-new-version-of-tpm-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results from new version of TPM firmware
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-rsa-key-pairs-with-tpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating RSA key pairs with TPM
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating RSA key pairs with TPM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extracting-keys-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extracting keys hashes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-for-roca-vulnerability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing for ROCA vulnerability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing for ROCA vulnerability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-tpm-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating TPM firmware
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating TPM firmware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-tpm-firmware-automatic-version-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating TPM firmware - automatic version detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results-from-new-version-of-tpm-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results from new version of TPM firmware
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="roca-tpm-vulnerability-verification-and-status">ROCA TPM vulnerability verification and status</h1>
+<p><a href="https://en.wikipedia.org/wiki/ROCA_vulnerability">ROCA vulnerability</a> was
+discovered (October 2017) in a software library, RSALib, provided by Infineon
+Technologies. That library is also used in TPM modules. When this vulnerability
+is present, a pair of prime numbers used for generating RSA keys is chosen from
+a small subset of all available prime numbers. This results in a great loss of
+entropy. Details and exact numbers can be found <a href="https://crocs.fi.muni.cz/_media/public/papers/nemec_roca_ccs17_preprint.pdf">here</a>.</p>
+<h2 id="generating-rsa-key-pairs-with-tpm">Generating RSA key pairs with TPM</h2>
+<p>RSA keys can be generated with <a href="https://github.com/tpm2-software/tpm2-tools">tpm2-tools</a>.
+SLB 9665 used in TPM module doesn't support 512-bit RSA, so either 1024 or
+2048-bit keys must be used. Context is used for key generation, so it must be
+generated first:</p>
+<div class="highlight"><pre><span></span><code>tpm2_createprimary -g &#39;sha1&#39; -G &#39;rsa1024:null:aes128cfb&#39; -o tpm.ctx
+tpm2_create -C tpm.ctx -Grsa1024 -u key.pub -r key.priv
+</code></pre></div>
+<p>Only the public key is actually required by vulnerability check. It is a good
+idea to generate more than one pair, probably using different key sizes -
+chances for false positives are extremely low, but not zero.</p>
+<p>TPM has limited internal RAM and runs out of memory after 3 operations with
+error:</p>
+<div class="highlight"><pre><span></span><code>ERROR: Tss2_Sys_CreatePrimary(0x902) - tpm:warn(2.0): out of memory for object contexts
+</code></pre></div>
+<p>In this case either rebooting or <a href="https://github.com/tpm2-software/tpm2-tools/issues/303#issuecomment-455309118">flushing open handles manually</a>
+helps. Only <code>handles-transient</code> need to be flushed:</p>
+<div class="highlight"><pre><span></span><code>$ tpm2_getcap -c handles-transient
+- 0x80000000
+- 0x80000001
+- 0x80000002
+$ tpm2_flushcontext -c 0x80000000
+$ tpm2_flushcontext -c 0x80000001
+$ tpm2_flushcontext -c 0x80000002
+</code></pre></div>
+<h4 id="extracting-keys-hashes">Extracting keys hashes</h4>
+<p>File <code>key.pub</code> is a binary file with a TPM-specific header. It is not supported
+by the tool for checking for ROCA vulnerability, so the key needs to be
+extracted and saved in one of the supported formats, e.g. hex coded number.
+This can be done with the following script:</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+rm -f keys.txt
+
+for file in *.pub
+do
+    dd if=${file} bs=1 skip=24 | hexdump -v -e &#39;/1 &quot;%02x&quot;&#39; &gt;&gt; keys.txt
+    echo &quot;&quot; &gt;&gt; keys.txt
+done
+</code></pre></div>
+<h2 id="testing-for-roca-vulnerability">Testing for ROCA vulnerability</h2>
+<p>A tool for checking for ROCA TPM vulnerability can be found <a href="https://github.com/crocs-muni/roca">here</a>.
+The easiest way is to install it with <code>pip</code>:</p>
+<div class="highlight"><pre><span></span><code>pip install roca-detect
+</code></pre></div>
+<p>All parsed keys can be checked using just one command:</p>
+<div class="highlight"><pre><span></span><code>roca-detect keys.txt
+</code></pre></div>
+<p>More use cases can be found on the main page of this tool, including tests for
+saved SSH hosts keys.</p>
+<p>This operation should take no more than a couple of seconds, as it only checks
+if the key was generated from insecure prime numbers, without finding the exact
+numbers used. It does not generate private keys.</p>
+<h4 id="results">Results</h4>
+<p>This is output from test run on 2 different modules, with both 1024 and 2048-bit
+keys generated on each of them:</p>
+<div class="highlight"><pre><span></span><code>2019-03-25 18:31:17 [11915] WARNING Fingerprint found in modulus keys.txt idx 0
+{&quot;type&quot;: &quot;mod-hex&quot;, &quot;fname&quot;: &quot;keys.txt&quot;, &quot;idx&quot;: 0, &quot;aux&quot;: null,
+  &quot;n&quot;: &quot;0x94b79a35a5d47040df1503670080a7714ae1ee751aeb32071b3db388b3bf80b11f661c4b8819ebd1c716239c9ec5a202b08a2aa3c17ad6cd17075ba49fcd005d8b8fa50c29433db35c1421727472deddd77bced7e6438db4d447008b11cdb018139bfef2e06c4b4a3e672543a7e9333040fd881815e14b1f1338e90180fd0865&quot;,
+  &quot;marked&quot;: true, &quot;time_years&quot;: 0.16104529886799998, &quot;price_aws_c4&quot;: 70.5861544938444}
+(...)
+2019-03-25 18:31:17 [11915] INFO ### SUMMARY ####################
+2019-03-25 18:31:17 [11915] INFO Records tested: 8
+2019-03-25 18:31:17 [11915] INFO .. PEM certs: . . . 0
+2019-03-25 18:31:17 [11915] INFO .. DER certs: . . . 0
+2019-03-25 18:31:17 [11915] INFO .. RSA key files: . 0
+2019-03-25 18:31:17 [11915] INFO .. PGP master keys: 0
+2019-03-25 18:31:17 [11915] INFO .. PGP total keys:  0
+2019-03-25 18:31:17 [11915] INFO .. SSH keys:  . . . 0
+2019-03-25 18:31:17 [11915] INFO .. APK keys:  . . . 0
+2019-03-25 18:31:17 [11915] INFO .. JSON keys: . . . 0
+2019-03-25 18:31:17 [11915] INFO .. LDIFF certs: . . 0
+2019-03-25 18:31:17 [11915] INFO .. JKS certs: . . . 0
+2019-03-25 18:31:17 [11915] INFO .. PKCS7: . . . . . 0
+2019-03-25 18:31:17 [11915] INFO Fingerprinted keys found: 4
+2019-03-25 18:31:17 [11915] INFO WARNING: Potential vulnerability
+2019-03-25 18:31:17 [11915] INFO ################################
+</code></pre></div>
+<p>It shows that ROCA vulnerability <strong>is present</strong> on this TPM module model. TPM
+firmware update will be required.</p>
+<p>Note that ROCA is connected only with RSA, it doesn't affect any other security
+functions, as long as they don't use RSALib.</p>
+<h2 id="updating-tpm-firmware">Updating TPM firmware</h2>
+<p>Tools for updating Infineon TPM firmware can be easily found, unfortunately,
+most of them are either UEFI or Windows applications. A Linux port of them can
+be found <a href="https://github.com/iavael/infineon-firmware-updater">here</a>.</p>
+<p>First, check if <code>TPMFactoryUpd</code> was built successfully and TPM is detected
+properly:</p>
+<div class="highlight"><pre><span></span><code>$ ./TPMFactoryUpd -info
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM information:
+       ----------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.61.2785.0
+       TPM platformAuth                  :    Empty Buffer
+       Remaining updates                 :    64
+</code></pre></div>
+<p>Remember the current firmware version number, it will be needed later. Also note
+what is the value of <code>TPM platformAuth</code> - it must be <code>Empty Buffer</code> in order to
+perform an update. To do this, build and flash coreboot with TPM disabled in
+config menu, or use older version of BIOS - none of the v4.8.0.* versions have
+TPM support enabled. SeaBIOS doesn't need any modifications, it will not
+initialize TPM unless coreboot does.</p>
+<p>TPM firmwares are available with some of the UEFI and Windows images, like
+<a href="ftp://ftp.supermicro.com/driver/TPM/9665FW%20update%20package_1.5.zip">these</a>.
+Only <code>9665FW update package_1.5/Firmware/TPM20_&lt;old_version&gt;_to_TPM20_5.63.3144.0.BIN</code>
+file is required. Extract this file to the same directory as the <code>TPMFactoryUpd</code>
+and run:</p>
+<div class="highlight"><pre><span></span><code>$ ./TPMFactoryUpd -update tpm20-emptyplatformauth -firmware TPM20_&lt;old_version&gt;_to_TPM20_5.63.3144.0.BIN
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM update information:
+       -----------------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.61.2785.0
+       TPM platformAuth                  :    Empty Buffer
+       Remaining updates                 :    64
+       New firmware valid for TPM        :    Yes
+       TPM family after update           :    2.0
+       TPM firmware version after update :    5.63.3144.0
+
+       Preparation steps:
+       TPM2.0 policy session created to authorize the update.
+
+    DO NOT TURN OFF OR SHUT DOWN THE SYSTEM DURING THE UPDATE PROCESS!
+
+       Updating the TPM firmware ...
+       Completion: 100 %
+       TPM Firmware Update completed successfully.
+</code></pre></div>
+<p>This can take 3-5 minutes, depending on the firmware update size. After it
+completes, TPM is not useful until the next reboot:</p>
+<div class="highlight"><pre><span></span><code>$ ./TPMFactoryUpd -info
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM information:
+       ----------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.63.3144.0
+       TPM platformAuth                  :    N/A - System restart required
+       Remaining updates                 :    N/A - System restart required
+</code></pre></div>
+<p>Reboot platform immediately. Using TPM functions in this state isn't safe.
+After successful reboot and flashing original coreboot firmware the result
+should be:</p>
+<div class="highlight"><pre><span></span><code>$ ./TPMFactoryUpd -info
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM information:
+       ----------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.63.3144.0
+       TPM platformAuth                  :    Not Empty Buffer
+       Remaining updates                 :    63
+</code></pre></div>
+<h4 id="updating-tpm-firmware-automatic-version-detection">Updating TPM firmware - automatic version detection</h4>
+<p>Assuming that a whole <code>Firmware</code> directory was extracted to directory containing
+<code>TPMFactoryUpd</code> from the <a href="ftp://ftp.supermicro.com/driver/TPM/9665FW%20update%20package_1.5.zip">update package</a>,
+one can use single command to do the update. Appropriate file is chosen
+automatically, depending on the old version. The command is:</p>
+<div class="highlight"><pre><span></span><code>$ ./TPMFactoryUpd -update config-file -config Firmware/TPM20_latest.cfg
+  **********************************************************************
+  *    Infineon Technologies AG   TPMFactoryUpd   Ver 01.01.2459.00    *
+  **********************************************************************
+
+       TPM update information:
+       -----------------------
+       Firmware valid                    :    Yes
+       TPM family                        :    2.0
+       TPM firmware version              :    5.51.2098.0
+       TPM platformAuth                  :    Empty Buffer
+       Remaining updates                 :    64
+       New firmware valid for TPM        :    Yes
+       TPM family after update           :    2.0
+       TPM firmware version after update :    5.63.3144.0
+
+       Selected firmware image:
+       TPM20_5.51.2098.0_to_TPM20_5.63.3144.0.BIN
+
+       Preparation steps:
+       TPM2.0 policy session created to authorize the update.
+
+    DO NOT TURN OFF OR SHUT DOWN THE SYSTEM DURING THE UPDATE PROCESS!
+
+       Updating the TPM firmware ...
+       Completion: 100 %
+       TPM Firmware Update completed successfully.
+</code></pre></div>
+<p>Remember to use BIOS with TPM disabled, and re-flash newer BIOS firmware
+afterwards.</p>
+<h4 id="results-from-new-version-of-tpm-firmware">Results from new version of TPM firmware</h4>
+<p>Repeating all steps from generating TPM context to using <code>roca-detect</code> shows
+that the vulnerability is <strong>no longer present</strong>:</p>
+<div class="highlight"><pre><span></span><code>2019-03-26 18:40:42 [4325] INFO ### SUMMARY ####################
+2019-03-26 18:40:42 [4325] INFO Records tested: 8
+2019-03-26 18:40:42 [4325] INFO .. PEM certs: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. DER certs: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. RSA key files: . 0
+2019-03-26 18:40:42 [4325] INFO .. PGP master keys: 0
+2019-03-26 18:40:42 [4325] INFO .. PGP total keys:  0
+2019-03-26 18:40:42 [4325] INFO .. SSH keys:  . . . 0
+2019-03-26 18:40:42 [4325] INFO .. APK keys:  . . . 0
+2019-03-26 18:40:42 [4325] INFO .. JSON keys: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. LDIFF certs: . . 0
+2019-03-26 18:40:42 [4325] INFO .. JKS certs: . . . 0
+2019-03-26 18:40:42 [4325] INFO .. PKCS7: . . . . . 0
+2019-03-26 18:40:42 [4325] INFO No fingerprinted keys found (OK)
+2019-03-26 18:40:42 [4325] INFO ################################
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

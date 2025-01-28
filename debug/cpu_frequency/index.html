@@ -1,0 +1,2378 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://pcengines.github.io/apu2-documentation/debug/cpu_frequency/">
+      
+      
+        <link rel="prev" href="../alix3d2_issue/">
+      
+      
+        <link rel="next" href="../debian_kernel_rebuild/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Debug notes for CPU frequency issues - apu2 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#debug-notes-for-cpu-frequency-issues" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apu2 Documentation" class="md-header__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apu2 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Debug notes for CPU frequency issues
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apu2 Documentation" class="md-nav__button md-logo" aria-label="apu2 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    apu2 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_CPU_boost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU Core Performance Boost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_ecc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issues with ECC enabling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_ipxe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines APUx flashing with iPXE usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu_flashing_with_rpi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing APUx with Raspberry Pi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../APU_mPCIe_capabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU mPCIe capabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vboot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vboot measured boot on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apu2_vs_apu4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apu2 vs apu4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cbmem_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot cbmem building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cold_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performing cold reset remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../firmware_flashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Firmware flashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flashrom_building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashrom building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generating_coreboot_support_logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generating coreboot support logs and sending them for verification purposes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    APU GPIO tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ipxe_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ipxe compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Known issues with Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microcode_patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcode patching on PC Engines apu2/3/4/5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mpcie_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of supported mPCIe modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../order_of_PCI_addresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Order of PCI addresses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os_boot_serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling OS boot serial console and setting connection parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tested operating systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfsense_installerconfig/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unattended installation PFSense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pfSense-install-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pxelinux-cfg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pxelinux cfg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sd_card_performance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd card performance test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serial_console/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial console output in coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../supported_coreboot_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building firmware supported by coreboot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory-of-operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu features - theory of operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tianocore_build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coreboot with tianocore payload on apu2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_menu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SeaBIOS TPM configuration menu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tpm_pin_mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pin mapping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_image_building_alix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Voyage Linux image for PC Engines ALIX platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_netinst/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring Voyage Linux netinst
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../voyage_linux_sd_card_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voyage linux sd card install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../power_consumption_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Consumption Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_37" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_37" id="__nav_37_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_37_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_37">
+            <span class="md-nav__icon md-icon"></span>
+            debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AGESA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AGESA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alix3d2_issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue description of PC Engines ALIX2D3 board
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Debug notes for CPU frequency issues
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reproducing-the-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reproducing the issue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      P-states
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="P-states">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#values-obtained-from-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Values obtained from registers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-regulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage regulator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-from-logs-obtained-from-community" class="md-nav__link">
+    <span class="md-ellipsis">
+      Findings from logs obtained from community
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Findings from logs obtained from community">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acpi-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      ACPI tables
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      C-states
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C-states">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debian_kernel_rebuild/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debian kernel rebuild
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_sd_slot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    External sd slot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freeDOS_problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with FreeDOS on APU2 platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_mPCIe_log_analyze/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    hdd mPCIe log analyze
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hdd_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hdd test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iommu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMD I/O Virtualization Technology (IOMMU)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie_ethernet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mpcie ethernet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie1_mpcie2_ethernet_card/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Problems with APU2 when using Mini PCI-Express Dual Gigabit Ethernet Controller Card
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpcie2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASM1061 in the J13 slot problems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openwrt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Openwrt booting from SD card issue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pfsense-ahci-issue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    pfSense installation tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sd_registers_bad/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sd registers bad
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_debug/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard debug
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdcard_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sdcard test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tplink_hg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tplink hg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TPM support for apu platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    apu2 USB xHCi debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-sticks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB sticks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usb-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../warmboot_reset/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doubled sign of life
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_38" >
+        
+          
+          <label class="md-nav__link" for="__nav_38" id="__nav_38_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    research
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_38_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_38">
+            <span class="md-nav__icon md-icon"></span>
+            research
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/apu_bios_write_protect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BIOS write protect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/early-cbmem-implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Early cbmem implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/fast_boot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines fast boot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/freebsd_tpm_support/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FreeBSD TPM2.0 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/geode_lx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ALIX and AMD Geode LX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/Orange_Pi_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orange Pi flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/power-consumption-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PC Engines apu3 power consumption tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/ROCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROCA TPM vulnerability verification and status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RPI_SPI_flasher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPI flasher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/tpm2-triage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Report of TPM2 support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/USB_compliance_test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USB compliance tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reproducing-the-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reproducing the issue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      P-states
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="P-states">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#values-obtained-from-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Values obtained from registers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-regulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage regulator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-from-logs-obtained-from-community" class="md-nav__link">
+    <span class="md-ellipsis">
+      Findings from logs obtained from community
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Findings from logs obtained from community">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acpi-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      ACPI tables
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      C-states
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C-states">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="debug-notes-for-cpu-frequency-issues">Debug notes for CPU frequency issues</h1>
+<p><a href="https://github.com/pcengines/coreboot/issues/196">GitHub issue</a></p>
+<p>Most of information is taken from <a href="https://www.amd.com/system/files/TechDocs/52740_16h_Models_30h-3Fh_BKDG.pdf">BKDG</a>,
+unless noted otherwise.</p>
+<h2 id="reproducing-the-issue">Reproducing the issue</h2>
+<p>Steps described in linked GitHub issue were used.</p>
+<p>For some reason, our installation of pfSense doesn't include <code>cpuctl</code> module,
+so <code>turbostat</code> didn't work at all. According to its source code, the <code>Bzy_MHz</code>
+field shows real CPU frequency. It is counted as ratio of clock ticks of CPU
+divided by clock ticks of P0 as a reference over some period of time, and scaled
+appropriately. It is thus a good measurement of real CPU frequency.</p>
+<p>Another approach was to indirectly compare CPU frequencies by comparing bogo ops
+from <code>stress-ng</code>. This method can give different results depending on system
+load or interrupts, but can be used as an approximation. In our tests, bogo ops
+after the issue occurred were slightly lower than those reported on GitHub
+(1250-1350 vs. 1407), however they were definitely lower than when the issue
+did not happen (~1950). This was mostly consistent with what was described on
+GitHub when it comes to triggering this issue.</p>
+<p>However, after a couple of days we couldn't reproduce this anymore, no matter
+which platform or firmware version was used. Every test showed high bogo ops
+value (1900-2050), with no difference after a couple of days of runtime and
+different ways of starting the system (cold boot, warm boot, reset, reboot from
+pfSense and another operating system).</p>
+<h2 id="p-states">P-states</h2>
+<p>AMD processors have 2 sets of P-state numeration: software and hardware. They
+both start with P0 being highest-performance accessible, but hardware P0 isn't
+the same as software P0. On the software side additional boost states (Pb0, Pb1)
+are used. All boosted P-states are always higher performance than non-boosted
+P-states. Hardware P0 is software Pb0. Rest of states is mapped 1-to-1, with the
+same names corresponding to different states, which can be confusing. Number of
+boost states is written in <code>D18F4x15C[NumBoostStates]</code>, in case of apu it is 2.
+<strong>BIOS should not provide ACPI <code>_PSS</code> entries for boosted P-states.</strong></p>
+<p>Boost states cannot be requested directly, some conditions that must be met:</p>
+<ul>
+<li>P0 (software) requested</li>
+<li>boost enabled (i.e. boost states exist and not disabled in <code>MSRC001_0015[CpbDis]</code>,
+  this bit is clear in our case so boost isn't disabled here)</li>
+<li>actual demand on CPU</li>
+<li>no upper limit set (<code>D18F4x13C[SmuPstateLimit]</code>, set as 0 so no limit)</li>
+<li>additional hardware limits (these values vary, most of them is set by AGESA):</li>
+<li>temperature (temperature limit is set in <code>D18F3x64</code> as 105 &deg;C)</li>
+<li>TDP - whole CPU (set as a dynamic in <code>D18F3x1FC</code>, there is a dead link to
+    section 2.5.11.8 in BKDG)</li>
+<li>power consumption - individual cores (power required by core is also
+    calculated or hard-coded in AGESA, but a P-state would be disabled if it
+    were to require more power than a board can supply)</li>
+</ul>
+<p>CPU can temporarily go above the TDP for one core, given that enough of other
+cores are halted or waiting on IO operation. This is configured in <code>D18F4x16C</code>.</p>
+<p>Lower limits can be set in <code>D18F3x64[HtcPstateLimit]</code>, <code>D18F3x68[SwPstateLimit]</code>
+and <code>D18F3xDC[HwPstateLimit]</code> - all of these use hardware numeration. Also in
+BKDG among other limitations "APML" (Advanced Platform Management Link?) was
+mentioned with a dead link to <code>D18F3xC4[PstateLimit]</code>.</p>
+<p>There is a maximum of 8 states, but only 5 are used in apu:</p>
+<table>
+<thead>
+<tr>
+<th>Software</th>
+<th>Hardware</th>
+<th>Frequency</th>
+<th>Register</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pb0</td>
+<td>P0</td>
+<td>1.4 GHz</td>
+<td>MSRC001_0064</td>
+</tr>
+<tr>
+<td>Pb1</td>
+<td>P1</td>
+<td>1.2 GHz</td>
+<td>MSRC001_0065</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>P2</td>
+<td>1.0 GHz</td>
+<td>MSRC001_0066</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>P3</td>
+<td>800 MHz</td>
+<td>MSRC001_0067</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>P4</td>
+<td>600 MHz</td>
+<td>MSRC001_0068</td>
+</tr>
+<tr>
+<td>n/a</td>
+<td>n/a</td>
+<td></td>
+<td>MSRC001_0069</td>
+</tr>
+<tr>
+<td>n/a</td>
+<td>n/a</td>
+<td></td>
+<td>MSRC001_006A</td>
+</tr>
+<tr>
+<td>n/a</td>
+<td>n/a</td>
+<td></td>
+<td>MSRC001_006B</td>
+</tr>
+</tbody>
+</table>
+<p>Problem is that platform doesn't go back to 1.0 GHz, so it isn't probably
+connected to boost. However boost states were not observed despite no visible
+limits (except for dynamic TDP, not sufficiently described in BKDG). This could
+be due to the nature of checking for P-states - perhaps a function that reads
+registers uses IO operations which don't require computing power as much.</p>
+<p>Other MSRs directly connected to P-states:</p>
+<ul>
+<li>MSRC001_0061 - current P-state limit, P-state max value - read only.</li>
+<li>MSRC001_0062 - P-state control, write to this register requests a change.
+Actual change might not happen if it exceeds any of set limits or if another
+core on the same voltage/frequency domain uses different state.</li>
+<li>MSRC001_0063 - current P-state. Uses software numbering. May not be accurate
+after warm reset, if it happened during state change (might be connected to
+reboot issues).</li>
+<li>MSRC001_0071 - COFVID status. This register has fields describing real value
+of P-state, current P-state limit (2 in this case, so no boost is allowed),
+startup P-state, maximum frequency of CPU and NB, current frequency and voltage.
+All P-states here use hardware numbering.</li>
+</ul>
+<h4 id="values-obtained-from-registers">Values obtained from registers</h4>
+<p>Values of the mentioned registers were read using BITS, <code>lspci -xxxx</code> (Debian)
+and <code>pciconf</code> (pfSense). <code>pciconf</code> doesn't allow to read registers above 0x100
+(extended PCI configuration space) so <code>D18F4</code> was not checked there. Also MSRs
+were only read and written with BITS - accessing them from OS would require a
+kernel module and could mess/get messed by power management of OS.</p>
+<p>Results seems to be consistent across different platforms (except for small
+voltage differences), OSes and warm/cold boots.</p>
+<table>
+<thead>
+<tr>
+<th>Register</th>
+<th style="text-align: right;">Value</th>
+<th>Decoded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D18F3x64</td>
+<td style="text-align: right;">0x426a0025</td>
+<td>HtcPstateLimit = 4 (low, HW)<br>HtcHystLimit = 2<br>HtcTmpLimit = 0x6a = 105 &deg;C<br>HtcActSts = 1 <em>processor entered HTC since reset</em><br>HtcAct = 0 <em>processor is not in HTC state currently</em><br>HtcEn = 1</td>
+</tr>
+<tr>
+<td>D18F3x68</td>
+<td style="text-align: right;">0x40000000</td>
+<td>SwPstateLimit = 4 (low, HW)<br>SwPstateLimitEn = 0</td>
+</tr>
+<tr>
+<td>D18F3xC4</td>
+<td style="text-align: right;">0x00000000</td>
+<td><em>mentioned but not described in BKDG</em></td>
+</tr>
+<tr>
+<td>D18F3xDC</td>
+<td style="text-align: right;">0x68786400</td>
+<td>NbsynPtrAdjPstate = 2<br>NbsynPtrAdjLo = 5<br>CacheFlushOnHaltTmr = 0xf<br>NbsynPtrAdj = 6<br>HwPstateMaxVal = 4 (low, HW)</td>
+</tr>
+<tr>
+<td>D18F4x110</td>
+<td style="text-align: right;">0x000c4014</td>
+<td>MinResTmr = 0x62 = 98<br>CSampleTimer = 0x14 = 20 <em>(~10 ms)</em></td>
+</tr>
+<tr>
+<td>D18F4x13C</td>
+<td style="text-align: right;">0x00000001</td>
+<td>SmuPstateLimitEn = 1<br>SmuPstateLimit = 0 (high, HW)</td>
+</tr>
+<tr>
+<td>D18F4x15C</td>
+<td style="text-align: right;">0x00000189</td>
+<td>BoostLock = 0<br>CstatePowerEn = 1<br>ApmMasterEn = 1<br>NumBoostStates = 2<br>BoostSrc = 1 <em>use of Pb0 and Pb1 enabled</em></td>
+</tr>
+<tr>
+<td>D18F4x16C</td>
+<td style="text-align: right;">0x000024bc</td>
+<td>CstateCores = 1 <em>whether CstateCnt describes cores or compute units, 1 = cores</em><br>CstateCnt = 2 <em>how many cores/CUs need to be in CC6 for boosting others</em><br>CstateBoost = 2 (HW) <em>core needs to be in this </em><em>P</em><em>-state before being boosted</em><br>ApmTdpLimitSts = 1<br>ApmTdpLimitIntEn = 1<br>TdpLimitDis = 1</td>
+</tr>
+<tr>
+<td>D18F5x84</td>
+<td style="text-align: right;">0x0e0ef003</td>
+<td>DdrMaxRateEnf = 0xe<br>DdrMaxRate = 0xe<br>DctEn = 0xf<br>CmpCap = 3 <em>(4 cores)</em></td>
+</tr>
+<tr>
+<td>D18F5xE0</td>
+<td style="text-align: right;">0x0000xxx1</td>
+<td>RunAvgRange = 1 <em>(interval = 40ms)</em><br><em>bits marked with x are reserved, they change between reads</em></td>
+</tr>
+<tr>
+<td>MSRC001_0061</td>
+<td style="text-align: right;">0x0000000000000020</td>
+<td>CurPstateLimit = 0 (high, SW)<br>PstateMaxVal = 2 (low, SW)</td>
+</tr>
+<tr>
+<td>MSRC001_0062</td>
+<td style="text-align: right;">0x0000000000000000</td>
+<td>PstateCmd = 0 <em>see notes below</em></td>
+</tr>
+<tr>
+<td>MSRC001_0063</td>
+<td style="text-align: right;">0x0000000000000000</td>
+<td>CurPstate = 0 <em>see notes below</em></td>
+</tr>
+<tr>
+<td>MSRC001_0064</td>
+<td style="text-align: right;">0x8000025f0000b84c</td>
+<td>PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x5f<br>NbPstate = 0<br>CpuVid = 0x5c<br>CpuDid = 1 <em>(divide by 2)</em><br>CpuFid = 0xc <em>(COF = 1400 MHz)</em></td>
+</tr>
+<tr>
+<td>MSRC001_0065</td>
+<td style="text-align: right;">0x8000024d0000c848</td>
+<td>PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x4d<br>NbPstate = 0<br>CpuVid = 0x64<br>CpuDid = 1 <em>(divide by 2)</em><br>CpuFid = 8 <em>(COF = 1200 MHz)</em></td>
+</tr>
+<tr>
+<td>MSRC001_0066</td>
+<td style="text-align: right;">0x800002700000d844</td>
+<td>PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x70<br>NbPstate = 0<br>CpuVid = 0x6c<br>CpuDid = 1 <em>(divide by 2)</em><br>CpuFid = 4 <em>(COF = 1000 MHz)</em></td>
+</tr>
+<tr>
+<td>MSRC001_0067</td>
+<td style="text-align: right;">0x8000025f0040e040</td>
+<td>PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x5f<br>NbPstate = 1<br>CpuVid = 0x70<br>CpuDid = 1 <em>(divide by 2)</em><br>CpuFid = 0 <em>(COF = 800 MHz)</em></td>
+</tr>
+<tr>
+<td>MSRC001_0068</td>
+<td style="text-align: right;">0x8000024b0040ece0</td>
+<td>PstateEn = 1<br>IddDiv = 2<br>IddValue = 0x4b<br>NbPstate = 1<br>CpuVid = 0x76<br>CpuDid = 3 <em>(divide by 8)</em><br>CpuFid = 0x20 <em>(COF = 600 MHz)</em></td>
+</tr>
+<tr>
+<td>MSRC001_0069<br>MSRC001_006A<br>MSRC001_006B</td>
+<td style="text-align: right;">0x000000000041fe00</td>
+<td>PstateEn = 0</td>
+</tr>
+<tr>
+<td>MSRC001_0071</td>
+<td style="text-align: right;">0x3a1c00027442d844</td>
+<td>MaxNbCof = 7 <em>(700 MHz)</em><br>CurPstateLimit = 2 (high, HW)<br>MaxCpuCof = 0xe = 14 <em>(1400 MHz)</em><br>StartupPstate = 2 (HW) <em>cold reset, may be different after reboot/reset</em><br>CurNbVid = 0x74<br>NbPstateDis = 0<br>CurPstate = 2 (HW) <em>see notes below</em><br>CurCpuVid = 0x6c<br>CurCpuDid = 1<br>CurCpuFid = 4</td>
+</tr>
+</tbody>
+</table>
+<p>In the table SW means software numbering, HW - hardware. High limit means
+an upper limit on frequency (performance), lowest P-state number. COF (current
+operating frequency) is calculated as <code>100 * ((CpuFid + 0x10) / (2^CpuDid))</code>.
+Transitions between P-states were working as expected. To change P-state to the
+lower frequency following steps were taken:</p>
+<ol>
+<li>Write to MSRC001_0062 with requested, higher P-state number (SW).</li>
+<li>Read from MSRC001_0062 should return written state, as long as it is within
+limits.</li>
+<li>Read from MSRC001_0063 returns 0, MSRC001_0071 returns previous value - no
+P-state transition occurred because of frequency and voltage domains.</li>
+<li>Write to MSRC001_0062 of other cores.</li>
+<li>After all cores have requested change the actual P-state transition takes
+place. Reads from MSRC001_0063 and MSRC001_0071 return expected values.</li>
+</ol>
+<p>Changing P-state to higher performance results in immediate change, as frequency
+and voltage domains are tailored to the most demanding core.</p>
+<p>Actual frequency and/or voltage can be different than in the state pointed by
+CurPstate in MSRC001_0063 after a warm reset that occurred during plane
+transition. In this case current value can be that before or after transition.
+Firmware is required to transition the processor to valid COF and VID settings.
+This can be the source of some reboot problems, but it is hard to test in a
+reliable way - reset is asynchronous event that have to take place in very short
+amount of time during transition.</p>
+<h2 id="voltage-regulator">Voltage regulator</h2>
+<p>CPU communicates with voltage regulator using SVI2 (Serial VID Interface 2.0).
+Typically, after all frequency and voltage dependencies described above are
+resolved, transition to higher performance follows a sequence:</p>
+<ol>
+<li>SVI2 command is send to the voltage regulator, <code>D18F5x12C[Svi2CmdBusy]</code>
+   is set.</li>
+<li>Voltage regulator sets the requested voltage, waits for it to stabilize and
+   clears <code>Svi2CmdBusy</code>.</li>
+<li>After <code>Svi2CmdBusy</code> is clear frequency change is performed.</li>
+</ol>
+<p>Transition towards lower performance starts with frequency change and doesn't
+have to wait for it to finish before changing voltage. Because of these
+restrictions it is impossible for CPU to work with high frequency and too low
+voltage for that frequency.</p>
+<p>Multiple requests can be grouped:</p>
+<blockquote>
+<ul>
+<li>If multiple commands are issued that affect the P-state of a domain prior
+  to when the processor initiates the change of the P-state of that domain,
+  then the processor operates on the last one issued.</li>
+<li>Once a P-state change starts, the P-state state machine (PSSM) continues
+  through completion unless interrupted by a PWROK deassertion. If multiple
+  P-state changes are requested concurrently, the PSSM may group the
+  associated VID changes separately from the associated COF changes.</li>
+</ul>
+</blockquote>
+<p>Setting <code>D18F5x12C[WaitVidCompDis]</code> changes behaviour of transition towards
+higher performance - instead of waiting for voltage regulator to report end of
+transition next request can be made after a defined time period
+(<code>D18F3xD8[VSRampSlamTime]</code>). BKDG recommends 2.00 μs per 15 mV, it is set as
+such by AGESA, but can be modified by OEM callouts.</p>
+<h2 id="findings-from-logs-obtained-from-community">Findings from logs obtained from community</h2>
+<p>Registers values from community revealed that CPU had voltage of (software) P0,
+but its frequency was stuck at a value of P2. Voltage change to P0 was requested
+but not reported as done by voltage regulator for some reason.</p>
+<p>It is possible that under certain circumstances an infinite loop occurs during
+boot - CPU is not requested to transition to P0 as its voltage already is equal
+to that of P0, so AGESA waits for frequency change to catch up, which doesn't
+happen. An explicit request to transition to P0 during boot could help with
+<a href="https://github.com/pcengines/apu2-documentation/issues/64">the other issue</a>.</p>
+<p>It is unclear why some platforms are influenced and others are not. Maybe
+different batch of voltage regulator (chip U7 on the bottom side of board)
+was used?</p>
+<h4 id="acpi-tables">ACPI tables</h4>
+<p>All required objects for P-states are present, even the optional <code>_PPC</code>. Only
+difference between actual tables and recommendations from BKDG is entry
+<code>DUTY_WIDTH</code> in Fixed ACPI Description Table (FADT) - AMD recommends value of 0,
+while real entry has 3. Description of this entry from <a href="http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf">ACPI specification</a>:</p>
+<blockquote>
+<p>The bit width of the processor’s duty cycle setting value in the P_CNT
+register. Each processor’s duty cycle setting allows the software to select
+a nominal processor frequency below its absolute frequency as defined by:</p>
+<p>THTL_EN = 1</p>
+<p>BF*DC/(2^DUTY_WIDTH)</p>
+<p>Where:</p>
+<p>BF – Base frequency</p>
+<p>DC – Duty cycle setting</p>
+<p>When THTL_EN is 0, the processor runs at its absolute BF.
+A DUTY_WIDTH value of 0 indicates that processor duty cycle is not
+supported and the processor continuously runs at its base frequency.</p>
+</blockquote>
+<h2 id="c-states">C-states</h2>
+<p>Only theoretical research on registers was done from C0, and everything seems to
+be correct. Practical research (i.e. transitions between states) is impossible,
+because when CPU is in lower C-state it doesn't process instructions and thus
+cannot report any of its register values.</p>
+<p>As for ACPI tables, we couldn't find <code>_CRS</code> object. <code>P_LVL2_LAT</code> showed a
+value 0f 0x65 = 101, which disables C2 state according to <a href="http://www.acpi.info/DOWNLOADS/ACPIspec-2-0a.pdf">specification</a>.
+First recorded value of this field actually showed 0x64 = 100, that is as
+specified in BKDG, but all subsequent logs show 0x65. This could either be an
+error with serial connection or this value did change, which could possibly
+explain sudden problems with reproducing. A look at the source code however
+shows that it is set as 0x65, against instructions from BKDG. If this value was
+indeed different it had to be set by some other agent (payload, OS, AGESA).</p>
+<h4 id="fix">Fix</h4>
+<p>Setting <code>D18F5x12C[WaitVidCompDis]</code> resolved both this issue as well as problems
+with reboot. This bit is protected by <code>D18F2x1B4[SmuCfgLock]</code> after system or a
+payload starts, but is cleared during init.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>
